@@ -1,6 +1,7 @@
 
 const delay = (fn, time) => (...args) => {
-	setTimeout(() => fn(...args), time)
+	const timeout = setTimeout(() => fn(...args), time)
+	return () => { clearTimeout(timeout) }
 }
 
 module.exports = { delay }

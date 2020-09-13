@@ -1,5 +1,8 @@
 const { random } = require('./random')
 
-const rand = (n) => Math.floor(random() * n)
+const rand = (n, options) => {
+	const getRandom = options ? options.random : random
+	return Math.floor(getRandom() * n)
+}
 
-module.export = { rand }
+module.exports = { rand }

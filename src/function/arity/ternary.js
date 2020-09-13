@@ -1,4 +1,4 @@
 
-const binary = (fn) => (a, b, c) => fn(a, b, c)
+const ternary = (fn) => (a, b, c) => fn(a, b, c)
 
-module.exports = { binary }
+module.exports = { ternary }

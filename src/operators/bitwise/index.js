@@ -1,10 +1,10 @@
 
 module.exports = {
-	...require('./bitNot'),
-	...require('./bitOr'),
-	...require('./bitAnd'),
-	...require('./bitXor'),
-	...require('./shiftL'),
-	...require('./shiftR'),
-	...require('./shiftZ'),
+	...require('./bit-not'),
+	...require('./bit-or'),
+	...require('./bit-and'),
+	...require('./bit-xor'),
+	...require('./shift-l'),
+	...require('./shift-r'),
+	...require('./shift-z'),
 }

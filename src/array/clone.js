@@ -1,4 +1,5 @@
+const { slice } = require('./slice')
 
-const clone = (a) => Array.from(a)
+const clone = (arr) => slice(arr)
 
 module.exports = { clone }

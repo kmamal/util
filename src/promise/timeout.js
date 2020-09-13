@@ -1,7 +1,7 @@
 
 const timeout = (time) => new Promise((resolve, reject) => {
 	setTimeout(() => {
-		reject(new Error('timeout'))
+		reject(new Error("timeout"))
 	}, time)
 })
 

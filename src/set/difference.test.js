@@ -1,22 +1,37 @@
-const { test } = require('../test')
-const { difference } = require('./difference')
+const { test } = require('@xyz/tests')
+const { difference } = require('.')
 
 test('set.difference', (t) => {
 	const a = new Set([ 1, 2, 3 ])
 	const b = new Set([ 2, 3, 4 ])
-	const diff = difference(a, b)
+	const set = difference(a, b)
 
-	t.assert(() => diff.size <= a.size)
+	t.assert(() => set.size <= a.size)
 
-	for (const x of diff) {
+	// The difference contains only values of a that are not in b
+	for (const x of set) {
 		if (!a.has(x)) {
-			t.fail('value missing', { x, a })
+			t.fail({ reason: "extra value", x, a })
+		}
+
+		if (b.has(x)) {
+			t.fail({ reason: "value not removed", x, b })
 		}
 	}
 
-	for (const x of diff) {
-		if (b.has(x)) {
-			t.fail('value not removed', { x, b })
+	// All values of a appear if they are not in b
+	for (const x of a) {
+		if (!set.has(x)) {
+			if (!b.has(x)) {
+				t.fail({ reason: "value missing", x, a })
+			}
+		}
+	}
+
+	// No values of b appear
+	for (const x of b) {
+		if (set.has(x)) {
+			t.fail({ reason: "value not removed", x, b })
 		}
 	}
 })

@@ -1,14 +1,17 @@
 
 const debounce = (fn, time, options) => {
-	const leading = options && options.leading
-	const trailing = !options || options.trailing
+	let leading = false
+	let trailing = true
+	if (options) {
+		if (options.leading !== undefined) { leading = options.leading }
+		if (options.trailing !== undefined) { trailing = options.trailing }
+	}
 
 	let timeout = null
 	let last_args
 	let last_result
 
 	const invoke = () => {
-		if (!trailing) { return }
 		last_result = fn(...last_args)
 	}
 
@@ -26,7 +29,11 @@ const debounce = (fn, time, options) => {
 			invoke()
 		}
 
-		setTimeout(invoke, time)
+		timeout = setTimeout(() => {
+			timeout = null
+			if (!trailing) { return }
+			invoke()
+		}, time)
 		return last_result
 	}
 
@@ -38,7 +45,7 @@ const debounce = (fn, time, options) => {
 	debounced.flush = () => {
 		if (timeout) {
 			cancel()
-			invoke()
+			if (trailing) { invoke() }
 		}
 		return last_result
 	}

@@ -1,9 +1,10 @@
 
 module.exports = {
-	...require('./random'),
-	...require('./rand'),
-	...require('./rand-int'),
-	...require('./rand-float'),
-	...require('./shuffle'),
 	...require('./choose'),
+	...require('./choose-n'),
+	...require('./rand-float'),
+	...require('./rand-int'),
+	...require('./rand'),
+	...require('./random'),
+	...require('./shuffle'),
 }

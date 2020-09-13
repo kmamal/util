@@ -4,6 +4,7 @@ module.exports = {
 	...require('./all'),
 	...require('./catch'),
 	...require('./finally'),
+	...require('./future'),
 	...require('./race'),
 	...require('./reject'),
 	...require('./resolve'),

@@ -1,12 +1,14 @@
 {
-  "name": "stdlib",
   "version": "0.0.1",
-  "description": "",
+  "name": "@xyz/util",
+  "description": "util",
+  "repository": {
+    "type": "git",
+    "url": "git:repos/util"
+  },
   "main": "src/index.js",
   "scripts": {
-    "test": "node src/test/ src/**/*.test.js"
+    "test": "./scripts/run-tests.sh"
   },
-  "keywords": [],
-  "author": "",
   "license": "ISC"
 }

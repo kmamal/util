@@ -1,4 +1,4 @@
 
-const toPrecision = (precision) => (x) => x.toPrecision(precision)
+const toPrecision = (x, precision) => x.toPrecision(precision)
 
 module.exports = { toPrecision }

@@ -1,6 +1,8 @@
 const { random } = require('./random')
 
-const randFloat = (_a, _b) => {
+const randFloat = (_a, _b, options) => {
+	const getRandom = options ? options.random : random
+
 	let a = _a
 	let b = _b
 	let range = b - a
@@ -12,7 +14,8 @@ const randFloat = (_a, _b) => {
 		range = b - a
 		scale = 2
 	}
-	return scale * (random() * range + a)
+
+	return scale * (getRandom() * range + a)
 }
 
 module.exports = { randFloat }

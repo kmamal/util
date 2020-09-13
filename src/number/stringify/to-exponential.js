@@ -1,4 +1,4 @@
 
-const toExponential = (fractionDigits) => (x) => x.toExponential(fractionDigits)
+const toExponential = (x, fractionDigits) => x.toExponential(fractionDigits)
 
 module.exports = { toExponential }
