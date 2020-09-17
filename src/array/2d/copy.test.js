@@ -1,4 +1,4 @@
-const { test } = require('@xyz/tests')
+const { test } = require('@xyz/testing')
 const { Array2d, clone, copy } = require('.')
 
 test('array.2d.copy', (t) => {

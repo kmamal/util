@@ -1,4 +1,4 @@
-const { test } = require('@xyz/tests')
+const { test } = require('@xyz/testing')
 const { createTests: createTestCasesForUnstableSort } = require('./test-cases-for-unstable-sort')
 
 const createTests = (name) => {

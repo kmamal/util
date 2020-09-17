@@ -1,4 +1,4 @@
-const { test } = require('@xyz/tests')
+const { test } = require('@xyz/testing')
 const { fromFactory } = require('../../map')
 const { sum } = require('../../array/sum')
 const { sampleIndexesFromReservoir } = require('.')

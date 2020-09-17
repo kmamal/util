@@ -1,4 +1,4 @@
-const { test } = require('@xyz/tests')
+const { test } = require('@xyz/testing')
 const { findIndex, findIndexRight, find, findRight } = require('.')
 
 test('array.findIndex', (t) => {

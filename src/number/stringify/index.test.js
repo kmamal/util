@@ -1,4 +1,4 @@
-const { test } = require('@xyz/tests')
+const { test } = require('@xyz/testing')
 const Stringify = require('.')
 
 const a = [ 42, -69, Math.PI, Number.MAX_VALUE, Infinity, NaN ]

@@ -1,4 +1,4 @@
-const { test } = require('@xyz/tests')
+const { test } = require('@xyz/testing')
 const { normalize } = require('./normalize')
 
 test('intervals.normalize', (t) => {

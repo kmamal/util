@@ -1,4 +1,4 @@
-const { test } = require('@xyz/tests')
+const { test } = require('@xyz/testing')
 const { fromFactory } = require('../map/from-factory')
 const { randFloat } = require('.')
 

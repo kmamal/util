@@ -1,4 +1,4 @@
-const { test } = require('@xyz/tests')
+const { test } = require('@xyz/testing')
 const { debounce } = require('.')
 
 test('function.async.debounce', (t) => new Promise((resolve) => {

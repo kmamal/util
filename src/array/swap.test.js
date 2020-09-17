@@ -1,4 +1,4 @@
-const { test } = require('@xyz/tests')
+const { test } = require('@xyz/testing')
 const { swap } = require('.')
 
 test('array.swap', (t) => {

@@ -1,4 +1,4 @@
-const { test } = require('@xyz/tests')
+const { test } = require('@xyz/testing')
 const { isEqual } = require('./is-equal')
 
 test('object.isEqual', (t) => {

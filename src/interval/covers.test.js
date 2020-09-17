@@ -1,4 +1,4 @@
-const { test } = require('@xyz/tests')
+const { test } = require('@xyz/testing')
 const { covers } = require('./covers')
 
 test('interval.covers', (t) => {

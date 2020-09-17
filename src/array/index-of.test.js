@@ -1,4 +1,4 @@
-const { test } = require('@xyz/tests')
+const { test } = require('@xyz/testing')
 const { indexOf, indexOfRight, indexOfSorted, indexOfSortedRight } = require('.')
 
 test('array.indexOf', (t) => {

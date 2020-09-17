@@ -1,4 +1,4 @@
-const { test } = require('@xyz/tests')
+const { test } = require('@xyz/testing')
 const { reduce } = require('.')
 
 test('iterable.reduce', (t) => {

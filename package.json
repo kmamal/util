@@ -10,5 +10,8 @@
   "scripts": {
     "test": "./scripts/run-tests.sh"
   },
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "@xyz/testing": "git:repos/testing#semver:*"
+  }
 }

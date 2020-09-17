@@ -1,4 +1,4 @@
-const { test } = require('@xyz/tests')
+const { test } = require('@xyz/testing')
 const { xor, xorSorted } = require('.')
 
 test('array.xor', (t) => {

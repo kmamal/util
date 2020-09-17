@@ -1,4 +1,4 @@
-const { test } = require('@xyz/tests')
+const { test } = require('@xyz/testing')
 const { sum } = require('.')
 
 test('array.sum', (t) => {

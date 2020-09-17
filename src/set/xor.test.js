@@ -1,4 +1,4 @@
-const { test } = require('@xyz/tests')
+const { test } = require('@xyz/testing')
 const { xor } = require('.')
 
 test('set.xor', (t) => {

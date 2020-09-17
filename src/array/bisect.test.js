@@ -1,4 +1,4 @@
-const { test } = require('@xyz/tests')
+const { test } = require('@xyz/testing')
 const { bisect, bisectLeft, bisectRight } = require('.')
 
 test('arra.bisect', (t) => {
