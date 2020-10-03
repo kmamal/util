@@ -1,8 +1,8 @@
 
 const chronometer = (callback) => {
-	const S = Date.now()
+	const start = Date.now()
 	callback()
-	return Date.now() - S
+	return Date.now() - start
 }
 
 module.exports = { chronometer }

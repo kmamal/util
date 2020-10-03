@@ -1,6 +1,15 @@
+const arithmetic = require('./arithmetic')
+const bitwise = require('./bitwise')
+const comparison = require('./comparison')
+const logical = require('./logical')
 
 module.exports = {
-	...require('./arithmetic'),
-	...require('./bitwise'),
-	...require('./logical'),
+	arithmetic,
+	bitwise,
+	comparison,
+	logical,
+	...arithmetic,
+	...bitwise,
+	...comparison,
+	...logical,
 }

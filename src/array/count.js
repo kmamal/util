@@ -10,7 +10,7 @@ const __count = (counts, arr, start, end, fn) => {
 }
 
 const countBy = (arr, fn) => {
-	const counts = {}
+	const counts = Object.create(null)
 	__count(counts, arr, 0, arr.length, fn)
 	return counts
 }

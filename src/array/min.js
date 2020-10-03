@@ -1,7 +1,6 @@
 const { __reduce } = require('./reduce')
 const { identity } = require('../function/identity')
 
-
 const __min = (arr, start, end, fn) => __reduce(arr, start, end, (a, item) => {
 	const value = fn(item)
 	return value < a.value ? { item, value } : a
