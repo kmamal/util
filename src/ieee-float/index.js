@@ -1,6 +1,10 @@
 const MANTISSA_LENGTH = 52
 const EXPONENT_LENGTH = 11
 
+const TWO_POW_16 = 2 ** 16
+const TWO_POW_31 = 2 ** 31
+const TWO_POW_32 = 2 ** 32
+
 const toBuffer = (value) => {
 	const buffer = Buffer.alloc(8)
 	buffer.writeDoubleBE(value, 0)
@@ -23,7 +27,7 @@ const mantissa = (value) => {
 	const buffer = toBuffer(value)
 	const high = buffer.readUInt32BE(0) & 0x0fffff
 	const low = buffer.readUInt32BE(4)
-	return (high * 2 ** 32) + low
+	return (high * TWO_POW_32) + low
 }
 
 const parse = (value) => ({
@@ -35,8 +39,8 @@ const parse = (value) => ({
 // TODO: is it faster to just do math?
 const _from1 = (s, e, m) => {
 	const buffer = Buffer.alloc(8)
-	const high = (((e & 0x07ff) << 20) | ((m / 2 ** 16) & 0x0fffff)) + ((s & 0x01) * 2 ** 31)
-	const low = ((m / 2) & 0x7fff8000) * 2 + (m & 0xffff)
+	const high = ((s & 0x01) * TWO_POW_31) + (((e & 0x07ff) << 20) | ((m / TWO_POW_32) & 0x0fffff))
+	const low = (((m / TWO_POW_16) & 0xffff) * TWO_POW_16) + (m & 0xffff)
 	buffer.writeUInt32BE(high, 0)
 	buffer.writeUInt32BE(low, 4)
 	return fromBuffer(buffer)
