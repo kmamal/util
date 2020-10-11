@@ -1,5 +1,8 @@
 
 const s = 0xda1ce2a9
+const TWO_POW_20 = 2 ** 20
+const TWO_POW_36 = 2 ** 36
+const TWO_POW_52 = 2 ** 52
 
 class MiddleSquareWeyl {
 	constructor (seed) {
@@ -28,7 +31,12 @@ class MiddleSquareWeyl {
 		const b = this.next()
 		const c = this.next()
 		const d = this.next()
-		return (a * 2 ** 36 + b * 2 ** 20 + c * 2 ** 4 + (d & 0x0f)) / 2 ** 52
+		return (0
+			+ (a * TWO_POW_36)
+			+ (b * TWO_POW_20)
+			+ (c << 4)
+			+ (d & 0x0f)
+		) / TWO_POW_52
 	}
 
 	static WORD = 16

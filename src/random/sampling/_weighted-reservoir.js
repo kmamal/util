@@ -5,7 +5,7 @@ const { identity } = require('../../function/identity')
 const getIndex = (x, i) => i
 
 const __sampleWeightedReservoir = async (dst, dst_start, iterable, n, selector, fn, options) => {
-	const getRandom = options ? options.random : random
+	const getRandom = options?.random ?? random
 
 	let index = 0
 	const heap = new Heap()

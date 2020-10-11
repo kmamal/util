@@ -4,6 +4,7 @@ module.exports = {
 	'fp': require('./fp'),
 	'function': require('./function'),
 	'ieee-float': require('./ieee-float'),
+	'int32': require('./int32'),
 	'interval': require('./interval'),
 	'intervals': require('./intervals'),
 	'iterable': require('./iterable'),

@@ -7,7 +7,7 @@ const __chooseWeighted = (arr, start, end, fn, options) => {
 	const length = end - start
 	if (length === 0) { return -1 }
 
-	const getRandom = options ? options.random : random
+	const getRandom = options?.random ?? random
 
 	const total = arr[end - 1]
 	const r = getRandom() * total

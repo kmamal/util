@@ -2,7 +2,7 @@ const { random } = require('../random')
 const { randInt } = require('../rand-int')
 
 const __sample1 = function * (length, n, options) {
-	const getRandom = options ? options.random : random
+	const getRandom = options?.random ?? random
 
 	let remaining = n
 	for (let i = 0; i < length; i++) {
@@ -21,7 +21,7 @@ const __sample1 = function * (length, n, options) {
 }
 
 const __sample2 = function * (length, n, options) {
-	const getRandom = options ? options.random : random
+	const getRandom = options?.random ?? random
 
 	const skip = (remaining, initialy_available) => {
 		let available = initialy_available

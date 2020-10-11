@@ -1,7 +1,7 @@
 const { random } = require('./random')
 
 const rand = (n, options) => {
-	const getRandom = options ? options.random : random
+	const getRandom = options?.random ?? random
 	return Math.floor(getRandom() * n)
 }
 

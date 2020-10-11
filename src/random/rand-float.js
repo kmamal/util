@@ -1,7 +1,7 @@
 const { random } = require('./random')
 
 const randFloat = (_a, _b, options) => {
-	const getRandom = options ? options.random : random
+	const getRandom = options?.random ?? random
 
 	let a = _a
 	let b = _b

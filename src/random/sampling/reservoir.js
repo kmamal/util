@@ -39,7 +39,7 @@ const __sampleReservoir2 = async (dst, dst_start, iterable, n, selector, options
 		dst[write_index++] = selector(value, index++)
 	}
 
-	const getRandom = options ? options.random : random
+	const getRandom = options?.random ?? random
 	let W = Math.exp(Math.log(getRandom()) / n)
 
 	for (;;) {
