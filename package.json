@@ -7,6 +7,9 @@
     "url": "git:repos/util"
   },
   "main": "src/index.js",
+  "exports": {
+    "./": "./src/"
+  },
   "scripts": {
     "test": "./scripts/run-tests.sh"
   },
