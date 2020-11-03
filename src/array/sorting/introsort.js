@@ -2,8 +2,10 @@ const { __quicksort } = require('./quicksort')
 const { __heapsort } = require('./heapsort')
 const { __insertionsort } = require('./insertionsort')
 const { compare } = require('../../function/compare')
-const { identity } = require('../../function/identity')
 const { clone } = require('../clone')
+const { map } = require('../map')
+
+const extract = ({ x }) => x
 
 const INSERTION_SORT_CUTOFF = 16
 
@@ -31,9 +33,23 @@ const introsortBy = (arr, fn) => introsortWith(arr, (a, b) => compare(fn(a), fn(
 
 introsortBy.$$$ = introsortBy$$$
 
-const introsort$$$ = (arr) => introsortBy$$$(arr, identity)
+const introsortByPure$$$ = (arr, fn) => {
+	map.$$$(arr, (x) => ({ x, value: fn(x) }))
+	introsortWith$$$(arr, (a, b) => compare(a.value, b.value))
+	return map.$$$(arr, extract)
+}
 
-const introsort = (arr) => introsortBy(arr, identity)
+const introsortByPure = (arr, fn) => {
+	const res = map(arr, (x) => ({ x, value: fn(x) }))
+	introsortWith$$$(res, (a, b) => compare(a.value, b.value))
+	return map.$$$(res, extract)
+}
+
+introsortByPure.$$$ = introsortByPure$$$
+
+const introsort$$$ = (arr) => introsortWith$$$(arr, compare)
+
+const introsort = (arr) => introsortWith(arr, compare)
 
 introsort.$$$ = introsort$$$
 
@@ -41,5 +57,6 @@ module.exports = {
 	__introsort,
 	introsortWith,
 	introsortBy,
+	introsortByPure,
 	introsort,
 }

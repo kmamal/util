@@ -1,9 +1,11 @@
 const { __insertionsort } = require('./insertionsort')
 const { __reverse } = require('../reverse')
 const { __mergeInplace } = require('../merge')
-const { clone } = require('../clone')
 const { compare } = require('../../function/compare')
-const { identity } = require('../../function/identity')
+const { clone } = require('../clone')
+const { map } = require('../map')
+
+const extract = ({ x }) => x
 
 const __findNextRunAscending = (arr, start, end, fn) => {
 	let prev = arr[start]
@@ -197,9 +199,23 @@ const timsortBy = (arr, fn) => timsortWith(arr, (a, b) => compare(fn(a), fn(b)))
 
 timsortBy.$$$ = timsortBy$$$
 
-const timsort$$$ = (arr) => timsortBy$$$(arr, identity)
+const timsortByPure$$$ = (arr, fn) => {
+	map.$$$(arr, (x) => ({ x, value: fn(x) }))
+	timsortWith$$$(arr, (a, b) => compare(a.value, b.value))
+	return map.$$$(arr, extract)
+}
 
-const timsort = (arr) => timsortBy(arr, identity)
+const timsortByPure = (arr, fn) => {
+	const res = map(arr, (x) => ({ x, value: fn(x) }))
+	timsortWith$$$(res, (a, b) => compare(a.value, b.value))
+	return map.$$$(res, extract)
+}
+
+timsortByPure.$$$ = timsortByPure$$$
+
+const timsort$$$ = (arr) => timsortWith$$$(arr, compare)
+
+const timsort = (arr) => timsortWith(arr, compare)
 
 timsort.$$$ = timsort$$$
 
@@ -207,5 +223,6 @@ module.exports = {
 	__timsort,
 	timsortWith,
 	timsortBy,
+	timsortByPure,
 	timsort,
 }

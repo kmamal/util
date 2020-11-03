@@ -3,7 +3,9 @@ const { __includes } = require('./includes')
 const { __comm } = require('./comm')
 const { eq } = require('../operators')
 const { compare } = require('../function/compare')
-const { identity } = require('../function/identity')
+const { map } = require('./map')
+
+const extract = ({ x }) => x
 
 const __intersection = (dst, dst_start, a, a_start, a_end, b, b_start, b_end, fn) => {
 	const pred = (x) => __includes(b, b_start, b_end, x, fn)
@@ -36,9 +38,27 @@ const intersectionBy = (a, b, fn) => intersectionWith(a, b, (x, y) => eq(fn(x), 
 
 intersectionBy.$$$ = intersectionBy$$$
 
-const intersection$$$ = (a, b) => intersectionBy$$$(a, b, identity)
+const intersectionByPure$$$ = (a, b, fn) => {
+	map.$$$(a, (x) => ({ x, value: fn(x) }))
+	map.$$$(b, (x) => ({ x, value: fn(x) }))
+	intersectionWith$$$(a, b, (x, y) => eq(x.value, y.value))
+	map.$$$(b, extract)
+	return map.$$$(a, extract)
+}
 
-const intersection = (a, b) => intersectionBy(a, b, identity)
+const intersectionByPure = (a, b, fn) => {
+	const res = map(a, (x) => ({ x, value: fn(x) }))
+	map.$$$(b, (x) => ({ x, value: fn(x) }))
+	intersectionWith$$$(res, b, (x, y) => eq(x.value, y.value))
+	map.$$$(b, extract)
+	return map.$$$(res, extract)
+}
+
+intersectionByPure.$$$ = intersectionByPure$$$
+
+const intersection$$$ = (a, b) => intersectionWith$$$(a, b, eq)
+
+const intersection = (a, b) => intersectionWith(a, b, eq)
 
 intersection.$$$ = intersection$$$
 
@@ -62,9 +82,48 @@ const intersectionBySorted = (a, b, fn) => intersectionWithSorted(a, b, (x, y) =
 
 intersectionBySorted.$$$ = intersectionBySorted$$$
 
-const intersectionSorted$$$ = (a, b) => intersectionBySorted$$$(a, b, identity)
+// HACK: Depends on knowing the algo internals
+const intersectionByPureSorted$$$ = (a, b, fn) => {
+	let last_x = NaN
+	let last_y = NaN
+	let x_value = NaN
+	let y_value = NaN
+	return intersectionWithSorted$$$(a, b, (x, y) => {
+		if (x !== last_x) {
+			last_x = x
+			x_value = fn(x)
+		}
+		if (y !== last_y) {
+			last_y = y
+			y_value = fn(y)
+		}
+		return compare(x_value, y_value)
+	})
+}
 
-const intersectionSorted = (a, b) => intersectionBySorted(a, b, identity)
+const intersectionByPureSorted = (a, b, fn) => {
+	let last_x = NaN
+	let last_y = NaN
+	let x_value = NaN
+	let y_value = NaN
+	return intersectionWithSorted(a, b, (x, y) => {
+		if (x !== last_x) {
+			last_x = x
+			x_value = fn(x)
+		}
+		if (y !== last_y) {
+			last_y = y
+			y_value = fn(y)
+		}
+		return compare(x_value, y_value)
+	})
+}
+
+intersectionByPureSorted.$$$ = intersectionByPureSorted$$$
+
+const intersectionSorted$$$ = (a, b) => intersectionWithSorted$$$(a, b, compare)
+
+const intersectionSorted = (a, b) => intersectionWithSorted(a, b, compare)
 
 intersectionSorted.$$$ = intersectionSorted$$$
 
@@ -72,8 +131,10 @@ module.exports = {
 	__intersection,
 	intersectionWith,
 	intersectionBy,
+	intersectionByPure,
 	intersection,
 	intersectionWithSorted,
 	intersectionBySorted,
+	intersectionByPureSorted,
 	intersectionSorted,
 }

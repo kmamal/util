@@ -1,5 +1,4 @@
 const { compare } = require('../function/compare')
-const { identity } = require('../function/identity')
 
 const __bisect = (arr, start, end, x, fn) => {
 	let low = start
@@ -46,9 +45,23 @@ const bisectBy = (arr, x, fn) => bisectWith(arr, x, (a, b) => compare(fn(a), fn(
 const bisectLeftBy = (arr, x, fn) => bisectLeftWith(arr, x, (a, b) => compare(fn(a), fn(b)))
 const bisectRightBy = (arr, x, fn) => bisectRightWith(arr, x, (a, b) => compare(fn(a), fn(b)))
 
-const bisect = (arr, x) => bisectBy(arr, x, identity)
-const bisectLeft = (arr, x) => bisectLeftBy(arr, x, identity)
-const bisectRight = (arr, x) => bisectRightBy(arr, x, identity)
+// HACK: The first argument to compare is always x
+const bisectByPure = (arr, x, fn) => {
+	const x_value = fn(x)
+	return bisectWith(arr, x, (a, b) => compare(x_value, fn(b)))
+}
+const bisectLeftByPure = (arr, x, fn) => {
+	const x_value = fn(x)
+	return bisectLeftWith(arr, x, (a, b) => compare(x_value, fn(b)))
+}
+const bisectRightByPure = (arr, x, fn) => {
+	const x_value = fn(x)
+	return bisectRightWith(arr, x, (a, b) => compare(x_value, fn(b)))
+}
+
+const bisect = (arr, x) => bisectWith(arr, x, compare)
+const bisectLeft = (arr, x) => bisectLeftWith(arr, x, compare)
+const bisectRight = (arr, x) => bisectRightWith(arr, x, compare)
 
 module.exports = {
 	__bisect,
@@ -60,6 +73,9 @@ module.exports = {
 	bisectBy,
 	bisectLeftBy,
 	bisectRightBy,
+	bisectByPure,
+	bisectLeftByPure,
+	bisectRightByPure,
 	bisect,
 	bisectLeft,
 	bisectRight,

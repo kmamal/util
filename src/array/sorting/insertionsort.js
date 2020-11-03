@@ -1,6 +1,8 @@
 const { compare } = require('../../function/compare')
-const { identity } = require('../../function/identity')
 const { clone } = require('../clone')
+const { map } = require('../map')
+
+const extract = ({ x }) => x
 
 const __insertionsort = (arr, start, sorted_end, end, fn) => {
 	for (let i = sorted_end; i < end; i++) {
@@ -31,9 +33,23 @@ const insertionsortBy = (arr, fn) => insertionsortWith(arr, (a, b) => compare(fn
 
 insertionsortBy.$$$ = insertionsortBy$$$
 
-const insertionsort$$$ = (arr) => insertionsortBy$$$(arr, identity)
+const insertionsortByPure$$$ = (arr, fn) => {
+	map.$$$(arr, (x) => ({ x, value: fn(x) }))
+	insertionsortWith$$$(arr, (a, b) => compare(a.value, b.value))
+	return map.$$$(arr, extract)
+}
 
-const insertionsort = (arr) => insertionsortBy(arr, identity)
+const insertionsortByPure = (arr, fn) => {
+	const res = map(arr, (x) => ({ x, value: fn(x) }))
+	insertionsortWith$$$(res, (a, b) => compare(a.value, b.value))
+	return map.$$$(res, extract)
+}
+
+insertionsortByPure.$$$ = insertionsortByPure$$$
+
+const insertionsort$$$ = (arr) => insertionsortWith$$$(arr, compare)
+
+const insertionsort = (arr) => insertionsortWith(arr, compare)
 
 insertionsort.$$$ = insertionsort$$$
 
@@ -41,5 +57,6 @@ module.exports = {
 	__insertionsort,
 	insertionsortWith,
 	insertionsortBy,
+	insertionsortByPure,
 	insertionsort,
 }

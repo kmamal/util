@@ -3,7 +3,9 @@ const { __includes } = require('./includes')
 const { __comm } = require('./comm')
 const { eq } = require('../operators')
 const { compare } = require('../function/compare')
-const { identity } = require('../function/identity')
+const { map } = require('./map')
+
+const extract = ({ x }) => x
 
 const __difference = (dst, dst_start, a, a_start, a_end, b, b_start, b_end, fn) => {
 	const pred = (x) => !__includes(b, b_start, b_end, x, fn)
@@ -36,9 +38,27 @@ const differenceBy = (a, b, fn) => differenceWith(a, b, (x, y) => eq(fn(x), fn(y
 
 differenceBy.$$$ = differenceBy$$$
 
-const difference$$$ = (a, b) => differenceBy$$$(a, b, identity)
+const differenceByPure$$$ = (a, b, fn) => {
+	map.$$$(a, (x) => ({ x, value: fn(x) }))
+	map.$$$(b, (x) => ({ x, value: fn(x) }))
+	differenceWith$$$(a, b, (x, y) => eq(x.value, y.value))
+	map.$$$(b, extract)
+	return map.$$$(a, extract)
+}
 
-const difference = (a, b) => differenceBy(a, b, identity)
+const differenceByPure = (a, b, fn) => {
+	const res = map(a, (x) => ({ x, value: fn(x) }))
+	map.$$$(b, (x) => ({ x, value: fn(x) }))
+	differenceWith$$$(res, b, (x, y) => eq(x.value, y.value))
+	map.$$$(b, extract)
+	return map.$$$(res, extract)
+}
+
+differenceByPure.$$$ = differenceByPure$$$
+
+const difference$$$ = (a, b) => differenceWith$$$(a, b, eq)
+
+const difference = (a, b) => differenceWith(a, b, eq)
 
 difference.$$$ = difference$$$
 
@@ -62,9 +82,48 @@ const differenceBySorted = (a, b, fn) => differenceWithSorted(a, b, (x, y) => co
 
 differenceBySorted.$$$ = differenceBySorted$$$
 
-const difference$$$Sorted = (a, b) => differenceBySorted$$$(a, b, identity)
+// HACK: Depends on knowing the algo internals
+const differenceByPureSorted$$$ = (a, b, fn) => {
+	let last_x = NaN
+	let last_y = NaN
+	let x_value = NaN
+	let y_value = NaN
+	return differenceWithSorted$$$(a, b, (x, y) => {
+		if (x !== last_x) {
+			last_x = x
+			x_value = fn(x)
+		}
+		if (y !== last_y) {
+			last_y = y
+			y_value = fn(y)
+		}
+		return compare(x_value, y_value)
+	})
+}
 
-const differenceSorted = (a, b) => differenceBySorted(a, b, identity)
+const differenceByPureSorted = (a, b, fn) => {
+	let last_x = NaN
+	let last_y = NaN
+	let x_value = NaN
+	let y_value = NaN
+	return differenceWithSorted(a, b, (x, y) => {
+		if (x !== last_x) {
+			last_x = x
+			x_value = fn(x)
+		}
+		if (y !== last_y) {
+			last_y = y
+			y_value = fn(y)
+		}
+		return compare(x_value, y_value)
+	})
+}
+
+differenceByPureSorted.$$$ = differenceByPureSorted$$$
+
+const difference$$$Sorted = (a, b) => differenceWithSorted$$$(a, b, compare)
+
+const differenceSorted = (a, b) => differenceWithSorted(a, b, compare)
 
 differenceSorted.$$$ = difference$$$Sorted
 
@@ -72,8 +131,10 @@ module.exports = {
 	__difference,
 	differenceWith,
 	differenceBy,
+	differenceByPure,
 	difference,
 	differenceWithSorted,
 	differenceBySorted,
+	differenceByPureSorted,
 	differenceSorted,
 }

@@ -2,49 +2,68 @@ const { __find, __findRight } = require('./find')
 const { __bisectLeft, __bisectRight } = require('./bisect')
 const { eq } = require('../operators')
 const { compare } = require('../function/compare')
-const { identity } = require('../function/identity')
 
-const __indexOf = (arr, start, end, value, fn) => __find(arr, start, end, (x) => fn(x, value))
+const __indexOf = (arr, start, end, x, fn) => __find(arr, start, end, (y) => fn(x, y))
 
-const __indexOfRight = (arr, start, end, value, fn) => __findRight(arr, start, end, (x) => fn(x, value))
+const __indexOfRight = (arr, start, end, x, fn) => __findRight(arr, start, end, (y) => fn(x, y))
 
-const __indexOfSorted = (arr, start, end, value, fn) => {
+const __indexOfSorted = (arr, start, end, x, fn) => {
 	if (end - start === 0) { return -1 }
-	const index = __bisectLeft(arr, start, end, value, fn)
-	const found = index !== end && fn(arr[index], value) === 0
+	const index = __bisectLeft(arr, start, end, x, fn)
+	const found = index !== end && fn(x, arr[index]) === 0
 	return found ? index : -1
 }
 
-const __indexOfSortedRight = (arr, start, end, value, fn) => {
+const __indexOfSortedRight = (arr, start, end, x, fn) => {
 	if (end - start === 0) { return -1 }
-	const index = __bisectRight(arr, start, end, value, fn) - 1
-	const found = index !== start - 1 && fn(arr[index], value) === 0
+	const index = __bisectRight(arr, start, end, x, fn) - 1
+	const found = index !== start - 1 && fn(x, arr[index]) === 0
 	return found ? index : -1
 }
 
-const indexOfWith = (arr, value, fn) => __indexOf(arr, 0, arr.length, value, fn)
+const indexOfWith = (arr, x, fn) => __indexOf(arr, 0, arr.length, x, fn)
 
-const indexOfBy = (arr, value, fn) => indexOfWith(arr, value, (a, b) => eq(fn(a), fn(b)))
+const indexOfWithRight = (arr, x, fn) => __indexOfRight(arr, 0, arr.length, x, fn)
 
-const indexOf = (arr, value) => indexOfBy(arr, value, identity)
+const indexOfBy = (arr, x, fn) => indexOfWith(arr, x, (a, b) => eq(fn(a), fn(b)))
 
-const indexOfWithRight = (arr, value, fn) => __indexOfRight(arr, 0, arr.length, value, fn)
+const indexOfByRight = (arr, x, fn) => indexOfWithRight(arr, x, (a, b) => eq(fn(a), fn(b)))
 
-const indexOfByRight = (arr, value, fn) => indexOfWithRight(arr, value, (a, b) => eq(fn(a), fn(b)))
+// HACK: The first argument to eq is always x
+const indexOfByPure = (arr, x, fn) => {
+	const x_value = fn(x)
+	return indexOfWith(arr, x, (a, b) => eq(x_value, fn(b)))
+}
+const indexOfByPureRight = (arr, x, fn) => {
+	const x_value = fn(x)
+	return indexOfWithRight(arr, x, (a, b) => eq(x_value, fn(b)))
+}
 
-const indexOfRight = (arr, value) => indexOfByRight(arr, value, identity)
+const indexOf = (arr, x) => indexOfWith(arr, x, eq)
 
-const indexOfWithSorted = (arr, value, fn) => __indexOfSorted(arr, 0, arr.length, value, fn)
+const indexOfRight = (arr, x) => indexOfWithRight(arr, x, eq)
 
-const indexOfBySorted = (arr, value, fn) => indexOfWithSorted(arr, value, (a, b) => compare(fn(a), fn(b)))
+const indexOfWithSorted = (arr, x, fn) => __indexOfSorted(arr, 0, arr.length, x, fn)
 
-const indexOfSorted = (arr, value) => indexOfBySorted(arr, value, identity)
+const indexOfWithSortedRight = (arr, x, fn) => __indexOfSortedRight(arr, 0, arr.length, x, fn)
 
-const indexOfWithSortedRight = (arr, value, fn) => __indexOfSortedRight(arr, 0, arr.length, value, fn)
+const indexOfBySorted = (arr, x, fn) => indexOfWithSorted(arr, x, (a, b) => compare(fn(a), fn(b)))
 
-const indexOfBySortedRight = (arr, value, fn) => indexOfWithSortedRight(arr, value, (a, b) => compare(fn(a), fn(b)))
+const indexOfBySortedRight = (arr, x, fn) => indexOfWithSortedRight(arr, x, (a, b) => compare(fn(a), fn(b)))
 
-const indexOfSortedRight = (arr, value) => indexOfBySortedRight(arr, value, identity)
+// HACK: The first argument to compare is always x
+const indexOfByPureSorted = (arr, x, fn) => {
+	const x_value = fn(x)
+	return indexOfWithSorted(arr, x, (a, b) => compare(x_value, fn(b)))
+}
+const indexOfByPureSortedRight = (arr, x, fn) => {
+	const x_value = fn(x)
+	return indexOfWithSortedRight(arr, x, (a, b) => compare(x_value, fn(b)))
+}
+
+const indexOfSorted = (arr, x) => indexOfWithSorted(arr, x, compare)
+
+const indexOfSortedRight = (arr, x) => indexOfWithSortedRight(arr, x, compare)
 
 module.exports = {
 	__indexOf,
@@ -52,15 +71,19 @@ module.exports = {
 	__indexOfSorted,
 	__indexOfSortedRight,
 	indexOfWith,
-	indexOfBy,
-	indexOf,
 	indexOfWithRight,
+	indexOfBy,
 	indexOfByRight,
+	indexOfByPure,
+	indexOfByPureRight,
+	indexOf,
 	indexOfRight,
 	indexOfWithSorted,
-	indexOfBySorted,
-	indexOfSorted,
 	indexOfWithSortedRight,
+	indexOfBySorted,
 	indexOfBySortedRight,
+	indexOfByPureSorted,
+	indexOfByPureSortedRight,
+	indexOfSorted,
 	indexOfSortedRight,
 }

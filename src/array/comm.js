@@ -1,5 +1,4 @@
 const { compare } = require('../function/compare')
-const { identity } = require('../function/identity')
 
 const __comm = (only_a, both, only_b, a, a_start, a_end, b, b_start, b_end, fn) => {
 	let a_index = a_start
@@ -51,11 +50,30 @@ const commWith = (a, b, fn) => {
 
 const commBy = (a, b, fn) => commWith(a, b, (x, y) => compare(fn(x), fn(y)))
 
-const comm = (a, b) => commBy(a, b, identity)
+const commByPure = (a, b, fn) => {
+	let last_x = NaN
+	let last_y = NaN
+	let x_value = NaN
+	let y_value = NaN
+	return commWith(a, b, (x, y) => {
+		if (x !== last_x) {
+			last_x = x
+			x_value = fn(x)
+		}
+		if (y !== last_y) {
+			last_y = y
+			y_value = fn(y)
+		}
+		return compare(x_value, y_value)
+	})
+}
+
+const comm = (a, b) => commWith(a, b, compare)
 
 module.exports = {
 	__comm,
 	commWith,
 	commBy,
+	commByPure,
 	comm,
 }

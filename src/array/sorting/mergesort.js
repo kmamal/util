@@ -1,8 +1,10 @@
 const { __mergeInplace } = require('../merge')
 const { __insertionsort } = require('./insertionsort')
 const { compare } = require('../../function/compare')
-const { identity } = require('../../function/identity')
 const { clone } = require('../clone')
+const { map } = require('../map')
+
+const extract = ({ x }) => x
 
 const INSERTION_SORT_CUTOFF = 16
 
@@ -40,9 +42,23 @@ const mergesortBy = (arr, fn) => mergesortWith(arr, (a, b) => compare(fn(a), fn(
 
 mergesortBy.$$$ = mergesortBy$$$
 
-const mergesort$$$ = (arr) => mergesortBy$$$(arr, identity)
+const mergesortByPure$$$ = (arr, fn) => {
+	map.$$$(arr, (x) => ({ x, value: fn(x) }))
+	mergesortWith$$$(arr, (a, b) => compare(a.value, b.value))
+	return map.$$$(arr, extract)
+}
 
-const mergesort = (arr) => mergesortBy(arr, identity)
+const mergesortByPure = (arr, fn) => {
+	const res = map(arr, (x) => ({ x, value: fn(x) }))
+	mergesortWith$$$(res, (a, b) => compare(a.value, b.value))
+	return map.$$$(res, extract)
+}
+
+mergesortByPure.$$$ = mergesortByPure$$$
+
+const mergesort$$$ = (arr) => mergesortWith$$$(arr, compare)
+
+const mergesort = (arr) => mergesortWith(arr, compare)
 
 mergesort.$$$ = mergesort$$$
 
@@ -50,5 +66,6 @@ module.exports = {
 	__mergesort,
 	mergesortWith,
 	mergesortBy,
+	mergesortByPure,
 	mergesort,
 }

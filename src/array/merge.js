@@ -1,6 +1,5 @@
 const { __copy, __copyRight } = require('./copy')
 const { compare } = require('../function/compare')
-const { identity } = require('../function/identity')
 
 const __merge = (dst, dst_start, a, a_start, a_end, b, b_start, b_end, fn) => {
 	let write_index = dst_start
@@ -84,7 +83,25 @@ const mergeWith = (a, b, fn) => {
 
 const mergeBy = (a, b, fn) => mergeWith(a, b, (x, y) => compare(fn(x), fn(y)))
 
-const merge = (a, b) => mergeBy(a, b, identity)
+const mergeByPure = (a, b, fn) => {
+	let last_x = NaN
+	let last_y = NaN
+	let x_value = NaN
+	let y_value = NaN
+	return mergeWith(a, b, (x, y) => {
+		if (x !== last_x) {
+			last_x = x
+			x_value = fn(x)
+		}
+		if (y !== last_y) {
+			last_y = y
+			y_value = fn(y)
+		}
+		return compare(x_value, y_value)
+	})
+}
+
+const merge = (a, b) => mergeWith(a, b, compare)
 
 module.exports = {
 	__merge,
@@ -92,5 +109,6 @@ module.exports = {
 	__mergeInplace,
 	mergeWith,
 	mergeBy,
+	mergeByPure,
 	merge,
 }

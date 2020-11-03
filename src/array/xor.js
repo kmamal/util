@@ -2,7 +2,9 @@ const { __difference } = require('./difference')
 const { __comm } = require('./comm')
 const { eq } = require('../operators')
 const { compare } = require('../function/compare')
-const { identity } = require('../function/identity')
+const { map } = require('./map')
+
+const extract = ({ x }) => x
 
 const __xor = (dst, dst_start, a, a_start, a_end, b, b_start, b_end, fn) => {
 	const n = __difference(dst, dst_start, a, a_start, a_end, b, b_start, b_end, fn)
@@ -24,7 +26,17 @@ const xorWith = (a, b, fn) => {
 
 const xorBy = (a, b, fn) => xorWith(a, b, (x, y) => eq(fn(x), fn(y)))
 
-const xor = (a, b) => xorBy(a, b, identity)
+const xorByPure = (a, b, fn) => {
+	map.$$$(a, (x) => ({ x, value: fn(x) }))
+	map.$$$(b, (x) => ({ x, value: fn(x) }))
+	const res = xorWith(a, b, (x, y) => eq(x.value, y.value))
+	map.$$$(b, extract)
+	map.$$$(a, extract)
+	map.$$$(res, extract)
+	return res
+}
+
+const xor = (a, b) => xorWith(a, b, eq)
 
 const xorWithSorted = (a, b, fn) => {
 	const res = []
@@ -34,15 +46,35 @@ const xorWithSorted = (a, b, fn) => {
 
 const xorBySorted = (a, b, fn) => xorWithSorted(a, b, (x, y) => compare(fn(x), fn(y)))
 
-const xorSorted = (a, b) => xorBySorted(a, b, identity)
+const xorByPureSorted = (a, b, fn) => {
+	let last_x = NaN
+	let last_y = NaN
+	let x_value = NaN
+	let y_value = NaN
+	return xorWithSorted(a, b, (x, y) => {
+		if (x !== last_x) {
+			last_x = x
+			x_value = fn(x)
+		}
+		if (y !== last_y) {
+			last_y = y
+			y_value = fn(y)
+		}
+		return compare(x_value, y_value)
+	})
+}
+
+const xorSorted = (a, b) => xorWithSorted(a, b, compare)
 
 module.exports = {
 	__xor,
 	__xorSorted,
 	xorWith,
 	xorBy,
+	xorByPure,
 	xor,
 	xorWithSorted,
 	xorBySorted,
+	xorByPureSorted,
 	xorSorted,
 }
