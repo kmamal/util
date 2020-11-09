@@ -1,4 +1,5 @@
 const { getParent } = require('../tree/binary')
+const { compare } = require('../../function/compare')
 
 const __bubbleUp = (arr, start, end, _index, fn) => {
 	let index = _index
@@ -16,4 +17,17 @@ const __bubbleUp = (arr, start, end, _index, fn) => {
 	}
 }
 
-module.exports = { __bubbleUp }
+const bubbleUpWith = (arr, fn) => {
+	__bubbleUp(arr, 0, arr.length, fn)
+}
+
+const bubbleUpBy = (arr, fn) => bubbleUpWith(arr, (a, b) => compare(fn(a), fn(b)))
+
+const bubbleUp = (arr) => bubbleUpWith(arr, compare)
+
+module.exports = {
+	__bubbleUp,
+	bubbleUpWith,
+	bubbleUpBy,
+	bubbleUp,
+}

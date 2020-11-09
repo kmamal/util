@@ -1,4 +1,5 @@
 const { getLeft, getRight } = require('../tree/binary')
+const { compare } = require('../../function/compare')
 
 const __bubbleDown = (arr, start, end, _index, fn) => {
 	let index = _index
@@ -31,4 +32,17 @@ const __bubbleDown = (arr, start, end, _index, fn) => {
 	}
 }
 
-module.exports = { __bubbleDown }
+const bubbleDownWith = (arr, fn) => {
+	__bubbleDown(arr, 0, arr.length, fn)
+}
+
+const bubbleDownBy = (arr, fn) => bubbleDownWith(arr, (a, b) => compare(fn(a), fn(b)))
+
+const bubbleDown = (arr) => bubbleDownWith(arr, compare)
+
+module.exports = {
+	__bubbleDown,
+	bubbleDownWith,
+	bubbleDownBy,
+	bubbleDown,
+}

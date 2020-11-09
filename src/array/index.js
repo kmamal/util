@@ -39,6 +39,7 @@ module.exports = {
 	...require('./reduce'),
 	...require('./repeat'),
 	...require('./reverse'),
+	...require('./rotate'),
 	...require('./scan'),
 	...require('./slice'),
 	...require('./some'),
