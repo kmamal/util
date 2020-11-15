@@ -5,7 +5,7 @@ const __chunk = (dst, dst_start, src, src_start, src_end, chunk_size, chunk_num)
 	const dst_end = dst_start + chunk_num
 
 	while (write_index < dst_end - 1) {
-		const chunk = Array(chunk_size)
+		const chunk = new Array(chunk_size)
 		for (let i = 0; i < chunk_size; i++) {
 			chunk[i] = src[read_index++]
 		}
@@ -15,7 +15,7 @@ const __chunk = (dst, dst_start, src, src_start, src_end, chunk_size, chunk_num)
 	if (write_index < dst_end) {
 		const available = Math.max(0, src_end - read_index)
 		const last_chunk_size = Math.min(available, chunk_size)
-		const chunk = Array(last_chunk_size)
+		const chunk = new Array(last_chunk_size)
 		for (let i = 0; i < last_chunk_size; i++) {
 			chunk[i] = src[read_index++]
 		}
@@ -36,7 +36,7 @@ const chunk$$$ = (arr, n) => {
 const chunk = (arr, n) => {
 	const { length } = arr
 	const num_chunks = Math.ceil(length / n)
-	const res = Array(num_chunks)
+	const res = new Array(num_chunks)
 	__chunk(res, 0, arr, 0, length, n, num_chunks)
 	return res
 }

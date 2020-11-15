@@ -43,7 +43,7 @@ const cycle = (arr, n) => {
 		return arr
 	}
 
-	const res = Array(n)
+	const res = new Array(n)
 	__cycle(res, 0, arr, 0, arr.length, n)
 	return res
 }

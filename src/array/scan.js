@@ -51,7 +51,7 @@ const scan$$$ = (arr, fn, init) => {
 
 const scan = (arr, fn, init) => {
 	const { length } = arr
-	const res = Array(length)
+	const res = new Array(length)
 	__scan(res, 0, arr, 0, length, fn, init)
 	return res
 }
@@ -65,7 +65,7 @@ const scanRight$$$ = (arr, fn, init) => {
 
 const scanRight = (arr, fn, init) => {
 	const { length } = arr
-	const res = Array(length)
+	const res = new Array(length)
 	__scanRight(res, 0, arr, 0, length, fn, init)
 	return res
 }

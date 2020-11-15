@@ -55,7 +55,7 @@ class MergeStack {
 		this._start = start
 		this._end = end
 		this._fn = fn
-		this._buffer = Array(Math.floor((end - start) / 2))
+		this._buffer = new Array(Math.floor((end - start) / 2))
 
 		this._stack = []
 		this._a = null
@@ -129,7 +129,7 @@ const __timsort2 = (arr, start, end, fn) => {
 	let a = null
 	let b = null
 	let c = null
-	const buffer = Array(Math.floor(length / 2))
+	const buffer = new Array(Math.floor(length / 2))
 
 	const __maybeMergeRuns = () => {
 		if (!b) { return }

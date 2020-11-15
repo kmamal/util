@@ -76,7 +76,7 @@ const __mergeInplace = (arr, start, sep, end, buffer, fn) => {
 }
 
 const mergeWith = (a, b, fn) => {
-	const res = Array(a.length + b.length)
+	const res = new Array(a.length + b.length)
 	__merge(res, 0, a, 0, a.length, b, 0, b.length, fn)
 	return res
 }

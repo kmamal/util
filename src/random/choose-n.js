@@ -35,7 +35,7 @@ const chooseN$$$ = (arr, n, options) => {
 }
 
 const chooseN = (arr, n, options) => {
-	const res = Array(n)
+	const res = new Array(n)
 	const m = __chooseN(res, 0, arr, 0, arr.length, n, options)
 	res.length = m
 	return res

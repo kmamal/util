@@ -24,7 +24,7 @@ const _recurse = function * (parameters, index, options) {
 }
 
 const iterateParameters = function * (parameters) {
-	const options = Array(parameters.length)
+	const options = new Array(parameters.length)
 	yield* _recurse(parameters, 0, options)
 }
 

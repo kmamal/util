@@ -3,7 +3,7 @@ class Array2d {
 	constructor (w, h, arr) {
 		this.w = w
 		this.h = h
-		this.data = arr || Array(w * h)
+		this.data = arr || new Array(w * h)
 	}
 
 	_index (x, y) { return y * this.w + x }

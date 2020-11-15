@@ -30,7 +30,7 @@ const combine = (a, _offset, fn, b, _start, _end) => {
 	const start = startIndex(b_length, _start)
 	const end = endIndex(b_length, _end)
 	const length = end - start
-	const res = Array(a_length)
+	const res = new Array(a_length)
 	__copy(res, 0, a, 0, offset)
 	__combine(res, offset, a, offset, b, start, length, fn)
 	__copy(res, offset + length, a, end, a_length)

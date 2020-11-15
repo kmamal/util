@@ -24,7 +24,7 @@ const reverse$$$ = (arr) => {
 
 const reverse = (arr) => {
 	const { length } = arr
-	const res = Array(length)
+	const res = new Array(length)
 	__reverse(res, 0, arr, 0, length)
 	return res
 }

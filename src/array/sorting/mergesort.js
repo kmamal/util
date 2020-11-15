@@ -23,7 +23,7 @@ const __recurse = (arr, buffer, start, end, fn, cutoff, takeover) => {
 }
 
 const __mergesort = (arr, start, end, fn, cutoff, takeover) => {
-	const buffer = Array(Math.floor((end - start) / 2))
+	const buffer = new Array(Math.floor((end - start) / 2))
 	__recurse(arr, buffer, start, end, fn, cutoff, takeover)
 }
 

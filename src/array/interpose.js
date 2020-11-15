@@ -19,7 +19,7 @@ const interpose = (arr, value) => {
 
 	if (length === 0) { return [] }
 
-	const res = Array(length * 2 - 1)
+	const res = new Array(length * 2 - 1)
 	__interpose(res, 0, arr, 0, length, value)
 	return res
 }

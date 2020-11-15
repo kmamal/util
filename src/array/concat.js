@@ -14,7 +14,7 @@ const __concat = (dst, dst_start, src, src_start, src_end) => {
 
 const concat = (arrs) => {
 	const total = sumBy(arrs, ({ length: n }) => n)
-	const res = Array(total)
+	const res = new Array(total)
 	__concat(res, 0, arrs, 0, arrs.length)
 	return res
 }

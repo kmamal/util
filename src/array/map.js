@@ -14,7 +14,7 @@ const map$$$ = (arr, fn) => {
 
 const map = (arr, fn) => {
 	const { length } = arr
-	const res = Array(length)
+	const res = new Array(length)
 	__map(res, 0, arr, 0, arr.length, fn)
 	return res
 }

@@ -48,7 +48,7 @@ const copy = (a, _offset, b, _start, _end) => {
 	const length = b_end - b_start
 	const a_end = a_start + length
 
-	const res = Array(a_length)
+	const res = new Array(a_length)
 	__copy(res, 0, a, 0, a_start)
 	__copy(res, a_start, b, b_start, b_end)
 	__copy(res, a_end, a, a_end, a_length)

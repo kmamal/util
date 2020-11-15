@@ -60,14 +60,14 @@ const __sampleReservoir2 = async (dst, dst_start, iterable, n, selector, options
 }
 
 const sampleIndexesFromReservoir = async (iterable, n) => {
-	const res = Array(n)
+	const res = new Array(n)
 	const m = await __sampleReservoir1(res, 0, iterable, n, getIndex)
 	res.length = m
 	return res
 }
 
 const sampleValuesFromReservoir = async (iterable, n) => {
-	const res = Array(n)
+	const res = new Array(n)
 	const m = await __sampleReservoir1(res, 0, iterable, n, identity)
 	res.length = m
 	return res

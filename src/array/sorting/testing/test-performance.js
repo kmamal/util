@@ -153,7 +153,7 @@ const description = {
 		},
 	],
 	callback: ({ algo, n, permuteArray, scaleKeys }) => {
-		const arr = Array(n)
+		const arr = new Array(n)
 		for (let i = 0; i < n; i++) { arr[i] = i }
 		permuteArray(arr)
 		scaleKeys(arr)
@@ -164,7 +164,7 @@ const description = {
 
 const toCsv = (keys, record) => {
 	const { length } = keys
-	const values = Array(length)
+	const values = new Array(length)
 	for (let i = 0; i < length; i++) {
 		const key = keys[i]
 		let value = record[key]

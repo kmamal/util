@@ -23,7 +23,7 @@ const fill = (arr, value, _start, _end) => {
 	const start = startIndex(length, _start)
 	const end = endIndex(length, _end)
 
-	const res = Array(length)
+	const res = new Array(length)
 	__copy(res, 0, arr, 0, start)
 	__fill(res, start, end, value)
 	__copy(res, end, arr, end, length)

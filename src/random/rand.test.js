@@ -7,7 +7,7 @@ test('random.rand', (t) => {
 	let min = Infinity
 	let max = -Infinity
 	let sum = 0
-	const buckets = Array(A).fill(0)
+	const buckets = new Array(A).fill(0)
 
 	for (let i = 0; i < N; i++) {
 		const r = rand(A)

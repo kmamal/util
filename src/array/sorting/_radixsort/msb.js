@@ -151,7 +151,7 @@ const __recurse2 = (arr, buffer, start, end, fn, depth, cutoff, takeover) => {
 }
 
 const __radixsort2 = (arr, start, end, fn, cutoff, takeover) => {
-	const buffer = Array(end - start)
+	const buffer = new Array(end - start)
 	__recurse2(arr, buffer, start, end, fn, 0, cutoff, takeover)
 }
 
@@ -197,14 +197,14 @@ const __recurse3 = (arr, buffer, counts, start, end, fn, depth, cutoff, takeover
 }
 
 const __radixsort3 = (arr, start, end, fn, cutoff, takeover) => {
-	const buffer = Array(end - start)
-	const counts = Array(256)
+	const buffer = new Array(end - start)
+	const counts = new Array(256)
 	__recurse3(arr, buffer, counts, start, end, fn, 0, cutoff, takeover)
 }
 
 const __radixsort4 = (arr, start, end, fn) => {
-	const buffer = Array(end - start)
-	const counts = Array(256)
+	const buffer = new Array(end - start)
+	const counts = new Array(256)
 
 	let src = arr
 	let dst = buffer

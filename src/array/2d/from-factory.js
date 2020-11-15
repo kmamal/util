@@ -1,7 +1,7 @@
 const { Array2d } = require('./class')
 
 const fromFactory = (w, h, map) => {
-	const arr = Array(w * h)
+	const arr = new Array(w * h)
 	let write_index = 0
 	for (let j = 0; j < h; j++) {
 		for (let i = 0; i < w; i++) {

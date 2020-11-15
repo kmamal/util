@@ -12,7 +12,7 @@ class Hashtable {
 		this._fn = fn
 		this._size = 0
 		this._capacity = 1
-		this._array = Array(this._capacity * ENTRY_FIELDS)
+		this._array = new Array(this._capacity * ENTRY_FIELDS)
 	}
 
 	get size () { return this._size }
@@ -132,7 +132,7 @@ class Hashtable {
 			const old_array = this._array
 
 			this._capacity *= 2
-			this._array = Array(this._capacity * ENTRY_FIELDS)
+			this._array = new Array(this._capacity * ENTRY_FIELDS)
 
 			for (let i = 0; i < old_array.length * ENTRY_FIELDS; i += ENTRY_FIELDS) {
 				const key = old_array[i + ENTRY_KEY]
@@ -146,7 +146,7 @@ class Hashtable {
 			const old_array = this._array
 
 			this._capacity /= 2
-			this._array = Array(this._capacity * ENTRY_FIELDS)
+			this._array = new Array(this._capacity * ENTRY_FIELDS)
 
 			for (let i = 0; i < old_array.length * ENTRY_FIELDS; i += ENTRY_FIELDS) {
 				const key = old_array[i + ENTRY_KEY]

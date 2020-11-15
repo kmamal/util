@@ -45,7 +45,7 @@ const __sampleWeightedReservoir = async (dst, dst_start, iterable, n, selector, 
 }
 
 const sampleIndexesFromWeightedReservoirBy = async (iterable, n, fn, options) => {
-	const res = Array(n)
+	const res = new Array(n)
 	const m = await __sampleWeightedReservoir(res, 0, iterable, n, getIndex, fn, options)
 	res.length = m
 	return res
@@ -54,7 +54,7 @@ const sampleIndexesFromWeightedReservoirBy = async (iterable, n, fn, options) =>
 const sampleIndexesFromWeightedReservoir = (iterable, n, options) => sampleIndexesFromWeightedReservoirBy(iterable, n, identity, options)
 
 const sampleValuesFromWeightedReservoirBy = async (iterable, n, fn, options) => {
-	const res = Array(n)
+	const res = new Array(n)
 	const m = await __sampleWeightedReservoir(res, 0, iterable, n, identity, fn, options)
 	res.length = m
 	return res

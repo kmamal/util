@@ -4,11 +4,11 @@ const { random } = require('../random')
 const randomPointsInDimensions = (num_points, num_dimensions, options) => {
 	const getRandom = options?.random ?? random
 
-	const points = Array(num_points)
+	const points = new Array(num_points)
 	const width = 1 / num_points
 
 	for (let i = 0; i < num_points; i++) {
-		const point = Array(num_dimensions)
+		const point = new Array(num_dimensions)
 		for (let j = 0; j < num_dimensions; j++) {
 			point[j] = i
 		}
