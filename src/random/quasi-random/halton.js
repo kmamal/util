@@ -5,10 +5,6 @@ class Halton {
 		this._index = 1
 	}
 
-	_next () {
-
-	}
-
 	random () {
 		let n = this._index++
 
