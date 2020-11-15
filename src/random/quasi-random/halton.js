@@ -10,9 +10,9 @@ class Halton {
 	}
 
 	random () {
-		const base = this._base
+		let n = this._index++
 
-		let n = this._index
+		const base = this._base
 		let reverse_base = 1 / base
 		let value = 0
 		while (n > 0) {
