@@ -38,9 +38,10 @@ class LeafTree {
 				weight: 1,
 			}
 			this._size = 1
-		} else {
-			this._set(this._root, null, undefined, key, value)
+			return true
 		}
+
+		return this._set(this._root, null, undefined, key, value)
 	}
 
 	_set (node, parent, parent_cmp, key, value) {

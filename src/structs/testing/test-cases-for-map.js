@@ -9,23 +9,23 @@ const createTests = (name, constructor, args) => {
 		const a = new M(...args)
 		const b = new Map()
 
-		const K = 10
+		const K = 100
 		const V = 1000
 		const R = 10000
 		for (let i = 0; i < R; i++) {
 			if (rand(2)) {
 				const key = rand(K)
 				const value = rand(V)
-				// console.log('set', key, value)
+				// console.log('set', key, value) //
 				a.set(key, value)
 				b.set(key, value)
 			} else {
 				const key = rand(K)
-				// console.log('delete', key)
+				// console.log('delete', key) //
 				a.delete(key)
 				b.delete(key)
 			}
-			// a._print()
+			// a._print() //
 
 			t.equal(a.size, b.size)
 

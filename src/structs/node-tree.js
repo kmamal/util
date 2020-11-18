@@ -28,7 +28,7 @@ class NodeTree {
 		return cmp > 0 ? this._get(node.left, key) : this._get(node.right, key)
 	}
 
-	set (key, value) { this._set(this._root, null, undefined, key, value) }
+	set (key, value) { return this._set(this._root, null, undefined, key, value) }
 	_set (node, parent, parent_cmp, key, value) {
 		if (!node) {
 			const child = { key, value, weight: 1, left: null, right: null }
