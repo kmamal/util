@@ -1,4 +1,4 @@
-const { bisectWith } = require('../array/bisect')
+const { bisectWith } = require('../../array/bisect')
 
 const getKey = (key) => key
 const getValue = (key, value) => value

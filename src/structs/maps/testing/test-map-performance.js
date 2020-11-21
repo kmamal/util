@@ -1,9 +1,9 @@
 const { LeafTree } = require('../leaf-tree')
 const { NodeTree } = require('../node-tree')
 const { Hashtable } = require('../hashtable')
-const { sub } = require('../../operators')
-const { rand } = require('../../random')
-const { chronometer } = require('../../misc/chronometer')
+const { sub } = require('../../../operators')
+const { rand } = require('../../../random')
+const { chronometer } = require('../../../misc/chronometer')
 
 const hash0 = (a) => a * 199
 

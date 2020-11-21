@@ -1,5 +1,5 @@
 const { createTests } = require('./testing/test-cases-for-map')
-const { sub } = require('../operators')
+const { sub } = require('../../operators')
 
 createTests('b-tree', 'BTree', [ sub, 4 ])
 
