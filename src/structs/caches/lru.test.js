@@ -3,7 +3,7 @@ const { Lru } = require('./lru')
 
 const compareMaps = (t, actual, expected) => {
 	t.equal(actual.size, expected.size)
-	for (const key of expected) {
+	for (const key of expected.keys()) {
 		t.equal(actual.has(key), expected.has(key))
 		t.equal(actual.get(key), expected.get(key))
 	}
@@ -38,5 +38,13 @@ test('structs.caches.lru', (t) => {
 	a.set(5, 'e')
 	b.set(5, 'e')
 	b.delete(3)
+	compareMaps(t, a, b)
+
+	a.delete(1)
+	b.delete(1)
+	compareMaps(t, a, b)
+
+	a.set(6, 'f')
+	b.set(6, 'f')
 	compareMaps(t, a, b)
 })

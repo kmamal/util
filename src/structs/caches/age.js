@@ -1,4 +1,4 @@
-const { Deque } = require('./deque')
+const { Deque } = require('../deque')
 
 const k_key = Symbol("key")
 const k_time = Symbol("time")
@@ -11,35 +11,10 @@ class Age {
 		this._map = new Map()
 	}
 
+	get size () { return this._map.size }
+
 	has (key) {
-		return this._map.has(key)
-	}
-
-	_getEntry (key, now = Date.now()) {
-		let entry = this._map.get(key)
-		if (!entry) { return null }
-
-		const elapsed = now - entry[k_time]
-		const remaining = this._lifetime - elapsed
-		if (remaining > 0) {
-			this._list.remove(entry)
-			this._list._unshift(entry)
-			return entry
-		}
-
-		this._map.delete(entry[k_key])
-		this._list.remove(entry)
-
-		if (this._eager) {
-			entry = entry.next
-			while (entry) {
-				this._map.delete(entry[k_key])
-				this._list.remove(entry)
-				entry = entry.next
-			}
-		}
-
-		return null
+		return Boolean(this._peekEntry(key))
 	}
 
 	get (key) {
@@ -62,6 +37,47 @@ class Age {
 		this._map.set(key, entry)
 
 		return undefined
+	}
+
+	delete (key) {
+		const entry = this._map.get(key)
+		if (!entry) { return undefined }
+		this._list.remove(entry)
+		this._map.delete(key)
+		return entry.value
+	}
+
+	_peekEntry (key, now = Date.now()) {
+		let entry = this._map.get(key)
+		if (!entry) { return null }
+
+		const elapsed = now - entry[k_time]
+		const remaining = this._lifetime - elapsed
+		if (remaining > 0) { return entry }
+
+		this._map.delete(entry[k_key])
+		this._list.remove(entry)
+
+		if (this._eager) {
+			entry = entry.next
+			while (entry) {
+				this._map.delete(entry[k_key])
+				this._list.remove(entry)
+				entry = entry.next
+			}
+		}
+
+		return null
+	}
+
+	_getEntry (key, now = Date.now()) {
+		const entry = this._peekEntry(key, now)
+		if (!entry) { return null }
+
+		this._list.remove(entry)
+		this._list._unshift(entry)
+		entry[k_time] = now
+		return entry
 	}
 }
 

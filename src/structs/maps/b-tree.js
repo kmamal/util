@@ -122,7 +122,7 @@ class BTree {
 			if (node === this._root) { return true }
 
 			if (node.values.length < Math.ceil(this._order / 2)) {
-				if (parent.children.length === 1) { return { index: 0 } } // TODO
+				if (parent.children.length === 1) { return { index: 0 } }
 
 				const left_index = Math.max(0, index_in_parent - 1)
 				const right_index = left_index + 1
@@ -195,9 +195,7 @@ class BTree {
 				const avg = Math.floor((left_length + right_length) / 2)
 				if (left_length < right_length) {
 					const num = right_length - avg
-					if (left.children.length > 0) {
-						left.keys.push(parent.keys[left_index])
-					}
+					left.keys.push(parent.keys[left_index])
 					left.keys.push(...right.keys.splice(0, num))
 					left.children.push(...right.children.splice(0, num))
 					parent.keys[left_index] = left.keys.pop()

@@ -35,11 +35,15 @@ class Deque {
 	_shift () {
 		this._size -= 1
 		const entry = this._first
-		if (entry) {
-			this._first = entry.next
-		} else {
+		if (!entry) {
 			this._last = null
 			this._first = null
+			return null
+		}
+		const { next } = entry
+		if (next) {
+			this._first = next
+			next.prev = null
 		}
 		return entry
 	}
@@ -49,11 +53,15 @@ class Deque {
 	_pop () {
 		this._size -= 1
 		const entry = this._last
-		if (entry) {
-			this._last = entry.prev
-		} else {
+		if (!entry) {
 			this._last = null
 			this._first = null
+			return null
+		}
+		const { prev } = entry
+		if (prev) {
+			this._last = prev
+			prev.next = null
 		}
 		return entry
 	}

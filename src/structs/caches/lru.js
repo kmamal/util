@@ -16,20 +16,15 @@ class Lru {
 	}
 
 	get (key) {
-		const entry = this._map.get(key)
-		if (!entry) { return undefined }
-		this._list.remove(entry)
-		this._list._unshift(entry)
-		return entry.value
+		return this._getEntry(key)?.value
 	}
 
 	set (key, value) {
-		let entry = this._map.get(key)
+		let entry = this._getEntry(key)
 		if (entry) {
+			const old_value = entry.value
 			entry.value = value
-			this._list.remove(entry)
-			this._list._unshift(entry)
-			return undefined
+			return old_value
 		}
 
 		entry = this._list.unshift(value)
@@ -39,10 +34,25 @@ class Lru {
 		if (this._list.size() > this._capacity) {
 			entry = this._list._pop()
 			this._map.delete(entry[k_key])
-			return entry.value
 		}
 
 		return undefined
+	}
+
+	delete (key) {
+		const entry = this._map.get(key)
+		if (!entry) { return undefined }
+		this._list.remove(entry)
+		this._map.delete(key)
+		return entry.value
+	}
+
+	_getEntry (key) {
+		const entry = this._map.get(key)
+		if (!entry) { return undefined }
+		this._list.remove(entry)
+		this._list._unshift(entry)
+		return entry
 	}
 }
 
