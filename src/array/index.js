@@ -1,6 +1,5 @@
 
 module.exports = {
-	...require('./bisect'),
 	...require('./chunk'),
 	...require('./clone'),
 	...require('./combine'),

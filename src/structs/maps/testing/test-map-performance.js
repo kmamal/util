@@ -1,6 +1,8 @@
 const { LeafTree } = require('../leaf-tree')
 const { NodeTree } = require('../node-tree')
-const { Hashtable } = require('../hashtable')
+const { Hashtable: OpenHash } = require('../open-hashtable')
+const { Hashtable: ClosedHash } = require('../closed-hashtable')
+const { BTree } = require('../b-tree')
 const { sub } = require('../../../operators')
 const { rand } = require('../../../random')
 const { chronometer } = require('../../../misc/chronometer')
@@ -16,16 +18,27 @@ const hash2 = (a) => {
 	return d
 }
 
-const a = new Map()
-const b = new NodeTree(sub)
-const c = new LeafTree(sub)
-const d = new Hashtable(hash0)
-const e = new Hashtable(hash1)
-const f = new Hashtable(hash2)
+const maps = [
+	new Map(),
+	new NodeTree(sub),
+	new LeafTree(sub),
+	new ClosedHash(hash0),
+	new OpenHash(hash0),
+	new OpenHash(hash1),
+	new OpenHash(hash2),
+	new BTree(sub, 16),
+	{
+	 _obj: Object.create(null),
+	 has (k) { return k in this._obj },
+	 get (k) { return this._obj[k] },
+	 set (k, v) { this._obj[k] = v },
+	 delete (k) { delete this._obj[k] },
+	},
+]
 
-const K = 100
-const V = 1000
-const R = 1000000
+const K = 1000
+const V = 10000
+const R = 10000000
 
 const measureTime = (map) => chronometer(() => {
 	for (let i = 0; i < R; i++) {
@@ -39,17 +52,17 @@ const measureTime = (map) => chronometer(() => {
 
 			case 1: {
 				const key = rand(K)
-				map.delete(key)
+				map.get(key)
 			} break
 
 			case 2: {
 				const key = rand(K)
-				map.get(key)
+				map.has(key)
 			} break
 
 			case 3: {
 				const key = rand(K)
-				map.has(key)
+				map.delete(key)
 			} break
 
 				// No default
@@ -57,9 +70,6 @@ const measureTime = (map) => chronometer(() => {
 	}
 })
 
-console.log(measureTime(a))
-console.log(measureTime(b))
-console.log(measureTime(c))
-console.log(measureTime(d))
-console.log(measureTime(e))
-console.log(measureTime(f))
+for (let i = 0; i < maps.length; i++) {
+	console.log(measureTime(maps[i]))
+}

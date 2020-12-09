@@ -1,13 +1,13 @@
 const { compare } = require('../function/compare')
 
-const __comm = (only_a, both, only_b, a, a_start, a_end, b, b_start, b_end, fn) => {
+const __comm = (only_a, both, only_b, a, a_start, a_end, b, b_start, b_end, fn_cmp) => {
 	let a_index = a_start
 	let b_index = b_start
 	let a_item = a[a_start]
 	let b_item = b[b_start]
 
 	while (a_index < a_end && b_index < b_end) {
-		const cmp = fn(a_item, b_item)
+		const cmp = fn_cmp(a_item, b_item)
 		if (cmp < 0) {
 			if (only_a) { only_a.arr[only_a.index++] = a_item }
 			a_item = a[++a_index]
@@ -34,12 +34,12 @@ const __comm = (only_a, both, only_b, a, a_start, a_end, b, b_start, b_end, fn) 
 	}
 }
 
-const commWith = (a, b, fn) => {
+const commWith = (a, b, fn_cmp) => {
 	const only_a = { arr: [], index: 0 }
 	const both = { arr: [], index: 0 }
 	const only_b = { arr: [], index: 0 }
 
-	__comm(only_a, both, only_b, a, 0, a.length, b, 0, b.length, fn)
+	__comm(only_a, both, only_b, a, 0, a.length, b, 0, b.length, fn_cmp)
 
 	return {
 		a: only_a.arr,
@@ -48,9 +48,9 @@ const commWith = (a, b, fn) => {
 	}
 }
 
-const commBy = (a, b, fn) => commWith(a, b, (x, y) => compare(fn(x), fn(y)))
+const commBy = (a, b, fn_map) => commWith(a, b, (x, y) => compare(fn_map(x), fn_map(y)))
 
-const commByPure = (a, b, fn) => {
+const commByPure = (a, b, fn_map) => {
 	let last_x = NaN
 	let last_y = NaN
 	let x_value = NaN
@@ -58,11 +58,11 @@ const commByPure = (a, b, fn) => {
 	return commWith(a, b, (x, y) => {
 		if (x !== last_x) {
 			last_x = x
-			x_value = fn(x)
+			x_value = fn_map(x)
 		}
 		if (y !== last_y) {
 			last_y = y
-			y_value = fn(y)
+			y_value = fn_map(y)
 		}
 		return compare(x_value, y_value)
 	})

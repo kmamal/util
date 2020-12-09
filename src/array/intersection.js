@@ -7,48 +7,48 @@ const { map } = require('./map')
 
 const extract = ({ x }) => x
 
-const __intersection = (dst, dst_start, a, a_start, a_end, b, b_start, b_end, fn) => {
-	const pred = (x) => __includes(b, b_start, b_end, x, fn)
-	return __filter(dst, dst_start, a, a_start, a_end, pred)
+const __intersection = (dst, dst_start, a, a_start, a_end, b, b_start, b_end, fn_eq) => {
+	const fn_pred = (x) => __includes(b, b_start, b_end, x, fn_eq)
+	return __filter(dst, dst_start, a, a_start, a_end, fn_pred)
 }
 
-const __intersectionSorted = (dst, dst_start, a, a_start, a_end, b, b_start, b_end, fn) => {
+const __intersectionSorted = (dst, dst_start, a, a_start, a_end, b, b_start, b_end, fn_cmp) => {
 	const inter = { arr: dst, index: dst_start }
-	__comm(null, inter, null, a, a_start, a_end, b, b_start, b_end, fn)
+	__comm(null, inter, null, a, a_start, a_end, b, b_start, b_end, fn_cmp)
 	return inter.index - dst_start
 }
 
-const intersectionWith$$$ = (a, b, fn) => {
-	const n = __intersection(a, 0, a, 0, a.length, b, 0, b.length, fn)
+const intersectionWith$$$ = (a, b, fn_eq) => {
+	const n = __intersection(a, 0, a, 0, a.length, b, 0, b.length, fn_eq)
 	a.length = n
 	return a
 }
 
-const intersectionWith = (a, b, fn) => {
+const intersectionWith = (a, b, fn_eq) => {
 	const res = []
-	__intersection(res, 0, a, 0, a.length, b, 0, b.length, fn)
+	__intersection(res, 0, a, 0, a.length, b, 0, b.length, fn_eq)
 	return res
 }
 
 intersectionWith.$$$ = intersectionWith$$$
 
-const intersectionBy$$$ = (a, b, fn) => intersectionWith$$$(a, b, (x, y) => eq(fn(x), fn(y)))
+const intersectionBy$$$ = (a, b, fn_map) => intersectionWith$$$(a, b, (x, y) => eq(fn_map(x), fn_map(y)))
 
-const intersectionBy = (a, b, fn) => intersectionWith(a, b, (x, y) => eq(fn(x), fn(y)))
+const intersectionBy = (a, b, fn_map) => intersectionWith(a, b, (x, y) => eq(fn_map(x), fn_map(y)))
 
 intersectionBy.$$$ = intersectionBy$$$
 
-const intersectionByPure$$$ = (a, b, fn) => {
-	map.$$$(a, (x) => ({ x, value: fn(x) }))
-	map.$$$(b, (x) => ({ x, value: fn(x) }))
+const intersectionByPure$$$ = (a, b, fn_map) => {
+	map.$$$(a, (x) => ({ x, value: fn_map(x) }))
+	map.$$$(b, (x) => ({ x, value: fn_map(x) }))
 	intersectionWith$$$(a, b, (x, y) => eq(x.value, y.value))
 	map.$$$(b, extract)
 	return map.$$$(a, extract)
 }
 
-const intersectionByPure = (a, b, fn) => {
-	const res = map(a, (x) => ({ x, value: fn(x) }))
-	map.$$$(b, (x) => ({ x, value: fn(x) }))
+const intersectionByPure = (a, b, fn_map) => {
+	const res = map(a, (x) => ({ x, value: fn_map(x) }))
+	map.$$$(b, (x) => ({ x, value: fn_map(x) }))
 	intersectionWith$$$(res, b, (x, y) => eq(x.value, y.value))
 	map.$$$(b, extract)
 	return map.$$$(res, extract)
@@ -62,28 +62,28 @@ const intersection = (a, b) => intersectionWith(a, b, eq)
 
 intersection.$$$ = intersection$$$
 
-const intersectionWithSorted$$$ = (a, b, fn) => {
-	const n = __intersectionSorted(a, 0, a, 0, a.length, b, 0, b.length, fn)
+const intersectionWithSorted$$$ = (a, b, fn_cmp) => {
+	const n = __intersectionSorted(a, 0, a, 0, a.length, b, 0, b.length, fn_cmp)
 	a.length = n
 	return a
 }
 
-const intersectionWithSorted = (a, b, fn) => {
+const intersectionWithSorted = (a, b, fn_cmp) => {
 	const res = []
-	__intersectionSorted(res, 0, a, 0, a.length, b, 0, b.length, fn)
+	__intersectionSorted(res, 0, a, 0, a.length, b, 0, b.length, fn_cmp)
 	return res
 }
 
 intersectionWithSorted.$$$ = intersectionWithSorted$$$
 
-const intersectionBySorted$$$ = (a, b, fn) => intersectionWithSorted$$$(a, b, (x, y) => compare(fn(x), fn(y)))
+const intersectionBySorted$$$ = (a, b, fn_map) => intersectionWithSorted$$$(a, b, (x, y) => compare(fn_map(x), fn_map(y)))
 
-const intersectionBySorted = (a, b, fn) => intersectionWithSorted(a, b, (x, y) => compare(fn(x), fn(y)))
+const intersectionBySorted = (a, b, fn_map) => intersectionWithSorted(a, b, (x, y) => compare(fn_map(x), fn_map(y)))
 
 intersectionBySorted.$$$ = intersectionBySorted$$$
 
 // HACK: Depends on knowing the algo internals
-const intersectionByPureSorted$$$ = (a, b, fn) => {
+const intersectionByPureSorted$$$ = (a, b, fn_map) => {
 	let last_x = NaN
 	let last_y = NaN
 	let x_value = NaN
@@ -91,17 +91,17 @@ const intersectionByPureSorted$$$ = (a, b, fn) => {
 	return intersectionWithSorted$$$(a, b, (x, y) => {
 		if (x !== last_x) {
 			last_x = x
-			x_value = fn(x)
+			x_value = fn_map(x)
 		}
 		if (y !== last_y) {
 			last_y = y
-			y_value = fn(y)
+			y_value = fn_map(y)
 		}
 		return compare(x_value, y_value)
 	})
 }
 
-const intersectionByPureSorted = (a, b, fn) => {
+const intersectionByPureSorted = (a, b, fn_map) => {
 	let last_x = NaN
 	let last_y = NaN
 	let x_value = NaN
@@ -109,11 +109,11 @@ const intersectionByPureSorted = (a, b, fn) => {
 	return intersectionWithSorted(a, b, (x, y) => {
 		if (x !== last_x) {
 			last_x = x
-			x_value = fn(x)
+			x_value = fn_map(x)
 		}
 		if (y !== last_y) {
 			last_y = y
-			y_value = fn(y)
+			y_value = fn_map(y)
 		}
 		return compare(x_value, y_value)
 	})

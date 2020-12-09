@@ -1,3 +1,5 @@
+// NOTE: Must be run with `--expose-gc`
+
 const { run } = require('../../../misc/speedtest')
 
 const {
@@ -25,10 +27,9 @@ const { sub } = require('../../../operators')
 const { identity } = require('../../../function')
 
 const description = {
-	parameters: [
-		{
+	parameters: {
+		n: {
 			name: "Array size",
-			key: 'n',
 			values: [
 				// 10,
 				// 100,
@@ -38,9 +39,8 @@ const description = {
 				// 1000000,
 			],
 		},
-		{
+		permuteArray: {
 			name: "Array structure",
-			key: 'permuteArray',
 			options: [
 				{
 					name: "random",
@@ -77,9 +77,8 @@ const description = {
 				// },
 			],
 		},
-		{
+		scaleKeys: {
 			name: "Key distribution",
-			key: 'scaleKeys',
 			options: [
 				{
 					name: "small keys",
@@ -103,9 +102,8 @@ const description = {
 				// },
 			],
 		},
-		{
+		algo: {
 			name: "Algorithm",
-			key: 'algo',
 			options: [
 				{
 					name: "built-in sort",
@@ -151,9 +149,9 @@ const description = {
 				// },
 			],
 		},
-	],
-	callback: ({ algo, n, permuteArray, scaleKeys }) => {
-		const arr = new Array(n)
+	},
+	pre: ({ n }) => new Array(n),
+	callback: ({ algo, n, permuteArray, scaleKeys }, arr) => {
 		for (let i = 0; i < n; i++) { arr[i] = i }
 		permuteArray(arr)
 		scaleKeys(arr)
@@ -181,6 +179,10 @@ const main = async () => {
 
 	for await (const { type, data } of run(description)) {
 		switch (type) {
+			case 'warning': {
+				console.error("WARN", data)
+				break
+			}
 			case 'info': {
 				if (!data.labels) { break }
 				keys = Object.keys(data.labels)

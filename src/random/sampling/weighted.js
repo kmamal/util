@@ -1,5 +1,5 @@
 const { random } = require('../random')
-const { __bisectLeft } = require('../../array/bisect')
+const { __binarySearchLeft } = require('../../array/search/binary')
 const { prefixSumsBy } = require('../../array/prefix-sums')
 const { identity } = require('../../function/identity')
 
@@ -11,7 +11,7 @@ const __chooseWeighted = (arr, start, end, fn, options) => {
 
 	const total = arr[end - 1]
 	const r = getRandom() * total
-	return __bisectLeft(arr, start, end, r, (a, b) => fn(a) - fn(b))
+	return __binarySearchLeft(arr, start, end, r, (a, b) => fn(a) - fn(b))
 }
 
 const chooseIndexFromPrefixSumsBy = (arr, fn, options) => __chooseWeighted(arr, 0, arr.length, fn, options)

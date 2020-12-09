@@ -11,7 +11,7 @@ const createTests = (name, constructor, args) => {
 
 		const K = 100
 		const V = 1000
-		const R = 10000
+		const R = 1000
 		for (let i = 0; i < R; i++) {
 			if (rand(2)) {
 				const key = rand(K)

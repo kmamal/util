@@ -1,6 +1,6 @@
 const { startIndex } = require('../array/start-index')
 const { endIndex } = require('../array/end-index')
-const { bisectRight } = require('../array/bisect')
+const { binarySearchRight } = require('../array/search/binary')
 const { concat } = require('../array/concat')
 const B = require('buffer')
 
@@ -48,7 +48,7 @@ class ChunkList {
 		const index = _index + this._start_index
 		if (index < this._start_index || this._end_index <= index) { return undefined }
 
-		const chunk_index = bisectRight(this._chunk_limits, index) - 1
+		const chunk_index = binarySearchRight(this._chunk_limits, index) - 1
 		const offset = this._chunk_limits[chunk_index]
 		const index_in_chunk = index - offset
 

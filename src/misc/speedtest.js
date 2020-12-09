@@ -28,7 +28,8 @@ const iterateParameters = function * (parameters) {
 	yield* _recurse(parameters, 0, options)
 }
 
-const run = async function * ({ parameters, callback, time }) {
+const run = async function * ({ parameters: _p, pre, post, callback, time }) {
+	const parameters = map(Object.entries(_p), ([ key, value ]) => ({ ...value, key }))
 	{
 		const labels = reduce(parameters, (acc, { name, key }) => ({ ...acc, [key]: name }), {})
 		labels.result = "Result"
@@ -52,7 +53,9 @@ const run = async function * ({ parameters, callback, time }) {
 				if (!filter(info)) { continue foreach_case }
 			}
 
-			const elapsed = chronometer(() => callback(data))
+			const pre_data = pre ? pre(data) : null
+			const elapsed = chronometer(() => callback(data, pre_data))
+			post && post(pre_data)
 
 			if (elapsed * 10 <= time) {
 				cases.push({ info, data })
@@ -69,18 +72,22 @@ const run = async function * ({ parameters, callback, time }) {
 	for (const c of cases) {
 		const { info, data } = c
 
+		const pre_data = pre ? pre(data) : null
+
 		// Warmup
 		global.gc(true)
-		for (let i = 0; i < 10; i++) { callback(data) }
+		for (let i = 0; i < 10; i++) { callback(data, pre_data) }
 
 		// Measure
 		let count = 0
 		await amrap((reps) => {
 			count += reps
 			for (let i = 0; i < reps; i++) {
-				callback(data)
+				callback(data, pre_data)
 			}
 		}, time)
+
+		post && post(pre_data)
 
 		yield { type: 'result', data: { ...info, result: count } }
 	}

@@ -1,4 +1,4 @@
-const { __bisectRight } = require('../bisect')
+const { __binarySearchRight } = require('../search/binary')
 const { compare } = require('../../function/compare')
 const { clone } = require('../clone')
 const { map } = require('../map')
@@ -8,7 +8,7 @@ const extract = ({ x }) => x
 const __binsertionsort = (arr, start, sorted_end, end, fn) => {
 	for (let i = sorted_end; i < end; i++) {
 		const item = arr[i]
-		const position = __bisectRight(arr, start, i, item, fn)
+		const position = __binarySearchRight(arr, start, i, item, fn)
 		for (let j = i; j > position; j--) {
 			arr[j] = arr[j - 1]
 		}
