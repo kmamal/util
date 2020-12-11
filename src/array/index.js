@@ -5,6 +5,7 @@ module.exports = {
 	...require('./combine'),
 	...require('./comm'),
 	...require('./compact'),
+	...require('./compact-map'),
 	...require('./concat'),
 	...require('./copy'),
 	...require('./count'),
