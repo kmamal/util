@@ -1,8 +1,8 @@
 const { test } = require('@xyz/testing')
-const { WaitingList } = require('./waiting-list')
+const { ObjectPool } = require('./object-pool')
 const { sleep } = require('../promise/sleep')
 
-test('structs.waiting-list', async (t) => {
+test('structs.object-pool', async (t) => {
 	t.timeout(500)
 	const s = t.schedule([
 		[ 0, 1 ],
@@ -11,7 +11,7 @@ test('structs.waiting-list', async (t) => {
 		[ 100, 4 ],
 	])
 
-	const a = new WaitingList()
+	const a = new ObjectPool()
 	s.start()
 
 	a.release(2)
