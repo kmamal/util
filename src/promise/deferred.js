@@ -16,11 +16,11 @@ class Deferred {
 		return this._result
 	}
 
-	async produce (callback) {
+	async produce () {
 		if (this._state !== Deferred.State.NEW) { return }
 
 		this._state = Deferred.State.PRODUCING
-		this._result = await callback()
+		this._result = await this._callback()
 		this._state = Deferred.State.PRODUCED
 		this._future.resolve()
 	}
