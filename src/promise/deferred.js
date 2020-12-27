@@ -35,7 +35,7 @@ class Deferred {
 		PRODUCED: 'produced',
 	}
 
-	static set (value) {
+	static resolve (value) {
 		const deferred = new Deferred()
 		deferred._state = Deferred.State.PRODUCED
 		deferred._future.resolve(value)
