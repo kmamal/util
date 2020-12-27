@@ -11,17 +11,33 @@ class Deferred {
 
 	async get () {
 		if (this._state === Deferred.State.NEW) { this.produce() }
-		const result = await this._future.promise()
-		return result
+		const value = await this._future.promise()
+		return value
+	}
+
+	set (value) {
+		if (this._state !== Deferred.State.NEW) {
+			const error = new Error("invalid state")
+			error.state = this._state
+			error.value = this._value
+			throw error
+		}
+
+		this._state = Deferred.State.PRODUCED
+		this._future.resolve(value)
 	}
 
 	async produce () {
-		if (this._state !== Deferred.State.NEW) { return }
+		if (this._state !== Deferred.State.NEW) {
+			const error = new Error("invalid state")
+			error.state = this._state
+			throw error
+		}
 
 		this._state = Deferred.State.PRODUCING
-		const result = await this._callback()
+		const value = await this._callback()
 		this._state = Deferred.State.PRODUCED
-		this._future.resolve(result)
+		this._future.resolve(value)
 	}
 
 	static State = {
@@ -30,10 +46,9 @@ class Deferred {
 		PRODUCED: 'produced',
 	}
 
-	static produce (result) {
+	static set (value) {
 		const deferred = new Deferred()
-		deferred._future.resolve(result)
-		deferred._state = Deferred.State.PRODUCED
+		deferred.set(value)
 		return deferred
 	}
 }
