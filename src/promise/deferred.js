@@ -1,41 +1,30 @@
 const { Future } = require('@xyz/util/promise/future')
 
 class Deferred {
-	constructor (callback) {
-		this._callback = callback
+	constructor (params) {
+		this._params = params
 		this._future = new Future()
 		this._state = Deferred.State.NEW
 	}
 
+	params () { return this._params }
 	state () { return this._state }
 
 	async get () {
-		if (this._state === Deferred.State.NEW) { this.produce() }
-		const value = await this._future.promise()
-		return value
+		return await this._future.promise()
 	}
 
-	set (value) {
+	async produce (callback) {
 		if (this._state !== Deferred.State.NEW) {
 			const error = new Error("invalid state")
 			error.state = this._state
-			error.value = this._value
-			throw error
-		}
-
-		this._state = Deferred.State.PRODUCED
-		this._future.resolve(value)
-	}
-
-	async produce () {
-		if (this._state !== Deferred.State.NEW) {
-			const error = new Error("invalid state")
-			error.state = this._state
+			error.params = this._params
+			error.callback = this._callback
 			throw error
 		}
 
 		this._state = Deferred.State.PRODUCING
-		const value = await this._callback()
+		const value = await callback(this._params)
 		this._state = Deferred.State.PRODUCED
 		this._future.resolve(value)
 	}
@@ -48,7 +37,8 @@ class Deferred {
 
 	static set (value) {
 		const deferred = new Deferred()
-		deferred.set(value)
+		deferred._state = Deferred.State.PRODUCED
+		deferred._future.resolve(value)
 		return deferred
 	}
 }
