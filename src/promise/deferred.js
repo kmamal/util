@@ -20,20 +20,15 @@ class Deferred {
 		if (this._state !== Deferred.State.NEW) { return }
 
 		this._state = Deferred.State.PRODUCING
-		try {
-			this._result = await this._callback()
-		} catch (error) {
-			console.log(this)
-			throw error
-		}
+		this._result = await this._callback()
 		this._state = Deferred.State.PRODUCED
 		this._future.resolve()
 	}
 
 	static State = {
-		NEW: 0,
-		PRODUCING: 0,
-		PRODUCED: 0,
+		NEW: 'new',
+		PRODUCING: 'producing',
+		PRODUCED: 'produced',
 	}
 
 	static produce (result) {
