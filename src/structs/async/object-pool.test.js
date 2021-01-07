@@ -1,6 +1,6 @@
 const { test } = require('@xyz/testing')
 const { ObjectPool } = require('./object-pool')
-const { sleep } = require('../promise/sleep')
+const { sleep } = require('../../promise/sleep')
 
 test('structs.object-pool', async (t) => {
 	t.timeout(500)

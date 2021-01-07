@@ -16,7 +16,7 @@ class ObjectPool {
 	}
 
 	async reserve () {
-		await new Promise((resolve) => {
+		return await new Promise((resolve) => {
 			if (this._objects.length > 0) {
 				resolve(this._objects.pop())
 				return
