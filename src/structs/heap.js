@@ -35,7 +35,11 @@ class Heap {
 	}
 
 	min () { return this._array[0] }
-	pop () { return this.remove(this._array[0]) }
+	pop () {
+		return this._array.length !== 0
+			? this.remove(this._array[0])
+			: undefined
+	}
 
 	_bubbleUp (entry) {
 		for (;;) {
