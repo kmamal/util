@@ -4,11 +4,10 @@ const __binarySearch = (arr, start, end, x, fn_cmp) => {
 	let low = start
 	let high = end
 	for (;;) {
-		const len = high - low
-		if (len <= 0) { return low }
+		if (high <= low) { return low }
 		const mid = Math.floor((high + low) / 2)
-		const item = arr[mid]
-		const cmp = fn_cmp(x, item)
+		const value = arr[mid]
+		const cmp = fn_cmp(x, value)
 		if (cmp === 0) { return mid }
 		cmp < 0 ? high = mid : low = mid + 1
 	}
@@ -18,11 +17,10 @@ const __binarySearchLeft = (arr, start, end, x, fn_cmp) => {
 	let low = start
 	let high = end
 	for (;;) {
-		const len = high - low
-		if (len <= 0) { return low }
+		if (high <= low) { return low }
 		const mid = Math.floor((high + low) / 2)
-		const item = arr[mid]
-		const cmp = fn_cmp(x, item)
+		const value = arr[mid]
+		const cmp = fn_cmp(x, value)
 		cmp <= 0 ? high = mid : low = mid + 1
 	}
 }
@@ -31,11 +29,10 @@ const __binarySearchRight = (arr, start, end, x, fn_cmp) => {
 	let low = start
 	let high = end
 	for (;;) {
-		const len = high - low
-		if (len <= 0) { return low }
+		if (high <= low) { return low }
 		const mid = Math.floor((high + low) / 2)
-		const item = arr[mid]
-		const cmp = fn_cmp(x, item)
+		const value = arr[mid]
+		const cmp = fn_cmp(x, value)
 		cmp < 0 ? high = mid : low = mid + 1
 	}
 }

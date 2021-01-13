@@ -1,5 +1,5 @@
 
-const amrap = async (iterate, time_limit, options = {}) => {
+const amrap = (iterate, time_limit, options = {}) => {
 	const start_time = Date.now()
 
 	const {
@@ -13,7 +13,7 @@ const amrap = async (iterate, time_limit, options = {}) => {
 	let reps = 0
 
 	for (;;) {
-		const done = await iterate(next, remaining)
+		const done = iterate(next, remaining)
 
 		const ellapsed = Date.now() - start_time
 		remaining = time_limit - ellapsed

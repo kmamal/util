@@ -1,22 +1,18 @@
 
 const __linearSearch = (arr, start, end, fn_pred) => {
-	let index = start
-	while (index < end) {
-		const item = arr[index]
-		if (fn_pred(item)) { break }
-		index++
+	for (let i = start; i < end; i++) {
+		const item = arr[i]
+		if (fn_pred(item)) { return i }
 	}
-	return index
+	return -1
 }
 
 const __linearSearchRight = (arr, start, end, fn_pred) => {
-	let index = end - 1
-	while (index >= start) {
-		const item = arr[index]
-		if (fn_pred(item)) { break }
-		index--
+	for (let i = end - 1; i >= start; i--) {
+		const item = arr[i]
+		if (fn_pred(item)) { return i }
 	}
-	return index
+	return -1
 }
 
 module.exports = {

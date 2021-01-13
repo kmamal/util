@@ -5,6 +5,7 @@ const { run } = require('../../../misc/speedtest')
 const { __linearSearch } = require('../linear')
 const { __binarySearch } = require('../binary')
 const { __interpolationSearch } = require('../interpolation')
+const { __exponentialSearch } = require('../exponential')
 
 const { fromFactory } = require('../../from-factory')
 const { identity } = require('../../../function/identity')
@@ -62,6 +63,12 @@ const description = {
 					name: "interpolation search",
 					value: (arr, x, get) => {
 						__interpolationSearch(arr, 0, arr.length, x, (_, y) => x - get(y))
+					},
+				},
+				{
+					name: "exponential search",
+					value: (arr, x, get) => {
+						__exponentialSearch(arr, 0, arr.length, x, (_, y) => x - get(y))
 					},
 				},
 			],

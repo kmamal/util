@@ -5,10 +5,7 @@ const { compare } = require('../function/compare')
 
 const LINEAR_SEARCH_CUTOFF = 8
 
-const __indexOf = (arr, start, end, x, fn_eq) => {
-	const index = __linearSearch(arr, start, end, (y) => fn_eq(x, y))
-	return index === end ? -1 : index
-}
+const __indexOf = (arr, start, end, x, fn_eq) => __linearSearch(arr, start, end, (y) => fn_eq(x, y))
 
 const __indexOfRight = (arr, start, end, x, fn_eq) => __linearSearchRight(arr, start, end, (y) => fn_eq(x, y))
 

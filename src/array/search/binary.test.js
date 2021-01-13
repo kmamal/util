@@ -11,7 +11,7 @@ const {
 	binarySearchRightByPure,
 } = require('./binary')
 
-test('arra.binarySearch', (t) => {
+test('array.binarySearch', (t) => {
 	t.equal(binarySearch([], 0), 0)
 	t.equal(binarySearch([ 1 ], 0), 0)
 	t.equal(binarySearch([ 1 ], 1), 0)
@@ -23,7 +23,7 @@ test('arra.binarySearch', (t) => {
 	t.equal(binarySearch([ 1, 2, 3 ], 4), 3)
 })
 
-test('arra.binarySearchLeft', (t) => {
+test('array.binarySearchLeft', (t) => {
 	t.equal(binarySearchLeft([], 0), 0)
 	t.equal(binarySearchLeft([ 1 ], 0), 0)
 	t.equal(binarySearchLeft([ 1 ], 1), 0)
@@ -36,7 +36,7 @@ test('arra.binarySearchLeft', (t) => {
 	t.equal(binarySearchLeft([ 2, 2, 2 ], 2), 0)
 })
 
-test('arra.binarySearchRight', (t) => {
+test('array.binarySearchRight', (t) => {
 	t.equal(binarySearchRight([], 0), 0)
 	t.equal(binarySearchRight([ 1 ], 0), 0)
 	t.equal(binarySearchRight([ 1 ], 1), 1)
@@ -49,7 +49,7 @@ test('arra.binarySearchRight', (t) => {
 	t.equal(binarySearchRight([ 2, 2, 2 ], 2), 3)
 })
 
-test('arra.binarySearchBy', (t) => {
+test('array.binarySearchBy', (t) => {
 	t.equal(binarySearchBy([], 0, (x) => 2 * x), 0)
 	t.equal(binarySearchBy([ 1 ], 0, (x) => 2 * x), 0)
 	t.equal(binarySearchBy([ 1 ], 1, (x) => 2 * x), 0)
@@ -61,7 +61,7 @@ test('arra.binarySearchBy', (t) => {
 	t.equal(binarySearchBy([ 1, 2, 3 ], 4, (x) => 2 * x), 3)
 })
 
-test('arra.binarySearchLeftBy', (t) => {
+test('array.binarySearchLeftBy', (t) => {
 	t.equal(binarySearchLeftBy([], 0, (x) => 2 * x), 0)
 	t.equal(binarySearchLeftBy([ 1 ], 0, (x) => 2 * x), 0)
 	t.equal(binarySearchLeftBy([ 1 ], 1, (x) => 2 * x), 0)
@@ -74,7 +74,7 @@ test('arra.binarySearchLeftBy', (t) => {
 	t.equal(binarySearchLeftBy([ 2, 2, 2 ], 2, (x) => 2 * x), 0)
 })
 
-test('arra.binarySearchRightBy', (t) => {
+test('array.binarySearchRightBy', (t) => {
 	t.equal(binarySearchRightBy([], 0, (x) => 2 * x), 0)
 	t.equal(binarySearchRightBy([ 1 ], 0, (x) => 2 * x), 0)
 	t.equal(binarySearchRightBy([ 1 ], 1, (x) => 2 * x), 1)
@@ -87,7 +87,7 @@ test('arra.binarySearchRightBy', (t) => {
 	t.equal(binarySearchRightBy([ 2, 2, 2 ], 2, (x) => 2 * x), 3)
 })
 
-test('arra.binarySearchByPure', (t) => {
+test('array.binarySearchByPure', (t) => {
 	t.equal(binarySearchByPure([], 0, (x) => 2 * x), 0)
 	t.equal(binarySearchByPure([ 1 ], 0, (x) => 2 * x), 0)
 	t.equal(binarySearchByPure([ 1 ], 1, (x) => 2 * x), 0)
@@ -99,7 +99,7 @@ test('arra.binarySearchByPure', (t) => {
 	t.equal(binarySearchByPure([ 1, 2, 3 ], 4, (x) => 2 * x), 3)
 })
 
-test('arra.binarySearchLeftByPure', (t) => {
+test('array.binarySearchLeftByPure', (t) => {
 	t.equal(binarySearchLeftByPure([], 0, (x) => 2 * x), 0)
 	t.equal(binarySearchLeftByPure([ 1 ], 0, (x) => 2 * x), 0)
 	t.equal(binarySearchLeftByPure([ 1 ], 1, (x) => 2 * x), 0)
@@ -112,7 +112,7 @@ test('arra.binarySearchLeftByPure', (t) => {
 	t.equal(binarySearchLeftByPure([ 2, 2, 2 ], 2, (x) => 2 * x), 0)
 })
 
-test('arra.binarySearchRightByPure', (t) => {
+test('array.binarySearchRightByPure', (t) => {
 	t.equal(binarySearchRightByPure([], 0, (x) => 2 * x), 0)
 	t.equal(binarySearchRightByPure([ 1 ], 0, (x) => 2 * x), 0)
 	t.equal(binarySearchRightByPure([ 1 ], 1, (x) => 2 * x), 1)
