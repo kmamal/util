@@ -1,7 +1,7 @@
 const { test } = require('@xyz/testing')
 const { interweave } = require('.')
 
-test('array.interweave', (t) => {
+test("array.interweave", (t) => {
 	t.equal(interweave([], []), [])
 	t.equal(interweave([], [ 1 ]), [ 1 ])
 	t.equal(interweave([ 1 ], []), [ 1 ])

@@ -1,7 +1,7 @@
 const { test } = require('@xyz/testing')
 const { clamp } = require('./clamp')
 
-test('interval.clamp', (t) => {
+test("interval.clamp", (t) => {
 	const interval = [ 2, 4 ]
 
 	t.equal(clamp(interval, 1), 2)

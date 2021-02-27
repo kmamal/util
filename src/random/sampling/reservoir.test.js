@@ -10,12 +10,12 @@ const toAsyncIterable = async function * (arr) {
 	}
 }
 
-test('sampling.sampleIndexesFromReservoir Edge-cases', async (t) => {
+test("sampling.sampleIndexesFromReservoir Edge-cases", async (t) => {
 	t.equal(await sampleIndexesFromReservoir(toAsyncIterable([]), 3), [])
 	t.equal(await sampleIndexesFromReservoir(toAsyncIterable([ 3 ]), 3), [ 0 ])
 })
 
-test('sampling.sampleIndexesFromReservoir Frequencies', async (t) => {
+test("sampling.sampleIndexesFromReservoir Frequencies", async (t) => {
 	const arr = [ 1, 2, 3, 4, 5 ]
 	const N = 3
 	const R = 10000

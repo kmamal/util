@@ -131,7 +131,7 @@ class Hashtable {
 			if (entry_key === undefined || entry_key === key) { return i }
 		}
 
-		throw new Error('wtf')
+		throw new Error("wtf")
 	}
 
 	_rebalance () {

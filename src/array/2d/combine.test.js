@@ -2,7 +2,7 @@ const { test } = require('@xyz/testing')
 const { Array2d, clone, combine } = require('.')
 const { add } = require('../../operators')
 
-test('array.2d.combine', (t) => {
+test("array.2d.combine", (t) => {
 	const a = new Array2d(2, 3, [ 1, 2, 3, 4, 5, 6 ])
 	const b = new Array2d(3, 2, [ 7, 8, 9, 10, 11, 12 ])
 
@@ -17,7 +17,7 @@ test('array.2d.combine', (t) => {
 	t.equal(d.data, [ 8, 10, 3, 4, 16, 18 ])
 })
 
-test('array.2d.combine.$$$', (t) => {
+test("array.2d.combine.$$$", (t) => {
 	const a = new Array2d(2, 3, [ 1, 2, 3, 4, 5, 6 ])
 	const b = new Array2d(3, 2, [ 7, 8, 9, 10, 11, 12 ])
 

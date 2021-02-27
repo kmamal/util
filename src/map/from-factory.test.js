@@ -1,7 +1,7 @@
 const { test } = require('@xyz/testing')
 const { fromFactory } = require('./from-factory')
 
-test('map.fromFactory Counting', (t) => {
+test("map.fromFactory Counting", (t) => {
 	const a = [ 1, 2, 1, 3 ]
 	const counts = fromFactory(() => 0)
 
@@ -15,7 +15,7 @@ test('map.fromFactory Counting', (t) => {
 	t.equal(counts.get(4), 0)
 })
 
-test('map.fromFactory Argument', (t) => {
+test("map.fromFactory Argument", (t) => {
 	const map = fromFactory((x) => x)
 
 	t.equal(map.get(1), 1)

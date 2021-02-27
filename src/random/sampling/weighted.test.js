@@ -3,12 +3,12 @@ const { fromFactory } = require('../../map')
 const { sum } = require('../../array/sum')
 const { chooseIndexFromWeighted } = require('.')
 
-test('sampling.chooseIndexFromWeighted Edge-cases', (t) => {
+test("sampling.chooseIndexFromWeighted Edge-cases", (t) => {
 	t.equal(chooseIndexFromWeighted([]), -1)
 	t.equal(chooseIndexFromWeighted([ 1 ]), 0)
 })
 
-test('sampling.chooseIndexFromWeighted Frequencies', (t) => {
+test("sampling.chooseIndexFromWeighted Frequencies", (t) => {
 	const arr = [ 1, 3, 2 ]
 	const N = 3000
 

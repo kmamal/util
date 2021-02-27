@@ -1,7 +1,7 @@
 const { test } = require('@xyz/testing')
 const { union } = require('./union')
 
-test('intervals.union', (t) => {
+test("intervals.union", (t) => {
 	t.equal(union([], []), [])
 	t.equal(union([], [ [ 1, 2 ] ]), [ [ 1, 2 ] ])
 	t.equal(union([ [ 1, 2 ] ], []), [ [ 1, 2 ] ])

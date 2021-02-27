@@ -1,7 +1,7 @@
 const { test } = require('@xyz/testing')
 const { xor } = require('.')
 
-test('set.xor', (t) => {
+test("set.xor", (t) => {
 	const a = new Set([ 1, 2, 3 ])
 	const b = new Set([ 2, 3, 4 ])
 	const set = xor(a, b)

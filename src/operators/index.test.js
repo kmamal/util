@@ -4,7 +4,7 @@ const Ops = require('.')
 const a = -42
 const b = 69
 
-test('operators', (t) => {
+test("operators", (t) => {
 	t.equal(Ops.add(a, b), a + b)
 	t.equal(Ops.div(a, b), a / b)
 	t.equal(Ops.neg(a), -a)

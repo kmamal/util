@@ -1,12 +1,16 @@
-const MANTISSA_LENGTH = 52
-const EXPONENT_LENGTH = 11
+const BYTES = 8
+const MANTISSA_BITS = 52
+const HIDDEN_BIT = 2 ** MANTISSA_BITS
+const EXPONENT_BITS = 11
+const EXPONENT_MASK = 2 ** EXPONENT_BITS - 1
+const EXPONENT_BIAS = 2 ** (EXPONENT_BITS - 1) - 1
 
 const TWO_POW_16 = 2 ** 16
 const TWO_POW_31 = 2 ** 31
 const TWO_POW_32 = 2 ** 32
 
 const toBuffer = (value) => {
-	const buffer = Buffer.alloc(8)
+	const buffer = Buffer.alloc(BYTES)
 	buffer.writeDoubleBE(value, 0)
 	return buffer
 }
@@ -20,7 +24,7 @@ const sign = (value) => {
 
 const exponent = (value) => {
 	const buffer = toBuffer(value)
-	return buffer.readUInt16BE(0) >> 4 & 0x07ff
+	return buffer.readUInt16BE(0) >> 4 & EXPONENT_MASK
 }
 
 const mantissa = (value) => {
@@ -38,8 +42,8 @@ const parse = (value) => ({
 
 // TODO: is it faster to just do math?
 const _from1 = (s, e, m) => {
-	const buffer = Buffer.alloc(8)
-	const high = ((s & 0x01) * TWO_POW_31) + (((e & 0x07ff) << 20) | ((m / TWO_POW_32) & 0x0fffff))
+	const buffer = Buffer.alloc(BYTES)
+	const high = ((s & 0x01) * TWO_POW_31) + (((e & EXPONENT_MASK) << 20) | ((m / TWO_POW_32) & 0x0fffff))
 	const low = (((m / TWO_POW_16) & 0xffff) * TWO_POW_16) + (m & 0xffff)
 	buffer.writeUInt32BE(high, 0)
 	buffer.writeUInt32BE(low, 4)
@@ -48,8 +52,8 @@ const _from1 = (s, e, m) => {
 
 const _from2 = (s, e, m) => {
 	const _s = s ? -1 : 1
-	const _e = 2 ** (e - 1023 - 52)
-	const _m = (2 ** 52) + m
+	const _e = 2 ** (e - EXPONENT_BIAS - MANTISSA_BITS)
+	const _m = HIDDEN_BIT + m
 	return _s * _e * _m
 }
 
@@ -69,8 +73,8 @@ const nextToward = (value, target) => {
 
 
 module.exports = {
-	MANTISSA_LENGTH,
-	EXPONENT_LENGTH,
+	MANTISSA_BITS,
+	EXPONENT_BITS,
 	toBuffer,
 	sign,
 	exponent,

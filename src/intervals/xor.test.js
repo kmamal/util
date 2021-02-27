@@ -1,7 +1,7 @@
 const { test } = require('@xyz/testing')
 const { xor } = require('./xor')
 
-test('intervals.xor', (t) => {
+test("intervals.xor", (t) => {
 	t.equal(xor([], []), [])
 	t.equal(xor([], [ [ 1, 2 ] ]), [ [ 1, 2 ] ])
 	t.equal(xor([ [ 1, 2 ] ], []), [ [ 1, 2 ] ])

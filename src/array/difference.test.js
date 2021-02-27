@@ -8,7 +8,7 @@ const {
 	differenceByPureSorted,
 } = require('.')
 
-test('array.difference', (t) => {
+test("array.difference", (t) => {
 	t.equal(difference([], []), [])
 	t.equal(difference([], [ 1 ]), [])
 	t.equal(difference([ 1 ], []), [ 1 ])
@@ -16,7 +16,7 @@ test('array.difference', (t) => {
 	t.equal(difference([ 1, 2, 3 ], [ 2, 3, 4 ]), [ 1 ])
 })
 
-test('array.difference.$$$', (t) => {
+test("array.difference.$$$", (t) => {
 	t.equal(difference.$$$([], []), [])
 	t.equal(difference.$$$([], [ 1 ]), [])
 	t.equal(difference.$$$([ 1 ], []), [ 1 ])
@@ -24,7 +24,7 @@ test('array.difference.$$$', (t) => {
 	t.equal(difference.$$$([ 1, 2, 3 ], [ 2, 3, 4 ]), [ 1 ])
 })
 
-test('array.differenceSorted', (t) => {
+test("array.differenceSorted", (t) => {
 	t.equal(differenceSorted([], []), [])
 	t.equal(differenceSorted([], [ 1 ]), [])
 	t.equal(differenceSorted([ 1 ], []), [ 1 ])
@@ -32,7 +32,7 @@ test('array.differenceSorted', (t) => {
 	t.equal(differenceSorted([ 1, 2, 3 ], [ 2, 3, 4 ]), [ 1 ])
 })
 
-test('array.differenceSorted.$$$', (t) => {
+test("array.differenceSorted.$$$", (t) => {
 	t.equal(differenceSorted.$$$([], []), [])
 	t.equal(differenceSorted.$$$([], [ 1 ]), [])
 	t.equal(differenceSorted.$$$([ 1 ], []), [ 1 ])
@@ -40,7 +40,7 @@ test('array.differenceSorted.$$$', (t) => {
 	t.equal(differenceSorted.$$$([ 1, 2, 3 ], [ 2, 3, 4 ]), [ 1 ])
 })
 
-test('array.differenceBy', (t) => {
+test("array.differenceBy", (t) => {
 	t.equal(differenceBy([], [], (x) => 2 * x), [])
 	t.equal(differenceBy([], [ 1 ], (x) => 2 * x), [])
 	t.equal(differenceBy([ 1 ], [], (x) => 2 * x), [ 1 ])
@@ -48,7 +48,7 @@ test('array.differenceBy', (t) => {
 	t.equal(differenceBy([ 1, 2, 3 ], [ 2, 3, 4 ], (x) => 2 * x), [ 1 ])
 })
 
-test('array.differenceBy.$$$', (t) => {
+test("array.differenceBy.$$$", (t) => {
 	t.equal(differenceBy.$$$([], [], (x) => 2 * x), [])
 	t.equal(differenceBy.$$$([], [ 1 ], (x) => 2 * x), [])
 	t.equal(differenceBy.$$$([ 1 ], [], (x) => 2 * x), [ 1 ])
@@ -56,7 +56,7 @@ test('array.differenceBy.$$$', (t) => {
 	t.equal(differenceBy.$$$([ 1, 2, 3 ], [ 2, 3, 4 ], (x) => 2 * x), [ 1 ])
 })
 
-test('array.differenceBySorted', (t) => {
+test("array.differenceBySorted", (t) => {
 	t.equal(differenceBySorted([], [], (x) => 2 * x), [])
 	t.equal(differenceBySorted([], [ 1 ], (x) => 2 * x), [])
 	t.equal(differenceBySorted([ 1 ], [], (x) => 2 * x), [ 1 ])
@@ -64,7 +64,7 @@ test('array.differenceBySorted', (t) => {
 	t.equal(differenceBySorted([ 1, 2, 3 ], [ 2, 3, 4 ], (x) => 2 * x), [ 1 ])
 })
 
-test('array.differenceBySorted.$$$', (t) => {
+test("array.differenceBySorted.$$$", (t) => {
 	t.equal(differenceBySorted.$$$([], [], (x) => 2 * x), [])
 	t.equal(differenceBySorted.$$$([], [ 1 ], (x) => 2 * x), [])
 	t.equal(differenceBySorted.$$$([ 1 ], [], (x) => 2 * x), [ 1 ])
@@ -73,7 +73,7 @@ test('array.differenceBySorted.$$$', (t) => {
 })
 
 
-test('array.differenceByPure', (t) => {
+test("array.differenceByPure", (t) => {
 	t.equal(differenceByPure([], [], (x) => 2 * x), [])
 	t.equal(differenceByPure([], [ 1 ], (x) => 2 * x), [])
 	t.equal(differenceByPure([ 1 ], [], (x) => 2 * x), [ 1 ])
@@ -81,7 +81,7 @@ test('array.differenceByPure', (t) => {
 	t.equal(differenceByPure([ 1, 2, 3 ], [ 2, 3, 4 ], (x) => 2 * x), [ 1 ])
 })
 
-test('array.differenceByPure.$$$', (t) => {
+test("array.differenceByPure.$$$", (t) => {
 	t.equal(differenceByPure.$$$([], [], (x) => 2 * x), [])
 	t.equal(differenceByPure.$$$([], [ 1 ], (x) => 2 * x), [])
 	t.equal(differenceByPure.$$$([ 1 ], [], (x) => 2 * x), [ 1 ])
@@ -89,7 +89,7 @@ test('array.differenceByPure.$$$', (t) => {
 	t.equal(differenceByPure.$$$([ 1, 2, 3 ], [ 2, 3, 4 ], (x) => 2 * x), [ 1 ])
 })
 
-test('array.differenceByPureSorted', (t) => {
+test("array.differenceByPureSorted", (t) => {
 	t.equal(differenceByPureSorted([], [], (x) => 2 * x), [])
 	t.equal(differenceByPureSorted([], [ 1 ], (x) => 2 * x), [])
 	t.equal(differenceByPureSorted([ 1 ], [], (x) => 2 * x), [ 1 ])
@@ -97,7 +97,7 @@ test('array.differenceByPureSorted', (t) => {
 	t.equal(differenceByPureSorted([ 1, 2, 3 ], [ 2, 3, 4 ], (x) => 2 * x), [ 1 ])
 })
 
-test('array.differenceByPureSorted.$$$', (t) => {
+test("array.differenceByPureSorted.$$$", (t) => {
 	t.equal(differenceByPureSorted.$$$([], [], (x) => 2 * x), [])
 	t.equal(differenceByPureSorted.$$$([], [ 1 ], (x) => 2 * x), [])
 	t.equal(differenceByPureSorted.$$$([ 1 ], [], (x) => 2 * x), [ 1 ])

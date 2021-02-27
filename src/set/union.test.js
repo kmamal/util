@@ -1,7 +1,7 @@
 const { test } = require('@xyz/testing')
 const { union } = require('.')
 
-test('set.union', (t) => {
+test("set.union", (t) => {
 	const a = new Set([ 1, 2, 3 ])
 	const b = new Set([ 2, 3, 4 ])
 	const set = union(a, b)

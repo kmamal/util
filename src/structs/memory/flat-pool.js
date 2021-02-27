@@ -28,7 +28,7 @@ class FlatPool {
 
 	alloc () {
 		if (this._array.length === this._max_capacity * this._entry_fields) {
-			throw new Error('out of memory')
+			throw new Error("out of memory")
 		}
 
 		// Grow

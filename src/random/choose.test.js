@@ -3,7 +3,7 @@ const { fromFactory } = require('../map/from-factory')
 const { range } = require('../range')
 const { choose } = require('.')
 
-test('random.choose', (t) => {
+test("random.choose", (t) => {
 	const A = 10
 	const B = 20
 	const arr = [ ...range(A, B) ]

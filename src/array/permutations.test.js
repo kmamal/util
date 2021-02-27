@@ -2,7 +2,7 @@ const { test } = require('@xyz/testing')
 const { permutations } = require('.')
 const { clone } = require('./clone')
 
-test('array.permutations', (t) => {
+test("array.permutations", (t) => {
 	t.equal([ ...permutations([]) ], [ [] ])
 	t.equal([ ...permutations([ 1 ]) ], [ [ 1 ] ])
 	t.equal([ ...permutations([ 1, 2 ]) ], [ [ 1, 2 ], [ 2, 1 ] ])
@@ -16,7 +16,7 @@ test('array.permutations', (t) => {
 	])
 })
 
-test('array.permutations.$$$', (t) => {
+test("array.permutations.$$$", (t) => {
 	const getResult = (iterator) => {
 		const result = []
 		for (const x of iterator) {

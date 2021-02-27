@@ -16,9 +16,7 @@ const popWith = (arr, fn) => {
 
 const popBy = (arr, fn) => popWith(arr, (a, b) => compare(fn(a), fn(b)))
 
-
 const pop = (arr) => popWith(arr, compare)
-
 
 module.exports = {
 	__pop,

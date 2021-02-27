@@ -1,7 +1,7 @@
 const { test } = require('@xyz/testing')
 const { forEach } = require('.')
 
-test('array.forEach', (t) => {
+test("array.forEach", (t) => {
 	let sum
 	const fn = (x) => { sum += x }
 

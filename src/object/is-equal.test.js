@@ -1,7 +1,7 @@
 const { test } = require('@xyz/testing')
 const { isEqual } = require('./is-equal')
 
-test('object.isEqual', (t) => {
+test("object.isEqual", (t) => {
 	t.ok(isEqual(null, null))
 	t.ok(isEqual(undefined, undefined))
 	t.ok(!isEqual(null, undefined))

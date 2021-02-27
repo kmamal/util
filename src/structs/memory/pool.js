@@ -30,7 +30,7 @@ class Pool {
 
 	alloc () {
 		if (this._array.length === this._max_capacity * ENTRY_FIELDS) {
-			throw new Error('out of memory')
+			throw new Error("out of memory")
 		}
 
 		// Grow

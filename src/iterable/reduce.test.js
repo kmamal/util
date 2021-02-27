@@ -1,7 +1,7 @@
 const { test } = require('@xyz/testing')
 const { reduce } = require('.')
 
-test('iterable.reduce', (t) => {
+test("iterable.reduce", (t) => {
 	t.equal([ ...reduce([], () => {}) ], [])
 	t.equal([ ...reduce([], () => {}, 10) ], [])
 	t.equal([ ...reduce([ 1, 2, 3 ], (a, x) => x) ], [ 3 ])

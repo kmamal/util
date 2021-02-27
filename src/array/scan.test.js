@@ -1,7 +1,7 @@
 const { test } = require('@xyz/testing')
 const { scan, scanRight } = require('.')
 
-test('array.scan', (t) => {
+test("array.scan", (t) => {
 	t.equal(scan([], () => {}), [])
 	t.equal(scan([], () => {}, 'x'), [])
 	t.equal(scan([ 'a' ], () => {}), [ 'a' ])
@@ -11,7 +11,7 @@ test('array.scan', (t) => {
 	t.equal(scan([ 'a', 'b', 'c' ], (a, x) => a + x, 'x'), [ 'xa', 'xab', 'xabc' ])
 })
 
-test('array.scan.$$$', (t) => {
+test("array.scan.$$$", (t) => {
 	t.equal(scan.$$$([], () => {}), [])
 	t.equal(scan.$$$([], () => {}, 'x'), [])
 	t.equal(scan.$$$([ 'a' ], () => {}), [ 'a' ])
@@ -21,7 +21,7 @@ test('array.scan.$$$', (t) => {
 	t.equal(scan.$$$([ 'a', 'b', 'c' ], (a, x) => a + x, 'x'), [ 'xa', 'xab', 'xabc' ])
 })
 
-test('array.scanRight', (t) => {
+test("array.scanRight", (t) => {
 	t.equal(scanRight([], () => {}), [])
 	t.equal(scanRight([], () => {}, 'x'), [])
 	t.equal(scanRight([ 'a' ], () => {}), [ 'a' ])
@@ -31,7 +31,7 @@ test('array.scanRight', (t) => {
 	t.equal(scanRight([ 'a', 'b', 'c' ], (a, x) => a + x, 'x'), [ 'xcba', 'xcb', 'xc' ])
 })
 
-test('array.scanRight.$$$', (t) => {
+test("array.scanRight.$$$", (t) => {
 	t.equal(scanRight.$$$([], () => {}), [])
 	t.equal(scanRight.$$$([], () => {}, 'x'), [])
 	t.equal(scanRight.$$$([ 'a' ], () => {}), [ 'a' ])

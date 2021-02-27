@@ -1,7 +1,7 @@
 const { test } = require('@xyz/testing')
 const { flat } = require('.')
 
-test('array.flat', (t) => {
+test("array.flat", (t) => {
 	t.equal(flat([]), [])
 	t.equal(flat([ [] ]), [])
 	t.equal(flat([ [], [], [] ]), [])
@@ -13,7 +13,7 @@ test('array.flat', (t) => {
 	t.equal(flat([ 1, 2, [ 3, 4, [ 5, 6, [ 7, 8, [ 9 ] ] ] ] ], Infinity), [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ])
 })
 
-test('array.flat.$$$', (t) => {
+test("array.flat.$$$", (t) => {
 	t.equal(flat.$$$([]), [])
 	t.equal(flat.$$$([ [] ]), [])
 	t.equal(flat.$$$([ [], [], [] ]), [])

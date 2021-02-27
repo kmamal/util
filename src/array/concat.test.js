@@ -1,7 +1,7 @@
 const { test } = require('@xyz/testing')
 const { concat } = require('.')
 
-test('array.concat', (t) => {
+test("array.concat", (t) => {
 	t.equal(concat([]), [])
 	t.equal(concat([ [] ]), [])
 	t.equal(concat([ [], [], [] ]), [])

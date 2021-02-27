@@ -2,7 +2,7 @@ const { test } = require('@xyz/testing')
 const { fromFactory } = require('../map/from-factory')
 const { randInt } = require('.')
 
-test('random.randInt', (t) => {
+test("random.randInt", (t) => {
 	const A = 10
 	const B = 20
 	const N = 100000

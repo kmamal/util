@@ -1,7 +1,7 @@
 const { test } = require('@xyz/testing')
 const { cycle } = require('.')
 
-test('array.cycle', (t) => {
+test("array.cycle", (t) => {
 	t.equal(cycle([], 0), [])
 	t.equal(cycle([], 10), [])
 	t.equal(cycle([ 1, 2, 3 ], 0), [])

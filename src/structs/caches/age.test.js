@@ -10,7 +10,7 @@ const compareMaps = (t, actual, expected) => {
 	}
 }
 
-test('structs.caches.age sync', (t) => {
+test("structs.caches.age sync", (t) => {
 	const a = new Age(100)
 	const b = new Map()
 	compareMaps(t, a, b)
@@ -32,7 +32,7 @@ test('structs.caches.age sync', (t) => {
 	compareMaps(t, a, b)
 })
 
-test('structs.caches.age expiration', async (t) => {
+test("structs.caches.age expiration", async (t) => {
 	t.timeout(1e3)
 
 	const a = new Age(150)

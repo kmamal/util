@@ -2,14 +2,14 @@ const { test } = require('@xyz/testing')
 const { fromFactory } = require('../../map')
 const { sampleValues } = require('.')
 
-test('sampling.sampleValues Edge-cases', (t) => {
+test("sampling.sampleValues Edge-cases", (t) => {
 	t.equal([ ...sampleValues([], 0) ], [])
 	t.throws(() => [ ...sampleValues([], 3) ])
 	t.throws(() => [ ...sampleValues([ 6, 7 ], 3) ])
 	t.equal([ ...sampleValues([ 6, 7, 8 ], 3) ], [ 6, 7, 8 ])
 })
 
-test('sampling.sampleValues Frequencies', (t) => {
+test("sampling.sampleValues Frequencies", (t) => {
 	const a = [ 5, 6, 7, 8, 9 ]
 	const N = 3
 	const R = 1000

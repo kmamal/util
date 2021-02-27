@@ -1,7 +1,7 @@
 const { test } = require('@xyz/testing')
 const { intersection } = require('./intersection')
 
-test('intervals.intersection', (t) => {
+test("intervals.intersection", (t) => {
 	t.equal(intersection([], []), [])
 	t.equal(intersection([], [ [ 1, 2 ] ]), [])
 	t.equal(intersection([ [ 1, 2 ] ], []), [])

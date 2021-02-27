@@ -16,7 +16,7 @@ const _makeArray = (_x) => {
 const transit = (stateMachine, stateName, event, ...eventData) => {
 	const state = stateMachine[stateName]
 	if (!state) {
-		const error = new Error('Invalid source state')
+		const error = new Error("Invalid source state")
 		error.stateName = stateName
 		throw error
 	}
@@ -61,7 +61,7 @@ const transit = (stateMachine, stateName, event, ...eventData) => {
 	if (newStateName && newStateName !== stateName) {
 		const newState = stateMachine[newStateName]
 		if (!newState) {
-			const error = new Error('Invalid target state')
+			const error = new Error("Invalid target state")
 			error.stateName = stateName
 			throw error
 		}

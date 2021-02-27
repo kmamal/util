@@ -13,7 +13,7 @@ const { sort } = require('../sort')
 
 const N = 1000
 
-test('array.heap', (t) => {
+test("array.heap", (t) => {
 	const arr = new Array(N)
 	map.$$$(arr, Math.random)
 	const expected = sort(arr)
@@ -28,7 +28,7 @@ test('array.heap', (t) => {
 	t.equal(sorted, expected)
 })
 
-test('array.heapBy', (t) => {
+test("array.heapBy", (t) => {
 	const arr = new Array(N)
 	map.$$$(arr, Math.random)
 	const expected = sort(arr)
@@ -45,7 +45,7 @@ test('array.heapBy', (t) => {
 	t.equal(sorted, expected)
 })
 
-test('array.heapWith', (t) => {
+test("array.heapWith", (t) => {
 	const arr = new Array(N)
 	map.$$$(arr, Math.random)
 	const expected = sort(arr)

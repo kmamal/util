@@ -44,7 +44,7 @@ class Limiter {
 
 	async get (n) {
 		if (n > this._capacity) {
-			const error = new Error('requested more tokens than capacity')
+			const error = new Error("requested more tokens than capacity")
 			error.tokens = n
 			error.capacity = this._capacity
 			throw error

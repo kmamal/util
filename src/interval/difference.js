@@ -1,5 +1,5 @@
 const { covers } = require('./covers')
-const { nextToward } = require('../ieee-float')
+const { nextToward } = require('../ieee-float/double')
 
 const difference = (a, b) => {
 	const [ a_start, a_end ] = a

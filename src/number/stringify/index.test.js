@@ -3,7 +3,7 @@ const Stringify = require('.')
 
 const a = [ 42, -69, Math.PI, Number.MAX_VALUE, Infinity, NaN ]
 
-test('number.stringify', (t) => {
+test("number.stringify", (t) => {
 	for (const x of a) {
 		t.equal(Stringify.toExponential(x, 5), x.toExponential(5))
 		t.equal(Stringify.toFixed(x, 5), x.toFixed(5))

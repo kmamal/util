@@ -8,7 +8,7 @@ const {
 	includesByPureSorted,
 } = require('.')
 
-test('array.includes', (t) => {
+test("array.includes", (t) => {
 	t.equal(includes([], 1), false)
 	t.equal(includes([ 1, 3, 2 ], 1), true)
 	t.equal(includes([ 1, 3, 2 ], 2), true)
@@ -19,7 +19,7 @@ test('array.includes', (t) => {
 	t.equal(includes([ 1, 3, 2 ], '1'), false) // !!!
 })
 
-test('array.includesSorted', (t) => {
+test("array.includesSorted", (t) => {
 	t.equal(includesSorted([], 1), false)
 	t.equal(includesSorted([ 1, 2, 3 ], 1), true)
 	t.equal(includesSorted([ 1, 2, 3 ], 2), true)
@@ -30,7 +30,7 @@ test('array.includesSorted', (t) => {
 	t.equal(includesSorted([ 1, 2, 3 ], '1'), true) // !!!
 })
 
-test('array.includesBy', (t) => {
+test("array.includesBy", (t) => {
 	t.equal(includesBy([], 1, (x) => 2 * x), false)
 	t.equal(includesBy([ 1, 3, 2 ], 1, (x) => 2 * x), true)
 	t.equal(includesBy([ 1, 3, 2 ], 2, (x) => 2 * x), true)
@@ -41,7 +41,7 @@ test('array.includesBy', (t) => {
 	t.equal(includesBy([ 1, 3, 2 ], '1', (x) => 2 * x), true) // !!!
 })
 
-test('array.includesBySorted', (t) => {
+test("array.includesBySorted", (t) => {
 	t.equal(includesBySorted([], 1, (x) => 2 * x), false)
 	t.equal(includesBySorted([ 1, 2, 3 ], 1, (x) => 2 * x), true)
 	t.equal(includesBySorted([ 1, 2, 3 ], 2, (x) => 2 * x), true)
@@ -52,7 +52,7 @@ test('array.includesBySorted', (t) => {
 	t.equal(includesBySorted([ 1, 2, 3 ], '1', (x) => 2 * x), true) // !!!
 })
 
-test('array.includesByPure', (t) => {
+test("array.includesByPure", (t) => {
 	t.equal(includesByPure([], 1, (x) => 2 * x), false)
 	t.equal(includesByPure([ 1, 3, 2 ], 1, (x) => 2 * x), true)
 	t.equal(includesByPure([ 1, 3, 2 ], 2, (x) => 2 * x), true)
@@ -63,7 +63,7 @@ test('array.includesByPure', (t) => {
 	t.equal(includesByPure([ 1, 3, 2 ], '1', (x) => 2 * x), true) // !!!
 })
 
-test('array.includesByPureSorted', (t) => {
+test("array.includesByPureSorted", (t) => {
 	t.equal(includesByPureSorted([], 1, (x) => 2 * x), false)
 	t.equal(includesByPureSorted([ 1, 2, 3 ], 1, (x) => 2 * x), true)
 	t.equal(includesByPureSorted([ 1, 2, 3 ], 2, (x) => 2 * x), true)

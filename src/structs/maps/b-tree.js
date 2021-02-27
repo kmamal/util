@@ -6,7 +6,7 @@ const getEntry = (key, value) => [ key, value ]
 
 class BTree {
 	constructor (fn, order) {
-		if (order < 4) { throw new Error('order < 4') }
+		if (order < 4) { throw new Error("order < 4") }
 
 		this._fn = fn
 		this._order = order

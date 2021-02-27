@@ -1,7 +1,7 @@
 const { test } = require('@xyz/testing')
 const { before } = require('.')
 
-test('function.async.before', (t) => {
+test("function.async.before", (t) => {
 	t.expect(2)
 	const choked = before((x) => t.ok(x < 3), 3)
 	choked(1)

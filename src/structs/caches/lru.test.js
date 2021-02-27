@@ -9,7 +9,7 @@ const compareMaps = (t, actual, expected) => {
 	}
 }
 
-test('structs.caches.lru', (t) => {
+test("structs.caches.lru", (t) => {
 	const a = new Lru(3)
 	const b = new Map()
 	compareMaps(t, a, b)

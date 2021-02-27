@@ -1,7 +1,7 @@
 const { test } = require('@xyz/testing')
 const { normalize } = require('./normalize')
 
-test('intervals.normalize', (t) => {
+test("intervals.normalize", (t) => {
 	t.equal(normalize([]), [])
 	t.equal(normalize([ [ 1, 2 ] ]), [ [ 1, 2 ] ])
 	t.equal(normalize([ [ 1, 2 ], [ 3, 4 ] ]), [ [ 1, 2 ], [ 3, 4 ] ])

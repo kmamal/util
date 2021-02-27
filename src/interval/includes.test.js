@@ -1,7 +1,7 @@
 const { test } = require('@xyz/testing')
 const { includes } = require('./includes')
 
-test('interval.includes', (t) => {
+test("interval.includes", (t) => {
 	const interval = [ 2, 4 ]
 
 	t.ok(!includes(interval, 1))

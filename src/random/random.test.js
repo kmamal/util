@@ -1,7 +1,7 @@
 const { test } = require('@xyz/testing')
 const { random } = require('.')
 
-test('random.random', (t) => {
+test("random.random", (t) => {
 	const N = 100000
 	let min = Infinity
 	let max = -Infinity

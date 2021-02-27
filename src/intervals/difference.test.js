@@ -1,7 +1,7 @@
 const { test } = require('@xyz/testing')
 const { difference } = require('./difference')
 
-test('intervals.difference', (t) => {
+test("intervals.difference", (t) => {
 	t.equal(difference([], []), [])
 	t.equal(difference([], [ [ 1, 2 ] ]), [])
 	t.equal(difference([ [ 1, 2 ] ], []), [ [ 1, 2 ] ])

@@ -1,7 +1,7 @@
 const { test } = require('@xyz/testing')
 const { rotate } = require('.')
 
-test('array.rotate', (t) => {
+test("array.rotate", (t) => {
 	t.equal(rotate([], -2), [])
 	t.equal(rotate([], 0), [])
 	t.equal(rotate([], 2), [])

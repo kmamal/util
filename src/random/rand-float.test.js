@@ -2,7 +2,7 @@ const { test } = require('@xyz/testing')
 const { fromFactory } = require('../map/from-factory')
 const { randFloat } = require('.')
 
-test('random.randFloat', (t) => {
+test("random.randFloat", (t) => {
 	const A = 10
 	const B = 20
 	const D = B - A

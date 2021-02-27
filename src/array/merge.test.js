@@ -1,7 +1,7 @@
 const { test } = require('@xyz/testing')
 const { merge, mergeBy, mergeByPure } = require('.')
 
-test('array.merge', (t) => {
+test("array.merge", (t) => {
 	t.equal(merge([], []), [])
 	t.equal(merge([ 1, 2, 3 ], []), [ 1, 2, 3 ])
 	t.equal(merge([], [ 1, 2, 3 ]), [ 1, 2, 3 ])
@@ -11,7 +11,7 @@ test('array.merge', (t) => {
 	t.equal(merge([ 2, 4, 6 ], [ 1, 3, 5 ]), [ 1, 2, 3, 4, 5, 6 ])
 })
 
-test('array.mergeBy', (t) => {
+test("array.mergeBy", (t) => {
 	t.equal(mergeBy([], [], (x) => 2 * x), [])
 	t.equal(mergeBy([ 1, 2, 3 ], [], (x) => 2 * x), [ 1, 2, 3 ])
 	t.equal(mergeBy([], [ 1, 2, 3 ], (x) => 2 * x), [ 1, 2, 3 ])
@@ -21,7 +21,7 @@ test('array.mergeBy', (t) => {
 	t.equal(mergeBy([ 2, 4, 6 ], [ 1, 3, 5 ], (x) => 2 * x), [ 1, 2, 3, 4, 5, 6 ])
 })
 
-test('array.mergeByPure', (t) => {
+test("array.mergeByPure", (t) => {
 	t.equal(mergeByPure([], [], (x) => 2 * x), [])
 	t.equal(mergeByPure([ 1, 2, 3 ], [], (x) => 2 * x), [ 1, 2, 3 ])
 	t.equal(mergeByPure([], [ 1, 2, 3 ], (x) => 2 * x), [ 1, 2, 3 ])

@@ -1,7 +1,7 @@
 const { test } = require('@xyz/testing')
 const { Array2d, clone, fill } = require('.')
 
-test('array.2d.fill', (t) => {
+test("array.2d.fill", (t) => {
 	const a = new Array2d(2, 3)
 
 	const b = fill(a, 1)
@@ -21,7 +21,7 @@ test('array.2d.fill', (t) => {
 	t.equal(e.data, [ 2, 1, 4, 4, 1, 3 ])
 })
 
-test('array.2d.fill.$$$', (t) => {
+test("array.2d.fill.$$$", (t) => {
 	const a = new Array2d(2, 3)
 
 	fill.$$$(a, 1)

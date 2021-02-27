@@ -3,7 +3,7 @@ const { fromFactory } = require('../map/from-factory')
 const { permutations } = require('../array/permutations')
 const { shuffle } = require('.')
 
-test('random.shuffle', (t) => {
+test("random.shuffle", (t) => {
 	const arr = [ 1, 2, 3 ]
 	const N = 10000
 	const counts = fromFactory(() => 0)

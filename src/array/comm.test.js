@@ -1,7 +1,7 @@
 const { test } = require('@xyz/testing')
 const { comm, commBy, commByPure } = require('.')
 
-test('array.comm', (t) => {
+test("array.comm", (t) => {
 	t.equal(comm([], []), { a: [], ab: [], b: [] })
 	t.equal(comm([ 1 ], []), { a: [ 1 ], ab: [], b: [] })
 	t.equal(comm([], [ 1 ]), { a: [], ab: [], b: [ 1 ] })
@@ -12,7 +12,7 @@ test('array.comm', (t) => {
 	t.equal(comm([ 1, 2, 3 ], [ 2, 3, 4 ]), { a: [ 1 ], ab: [ 2, 3 ], b: [ 4 ] })
 })
 
-test('array.commBy', (t) => {
+test("array.commBy", (t) => {
 	t.equal(commBy([], [], (x) => 2 * x), { a: [], ab: [], b: [] })
 	t.equal(commBy([ 1 ], [], (x) => 2 * x), { a: [ 1 ], ab: [], b: [] })
 	t.equal(commBy([], [ 1 ], (x) => 2 * x), { a: [], ab: [], b: [ 1 ] })
@@ -23,7 +23,7 @@ test('array.commBy', (t) => {
 	t.equal(commBy([ 1, 2, 3 ], [ 2, 3, 4 ], (x) => 2 * x), { a: [ 1 ], ab: [ 2, 3 ], b: [ 4 ] })
 })
 
-test('array.commByPure', (t) => {
+test("array.commByPure", (t) => {
 	t.equal(commByPure([], [], (x) => 2 * x), { a: [], ab: [], b: [] })
 	t.equal(commByPure([ 1 ], [], (x) => 2 * x), { a: [ 1 ], ab: [], b: [] })
 	t.equal(commByPure([], [ 1 ], (x) => 2 * x), { a: [], ab: [], b: [ 1 ] })

@@ -1,7 +1,7 @@
 const { test } = require('@xyz/testing')
 const { flatMap } = require('.')
 
-test('array.flatMap', (t) => {
+test("array.flatMap", (t) => {
 	t.equal(flatMap([], () => {}), [])
 	t.equal(flatMap([], () => [ 1, 2, 3 ]), [])
 	t.equal(flatMap([ 1 ], (x) => [ x ]), [ 1 ])

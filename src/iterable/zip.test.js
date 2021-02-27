@@ -1,7 +1,7 @@
 const { test } = require('@xyz/testing')
 const { zip } = require('.')
 
-test('iterable.zip', (t) => {
+test("iterable.zip", (t) => {
 	t.equal([ ...zip([]) ], [])
 	t.equal([ ...zip([ [] ]) ], [])
 	t.equal([ ...zip([ [], [] ]) ], [])

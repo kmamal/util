@@ -1,7 +1,7 @@
 const { test } = require('@xyz/testing')
 const { debounce } = require('.')
 
-test('function.async.debounce', (t) => new Promise((resolve) => {
+test("function.async.debounce", (t) => new Promise((resolve) => {
 	const { start, step } = t.schedule([ [ 100, 2 ] ])
 
 	const fn = (x) => {
@@ -15,7 +15,7 @@ test('function.async.debounce', (t) => new Promise((resolve) => {
 	debounced(2)
 }))
 
-test('function.async.debounce Leading true', (t) => new Promise((resolve) => {
+test("function.async.debounce Leading true", (t) => new Promise((resolve) => {
 	const { start, step } = t.schedule([
 		[ 0, 1 ],
 		[ 100, 3 ],
@@ -33,7 +33,7 @@ test('function.async.debounce Leading true', (t) => new Promise((resolve) => {
 	debounced(3)
 }))
 
-test('function.async.debounce Trailing false', (t) => new Promise((resolve) => {
+test("function.async.debounce Trailing false", (t) => new Promise((resolve) => {
 	const { start, step } = t.schedule([
 		[ 0, 1 ],
 		[ 150, 4 ],
@@ -53,7 +53,7 @@ test('function.async.debounce Trailing false', (t) => new Promise((resolve) => {
 	setTimeout(() => { debounced(4) }, 150)
 }))
 
-test('function.async.debounce Cancel', (t) => new Promise((resolve) => {
+test("function.async.debounce Cancel", (t) => new Promise((resolve) => {
 	const { start, step } = t.schedule([
 		[ 0, 1 ],
 		[ 0, 4 ],
@@ -73,7 +73,7 @@ test('function.async.debounce Cancel', (t) => new Promise((resolve) => {
 	debounced(4)
 }))
 
-test('function.async.debounce Flush', (t) => new Promise((resolve) => {
+test("function.async.debounce Flush", (t) => new Promise((resolve) => {
 	const { start, step } = t.schedule([ [ 50, 2 ] ])
 
 	const fn = (x) => {

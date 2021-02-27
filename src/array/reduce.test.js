@@ -1,7 +1,7 @@
 const { test } = require('@xyz/testing')
 const { reduce, reduceRight } = require('.')
 
-test('array.reduce', (t) => {
+test("array.reduce", (t) => {
 	t.equal(reduce([], () => {}), undefined)
 	t.equal(reduce([], () => {}, 'x'), 'x')
 	t.equal(reduce([ 'a' ], () => {}), 'a')
@@ -11,7 +11,7 @@ test('array.reduce', (t) => {
 	t.equal(reduce([ 'a', 'b', 'c' ], (a, x) => a + x, 'x'), 'xabc')
 })
 
-test('array.reduceRight', (t) => {
+test("array.reduceRight", (t) => {
 	t.equal(reduceRight([], () => {}), undefined)
 	t.equal(reduceRight([], () => {}, 'x'), 'x')
 	t.equal(reduceRight([ 'a' ], () => {}), 'a')
