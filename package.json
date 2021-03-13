@@ -1,12 +1,14 @@
 {
-  "version": "0.0.32",
+  "version": "0.0.33",
   "name": "@xyz/util",
   "description": "util",
   "repository": {
     "type": "git",
     "url": "git:repos/util"
   },
-  "files": [ "/src/" ],
+  "files": [
+    "/src/"
+  ],
   "exports": {
     "./": "./src/"
   },
