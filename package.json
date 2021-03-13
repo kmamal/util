@@ -6,6 +6,7 @@
     "type": "git",
     "url": "git:repos/util"
   },
+  "files": [ "/src/" ],
   "exports": {
     "./": "./src/"
   },

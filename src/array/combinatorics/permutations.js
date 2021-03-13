@@ -1,5 +1,5 @@
-const { clone } = require('./clone')
-const { swap } = require('./swap')
+const { clone } = require('../clone')
+const { swap } = require('../swap')
 
 const __recurse = function * (arr, start, end) {
 	const length = end - start

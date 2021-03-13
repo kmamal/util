@@ -1,6 +1,6 @@
 const { test } = require('@xyz/testing')
-const { permutations } = require('.')
-const { clone } = require('./clone')
+const { permutations } = require('./permutations')
+const { clone } = require('../clone')
 
 test("array.permutations", (t) => {
 	t.equal([ ...permutations([]) ], [ [] ])

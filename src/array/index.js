@@ -34,7 +34,6 @@ module.exports = {
 	...require('./merge'),
 	...require('./min'),
 	...require('./nth'),
-	...require('./permutations'),
 	...require('./prefix-sums'),
 	...require('./reduce'),
 	...require('./repeat'),

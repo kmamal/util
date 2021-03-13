@@ -1,57 +1,46 @@
 const { amrap } = require('./amrap')
 const { chronometer } = require('./chronometer')
+const { product } = require('../array/combinatorics/product')
 const { map } = require('../array/map')
-const { reduce } = require('../array/reduce')
+const { every } = require('../array/every')
+const { zip: zipObject } = require('../object/zip')
 
-const iterateParameter = function * (parameter) {
-	const { name, key, options, values } = parameter
-	const arr = options || map(values, (x) => ({ name: x, value: x }))
-	for (const option of arr) {
-		yield { name, key, option }
-	}
-}
 
-const _recurse = function * (parameters, index, options) {
-	if (index === parameters.length) {
-		yield options
-		return
-	}
-
-	for (const option of iterateParameter(parameters[index])) {
-		options[index] = option
-		yield* _recurse(parameters, index + 1, options)
-	}
-}
-
-const iterateParameters = function * (parameters) {
-	const options = new Array(parameters.length)
-	yield* _recurse(parameters, 0, options)
-}
+const makeOption = (x) => ({ name: x, value: x })
 
 const run = async function * ({ parameters: _p, pre, post, callback, time }) {
-	const parameters = map(Object.entries(_p), ([ key, value ]) => ({ ...value, key }))
+	const parameters = Object.entries(_p)
+	const num_parameters = parameters.length
+	const parameter_keys = new Array(num_parameters)
+	const parameter_options = new Array(num_parameters)
+
 	{
-		const labels = reduce(parameters, (acc, { name, key }) => ({ ...acc, [key]: name }), {})
+		const labels = {}
+
+		for (let i = 0; i < num_parameters; i++) {
+			const [ key, { name, options, values } ] = parameters[i]
+			labels[key] = name
+			parameter_keys[i] = key
+			parameter_options[i] = options ?? map(values, makeOption)
+		}
+
 		labels.result = "Result"
 		yield { type: 'info', data: { labels } }
 	}
 
 	const cases = []
 	{
-		foreach_case:
-		for (const options of iterateParameters(parameters)) {
-			const info = {}
-			const data = {}
-			const filters = []
-			for (const { key, option: { name, value, filter } } of options) {
-				info[key] = name
-				data[key] = value
-				if (filter) { filters.push(filter) }
+		for (const options of product(parameter_options)) {
+			const names = map(options, ({ name }) => name)
+			const info = zipObject(parameter_keys, names)
+
+			const filters = map(options, ({ filter }) => filter).filter(Boolean)
+			if (!every(filters, (filter) => filter(info))) {
+				continue
 			}
 
-			for (const filter of filters) {
-				if (!filter(info)) { continue foreach_case }
-			}
+			const values = map(options, ({ value }) => value)
+			const data = zipObject(parameter_keys, values)
 
 			const pre_data = pre ? pre(data) : null
 			const elapsed = chronometer(() => callback(data, pre_data))
@@ -64,9 +53,9 @@ const run = async function * ({ parameters: _p, pre, post, callback, time }) {
 			}
 		}
 
-		const numCases = cases.length
-		const totalTimeEstimate = time * numCases
-		yield { type: 'info', data: { numCases, totalTimeEstimate } }
+		const num_cases = cases.length
+		const total_time_estimate = time * num_cases
+		yield { type: 'info', data: { num_cases, total_time_estimate } }
 	}
 
 	for (const c of cases) {
