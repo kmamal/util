@@ -1,5 +1,5 @@
 const { test } = require('@xyz/testing')
-const { chunk } = require('.')
+const { chunk } = require('./chunk')
 
 test("array.chunk", (t) => {
 	t.equal(chunk([], 1), [])

@@ -1,5 +1,5 @@
 const { test } = require('@xyz/testing')
-const { min, minBy, minIndex, minIndexBy } = require('.')
+const { min, minBy, minIndex, minIndexBy } = require('./min')
 
 test("array.min", (t) => {
 	t.equal(min([]), undefined)

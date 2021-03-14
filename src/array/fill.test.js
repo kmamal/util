@@ -1,5 +1,5 @@
 const { test } = require('@xyz/testing')
-const { fill } = require('.')
+const { fill } = require('./fill')
 
 test("array.fill", (t) => {
 	t.equal(fill([], 0), [])

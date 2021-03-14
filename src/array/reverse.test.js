@@ -1,5 +1,5 @@
 const { test } = require('@xyz/testing')
-const { reverse } = require('.')
+const { reverse } = require('./reverse')
 
 test("array.reverse", (t) => {
 	t.equal(reverse([]), [])

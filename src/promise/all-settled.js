@@ -1,4 +1,4 @@
 
-const allSettled = (arr) => Promise.allSettled(arr)
+const allSettled = Promise.allSettled
 
 module.exports = { allSettled }

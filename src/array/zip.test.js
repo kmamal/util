@@ -1,5 +1,5 @@
 const { test } = require('@xyz/testing')
-const { zip, zipWith } = require('.')
+const { zip, zipWith } = require('./zip')
 const { sum } = require('./sum')
 
 test("array.zip", (t) => {

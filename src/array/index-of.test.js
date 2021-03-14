@@ -12,7 +12,7 @@ const {
 	indexOfByPureRight,
 	indexOfByPureSorted,
 	indexOfByPureSortedRight,
-} = require('.')
+} = require('./index-of')
 
 test("array.indexOf", (t) => {
 	t.equal(indexOf([], 1), -1)

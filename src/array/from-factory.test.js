@@ -1,5 +1,5 @@
 const { test } = require('@xyz/testing')
-const { fromFactory } = require('.')
+const { fromFactory } = require('./from-factory')
 
 test("array.fromFactory", (t) => {
 	t.equal(fromFactory(0, () => {}), [])

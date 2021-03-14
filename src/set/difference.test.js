@@ -1,5 +1,5 @@
 const { test } = require('@xyz/testing')
-const { difference } = require('.')
+const { difference } = require('./difference')
 
 test("set.difference", (t) => {
 	const a = new Set([ 1, 2, 3 ])

@@ -1,5 +1,5 @@
 const { test } = require('@xyz/testing')
-const { combine } = require('.')
+const { combine } = require('./combine')
 const { add } = require('../operators')
 
 test("array.combine", (t) => {

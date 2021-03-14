@@ -1,4 +1,4 @@
 
-const reject = (value) => Promise.reject(value)
+const reject = Promise.reject
 
 module.exports = { reject }

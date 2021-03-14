@@ -1,5 +1,5 @@
 const { test } = require('@xyz/testing')
-const { after } = require('.')
+const { after } = require('./after')
 
 test("function.async.after", (t) => {
 	t.expect(3)

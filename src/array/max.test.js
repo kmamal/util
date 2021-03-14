@@ -1,5 +1,5 @@
 const { test } = require('@xyz/testing')
-const { max, maxBy, maxIndex, maxIndexBy } = require('.')
+const { max, maxBy, maxIndex, maxIndexBy } = require('./max')
 
 test("array.max", (t) => {
 	t.equal(max([]), undefined)

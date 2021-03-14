@@ -1,5 +1,5 @@
 const { test } = require('@xyz/testing')
-const { compact } = require('.')
+const { compact } = require('./compact')
 
 test("array.compact", (t) => {
 	t.equal(compact([]), [])

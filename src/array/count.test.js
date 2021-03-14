@@ -1,5 +1,5 @@
 const { test } = require('@xyz/testing')
-const { count } = require('.')
+const { count } = require('./count')
 
 test("array.count", (t) => {
 	t.equal(count([]), {})

@@ -1,5 +1,5 @@
 const { test } = require('@xyz/testing')
-const { reduce, reduceRight } = require('.')
+const { reduce, reduceRight } = require('./reduce')
 
 test("array.reduce", (t) => {
 	t.equal(reduce([], () => {}), undefined)

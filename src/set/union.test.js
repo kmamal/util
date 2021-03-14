@@ -1,5 +1,5 @@
 const { test } = require('@xyz/testing')
-const { union } = require('.')
+const { union } = require('./union')
 
 test("set.union", (t) => {
 	const a = new Set([ 1, 2, 3 ])

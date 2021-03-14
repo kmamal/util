@@ -1,5 +1,5 @@
 const { test } = require('@xyz/testing')
-const { concat } = require('.')
+const { concat } = require('./concat')
 
 test("array.concat", (t) => {
 	t.equal(concat([]), [])

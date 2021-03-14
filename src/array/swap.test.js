@@ -1,5 +1,5 @@
 const { test } = require('@xyz/testing')
-const { swap } = require('.')
+const { swap } = require('./swap')
 
 test("array.swap", (t) => {
 	t.equal(swap([ 1 ], 0, 0), [ 1 ])

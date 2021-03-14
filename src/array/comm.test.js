@@ -1,5 +1,5 @@
 const { test } = require('@xyz/testing')
-const { comm, commBy, commByPure } = require('.')
+const { comm, commBy, commByPure } = require('./comm')
 
 test("array.comm", (t) => {
 	t.equal(comm([], []), { a: [], ab: [], b: [] })

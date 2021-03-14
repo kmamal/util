@@ -1,5 +1,5 @@
 const { test } = require('@xyz/testing')
-const { cycle } = require('.')
+const { cycle } = require('./cycle')
 
 test("array.cycle", (t) => {
 	t.equal(cycle([], 0), [])

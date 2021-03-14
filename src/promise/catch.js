@@ -1,4 +1,4 @@
 
-const _catch = (onRejected) => (p) => p.catch(onRejected)
+const _catch = (p, onRejected) => p.catch(onRejected)
 
 module.exports = { catch: _catch }

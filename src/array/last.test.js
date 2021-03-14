@@ -1,5 +1,5 @@
 const { test } = require('@xyz/testing')
-const { last } = require('.')
+const { last } = require('./last')
 
 test("array.last", (t) => {
 	t.equal(last([]), undefined)

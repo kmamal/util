@@ -1,5 +1,5 @@
 const { test } = require('@xyz/testing')
-const { first } = require('.')
+const { first } = require('./first')
 
 test("array.first", (t) => {
 	t.equal(first([]), undefined)

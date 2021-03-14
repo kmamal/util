@@ -1,5 +1,5 @@
 const { test } = require('@xyz/testing')
-const { every } = require('.')
+const { every } = require('./every')
 
 test("array.every", (t) => {
 	t.equal(every([], () => false), true)

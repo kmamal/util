@@ -1,5 +1,5 @@
 const { test } = require('@xyz/testing')
-const { interpose } = require('.')
+const { interpose } = require('./interpose')
 
 test("array.interpose", (t) => {
 	t.equal(interpose([], 0), [])

@@ -1,5 +1,5 @@
 const { test } = require('@xyz/testing')
-const { nth } = require('.')
+const { nth } = require('./nth')
 
 test("array.nth", (t) => {
 	t.equal(nth([], 0), undefined)

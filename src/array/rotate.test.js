@@ -1,5 +1,5 @@
 const { test } = require('@xyz/testing')
-const { rotate } = require('.')
+const { rotate } = require('./rotate')
 
 test("array.rotate", (t) => {
 	t.equal(rotate([], -2), [])

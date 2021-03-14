@@ -6,7 +6,7 @@ const {
 	includesBySorted,
 	includesByPure,
 	includesByPureSorted,
-} = require('.')
+} = require('./includes')
 
 test("array.includes", (t) => {
 	t.equal(includes([], 1), false)

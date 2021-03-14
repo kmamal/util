@@ -1,5 +1,5 @@
 const { test } = require('@xyz/testing')
-const { isSorted, isSortedBy, isSortedByPure } = require('.')
+const { isSorted, isSortedBy, isSortedByPure } = require('./is-sorted')
 
 test("array.isSorted", (t) => {
 	t.equal(isSorted([]), true)

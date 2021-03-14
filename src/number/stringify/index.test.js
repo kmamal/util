@@ -1,5 +1,10 @@
 const { test } = require('@xyz/testing')
-const Stringify = require('.')
+const Stringify = {
+	...require('./to-exponential'),
+	...require('./to-fixed'),
+	...require('./to-locale-string'),
+	...require('./to-precision'),
+}
 
 const a = [ 42, -69, Math.PI, Number.MAX_VALUE, Infinity, NaN ]
 

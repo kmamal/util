@@ -1,5 +1,5 @@
 const { test } = require('@xyz/testing')
-const { debounce } = require('.')
+const { debounce } = require('./debounce')
 
 test("function.async.debounce", (t) => new Promise((resolve) => {
 	const { start, step } = t.schedule([ [ 100, 2 ] ])

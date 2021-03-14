@@ -1,11 +1,11 @@
 const { mergeWith } = require('./merge')
 
-let state
-const alternate = () => (state *= -1)
+let _state
+const _alternate = () => (_state *= -1)
 
 const interweave = (a, b) => {
-	state = 1
-	return mergeWith(a, b, alternate)
+	_state = 1
+	return mergeWith(a, b, _alternate)
 }
 
 module.exports = { interweave }

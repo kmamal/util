@@ -6,7 +6,7 @@ const {
 	differenceBySorted,
 	differenceByPure,
 	differenceByPureSorted,
-} = require('.')
+} = require('./difference')
 
 test("array.difference", (t) => {
 	t.equal(difference([], []), [])

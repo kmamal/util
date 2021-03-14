@@ -1,5 +1,5 @@
 const { test } = require('@xyz/testing')
-const { flat } = require('.')
+const { flat } = require('./flat')
 
 test("array.flat", (t) => {
 	t.equal(flat([]), [])

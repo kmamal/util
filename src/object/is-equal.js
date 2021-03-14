@@ -28,11 +28,11 @@ const isEqual = (a, b) => {
 	}
 
 	// Object
-	for (const key in a) {
+	for (const key of Object.keys(a)) {
 		if (!isEqual(a[key], b[key])) { return false }
 	}
 
-	for (const key in b) {
+	for (const key of Object.keys(b)) {
 		if (!isEqual(a[key], b[key])) { return false }
 	}
 

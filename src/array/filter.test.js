@@ -1,5 +1,5 @@
 const { test } = require('@xyz/testing')
-const { filter } = require('.')
+const { filter } = require('./filter')
 
 test("array.filter", (t) => {
 	t.equal(filter([], () => {}), [])

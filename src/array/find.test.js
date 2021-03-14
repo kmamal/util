@@ -1,5 +1,5 @@
 const { test } = require('@xyz/testing')
-const { findIndex, findIndexRight, find, findRight } = require('.')
+const { findIndex, findIndexRight, find, findRight } = require('./find')
 
 test("array.findIndex", (t) => {
 	t.equal(findIndex([], () => true), -1)

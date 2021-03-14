@@ -6,7 +6,7 @@ const {
 	intersectionBySorted,
 	intersectionByPure,
 	intersectionByPureSorted,
-} = require('.')
+} = require('./intersection')
 
 test("array.intersection", (t) => {
 	t.equal(intersection([], []), [])

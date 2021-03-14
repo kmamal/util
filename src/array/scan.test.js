@@ -1,5 +1,5 @@
 const { test } = require('@xyz/testing')
-const { scan, scanRight } = require('.')
+const { scan, scanRight } = require('./scan')
 
 test("array.scan", (t) => {
 	t.equal(scan([], () => {}), [])

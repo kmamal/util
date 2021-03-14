@@ -1,5 +1,5 @@
 const { test } = require('@xyz/testing')
-const { delay } = require('.')
+const { delay } = require('./delay')
 
 test("function.async.delay", (t) => new Promise((resolve) => {
 	const { start, step } = t.schedule([

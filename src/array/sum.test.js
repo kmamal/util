@@ -1,5 +1,5 @@
 const { test } = require('@xyz/testing')
-const { sum } = require('.')
+const { sum } = require('./sum')
 
 test("array.sum", (t) => {
 	t.equal(sum([]), 0)

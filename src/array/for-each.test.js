@@ -1,5 +1,5 @@
 const { test } = require('@xyz/testing')
-const { forEach } = require('.')
+const { forEach } = require('./for-each')
 
 test("array.forEach", (t) => {
 	let sum

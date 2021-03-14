@@ -1,5 +1,5 @@
 const { test } = require('@xyz/testing')
-const { copy } = require('.')
+const { copy } = require('./copy')
 
 test("array.copy", (t) => {
 	t.equal(copy([], 0, [], 1, 1), [])

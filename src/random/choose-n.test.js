@@ -1,7 +1,7 @@
 const { test } = require('@xyz/testing')
 const { fromFactory } = require('../map/from-factory')
 const { range } = require('../range')
-const { chooseN } = require('.')
+const { chooseN } = require('./choose-n')
 
 test("random.chooseN", (t) => {
 	const A = 10

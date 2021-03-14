@@ -1,5 +1,5 @@
 const { test } = require('@xyz/testing')
-const { prefixSums } = require('.')
+const { prefixSums } = require('./prefix-sums')
 
 test("array.prefixSums", (t) => {
 	t.equal(prefixSums([]), [])

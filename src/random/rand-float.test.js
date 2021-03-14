@@ -1,6 +1,6 @@
 const { test } = require('@xyz/testing')
 const { fromFactory } = require('../map/from-factory')
-const { randFloat } = require('.')
+const { randFloat } = require('./rand-float')
 
 test("random.randFloat", (t) => {
 	const A = 10

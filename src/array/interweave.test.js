@@ -1,5 +1,5 @@
 const { test } = require('@xyz/testing')
-const { interweave } = require('.')
+const { interweave } = require('./interweave')
 
 test("array.interweave", (t) => {
 	t.equal(interweave([], []), [])

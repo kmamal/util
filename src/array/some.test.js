@@ -1,5 +1,5 @@
 const { test } = require('@xyz/testing')
-const { some } = require('.')
+const { some } = require('./some')
 
 test("array.some", (t) => {
 	t.equal(some([], () => true), false)

@@ -1,4 +1,4 @@
 
-const race = (arr) => Promise.race(arr)
+const race = Promise.race
 
 module.exports = { race }

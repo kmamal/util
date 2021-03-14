@@ -1,4 +1,4 @@
 
-const _finally = (onSettled) => (p) => p.finally(onSettled)
+const _finally = (p, onSettled) => p.finally(onSettled)
 
 module.exports = { finally: _finally }

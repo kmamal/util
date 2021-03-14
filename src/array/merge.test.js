@@ -1,5 +1,5 @@
 const { test } = require('@xyz/testing')
-const { merge, mergeBy, mergeByPure } = require('.')
+const { merge, mergeBy, mergeByPure } = require('./merge')
 
 test("array.merge", (t) => {
 	t.equal(merge([], []), [])

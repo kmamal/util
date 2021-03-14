@@ -1,5 +1,5 @@
 const { test } = require('@xyz/testing')
-const { map } = require('.')
+const { map } = require('./map')
 
 test("array.map", (t) => {
 	t.equal(map([], (x) => 2 * x), [])

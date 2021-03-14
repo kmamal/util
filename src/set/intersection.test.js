@@ -1,5 +1,5 @@
 const { test } = require('@xyz/testing')
-const { intersection } = require('.')
+const { intersection } = require('./intersection')
 
 test("set.intersection", (t) => {
 	const a = new Set([ 1, 2, 3 ])

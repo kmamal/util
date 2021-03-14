@@ -1,5 +1,5 @@
 const { test } = require('@xyz/testing')
-const { xor } = require('.')
+const { xor } = require('./xor')
 
 test("set.xor", (t) => {
 	const a = new Set([ 1, 2, 3 ])

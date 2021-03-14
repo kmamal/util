@@ -6,7 +6,7 @@ const {
 	xorBySorted,
 	xorByPure,
 	xorByPureSorted,
-} = require('.')
+} = require('./xor')
 
 test("array.xor", (t) => {
 	t.equal(xor([], []), [])

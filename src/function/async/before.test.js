@@ -1,5 +1,5 @@
 const { test } = require('@xyz/testing')
-const { before } = require('.')
+const { before } = require('./before')
 
 test("function.async.before", (t) => {
 	t.expect(2)

@@ -6,7 +6,7 @@ const {
 	uniqBySorted,
 	uniqByPure,
 	uniqByPureSorted,
-} = require('.')
+} = require('./uniq')
 
 test("array.uniq", (t) => {
 	t.equal(uniq([]), [])

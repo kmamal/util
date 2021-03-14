@@ -1,5 +1,5 @@
 const { test } = require('@xyz/testing')
-const { compactMap } = require('.')
+const { compactMap } = require('./compact-map')
 
 test("array.compactMap", (t) => {
 	t.equal(compactMap([], () => {}), [])

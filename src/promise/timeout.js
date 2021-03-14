@@ -1,7 +1,9 @@
 
-const timeout = (time) => new Promise((resolve, reject) => {
+const timeout = (time, info) => new Promise((resolve, reject) => {
 	setTimeout(() => {
-		reject(new Error("timeout"))
+		const error = new Error("timeout")
+		Object.assign(error, info)
+		reject(error)
 	}, time)
 })
 
