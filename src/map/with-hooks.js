@@ -11,7 +11,7 @@ const withHooks = (hooks) => {
 		get: original_get,
 		set: original_set,
 		delete: original_delete,
-	} = map.get
+	} = map
 
 	let factory_get
 	if (factory) {
