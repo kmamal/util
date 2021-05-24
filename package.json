@@ -16,8 +16,7 @@
     "test": "./scripts/run-tests.sh"
   },
   "license": "MIT",
-  "dependencies": {},
   "devDependencies": {
-    "@kmamal/testing": "git@github.com:kmamal/testing.git#semver:*"
+    "@kmamal/testing": "kmamal/testing.git#semver:*"
   }
 }

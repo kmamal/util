@@ -6,33 +6,32 @@ const withHooks = (hooks) => {
 	} = hooks
 
 	const map = new Map()
+	const {
+		has: original_has,
+		get: original_get,
+		set: original_set,
+		delete: original_delete,
+	} = map.get
 
+	let factory_get
 	if (factory) {
-		const _get = map.get
-		map.get = (k, kk) => {
-			if (!map.has(k)) {
+		map.get = factory_get = (k, kk) => {
+			if (!original_has.call(map, k)) {
 				const v = factory(k, kk)
-				map.set(k, v)
+				original_set.call(map, k, v)
 				return v
 			}
-			return _get.call(map, k)
+			return original_get.call(map, k)
 		}
 	}
 
 	if (key) {
-		const _has = map.has
-		map.has = (k) => _has.call(map, key(k))
-
-		const _get = map.get
+		map.has = (k) => original_has.call(map, key(k))
 		map.get = factory
-			? (k) => _get.call(map, key(k), k)
-			: (k) => _get.call(map, key(k))
-
-		const _set = map.set
-		map.set = (k, v) => _set.call(map, key(k), v)
-
-		const _delete = map.delete
-		map.delete = (k) => _delete.call(map, key(k))
+			? (k) => factory_get.call(map, key(k), k)
+			: (k) => original_get.call(map, key(k))
+		map.set = (k, v) => original_set.call(map, key(k), v)
+		map.delete = (k) => original_delete.call(map, key(k))
 	}
 
 	return map
