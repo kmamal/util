@@ -1,5 +1,5 @@
 const { test } = require('@xyz/testing')
-const { fromFactory } = require('../../map')
+const { withHooks } = require('../../map/with-hooks')
 const { sum } = require('../../array/sum')
 const { sampleIndexesFromReservoir } = require('.')
 
@@ -20,7 +20,7 @@ test("sampling.sampleIndexesFromReservoir Frequencies", async (t) => {
 	const N = 3
 	const R = 10000
 
-	const counts = fromFactory(() => 0)
+	const counts = withHooks({ factory: () => 0 })
 	for (let i = 0; i < R; i++) {
 		const indexes = await sampleIndexesFromReservoir(toAsyncIterable(arr), N)
 		for (const index of indexes) {

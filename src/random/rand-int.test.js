@@ -1,6 +1,6 @@
 const { test } = require('@xyz/testing')
-const { fromFactory } = require('../map/from-factory')
-const { randInt } = require('.')
+const { withHooks } = require('../map/with-hooks')
+const { randInt } = require('./rand-int')
 
 test("random.randInt", (t) => {
 	const A = 10
@@ -9,7 +9,7 @@ test("random.randInt", (t) => {
 	let min = Infinity
 	let max = -Infinity
 	let sum = 0
-	const buckets = fromFactory(() => 0)
+	const buckets = withHooks({ factory: () => 0 })
 
 	for (let i = 0; i < N; i++) {
 		const r = randInt(A, B)

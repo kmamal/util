@@ -1,5 +1,5 @@
 const { test } = require('@xyz/testing')
-const { fromFactory } = require('../../map')
+const { withHooks } = require('../../map/with-hooks')
 const { sampleValues } = require('.')
 
 test("sampling.sampleValues Edge-cases", (t) => {
@@ -14,7 +14,7 @@ test("sampling.sampleValues Frequencies", (t) => {
 	const N = 3
 	const R = 1000
 
-	const counts = fromFactory(() => 0)
+	const counts = withHooks({ factory: () => 0 })
 	for (let i = 0; i < R; i++) {
 		const sampled = [ ...sampleValues(a, N) ]
 		t.assert(() => sampled.length === N)

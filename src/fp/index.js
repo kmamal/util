@@ -5,7 +5,7 @@ const __fp = (func) => (...args) => (x) => func(x, ...args)
 const _fp = (func) => {
 	if (func.length === 1) { return func }
 	const fp = __fp(func)
-	if (fp.$$$) { fp.$$$ = __fp(fp.$$$) }
+	if (func.$$$) { fp.$$$ = __fp(func.$$$) }
 	return fp
 }
 
@@ -184,11 +184,38 @@ const { split } = require('../string/split')
 const { startsWith } = require('../string/starts-with')
 const { substring } = require('../string/substring')
 const {
-	toLowerCase,
-	toUpperCase,
-	toLocaleLowerCase,
-	toLocaleUpperCase,
-} = require('../string/to-case')
+	lowerCase,
+	isLowerCase,
+} = require('../string/case/lower')
+const {
+	upperCase,
+	isUpperCase,
+} = require('../string/case/upper')
+const {
+	localeLowerCase,
+	isLocaleLowerCase,
+} = require('../string/case/local-lower')
+const {
+	localeUpperCase,
+	isLocaleUpperCase,
+} = require('../string/case/local-upper')
+const {
+	camelCase,
+	isCamelCase,
+} = require('../string/case/camel')
+const {
+	pascalCase,
+	isPascalCase,
+} = require('../string/case/pascal')
+const {
+	snakeCase,
+	isSnakeCase,
+} = require('../string/case/snake')
+const {
+	kebabCase,
+	isKebabCase,
+} = require('../string/case/kebab')
+
 const {
 	trim,
 	trimEnd,
@@ -199,7 +226,7 @@ const {
 const { fromFactory: arrayFromFactory } = require('../array/from-factory')
 const { fromHandlers: arrayFromHandlers } = require('../array/from-handlers')
 
-const { fromFactory: mapFromFactory } = require('../map/from-factory')
+const { withHooks: mapWithHooks } = require('../map/with-hooks')
 
 const { combine } = require('../array/combine')
 const {
@@ -449,10 +476,22 @@ module.exports = {
 	split: _fp(split),
 	startsWith: _fp(startsWith),
 	substring: _fp(substring),
-	toLowerCase: _fp(toLowerCase),
-	toUpperCase: _fp(toUpperCase),
-	toLocaleLowerCase: _fp(toLocaleLowerCase),
-	toLocaleUpperCase: _fp(toLocaleUpperCase),
+	lowerCase: _fp(lowerCase),
+	isLowerCase: _fp(isLowerCase),
+	upperCase: _fp(upperCase),
+	isUpperCase: _fp(isUpperCase),
+	localeLowerCase: _fp(localeLowerCase),
+	isLocaleLowerCase: _fp(isLocaleLowerCase),
+	localeUpperCase: _fp(localeUpperCase),
+	isLocaleUpperCase: _fp(isLocaleUpperCase),
+	camelCase: _fp(camelCase),
+	isCamelCase: _fp(isCamelCase),
+	pascalCase: _fp(pascalCase),
+	isPascalCase: _fp(isPascalCase),
+	snakeCase: _fp(snakeCase),
+	isSnakeCase: _fp(isSnakeCase),
+	kebabCase: _fp(kebabCase),
+	isKebabCase: _fp(isKebabCase),
 	trim: _fp(trim),
 	trimEnd: _fp(trimEnd),
 	trimStart: _fp(trimStart),
@@ -461,7 +500,7 @@ module.exports = {
 		arrayFromFactory,
 		arrayFromHandlers,
 
-		mapFromFactory,
+		mapWithHooks,
 
 		combine,
 		comm,
@@ -521,6 +560,14 @@ module.exports = {
 
 		range,
 		xrange,
+
+		times: (n, fn) => {
+			const res = new Array(n)
+			for (let i = 0; i < n; i++) {
+				res[i] = fn(i)
+			}
+			return res
+		},
 	},
 
 	sets: {

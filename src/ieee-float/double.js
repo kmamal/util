@@ -10,27 +10,30 @@ const TWO_POW_31 = 2 ** 31
 const TWO_POW_32 = 2 ** 32
 
 const toBuffer = (value) => {
-	const buffer = Buffer.alloc(BYTES)
-	buffer.writeDoubleBE(value, 0)
+	const buffer = new ArrayBuffer(BYTES)
+	const float64 = new Float64Array(buffer)
+	float64[0] = value
+	buffer.float64 = float64
 	return buffer
 }
 
-const fromBuffer = (buffer) => buffer.readDoubleBE(0)
-
 const sign = (value) => {
 	const buffer = toBuffer(value)
-	return buffer[0] >> 7
+	const uint8 = new Uint8Array(buffer)
+	return uint8[0] >> 7
 }
 
 const exponent = (value) => {
 	const buffer = toBuffer(value)
-	return buffer.readUInt16BE(0) >> 4 & EXPONENT_MASK
+	const uint16 = new Uint16Array(buffer)
+	return uint16[0] >> 4 & EXPONENT_MASK
 }
 
 const mantissa = (value) => {
 	const buffer = toBuffer(value)
-	const high = buffer.readUInt32BE(0) & 0x0fffff
-	const low = buffer.readUInt32BE(4)
+	const uint32 = new Uint32Array(buffer)
+	const high = uint32[0] & 0x0fffff
+	const low = uint32[1]
 	return (high * TWO_POW_32) + low
 }
 
@@ -42,12 +45,15 @@ const parse = (value) => ({
 
 // TODO: is it faster to just do math?
 const _from1 = (s, e, m) => {
-	const buffer = Buffer.alloc(BYTES)
 	const high = ((s & 0x01) * TWO_POW_31) + (((e & EXPONENT_MASK) << 20) | ((m / TWO_POW_32) & 0x0fffff))
 	const low = (((m / TWO_POW_16) & 0xffff) * TWO_POW_16) + (m & 0xffff)
-	buffer.writeUInt32BE(high, 0)
-	buffer.writeUInt32BE(low, 4)
-	return fromBuffer(buffer)
+
+	const buffer = new ArrayBuffer(BYTES)
+	const uint32 = new Uint32Array(buffer)
+	uint32[0] = high
+	uint32[1] = low
+	const float64 = new Float64Array(buffer)
+	return float64[0]
 }
 
 const _from2 = (s, e, m) => {
@@ -64,18 +70,18 @@ const nextToward = (value, target) => {
 	if (value === target) { return value }
 
 	const buffer = toBuffer(value)
-	const unsigned = buffer.readBigUInt64BE(0)
+	const biguint64 = new BigUint64Array(buffer)
+	const unsigned = biguint64[0]
 	const direction = target > value ? 1n : -1n
 	const increment = value > 0 ? direction : -direction
-	buffer.writeBigUInt64BE(unsigned + increment, 0)
-	return fromBuffer(buffer)
+	biguint64[0] = unsigned + increment
+	return buffer.float64[0]
 }
 
 
 module.exports = {
 	MANTISSA_BITS,
 	EXPONENT_BITS,
-	toBuffer,
 	sign,
 	exponent,
 	mantissa,

@@ -7,26 +7,29 @@ const EXPONENT_MASK = 2 ** EXPONENT_BITS - 1
 const EXPONENT_BIAS = 2 ** (EXPONENT_BITS - 1) - 1
 
 const toBuffer = (value) => {
-	const buffer = Buffer.alloc(BYTES)
-	buffer.writeFloatBE(value, 0)
+	const buffer = new ArrayBuffer(BYTES)
+	const float32 = new Float32Array(buffer)
+	float32[0] = value
+	buffer.float32 = float32
 	return buffer
 }
 
-const fromBuffer = (buffer) => buffer.readFloatBE(0)
-
 const sign = (value) => {
 	const buffer = toBuffer(value)
-	return buffer[0] >> 7
+	const uint8 = new Uint8Array(buffer)
+	return uint8[0] >> 7
 }
 
 const exponent = (value) => {
 	const buffer = toBuffer(value)
-	return buffer.readUInt16BE(0) >> 7 & EXPONENT_MASK
+	const uint16 = new Uint16Array(buffer)
+	return uint16[0] >> 7 & EXPONENT_MASK
 }
 
 const mantissa = (value) => {
 	const buffer = toBuffer(value)
-	return buffer.readUInt32BE(0) & MANTISSA_MASK
+	const uint32 = new Uint32Array(buffer)
+	return uint32[0] & MANTISSA_MASK
 }
 
 const parse = (value) => ({
@@ -37,13 +40,16 @@ const parse = (value) => ({
 
 // TODO: is it faster to just do math?
 const _from1 = (s, e, m) => {
-	const buffer = Buffer.alloc(BYTES)
 	const value = 0
 		 | ((s & 0x01) << 32 - 1)
 		 | ((e & EXPONENT_MASK) << 32 - EXPONENT_BITS)
 		 | ((m & MANTISSA_MASK))
-	buffer.writeUInt32BE(value, 0)
-	return fromBuffer(buffer)
+
+	const buffer = new ArrayBuffer(BYTES)
+	const uint32 = new Uint32Array(buffer)
+	uint32[0] = value
+	const float32 = new Float32Array(buffer)
+	return float32[0]
 }
 
 const _from2 = (s, e, m) => {
@@ -60,18 +66,18 @@ const nextToward = (value, target) => {
 	if (value === target) { return value }
 
 	const buffer = toBuffer(value)
-	const unsigned = buffer.readUInt32BE(0)
+	const uint32 = new Uint32Array(buffer)
+	const unsigned = uint32(0)
 	const direction = target > value ? 1 : -1
 	const increment = value > 0 ? direction : -direction
-	buffer.writeUInt32BE(unsigned + increment, 0)
-	return fromBuffer(buffer)
+	uint32[0] = unsigned + increment
+	return buffer.float32[0]
 }
 
 
 module.exports = {
 	MANTISSA_BITS,
 	EXPONENT_BITS,
-	toBuffer,
 	sign,
 	exponent,
 	mantissa,

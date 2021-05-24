@@ -1,5 +1,5 @@
 const { test } = require('@xyz/testing')
-const { rand } = require('../../../random')
+const { rand } = require('../../../random/rand')
 const { sortBy } = require('../../../array/sort')
 
 const createTests = (name, constructor, args) => {

@@ -1,9 +1,9 @@
 const { test } = require('@xyz/testing')
-const { fromFactory } = require('./from-factory')
+const { withHooks } = require('./with-hooks')
 
-test("map.fromFactory Counting", (t) => {
+test("map.withHooks Counting", (t) => {
 	const a = [ 1, 2, 1, 3 ]
-	const counts = fromFactory(() => 0)
+	const counts = withHooks({ factory: () => 0 })
 
 	for (const x of a) {
 		counts.set(x, counts.get(x) + 1)
@@ -15,8 +15,8 @@ test("map.fromFactory Counting", (t) => {
 	t.equal(counts.get(4), 0)
 })
 
-test("map.fromFactory Argument", (t) => {
-	const map = fromFactory((x) => x)
+test("map.withHooks Argument", (t) => {
+	const map = withHooks({ factory: (x) => x })
 
 	t.equal(map.get(1), 1)
 	t.equal(map.get(2), 2)

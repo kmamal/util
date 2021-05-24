@@ -1,12 +1,12 @@
 const { test } = require('@xyz/testing')
-const { fromFactory } = require('../map/from-factory')
+const { withHooks } = require('../map/with-hooks')
 const { permutations } = require('../array/combinatorics/permutations')
-const { shuffle } = require('.')
+const { shuffle } = require('./shuffle')
 
 test("random.shuffle", (t) => {
 	const arr = [ 1, 2, 3 ]
 	const N = 10000
-	const counts = fromFactory(() => 0)
+	const counts = withHooks({ factory: () => 0 })
 
 	for (let i = 0; i < N; i++) {
 		const shuffled = shuffle(arr)

@@ -1,5 +1,5 @@
 const { test } = require('@xyz/testing')
-const { random } = require('.')
+const { random } = require('./random')
 
 test("random.random", (t) => {
 	const N = 100000

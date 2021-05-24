@@ -1,6 +1,6 @@
 const { test } = require('@xyz/testing')
-const { fromFactory } = require('../map/from-factory')
-const { range } = require('../range')
+const { withHooks } = require('../map/with-hooks')
+const { range } = require('../range/range')
 const { chooseN } = require('./choose-n')
 
 test("random.chooseN", (t) => {
@@ -12,7 +12,7 @@ test("random.chooseN", (t) => {
 	let min = Infinity
 	let max = -Infinity
 	let sum = 0
-	const buckets = fromFactory(() => 0)
+	const buckets = withHooks({ factory: () => 0 })
 
 	for (let i = 0; i < N; i++) {
 		const choices = chooseN(arr, M)

@@ -1,5 +1,5 @@
 const { test } = require('@xyz/testing')
-const { fromFactory } = require('../map/from-factory')
+const { withHooks } = require('../map/with-hooks')
 const { randFloat } = require('./rand-float')
 
 test("random.randFloat", (t) => {
@@ -10,7 +10,7 @@ test("random.randFloat", (t) => {
 	let min = Infinity
 	let max = -Infinity
 	let sum = 0
-	const buckets = fromFactory(() => 0)
+	const buckets = withHooks({ factory: () => 0 })
 
 	for (let i = 0; i < N; i++) {
 		const r = randFloat(A, B)

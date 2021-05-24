@@ -1,5 +1,5 @@
 
-const _step_regex = /\[(?<key1>[^\]]+)\]|\.?(?<key2>[^.]+)/ug
+const _step_regex = /\[(?<key1>[^.\]+])\]|\.?(?<key2>[^[.]+)/ug
 
 const _makeSteps = (path) => [ ...path.matchAll(_step_regex) ]
 	.map(({ groups }) => groups.key1 || groups.key2)
