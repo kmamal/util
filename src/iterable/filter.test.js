@@ -1,4 +1,4 @@
-const { test } = require('@xyz/testing')
+const { test } = require('@kmamal/testing')
 const { filter } = require('.')
 
 test("iterable.filter", (t) => {

@@ -1,4 +1,4 @@
-const { test } = require('@xyz/testing')
+const { test } = require('@kmamal/testing')
 const { splitWith, splitBy, split } = require('./split')
 
 test('array.split', (t) => {

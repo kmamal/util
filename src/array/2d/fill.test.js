@@ -1,4 +1,4 @@
-const { test } = require('@xyz/testing')
+const { test } = require('@kmamal/testing')
 const { Array2d, clone, fill } = require('.')
 
 test("array.2d.fill", (t) => {

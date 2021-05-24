@@ -1,4 +1,4 @@
-const { test } = require('@xyz/testing')
+const { test } = require('@kmamal/testing')
 const { cycle } = require('./cycle')
 
 test("array.cycle", (t) => {

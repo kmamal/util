@@ -1,4 +1,4 @@
-const { test } = require('@xyz/testing')
+const { test } = require('@kmamal/testing')
 const { max, maxBy, maxIndex, maxIndexBy } = require('./max')
 
 test("array.max", (t) => {

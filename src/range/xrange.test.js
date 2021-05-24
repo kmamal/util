@@ -1,4 +1,4 @@
-const { test } = require('@xyz/testing')
+const { test } = require('@kmamal/testing')
 const { xrange } = require('./xrange')
 
 test("range.xrange", (t) => {

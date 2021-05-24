@@ -1,4 +1,4 @@
-const { test } = require('@xyz/testing')
+const { test } = require('@kmamal/testing')
 const { merge, mergeBy, mergeByPure } = require('./merge')
 
 test("array.merge", (t) => {

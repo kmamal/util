@@ -1,4 +1,4 @@
-const { test } = require('@xyz/testing')
+const { test } = require('@kmamal/testing')
 const { withHooks } = require('../map/with-hooks')
 const { range } = require('../range/range')
 const { chooseN } = require('./choose-n')

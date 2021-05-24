@@ -1,4 +1,4 @@
-const { Future } = require('@xyz/util/promise/future')
+const { Future } = require('@kmamal/util/promise/future')
 
 class Deferred {
 	constructor (params) {

@@ -1,4 +1,4 @@
-const { test } = require('@xyz/testing')
+const { test } = require('@kmamal/testing')
 const { Array2d, clone, combine } = require('.')
 const { add } = require('../../operators')
 

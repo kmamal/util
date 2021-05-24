@@ -1,4 +1,4 @@
-const { test } = require('@xyz/testing')
+const { test } = require('@kmamal/testing')
 const { combinations } = require('./combinations')
 
 const arr = [ 1, 2, 3, 4 ]

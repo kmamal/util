@@ -1,4 +1,4 @@
-const { test } = require('@xyz/testing')
+const { test } = require('@kmamal/testing')
 const { ObjectPool } = require('./object-pool')
 const { sleep } = require('../../promise/sleep')
 

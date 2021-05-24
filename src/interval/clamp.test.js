@@ -1,4 +1,4 @@
-const { test } = require('@xyz/testing')
+const { test } = require('@kmamal/testing')
 const { clamp } = require('./clamp')
 
 test("interval.clamp", (t) => {

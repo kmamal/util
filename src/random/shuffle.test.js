@@ -1,4 +1,4 @@
-const { test } = require('@xyz/testing')
+const { test } = require('@kmamal/testing')
 const { withHooks } = require('../map/with-hooks')
 const { permutations } = require('../array/combinatorics/permutations')
 const { shuffle } = require('./shuffle')

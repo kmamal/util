@@ -1,4 +1,4 @@
-const { test } = require('@xyz/testing')
+const { test } = require('@kmamal/testing')
 const { withHooks } = require('./with-hooks')
 
 test("map.withHooks Counting", (t) => {

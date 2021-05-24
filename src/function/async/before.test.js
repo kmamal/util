@@ -1,4 +1,4 @@
-const { test } = require('@xyz/testing')
+const { test } = require('@kmamal/testing')
 const { before } = require('./before')
 
 test("function.async.before", (t) => {

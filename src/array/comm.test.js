@@ -1,4 +1,4 @@
-const { test } = require('@xyz/testing')
+const { test } = require('@kmamal/testing')
 const { comm, commBy, commByPure } = require('./comm')
 
 test("array.comm", (t) => {

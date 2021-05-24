@@ -1,4 +1,4 @@
-const { test } = require('@xyz/testing')
+const { test } = require('@kmamal/testing')
 const { concat } = require('./concat')
 
 test("array.concat", (t) => {

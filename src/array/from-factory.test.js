@@ -1,4 +1,4 @@
-const { test } = require('@xyz/testing')
+const { test } = require('@kmamal/testing')
 const { fromFactory } = require('./from-factory')
 
 test("array.fromFactory", (t) => {

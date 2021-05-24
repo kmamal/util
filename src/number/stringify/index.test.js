@@ -1,4 +1,4 @@
-const { test } = require('@xyz/testing')
+const { test } = require('@kmamal/testing')
 const Stringify = {
 	...require('./to-exponential'),
 	...require('./to-fixed'),

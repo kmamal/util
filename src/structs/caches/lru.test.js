@@ -1,4 +1,4 @@
-const { test } = require('@xyz/testing')
+const { test } = require('@kmamal/testing')
 const { Lru } = require('./lru')
 
 const compareMaps = (t, actual, expected) => {

@@ -1,4 +1,4 @@
-const { test } = require('@xyz/testing')
+const { test } = require('@kmamal/testing')
 const { isSorted, isSortedBy, isSortedByPure } = require('./is-sorted')
 
 test("array.isSorted", (t) => {

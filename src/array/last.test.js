@@ -1,4 +1,4 @@
-const { test } = require('@xyz/testing')
+const { test } = require('@kmamal/testing')
 const { last } = require('./last')
 
 test("array.last", (t) => {

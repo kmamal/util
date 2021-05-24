@@ -1,4 +1,4 @@
-const { test } = require('@xyz/testing')
+const { test } = require('@kmamal/testing')
 const { rand } = require('../../../random/rand')
 const { sortBy } = require('../../../array/sort')
 

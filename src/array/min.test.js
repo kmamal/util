@@ -1,4 +1,4 @@
-const { test } = require('@xyz/testing')
+const { test } = require('@kmamal/testing')
 const { min, minBy, minIndex, minIndexBy } = require('./min')
 
 test("array.min", (t) => {
