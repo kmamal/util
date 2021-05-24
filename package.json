@@ -4,7 +4,7 @@
   "description": "util",
   "repository": {
     "type": "git",
-    "url": "git:repos/util"
+    "url": "git@github.com:kmamal/util.git"
   },
   "files": [
     "/src/"
@@ -15,9 +15,9 @@
   "scripts": {
     "test": "./scripts/run-tests.sh"
   },
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {},
   "devDependencies": {
-    "@xyz/testing": "git:repos/testing#semver:*"
+    "@xyz/testing": "git@github.com:kmamal/testing.git#semver:*"
   }
 }
