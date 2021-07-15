@@ -12,7 +12,7 @@
     "update-exports": "./scripts/update-exports.sh"
   },
   "devDependencies": {
-    "@kmamal/testing": "^0.0.9"
+    "@kmamal/testing": "^0.0.10"
   },
   "files": [
     "/src/"
