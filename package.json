@@ -12,7 +12,7 @@
     "update-exports": "./scripts/update-exports.sh"
   },
   "devDependencies": {
-    "@kmamal/testing": "kmamal/testing.git#semver:*"
+    "@kmamal/testing": "^0.0.9"
   },
   "files": [
     "/src/"
