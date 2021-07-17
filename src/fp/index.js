@@ -127,11 +127,15 @@ const { defaults } = require('../object/defaults')
 const { extend } = require('../object/extend')
 const { fromEntries } = require('../object/from-entries')
 const {
-	isEqualWith,
 	isEqual,
+	isEqualWith,
 } = require('../object/is-equal')
 const { keys } = require('../object/keys')
 const { mapValues } = require('../object/map-values')
+const {
+	matches,
+	matchesWith,
+} = require('../object/matches')
 const { omit } = require('../object/omit')
 const { pick } = require('../object/pick')
 const { toEntries } = require('../object/to-entries')
@@ -405,10 +409,12 @@ module.exports = {
 	defaults: _fp(defaults),
 	extend: _fp(extend),
 	fromEntries: _fp(fromEntries),
-	isEqualWith: _fp(isEqualWith),
 	isEqual: _fp(isEqual),
+	isEqualWith: _fp(isEqualWith),
 	keys: _fp(keys),
 	mapValues: _fp(mapValues),
+	matches: _fp(matches),
+	matchesWith: _fp(matchesWith),
 	omit: _fp(omit),
 	pick: _fp(pick),
 	toEntries: _fp(toEntries),
