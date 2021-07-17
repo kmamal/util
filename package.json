@@ -14,9 +14,6 @@
   "devDependencies": {
     "@kmamal/testing": "^0.0.10"
   },
-  "files": [
-    "/src/"
-  ],
   "exports": {
     "./array/slice": "./src/array/slice.js",
     "./array/reduce": "./src/array/reduce.js",
