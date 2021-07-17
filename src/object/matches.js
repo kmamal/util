@@ -1,14 +1,13 @@
+const { eq } = require('../operators/comparison/eq')
 
-const matchesWith = (obj, pattern, fnPropEq) => {
+const matchesWith = (obj, pattern, fnEqProp) => {
 	for (const [ key, value ] of Object.entries(pattern)) {
-		if (!fnPropEq(key, obj[key], value)) { return false }
+		if (!fnEqProp(obj[key], value, key)) { return false }
 	}
 	return true
 }
 
-const _propEq = (key, a, b) => a === b
-
-const matches = (obj, pattern) => matchesWith(obj, pattern, _propEq)
+const matches = (obj, pattern) => matchesWith(obj, pattern, eq)
 
 module.exports = {
 	matchesWith,

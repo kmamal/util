@@ -17,11 +17,11 @@ test('object.matchesWith', (t) => {
 	t.ok(matchesWith(
 		{ a: 1, b: 2, c: 3 },
 		{ a: 1, b: 2, c: 4 },
-		(key, a, b) => key === 'c' ? true : a === b,
+		(a, b, key) => key === 'c' ? true : a === b,
 	))
 	t.ok(!matchesWith(
 		{ a: 1, b: 2, c: 3 },
 		{ a: 2, b: 2, c: 4 },
-		(key, a, b) => key === 'c' ? true : a === b,
+		(a, b, key) => key === 'c' ? true : a === b,
 	))
 })
