@@ -159,6 +159,7 @@
     "./object/map-values": "./src/object/map-values.js",
     "./object/values": "./src/object/values.js",
     "./object/pick": "./src/object/pick.js",
+    "./object/matches": "./src/object/matches.js",
     "./object/from-entries": "./src/object/from-entries.js",
     "./object/is-equal": "./src/object/is-equal.js",
     "./object/accessors": "./src/object/accessors.js",
