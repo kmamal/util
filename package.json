@@ -267,6 +267,7 @@
     "./number/stringify/to-fixed": "./src/number/stringify/to-fixed.js",
     "./number/stringify/to-exponential": "./src/number/stringify/to-exponential.js",
     "./number/stringify/to-locale-string": "./src/number/stringify/to-locale-string.js",
+    "./number/modular": "./src/number/modular.js",
     "./fp": "./src/fp/index.js",
     "./int32": "./src/int32/index.js",
     "./structs/memory/flat-pool": "./src/structs/memory/flat-pool.js",

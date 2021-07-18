@@ -5,70 +5,70 @@ const { compare } = require('../function/compare')
 
 const LINEAR_SEARCH_CUTOFF = 8
 
-const __indexOf = (arr, start, end, x, fn_eq) => __linearSearch(arr, start, end, (y) => fn_eq(x, y))
+const __indexOf = (arr, start, end, x, fnEq) => __linearSearch(arr, start, end, (y) => fnEq(x, y))
 
-const __indexOfRight = (arr, start, end, x, fn_eq) => __linearSearchRight(arr, start, end, (y) => fn_eq(x, y))
+const __indexOfRight = (arr, start, end, x, fnEq) => __linearSearchRight(arr, start, end, (y) => fnEq(x, y))
 
-const __indexOfSorted = (arr, start, end, x, fn_cmp) => {
+const __indexOfSorted = (arr, start, end, x, fnCmp) => {
 	const length = end - start
 	if (length === 0) { return -1 }
 	if (length <= LINEAR_SEARCH_CUTOFF) {
-		return __indexOf(arr, start, end, x, (a, b) => fn_cmp(a, b) === 0)
+		return __indexOf(arr, start, end, x, (a, b) => fnCmp(a, b) === 0)
 	}
-	const index = __binarySearchLeft(arr, start, end, x, fn_cmp)
-	const found = index !== end && fn_cmp(x, arr[index]) === 0
+	const index = __binarySearchLeft(arr, start, end, x, fnCmp)
+	const found = index !== end && fnCmp(x, arr[index]) === 0
 	return found ? index : -1
 }
 
-const __indexOfSortedRight = (arr, start, end, x, fn_cmp) => {
+const __indexOfSortedRight = (arr, start, end, x, fnCmp) => {
 	const length = end - start
 	if (length === 0) { return -1 }
 	if (length <= LINEAR_SEARCH_CUTOFF) {
-		return __indexOfRight(arr, start, end, x, (a, b) => fn_cmp(a, b) === 0)
+		return __indexOfRight(arr, start, end, x, (a, b) => fnCmp(a, b) === 0)
 	}
-	const index = __binarySearchRight(arr, start, end, x, fn_cmp) - 1
-	const found = index !== start - 1 && fn_cmp(x, arr[index]) === 0
+	const index = __binarySearchRight(arr, start, end, x, fnCmp) - 1
+	const found = index !== start - 1 && fnCmp(x, arr[index]) === 0
 	return found ? index : -1
 }
 
-const indexOfWith = (arr, x, fn_eq) => __indexOf(arr, 0, arr.length, x, fn_eq)
+const indexOfWith = (arr, x, fnEq) => __indexOf(arr, 0, arr.length, x, fnEq)
 
-const indexOfWithRight = (arr, x, fn_eq) => __indexOfRight(arr, 0, arr.length, x, fn_eq)
+const indexOfWithRight = (arr, x, fnEq) => __indexOfRight(arr, 0, arr.length, x, fnEq)
 
-const indexOfBy = (arr, x, fn_map) => indexOfWith(arr, x, (a, b) => eq(fn_map(a), fn_map(b)))
+const indexOfBy = (arr, x, fnMap) => indexOfWith(arr, x, (a, b) => eq(fnMap(a), fnMap(b)))
 
-const indexOfByRight = (arr, x, fn_map) => indexOfWithRight(arr, x, (a, b) => eq(fn_map(a), fn_map(b)))
+const indexOfByRight = (arr, x, fnMap) => indexOfWithRight(arr, x, (a, b) => eq(fnMap(a), fnMap(b)))
 
 // HACK: The first argument to eq is always x
-const indexOfByPure = (arr, x, fn_map) => {
-	const x_value = fn_map(x)
-	return indexOfWith(arr, x, (a, b) => eq(x_value, fn_map(b)))
+const indexOfByPure = (arr, x, fnMap) => {
+	const xValue = fnMap(x)
+	return indexOfWith(arr, x, (a, b) => eq(xValue, fnMap(b)))
 }
-const indexOfByPureRight = (arr, x, fn_map) => {
-	const x_value = fn_map(x)
-	return indexOfWithRight(arr, x, (a, b) => eq(x_value, fn_map(b)))
+const indexOfByPureRight = (arr, x, fnMap) => {
+	const xValue = fnMap(x)
+	return indexOfWithRight(arr, x, (a, b) => eq(xValue, fnMap(b)))
 }
 
 const indexOf = (arr, x) => indexOfWith(arr, x, eq)
 
 const indexOfRight = (arr, x) => indexOfWithRight(arr, x, eq)
 
-const indexOfWithSorted = (arr, x, fn_cmp) => __indexOfSorted(arr, 0, arr.length, x, fn_cmp)
+const indexOfWithSorted = (arr, x, fnCmp) => __indexOfSorted(arr, 0, arr.length, x, fnCmp)
 
-const indexOfWithSortedRight = (arr, x, fn_cmp) => __indexOfSortedRight(arr, 0, arr.length, x, fn_cmp)
+const indexOfWithSortedRight = (arr, x, fnCmp) => __indexOfSortedRight(arr, 0, arr.length, x, fnCmp)
 
-const indexOfBySorted = (arr, x, fn_map) => indexOfWithSorted(arr, x, (a, b) => compare(fn_map(a), fn_map(b)))
+const indexOfBySorted = (arr, x, fnMap) => indexOfWithSorted(arr, x, (a, b) => compare(fnMap(a), fnMap(b)))
 
-const indexOfBySortedRight = (arr, x, fn_map) => indexOfWithSortedRight(arr, x, (a, b) => compare(fn_map(a), fn_map(b)))
+const indexOfBySortedRight = (arr, x, fnMap) => indexOfWithSortedRight(arr, x, (a, b) => compare(fnMap(a), fnMap(b)))
 
 // HACK: The first argument to compare is always x
-const indexOfByPureSorted = (arr, x, fn_map) => {
-	const x_value = fn_map(x)
-	return indexOfWithSorted(arr, x, (a, b) => compare(x_value, fn_map(b)))
+const indexOfByPureSorted = (arr, x, fnMap) => {
+	const xValue = fnMap(x)
+	return indexOfWithSorted(arr, x, (a, b) => compare(xValue, fnMap(b)))
 }
-const indexOfByPureSortedRight = (arr, x, fn_map) => {
-	const x_value = fn_map(x)
-	return indexOfWithSortedRight(arr, x, (a, b) => compare(x_value, fn_map(b)))
+const indexOfByPureSortedRight = (arr, x, fnMap) => {
+	const xValue = fnMap(x)
+	return indexOfWithSortedRight(arr, x, (a, b) => compare(xValue, fnMap(b)))
 }
 
 const indexOfSorted = (arr, x) => indexOfWithSorted(arr, x, compare)
