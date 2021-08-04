@@ -7,26 +7,25 @@ class _Base {
 		this._array = new Array(triangular(n))
 	}
 
-	get (i, j) { return this._array[this._index(i, j)] }
-	set (i, j, value) { this._array[this._index(i, j)] = value }
+	get (x, y) { return this._array[this._index(x, y)] }
+	set (x, y, value) { this._array[this._index(x, y)] = value }
 }
 
 class LowerLeft extends _Base {
-	_index (i, j) { return triangular(i) + j }
+	_index (x, y) { return triangular(y) + x }
 }
 
 class LowerRight extends _Base {
-	_index (i, j) { return triangular(i) + this._n - j - 1 }
+	_index (x, y) { return triangular(y) + this._n - x - 1 }
 }
 
 class UpperLeft extends _Base {
-	_index (i, j) { return triangular(this._n - i - 1) + j }
+	_index (x, y) { return triangular(this._n - y - 1) + x }
 }
 
 class UpperRight extends _Base {
-	_index (i, j) { return triangular(this._n - i - 1) + this._n - j - 1 }
+	_index (x, y) { return triangular(this._n - y - 1) + this._n - x - 1 }
 }
-
 
 module.exports = {
 	LowerLeft,

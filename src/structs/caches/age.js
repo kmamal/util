@@ -1,83 +1,83 @@
-const { Deque } = require('../deque')
+const { DoublyLinkedList } = require('../doubly-linked-list')
 
-const k_key = Symbol("key")
-const k_time = Symbol("time")
+const kKey = Symbol("key")
+const kTime = Symbol("time")
 
 class Age {
 	constructor (lifetime, eager = true) {
 		this._lifetime = lifetime
 		this._eager = eager
-		this._list = new Deque()
+		this._list = new DoublyLinkedList()
 		this._map = new Map()
 	}
 
 	get size () { return this._map.size }
 
 	has (key) {
-		return Boolean(this._peekEntry(key))
+		return Boolean(this._peekNode(key))
 	}
 
 	get (key) {
-		return this._getEntry(key)?.value
+		return this._getNode(key)?.value
 	}
 
 	set (key, value) {
 		const now = Date.now()
 
-		let entry = this._getEntry(key, now)?.value
-		if (entry) {
-			const old_value = entry.value
-			entry.value = value
-			return old_value
+		let node = this._getNode(key, now)?.value
+		if (node) {
+			const oldValue = node.value
+			node.value = value
+			return oldValue
 		}
 
-		entry = this._list.unshift(value)
-		entry[k_key] = key
-		entry[k_time] = now
-		this._map.set(key, entry)
+		node = this._list._unshift(value)
+		node[kKey] = key
+		node[kTime] = now
+		this._map.set(key, node)
 
 		return undefined
 	}
 
 	delete (key) {
-		const entry = this._map.get(key)
-		if (!entry) { return undefined }
-		this._list.remove(entry)
+		const node = this._map.get(key)
+		if (!node) { return undefined }
+		this._list._remove(node)
 		this._map.delete(key)
-		return entry.value
+		return node.value
 	}
 
-	_peekEntry (key, now = Date.now()) {
-		let entry = this._map.get(key)
-		if (!entry) { return null }
+	_peekNode (key, now = Date.now()) {
+		let node = this._map.get(key)
+		if (!node) { return null }
 
-		const elapsed = now - entry[k_time]
+		const elapsed = now - node[kTime]
 		const remaining = this._lifetime - elapsed
-		if (remaining > 0) { return entry }
+		if (remaining > 0) { return node }
 
-		this._map.delete(entry[k_key])
-		this._list.remove(entry)
+		this._map.delete(node[kKey])
+		this._list._remove(node)
 
 		if (this._eager) {
-			entry = entry.next
-			while (entry) {
-				this._map.delete(entry[k_key])
-				this._list.remove(entry)
-				entry = entry.next
+			node = node.next
+			while (node) {
+				this._map.delete(node[kKey])
+				this._list._remove(node)
+				node = node.next
 			}
 		}
 
 		return null
 	}
 
-	_getEntry (key, now = Date.now()) {
-		const entry = this._peekEntry(key, now)
-		if (!entry) { return null }
+	_getNode (key, now = Date.now()) {
+		const node = this._peekNode(key, now)
+		if (!node) { return null }
 
-		this._list.remove(entry)
-		this._list._unshift(entry)
-		entry[k_time] = now
-		return entry
+		this._list._remove(node)
+		this._list._unshiftNode(node)
+		node[kTime] = now
+		return node
 	}
 }
 

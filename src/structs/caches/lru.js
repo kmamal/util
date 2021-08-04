@@ -1,11 +1,11 @@
-const { Deque } = require('../deque')
+const { DoublyLinkedList } = require('../doubly-linked-list')
 
-const k_key = Symbol("key")
+const kKey = Symbol("key")
 
 class Lru {
 	constructor (capacity) {
 		this._capacity = capacity
-		this._list = new Deque()
+		this._list = new DoublyLinkedList()
 		this._map = new Map()
 	}
 
@@ -16,43 +16,43 @@ class Lru {
 	}
 
 	get (key) {
-		return this._getEntry(key)?.value
+		return this._getNode(key)?.value
 	}
 
 	set (key, value) {
-		let entry = this._getEntry(key)
-		if (entry) {
-			const old_value = entry.value
-			entry.value = value
-			return old_value
+		let node = this._getNode(key)
+		if (node) {
+			const oldValue = node.value
+			node.value = value
+			return oldValue
 		}
 
-		entry = this._list.unshift(value)
-		entry[k_key] = key
-		this._map.set(key, entry)
+		node = this._list._unshift(value)
+		node[kKey] = key
+		this._map.set(key, node)
 
 		if (this._list.size() > this._capacity) {
-			entry = this._list._pop()
-			this._map.delete(entry[k_key])
+			node = this._list._pop()
+			this._map.delete(node[kKey])
 		}
 
 		return undefined
 	}
 
 	delete (key) {
-		const entry = this._map.get(key)
-		if (!entry) { return undefined }
-		this._list.remove(entry)
+		const node = this._map.get(key)
+		if (!node) { return undefined }
+		this._list._remove(node)
 		this._map.delete(key)
-		return entry.value
+		return node.value
 	}
 
-	_getEntry (key) {
-		const entry = this._map.get(key)
-		if (!entry) { return undefined }
-		this._list.remove(entry)
-		this._list._unshift(entry)
-		return entry
+	_getNode (key) {
+		const node = this._map.get(key)
+		if (!node) { return undefined }
+		this._list._remove(node)
+		this._list._unshiftNode(node)
+		return node
 	}
 }
 

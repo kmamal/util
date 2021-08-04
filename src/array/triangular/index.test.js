@@ -12,16 +12,16 @@ test("array.triangular.upper-left", (t) => {
 	const a = new UpperLeft(N)
 	const b = new Array2d(N, N)
 
-	for (let i = 0; i < N; i++) {
-		for (let j = 0; j < N - i; j++) {
-			a.set(i, j, `${i}_${j}`)
-			b.set(i, j, `${i}_${j}`)
+	for (let y = 0; y < N; y++) {
+		for (let x = 0; x < N - y; x++) {
+			a.set(x, y, `${x}_${y}`)
+			b.set(x, y, `${x}_${y}`)
 		}
 	}
 
-	for (let i = 0; i < N; i++) {
-		for (let j = 0; j < N - i; j++) {
-			t.equal(a.get(i, j), b.get(i, j))
+	for (let y = 0; y < N; y++) {
+		for (let x = 0; x < N - y; x++) {
+			t.equal(a.get(x, y), b.get(x, y))
 		}
 	}
 })
@@ -32,16 +32,16 @@ test("array.triangular.upper-right", (t) => {
 	const a = new UpperRight(N)
 	const b = new Array2d(N, N)
 
-	for (let i = 0; i < N; i++) {
-		for (let j = i; j < N; j++) {
-			a.set(i, j, `${i}_${j}`)
-			b.set(i, j, `${i}_${j}`)
+	for (let y = 0; y < N; y++) {
+		for (let x = y; x < N; x++) {
+			a.set(x, y, `${x}_${y}`)
+			b.set(x, y, `${x}_${y}`)
 		}
 	}
 
-	for (let i = 0; i < N; i++) {
-		for (let j = i; j < N; j++) {
-			t.equal(a.get(i, j), b.get(i, j))
+	for (let y = 0; y < N; y++) {
+		for (let x = y; x < N; x++) {
+			t.equal(a.get(x, y), b.get(x, y))
 		}
 	}
 })
@@ -52,16 +52,16 @@ test("array.triangular.lower-left", (t) => {
 	const a = new LowerLeft(N)
 	const b = new Array2d(N, N)
 
-	for (let i = 0; i < N; i++) {
-		for (let j = 0; j <= i; j++) {
-			a.set(i, j, `${i}_${j}`)
-			b.set(i, j, `${i}_${j}`)
+	for (let y = 0; y < N; y++) {
+		for (let x = 0; x <= y; x++) {
+			a.set(x, y, `${x}_${y}`)
+			b.set(x, y, `${x}_${y}`)
 		}
 	}
 
-	for (let i = 0; i < N; i++) {
-		for (let j = 0; j <= i; j++) {
-			t.equal(a.get(i, j), b.get(i, j))
+	for (let y = 0; y < N; y++) {
+		for (let x = 0; x <= y; x++) {
+			t.equal(a.get(x, y), b.get(x, y))
 		}
 	}
 })
@@ -72,16 +72,16 @@ test("array.triangular.lower-right", (t) => {
 	const a = new LowerRight(N)
 	const b = new Array2d(N, N)
 
-	for (let i = 0; i < N; i++) {
-		for (let j = N - i - 1; j < N; j++) {
-			a.set(i, j, `${i}_${j}`)
-			b.set(i, j, `${i}_${j}`)
+	for (let y = 0; y < N; y++) {
+		for (let x = N - y - 1; x < N; x++) {
+			a.set(x, y, `${x}_${y}`)
+			b.set(x, y, `${x}_${y}`)
 		}
 	}
 
-	for (let i = 0; i < N; i++) {
-		for (let j = N - i - 1; j < N; j++) {
-			t.equal(a.get(i, j), b.get(i, j))
+	for (let y = 0; y < N; y++) {
+		for (let x = N - y - 1; x < N; x++) {
+			t.equal(a.get(x, y), b.get(x, y))
 		}
 	}
 })
