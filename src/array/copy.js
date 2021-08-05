@@ -2,28 +2,28 @@ const { startIndex } = require('./start-index')
 const { endIndex } = require('./end-index')
 
 const __copy = (a, offset, b, start, end) => {
-	let write_index = offset
-	let read_index = start
-	while (read_index < end) {
-		a[write_index++] = b[read_index++]
+	let writeIndex = offset
+	let readIndex = start
+	while (readIndex < end) {
+		a[writeIndex++] = b[readIndex++]
 	}
 }
 
 const __copyRight = (a, offset, b, start, end) => {
 	const length = end - start
-	let write_index = offset + length - 1
-	let read_index = end - 1
-	while (read_index >= start) {
-		a[write_index--] = b[read_index--]
+	let writeIndex = offset + length - 1
+	let readIndex = end - 1
+	while (readIndex >= start) {
+		a[writeIndex--] = b[readIndex--]
 	}
 }
 
 const __copyInplace = (arr, offset, start, end) => {
-	const overlaps_badly = start < offset && offset < end
-	if (!overlaps_badly) {
+	const overlapsBadly = start < offset && offset < end
+	if (!overlapsBadly) {
 		__copy(arr, offset, arr, start, end)
 	} else {
-		__copy(arr, offset, arr, start, end)
+		__copyRight(arr, offset, arr, start, end)
 	}
 }
 
@@ -40,18 +40,18 @@ const copy$$$ = (a, _offset, b, _start, _end) => {
 }
 
 const copy = (a, _offset, b, _start, _end) => {
-	const { length: a_length } = a
-	const { length: b_length } = b
-	const a_start = startIndex(a_length, _offset)
-	const b_start = startIndex(b_length, _start)
-	const b_end = endIndex(b_length, _end)
-	const length = b_end - b_start
-	const a_end = a_start + length
+	const { length: aLength } = a
+	const { length: bLength } = b
+	const aStart = startIndex(aLength, _offset)
+	const bStart = startIndex(bLength, _start)
+	const bEnd = endIndex(bLength, _end)
+	const length = bEnd - bStart
+	const aEnd = aStart + length
 
-	const res = new Array(a_length)
-	__copy(res, 0, a, 0, a_start)
-	__copy(res, a_start, b, b_start, b_end)
-	__copy(res, a_end, a, a_end, a_length)
+	const res = new Array(aLength)
+	__copy(res, 0, a, 0, aStart)
+	__copy(res, aStart, b, bStart, bEnd)
+	__copy(res, aEnd, a, aEnd, aLength)
 
 	return res
 }

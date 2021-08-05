@@ -1,9 +1,9 @@
 
-const __map = (dst, dst_start, src, src_start, src_end, fn) => {
-	let write_index = dst_start
-	let read_index = src_start
-	while (read_index < src_end) {
-		dst[write_index++] = fn(src[read_index++])
+const __map = (dst, dstStart, src, srcStart, srcEnd, fn) => {
+	let writeIndex = dstStart
+	let readIndex = srcStart
+	while (readIndex < srcEnd) {
+		dst[writeIndex++] = fn(src[readIndex++])
 	}
 }
 

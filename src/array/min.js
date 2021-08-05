@@ -1,20 +1,20 @@
 const { __reduce } = require('./reduce')
 const { identity } = require('../function/identity')
 
-const __min = (arr, start, end, fn_map) => {
+const __min = (arr, start, end, fnMap) => {
 	let index = -1
 	return __reduce(arr, start, end, (a, item) => {
 		index++
-		const value = fn_map(item)
+		const value = fnMap(item)
 		return value < a.value ? { value, index } : a
 	}, { value: Infinity, index })
 }
 
-const minIndexBy = (arr, fn_map) => __min(arr, 0, arr.length, fn_map).index
+const minIndexBy = (arr, fnMap) => __min(arr, 0, arr.length, fnMap).index
 
 const minIndex = (arr) => minIndexBy(arr, identity)
 
-const minBy = (arr, fn_map) => arr[minIndexBy(arr, fn_map)]
+const minBy = (arr, fnMap) => arr[minIndexBy(arr, fnMap)]
 
 const min = (arr) => minBy(arr, identity)
 
