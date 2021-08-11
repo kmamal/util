@@ -201,11 +201,11 @@ const {
 const {
 	localeLowerCase,
 	isLocaleLowerCase,
-} = require('../string/case/local-lower')
+} = require('../string/case/locale-lower')
 const {
 	localeUpperCase,
 	isLocaleUpperCase,
-} = require('../string/case/local-upper')
+} = require('../string/case/locale-upper')
 const {
 	camelCase,
 	isCamelCase,
