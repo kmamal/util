@@ -5,37 +5,37 @@ const { map } = require('../map')
 
 const extract = ({ x }) => x
 
-const __heapsort = (arr, start, end, _fn) => {
-	const fn = (a, b) => -_fn(a, b)
-	__heapify(arr, start, end, fn)
+const __heapsort = (arr, start, end, _fnCmp) => {
+	const fnCmp = (a, b) => -_fnCmp(a, b)
+	__heapify(arr, start, end, fnCmp)
 	for (let i = end; i > start; i--) {
-		__pop(arr, start, i, fn)
+		__pop(arr, start, i, fnCmp)
 	}
 }
 
-const heapsortWith$$$ = (arr, fn) => {
-	__heapsort(arr, 0, arr.length, fn)
+const heapsortWith$$$ = (arr, fnCmp) => {
+	__heapsort(arr, 0, arr.length, fnCmp)
 	return arr
 }
 
-const heapsortWith = (arr, fn) => heapsortWith$$$(clone(arr), fn)
+const heapsortWith = (arr, fnCmp) => heapsortWith$$$(clone(arr), fnCmp)
 
 heapsortWith.$$$ = heapsortWith$$$
 
-const heapsortBy$$$ = (arr, fn) => heapsortWith$$$(arr, (a, b) => compare(fn(a), fn(b)))
+const heapsortBy$$$ = (arr, fnMap) => heapsortWith$$$(arr, (a, b) => compare(fnMap(a), fnMap(b)))
 
-const heapsortBy = (arr, fn) => heapsortWith(arr, (a, b) => compare(fn(a), fn(b)))
+const heapsortBy = (arr, fnMap) => heapsortWith(arr, (a, b) => compare(fnMap(a), fnMap(b)))
 
 heapsortBy.$$$ = heapsortBy$$$
 
-const heapsortByPure$$$ = (arr, fn) => {
-	map.$$$(arr, (x) => ({ x, value: fn(x) }))
+const heapsortByPure$$$ = (arr, fnMap) => {
+	map.$$$(arr, (x) => ({ x, value: fnMap(x) }))
 	heapsortWith$$$(arr, (a, b) => compare(a.value, b.value))
 	return map.$$$(arr, extract)
 }
 
-const heapsortByPure = (arr, fn) => {
-	const res = map(arr, (x) => ({ x, value: fn(x) }))
+const heapsortByPure = (arr, fnMap) => {
+	const res = map(arr, (x) => ({ x, value: fnMap(x) }))
 	heapsortWith$$$(res, (a, b) => compare(a.value, b.value))
 	return map.$$$(res, extract)
 }

@@ -7,49 +7,49 @@ const extract = ({ x }) => x
 // Marcin Ciura's gap sequence
 const GAPS = [ 1750, 701, 301, 132, 57, 23, 10, 4, 1 ]
 
-const __shellsort = (arr, start, sorted_end, end, fn) => {
+const __shellsort = (arr, start, sortedEnd, end, fnCmp) => {
 	for (let g = 0; g < GAPS.length; g++) {
 		const gap = GAPS[g]
 
-		for (let i = sorted_end + gap - 1; i < end; i++) {
+		for (let i = sortedEnd + gap - 1; i < end; i++) {
 			const item = arr[i]
-			let last_j = i
-			let j = last_j - gap
+			let lastJ = i
+			let j = lastJ - gap
 			while (j >= start) {
 				const current = arr[j]
-				if (fn(current, item) <= 0) { break }
-				arr[last_j] = current
-				last_j = j
+				if (fnCmp(current, item) <= 0) { break }
+				arr[lastJ] = current
+				lastJ = j
 				j -= gap
 			}
-			arr[last_j] = item
+			arr[lastJ] = item
 		}
 	}
 }
 
-const shellsortWith$$$ = (arr, fn) => {
-	__shellsort(arr, 0, 1, arr.length, fn)
+const shellsortWith$$$ = (arr, fnCmp) => {
+	__shellsort(arr, 0, 1, arr.length, fnCmp)
 	return arr
 }
 
-const shellsortWith = (arr, fn) => shellsortWith$$$(clone(arr), fn)
+const shellsortWith = (arr, fnCmp) => shellsortWith$$$(clone(arr), fnCmp)
 
 shellsortWith.$$$ = shellsortWith$$$
 
-const shellsortBy$$$ = (arr, fn) => shellsortWith$$$(arr, (a, b) => compare(fn(a), fn(b)))
+const shellsortBy$$$ = (arr, fnMap) => shellsortWith$$$(arr, (a, b) => compare(fnMap(a), fnMap(b)))
 
-const shellsortBy = (arr, fn) => shellsortWith(arr, (a, b) => compare(fn(a), fn(b)))
+const shellsortBy = (arr, fnMap) => shellsortWith(arr, (a, b) => compare(fnMap(a), fnMap(b)))
 
 shellsortBy.$$$ = shellsortBy$$$
 
-const shellsortByPure$$$ = (arr, fn) => {
-	map.$$$(arr, (x) => ({ x, value: fn(x) }))
+const shellsortByPure$$$ = (arr, fnMap) => {
+	map.$$$(arr, (x) => ({ x, value: fnMap(x) }))
 	shellsortWith$$$(arr, (a, b) => compare(a.value, b.value))
 	return map.$$$(arr, extract)
 }
 
-const shellsortByPure = (arr, fn) => {
-	const res = map(arr, (x) => ({ x, value: fn(x) }))
+const shellsortByPure = (arr, fnMap) => {
+	const res = map(arr, (x) => ({ x, value: fnMap(x) }))
 	shellsortWith$$$(res, (a, b) => compare(a.value, b.value))
 	return map.$$$(res, extract)
 }

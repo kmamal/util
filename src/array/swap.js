@@ -1,19 +1,20 @@
 const { clone } = require('./clone')
 
-const __swap = (arr, a_index, b_index) => {
-	const tmp = arr[a_index]
-	arr[a_index] = arr[b_index]
-	arr[b_index] = tmp
+const __swap = (arr, aIndex, bIndex) => {
+	if (aIndex === bIndex) { return }
+	const tmp = arr[aIndex]
+	arr[aIndex] = arr[bIndex]
+	arr[bIndex] = tmp
 }
 
-const swap$$$ = (arr, a_index, b_index) => {
-	__swap(arr, a_index, b_index)
+const swap$$$ = (arr, aIndex, bIndex) => {
+	__swap(arr, aIndex, bIndex)
 	return arr
 }
 
-const swap = (arr, a_index, b_index) => {
+const swap = (arr, aIndex, bIndex) => {
 	const res = clone(arr)
-	__swap(res, a_index, b_index)
+	__swap(res, aIndex, bIndex)
 	return res
 }
 

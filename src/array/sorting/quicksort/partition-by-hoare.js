@@ -1,30 +1,30 @@
 
-const __partitionByHoare = (arr, start, end, pivot, fn) => {
-	let start_index = start
-	let end_index = end - 1
+const __partitionByHoare = (arr, start, end, pivot, fnCmp) => {
+	let startIndex = start
+	let endIndex = end - 1
 	for (;;) {
-		while (start_index < end) {
-			const item = arr[start_index]
-			if (fn(item, pivot) > 0) { break }
-			start_index += 1
+		while (startIndex < end) {
+			const item = arr[startIndex]
+			if (fnCmp(item, pivot) > 0) { break }
+			startIndex += 1
 		}
 
-		while (end_index > start) {
-			const item = arr[end_index]
-			if (fn(item, pivot) < 0) { break }
-			end_index -= 1
+		while (endIndex > start) {
+			const item = arr[endIndex]
+			if (fnCmp(item, pivot) < 0) { break }
+			endIndex -= 1
 		}
 
-		if (start_index >= end_index) { break }
+		if (startIndex >= endIndex) { break }
 
-		const tmp = arr[end_index]
-		arr[end_index] = arr[start_index]
-		arr[start_index] = tmp
-		start_index += 1
-		end_index -= 1
+		const tmp = arr[endIndex]
+		arr[endIndex] = arr[startIndex]
+		arr[startIndex] = tmp
+		startIndex += 1
+		endIndex -= 1
 	}
 
-	return start_index
+	return startIndex
 }
 
 module.exports = { __partitionByHoare }

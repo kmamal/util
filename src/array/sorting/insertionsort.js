@@ -4,43 +4,43 @@ const { map } = require('../map')
 
 const extract = ({ x }) => x
 
-const __insertionsort = (arr, start, sorted_end, end, fn) => {
-	for (let i = sorted_end; i < end; i++) {
+const __insertionsort = (arr, start, sortedEnd, end, fnCmp) => {
+	for (let i = sortedEnd; i < end; i++) {
 		const item = arr[i]
-		let last_j = i
-		for (let j = last_j - 1; j >= start; j--) {
+		let lastJ = i
+		for (let j = lastJ - 1; j >= start; j--) {
 			const current = arr[j]
-			if (fn(current, item) <= 0) { break }
-			arr[last_j] = current
-			last_j = j
+			if (fnCmp(current, item) <= 0) { break }
+			arr[lastJ] = current
+			lastJ = j
 		}
-		arr[last_j] = item
+		arr[lastJ] = item
 	}
 }
 
-const insertionsortWith$$$ = (arr, fn) => {
-	__insertionsort(arr, 0, 1, arr.length, fn)
+const insertionsortWith$$$ = (arr, fnCmp) => {
+	__insertionsort(arr, 0, 1, arr.length, fnCmp)
 	return arr
 }
 
-const insertionsortWith = (arr, fn) => insertionsortWith$$$(clone(arr), fn)
+const insertionsortWith = (arr, fnCmp) => insertionsortWith$$$(clone(arr), fnCmp)
 
 insertionsortWith.$$$ = insertionsortWith$$$
 
-const insertionsortBy$$$ = (arr, fn) => insertionsortWith$$$(arr, (a, b) => compare(fn(a), fn(b)))
+const insertionsortBy$$$ = (arr, fnMap) => insertionsortWith$$$(arr, (a, b) => compare(fnMap(a), fnMap(b)))
 
-const insertionsortBy = (arr, fn) => insertionsortWith(arr, (a, b) => compare(fn(a), fn(b)))
+const insertionsortBy = (arr, fnMap) => insertionsortWith(arr, (a, b) => compare(fnMap(a), fnMap(b)))
 
 insertionsortBy.$$$ = insertionsortBy$$$
 
-const insertionsortByPure$$$ = (arr, fn) => {
-	map.$$$(arr, (x) => ({ x, value: fn(x) }))
+const insertionsortByPure$$$ = (arr, fnMap) => {
+	map.$$$(arr, (x) => ({ x, value: fnMap(x) }))
 	insertionsortWith$$$(arr, (a, b) => compare(a.value, b.value))
 	return map.$$$(arr, extract)
 }
 
-const insertionsortByPure = (arr, fn) => {
-	const res = map(arr, (x) => ({ x, value: fn(x) }))
+const insertionsortByPure = (arr, fnMap) => {
+	const res = map(arr, (x) => ({ x, value: fnMap(x) }))
 	insertionsortWith$$$(res, (a, b) => compare(a.value, b.value))
 	return map.$$$(res, extract)
 }

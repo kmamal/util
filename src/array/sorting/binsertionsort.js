@@ -5,10 +5,10 @@ const { map } = require('../map')
 
 const extract = ({ x }) => x
 
-const __binsertionsort = (arr, start, sorted_end, end, fn) => {
-	for (let i = sorted_end; i < end; i++) {
+const __binsertionsort = (arr, start, sortedEnd, end, fnCmp) => {
+	for (let i = sortedEnd; i < end; i++) {
 		const item = arr[i]
-		const position = __binarySearchRight(arr, start, i, item, fn)
+		const position = __binarySearchRight(arr, start, i, item, fnCmp)
 		for (let j = i; j > position; j--) {
 			arr[j] = arr[j - 1]
 		}
@@ -16,29 +16,29 @@ const __binsertionsort = (arr, start, sorted_end, end, fn) => {
 	}
 }
 
-const binsertionsortWith$$$ = (arr, fn) => {
-	__binsertionsort(arr, 0, 1, arr.length, fn)
+const binsertionsortWith$$$ = (arr, fnCmp) => {
+	__binsertionsort(arr, 0, 1, arr.length, fnCmp)
 	return arr
 }
 
-const binsertionsortWith = (arr, fn) => binsertionsortWith$$$(clone(arr), fn)
+const binsertionsortWith = (arr, fnCmp) => binsertionsortWith$$$(clone(arr), fnCmp)
 
 binsertionsortWith.$$$ = binsertionsortWith$$$
 
-const binsertionsortBy$$$ = (arr, fn) => binsertionsortWith$$$(arr, (a, b) => compare(fn(a), fn(b)))
+const binsertionsortBy$$$ = (arr, fnMap) => binsertionsortWith$$$(arr, (a, b) => compare(fnMap(a), fnMap(b)))
 
-const binsertionsortBy = (arr, fn) => binsertionsortWith(arr, (a, b) => compare(fn(a), fn(b)))
+const binsertionsortBy = (arr, fnMap) => binsertionsortWith(arr, (a, b) => compare(fnMap(a), fnMap(b)))
 
 binsertionsortBy.$$$ = binsertionsortBy$$$
 
-const binsertionsortByPure$$$ = (arr, fn) => {
-	map.$$$(arr, (x) => ({ x, value: fn(x) }))
+const binsertionsortByPure$$$ = (arr, fnMap) => {
+	map.$$$(arr, (x) => ({ x, value: fnMap(x) }))
 	binsertionsortWith$$$(arr, (a, b) => compare(a.value, b.value))
 	return map.$$$(arr, extract)
 }
 
-const binsertionsortByPure = (arr, fn) => {
-	const res = map(arr, (x) => ({ x, value: fn(x) }))
+const binsertionsortByPure = (arr, fnMap) => {
+	const res = map(arr, (x) => ({ x, value: fnMap(x) }))
 	binsertionsortWith$$$(res, (a, b) => compare(a.value, b.value))
 	return map.$$$(res, extract)
 }

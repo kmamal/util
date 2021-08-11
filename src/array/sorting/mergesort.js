@@ -8,48 +8,48 @@ const extract = ({ x }) => x
 
 const INSERTION_SORT_CUTOFF = 16
 
-const __recurse = (arr, buffer, start, end, fn, cutoff, takeover) => {
+const __recurse = (arr, buffer, start, end, fnCmp, cutoff, takeover) => {
 	const length = end - start
 	if (length <= 1) { return }
 	if (length <= cutoff) {
-		takeover(arr, start, start + 1, end, fn)
+		takeover(arr, start, start + 1, end, fnCmp)
 		return
 	}
 
 	const mid = start + Math.floor(length / 2)
-	__recurse(arr, buffer, start, mid, fn, cutoff, takeover)
-	__recurse(arr, buffer, mid, end, fn, cutoff, takeover)
-	__mergeInplace(arr, start, mid, end, buffer, fn)
+	__recurse(arr, buffer, start, mid, fnCmp, cutoff, takeover)
+	__recurse(arr, buffer, mid, end, fnCmp, cutoff, takeover)
+	__mergeInplace(arr, start, mid, end, buffer, fnCmp)
 }
 
-const __mergesort = (arr, start, end, fn, cutoff, takeover) => {
+const __mergesort = (arr, start, end, fnCmp, cutoff, takeover) => {
 	const buffer = new Array(Math.floor((end - start) / 2))
-	__recurse(arr, buffer, start, end, fn, cutoff, takeover)
+	__recurse(arr, buffer, start, end, fnCmp, cutoff, takeover)
 }
 
-const mergesortWith$$$ = (arr, fn) => {
-	__mergesort(arr, 0, arr.length, fn, INSERTION_SORT_CUTOFF, __insertionsort)
+const mergesortWith$$$ = (arr, fnCmp) => {
+	__mergesort(arr, 0, arr.length, fnCmp, INSERTION_SORT_CUTOFF, __insertionsort)
 	return arr
 }
 
-const mergesortWith = (arr, fn) => mergesortWith$$$(clone(arr), fn)
+const mergesortWith = (arr, fnCmp) => mergesortWith$$$(clone(arr), fnCmp)
 
 mergesortWith.$$$ = mergesortWith$$$
 
-const mergesortBy$$$ = (arr, fn) => mergesortWith$$$(arr, (a, b) => compare(fn(a), fn(b)))
+const mergesortBy$$$ = (arr, fnMap) => mergesortWith$$$(arr, (a, b) => compare(fnMap(a), fnMap(b)))
 
-const mergesortBy = (arr, fn) => mergesortWith(arr, (a, b) => compare(fn(a), fn(b)))
+const mergesortBy = (arr, fnMap) => mergesortWith(arr, (a, b) => compare(fnMap(a), fnMap(b)))
 
 mergesortBy.$$$ = mergesortBy$$$
 
-const mergesortByPure$$$ = (arr, fn) => {
-	map.$$$(arr, (x) => ({ x, value: fn(x) }))
+const mergesortByPure$$$ = (arr, fnMap) => {
+	map.$$$(arr, (x) => ({ x, value: fnMap(x) }))
 	mergesortWith$$$(arr, (a, b) => compare(a.value, b.value))
 	return map.$$$(arr, extract)
 }
 
-const mergesortByPure = (arr, fn) => {
-	const res = map(arr, (x) => ({ x, value: fn(x) }))
+const mergesortByPure = (arr, fnMap) => {
+	const res = map(arr, (x) => ({ x, value: fnMap(x) }))
 	mergesortWith$$$(res, (a, b) => compare(a.value, b.value))
 	return map.$$$(res, extract)
 }

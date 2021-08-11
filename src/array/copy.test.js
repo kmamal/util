@@ -18,3 +18,8 @@ test("array.copy.$$$", (t) => {
 	t.equal(copy.$$$([ 1, 2, 3 ], 1, [ 1, 2, 3 ], 0, 2), [ 1, 1, 2 ])
 	t.equal(copy.$$$([ 1, 2, 3 ], 1, [ 1, 2, 3 ], 0, 3), [ 1, 1, 2, 3 ])
 })
+
+test("array.copy.inplace", (t) => {
+	const a = [ 1, 2, 3 ]
+	t.equal(copy.$$$(a, 1, a, 0, 3), [ 1, 1, 2, 3 ])
+})
