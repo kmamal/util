@@ -1,10 +1,10 @@
 const { slice } = require('./slice')
 
-const __flat = (dst, dst_start, src, src_start, src_end, _max_depth) => {
-	const max_depth = _max_depth + 1
-	let write_index = dst_start
+const __flat = (dst, dstStart, src, srcStart, srcEnd, _maxDepth) => {
+	const maxDepth = _maxDepth + 1
+	let writeIndex = dstStart
 
-	const stack = [ { arr: src, length: src_end - src_start, index: 0 } ]
+	const stack = [ { arr: src, length: srcEnd - srcStart, index: 0 } ]
 	for (;;) {
 		const { length: depth } = stack
 
@@ -16,26 +16,26 @@ const __flat = (dst, dst_start, src, src_start, src_end, _max_depth) => {
 		}
 
 		const item = top.arr[top.index++]
-		if (Array.isArray(item) && depth < max_depth) {
+		if (Array.isArray(item) && depth < maxDepth) {
 			stack.push({ arr: item, length: item.length, index: 0 })
 			continue
 		}
 
-		dst[write_index++] = item
+		dst[writeIndex++] = item
 	}
 
-	return write_index - dst_start
+	return writeIndex - dstStart
 }
 
-const flat$$$ = (arr, _max_depth = 1) => {
-	const n = __flat(arr, 0, slice(arr), 0, arr.length, _max_depth)
+const flat$$$ = (arr, _maxDepth = 1) => {
+	const n = __flat(arr, 0, slice(arr), 0, arr.length, _maxDepth)
 	arr.length = n
 	return arr
 }
 
-const flat = (arr, _max_depth = 1) => {
+const flat = (arr, _maxDepth = 1) => {
 	const res = []
-	__flat(res, 0, arr, 0, arr.length, _max_depth)
+	__flat(res, 0, arr, 0, arr.length, _maxDepth)
 	return res
 }
 

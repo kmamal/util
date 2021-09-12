@@ -1,6 +1,6 @@
 
-const __recurse = function * (dst, dst_index, src, n, k, index) {
-	const remaining = dst_index - k
+const __recurse = function * (dst, dstIndex, src, n, k, index) {
+	const remaining = dstIndex - k
 	if (remaining === 0) {
 		yield dst.slice()
 		return
@@ -9,12 +9,12 @@ const __recurse = function * (dst, dst_index, src, n, k, index) {
 	const available = n - index
 	if (available < remaining) { return }
 
-	const next_dst_index = dst_index + 1
+	const nextDstIndex = dstIndex + 1
 
 	let i = index
 	while (i < n) {
-		dst[dst_index] = src[i++]
-		yield* __recurse(dst, next_dst_index, src, n, k, i)
+		dst[dstIndex] = src[i++]
+		yield* __recurse(dst, nextDstIndex, src, n, k, i)
 	}
 }
 
