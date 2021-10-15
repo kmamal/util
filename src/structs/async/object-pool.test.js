@@ -14,8 +14,8 @@ test("structs.object-pool", async (t) => {
 	const a = new ObjectPool()
 	s.start()
 
-	a.release(2)
 	a.release(1)
+	a.release(2)
 	a.reserve().then((x) => { s.step(x) })
 	a.reserve().then((x) => { s.step(x) })
 	a.reserve().then((x) => { s.step(x) })
