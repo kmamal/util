@@ -5,6 +5,9 @@ class ObjectPool {
 		this._queue = []
 	}
 
+	get numAvailable () { return this._objects.length }
+	get numQueued () { return this._queue.length }
+
 	release (x) {
 		if (this._queue.length > 0) {
 			const resolve = this._queue.shift()
