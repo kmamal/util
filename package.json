@@ -51,6 +51,7 @@
     "./array/2d/fill": "./src/array/2d/fill.js",
     "./array/2d/end-index": "./src/array/2d/end-index.js",
     "./array/sum": "./src/array/sum.js",
+    "./array/group-by": "./src/array/group-by.js",
     "./array/triangular": "./src/array/triangular/index.js",
     "./array/search/exponential": "./src/array/search/exponential.js",
     "./array/search/interpolation": "./src/array/search/interpolation.js",

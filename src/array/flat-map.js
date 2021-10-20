@@ -1,15 +1,15 @@
 
-const __flatMap = (dst, dst_start, src, src_start, src_end, fn) => {
-	let write_index = dst_start
-	let read_index = src_start
-	while (read_index < src_end) {
-		const item = src[read_index++]
+const __flatMap = (dst, dstStart, src, srcStart, srcEnd, fn) => {
+	let writeIndex = dstStart
+	let readIndex = srcStart
+	while (readIndex < srcEnd) {
+		const item = src[readIndex++]
 		const mapped = fn(item)
 		for (let i = 0; i < mapped.length; i++) {
-			dst[write_index++] = mapped[i]
+			dst[writeIndex++] = mapped[i]
 		}
 	}
-	return write_index - dst_start
+	return writeIndex - dstStart
 }
 
 const flatMap = (arr, fn) => {

@@ -29,6 +29,7 @@ const { first } = require('../array/first')
 const { flatMap } = require('../array/flat-map')
 const { flat } = require('../array/flat')
 const { forEach } = require('../array/for-each')
+const { groupBy } = require('../array/group-by')
 const {
 	includes,
 	includesBy,
@@ -336,6 +337,7 @@ module.exports = {
 	flat: _fp(flat),
 	flatMap: _fp(flatMap),
 	forEach: _fp(forEach),
+	groupBy: _fp(groupBy),
 	includes: _fp(includes),
 	includesBy: _fp(includesBy),
 	includesByPure: _fp(includesByPure),
