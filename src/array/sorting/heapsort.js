@@ -14,7 +14,9 @@ const __heapsort = (arr, start, end, _fnCmp) => {
 }
 
 const heapsortWith$$$ = (arr, fnCmp) => {
-	__heapsort(arr, 0, arr.length, fnCmp)
+	if (arr.length > 1) {
+		__heapsort(arr, 0, arr.length, fnCmp)
+	}
 	return arr
 }
 
@@ -29,12 +31,14 @@ const heapsortBy = (arr, fnMap) => heapsortWith(arr, (a, b) => compare(fnMap(a),
 heapsortBy.$$$ = heapsortBy$$$
 
 const heapsortByPure$$$ = (arr, fnMap) => {
+	if (arr.length <= 1) { return arr }
 	map.$$$(arr, (x) => ({ x, value: fnMap(x) }))
 	heapsortWith$$$(arr, (a, b) => compare(a.value, b.value))
 	return map.$$$(arr, extract)
 }
 
 const heapsortByPure = (arr, fnMap) => {
+	if (arr.length <= 1) { return clone(arr) }
 	const res = map(arr, (x) => ({ x, value: fnMap(x) }))
 	heapsortWith$$$(res, (a, b) => compare(a.value, b.value))
 	return map.$$$(res, extract)

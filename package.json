@@ -162,6 +162,7 @@
     "./object/accessors": "./src/object/accessors.js",
     "./object/to-entries": "./src/object/to-entries.js",
     "./object/zip": "./src/object/zip.js",
+    "./object/clone": "./src/object/clone.js",
     "./object/keys": "./src/object/keys.js",
     "./object/defaults": "./src/object/defaults.js",
     "./object/omit": "./src/object/omit.js",

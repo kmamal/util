@@ -19,7 +19,9 @@ const __introsort = (arr, start, end, fnCmp) => {
 }
 
 const introsortWith$$$ = (arr, fnCmp) => {
-	__introsort(arr, 0, arr.length, fnCmp)
+	if (arr.length > 1) {
+		__introsort(arr, 0, arr.length, fnCmp)
+	}
 	return arr
 }
 
@@ -34,12 +36,14 @@ const introsortBy = (arr, fnMap) => introsortWith(arr, (a, b) => compare(fnMap(a
 introsortBy.$$$ = introsortBy$$$
 
 const introsortByPure$$$ = (arr, fnMap) => {
+	if (arr.length <= 1) { return arr }
 	map.$$$(arr, (x) => ({ x, value: fnMap(x) }))
 	introsortWith$$$(arr, (a, b) => compare(a.value, b.value))
 	return map.$$$(arr, extract)
 }
 
 const introsortByPure = (arr, fnMap) => {
+	if (arr.length <= 1) { return clone(arr) }
 	const res = map(arr, (x) => ({ x, value: fnMap(x) }))
 	introsortWith$$$(res, (a, b) => compare(a.value, b.value))
 	return map.$$$(res, extract)

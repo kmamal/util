@@ -28,7 +28,9 @@ const __mergesort = (arr, start, end, fnCmp, cutoff, takeover) => {
 }
 
 const mergesortWith$$$ = (arr, fnCmp) => {
-	__mergesort(arr, 0, arr.length, fnCmp, INSERTION_SORT_CUTOFF, __insertionsort)
+	if (arr.length > 1) {
+		__mergesort(arr, 0, arr.length, fnCmp, INSERTION_SORT_CUTOFF, __insertionsort)
+	}
 	return arr
 }
 
@@ -43,12 +45,14 @@ const mergesortBy = (arr, fnMap) => mergesortWith(arr, (a, b) => compare(fnMap(a
 mergesortBy.$$$ = mergesortBy$$$
 
 const mergesortByPure$$$ = (arr, fnMap) => {
+	if (arr.length <= 1) { return arr }
 	map.$$$(arr, (x) => ({ x, value: fnMap(x) }))
 	mergesortWith$$$(arr, (a, b) => compare(a.value, b.value))
 	return map.$$$(arr, extract)
 }
 
 const mergesortByPure = (arr, fnMap) => {
+	if (arr.length <= 1) { return clone(arr) }
 	const res = map(arr, (x) => ({ x, value: fnMap(x) }))
 	mergesortWith$$$(res, (a, b) => compare(a.value, b.value))
 	return map.$$$(res, extract)

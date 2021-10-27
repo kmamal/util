@@ -1,43 +1,43 @@
 
-const __chunk = (dst, dst_start, src, src_start, src_end, chunk_size, chunk_num) => {
-	let write_index = dst_start
-	let read_index = src_start
-	const dst_end = dst_start + chunk_num
+const __chunk = (dst, dstStart, src, srcStart, srcEnd, chunkSize, chunkNum) => {
+	let writeIndex = dstStart
+	let readIndex = srcStart
+	const dstEnd = dstStart + chunkNum
 
-	while (write_index < dst_end - 1) {
-		const chunk = new Array(chunk_size)
-		for (let i = 0; i < chunk_size; i++) {
-			chunk[i] = src[read_index++]
+	while (writeIndex < dstEnd - 1) {
+		const chunk = new Array(chunkSize)
+		for (let i = 0; i < chunkSize; i++) {
+			chunk[i] = src[readIndex++]
 		}
-		dst[write_index++] = chunk
+		dst[writeIndex++] = chunk
 	}
 
-	if (write_index < dst_end) {
-		const available = Math.max(0, src_end - read_index)
-		const last_chunk_size = Math.min(available, chunk_size)
-		const chunk = new Array(last_chunk_size)
-		for (let i = 0; i < last_chunk_size; i++) {
-			chunk[i] = src[read_index++]
+	if (writeIndex < dstEnd) {
+		const available = Math.max(0, srcEnd - readIndex)
+		const lastChunkSize = Math.min(available, chunkSize)
+		const chunk = new Array(lastChunkSize)
+		for (let i = 0; i < lastChunkSize; i++) {
+			chunk[i] = src[readIndex++]
 		}
-		dst[write_index++] = chunk
+		dst[writeIndex++] = chunk
 	}
 
-	return write_index - dst_start
+	return writeIndex - dstStart
 }
 
 const chunk$$$ = (arr, n) => {
 	const { length } = arr
-	const num_chunks = Math.ceil(length / n)
-	__chunk(arr, 0, arr, 0, length, n, num_chunks)
-	arr.length = num_chunks
+	const numChunks = Math.ceil(length / n)
+	__chunk(arr, 0, arr, 0, length, n, numChunks)
+	arr.length = numChunks
 	return arr
 }
 
 const chunk = (arr, n) => {
 	const { length } = arr
-	const num_chunks = Math.ceil(length / n)
-	const res = new Array(num_chunks)
-	__chunk(res, 0, arr, 0, length, n, num_chunks)
+	const numChunks = Math.ceil(length / n)
+	const res = new Array(numChunks)
+	__chunk(res, 0, arr, 0, length, n, numChunks)
 	return res
 }
 

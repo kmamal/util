@@ -181,15 +181,13 @@ const __timsort2 = (arr, start, end, fnCmp) => {
 }
 
 const timsortWith$$$ = (arr, fnCmp) => {
-	__timsort(arr, 0, arr.length, fnCmp)
+	if (arr.length > 1) {
+		__timsort(arr, 0, arr.length, fnCmp)
+	}
 	return arr
 }
 
-const timsortWith = (arr, fnCmp) => {
-	const res = clone(arr)
-	__timsort(res, 0, res.length, fnCmp)
-	return res
-}
+const timsortWith = (arr, fnCmp) => timsortWith$$$(clone(arr), fnCmp)
 
 timsortWith.$$$ = timsortWith$$$
 
@@ -200,12 +198,14 @@ const timsortBy = (arr, fnMap) => timsortWith(arr, (a, b) => compare(fnMap(a), f
 timsortBy.$$$ = timsortBy$$$
 
 const timsortByPure$$$ = (arr, fnMap) => {
+	if (arr.length <= 1) { return clone(arr) }
 	map.$$$(arr, (x) => ({ x, value: fnMap(x) }))
 	timsortWith$$$(arr, (a, b) => compare(a.value, b.value))
 	return map.$$$(arr, extract)
 }
 
 const timsortByPure = (arr, fnMap) => {
+	if (arr.length <= 1) { return arr }
 	const res = map(arr, (x) => ({ x, value: fnMap(x) }))
 	timsortWith$$$(res, (a, b) => compare(a.value, b.value))
 	return map.$$$(res, extract)

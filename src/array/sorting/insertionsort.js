@@ -19,7 +19,9 @@ const __insertionsort = (arr, start, sortedEnd, end, fnCmp) => {
 }
 
 const insertionsortWith$$$ = (arr, fnCmp) => {
-	__insertionsort(arr, 0, 1, arr.length, fnCmp)
+	if (arr.length > 1) {
+		__insertionsort(arr, 0, 1, arr.length, fnCmp)
+	}
 	return arr
 }
 
@@ -34,12 +36,14 @@ const insertionsortBy = (arr, fnMap) => insertionsortWith(arr, (a, b) => compare
 insertionsortBy.$$$ = insertionsortBy$$$
 
 const insertionsortByPure$$$ = (arr, fnMap) => {
+	if (arr.length <= 1) { return arr }
 	map.$$$(arr, (x) => ({ x, value: fnMap(x) }))
 	insertionsortWith$$$(arr, (a, b) => compare(a.value, b.value))
 	return map.$$$(arr, extract)
 }
 
 const insertionsortByPure = (arr, fnMap) => {
+	if (arr.length <= 1) { return clone(arr) }
 	const res = map(arr, (x) => ({ x, value: fnMap(x) }))
 	insertionsortWith$$$(res, (a, b) => compare(a.value, b.value))
 	return map.$$$(res, extract)

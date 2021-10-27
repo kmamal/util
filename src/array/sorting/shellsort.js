@@ -28,7 +28,9 @@ const __shellsort = (arr, start, sortedEnd, end, fnCmp) => {
 }
 
 const shellsortWith$$$ = (arr, fnCmp) => {
-	__shellsort(arr, 0, 1, arr.length, fnCmp)
+	if (arr.length > 1) {
+		__shellsort(arr, 0, 1, arr.length, fnCmp)
+	}
 	return arr
 }
 
@@ -43,12 +45,14 @@ const shellsortBy = (arr, fnMap) => shellsortWith(arr, (a, b) => compare(fnMap(a
 shellsortBy.$$$ = shellsortBy$$$
 
 const shellsortByPure$$$ = (arr, fnMap) => {
+	if (arr.length <= 1) { return arr }
 	map.$$$(arr, (x) => ({ x, value: fnMap(x) }))
 	shellsortWith$$$(arr, (a, b) => compare(a.value, b.value))
 	return map.$$$(arr, extract)
 }
 
 const shellsortByPure = (arr, fnMap) => {
+	if (arr.length <= 1) { return clone(arr) }
 	const res = map(arr, (x) => ({ x, value: fnMap(x) }))
 	shellsortWith$$$(res, (a, b) => compare(a.value, b.value))
 	return map.$$$(res, extract)
