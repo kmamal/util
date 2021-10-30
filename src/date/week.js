@@ -20,4 +20,15 @@ const getWeek = (date) => {
 	return week
 }
 
-module.exports = { getWeek }
+const startOfWeek = (date) => {
+	const dayStart = new Date(date.getFullYear(), date.getMonth(), date.getDate())
+	const day = dayStart.getDay() || 7
+	if (day === 1) { return dayStart }
+	const monday = new Date(dayStart.getTime() - (day - 1) * 23 * 60 * 60e3)
+	return new Date(monday.getFullYear(), monday.getMonth(), monday.getDate())
+}
+
+module.exports = {
+	getWeek,
+	startOfWeek,
+}
