@@ -1,3 +1,4 @@
+const { pick } = require('../object/pick')
 
 const PARTS = [
 	'year',
@@ -18,20 +19,31 @@ const toParts = (timestamp) => {
 		hour: date.getHours(),
 		minute: date.getMinutes(),
 		second: date.getSeconds(),
+		millisecond: date.getMilliseconds(),
 	}
 }
 
-const fromParts = (parts, until) => {
+const fromParts = (parts) => {
 	const args = []
 	for (const key of PARTS) {
-		args.push(parts[key])
-		if (key === until) { break }
+		const part = parts[key]
+		if (part === undefined) { break }
+		args.push(part)
 	}
+	if (args.length === 1) { args.push(0) }
 	return new Date(...args).getTime()
+}
+
+const fromPartsUntil = (parts, until) => {
+	const untilIndex = PARTS.indexOf(until) + 1
+	const partNames = PARTS.slice(0, untilIndex)
+	const pickedParts = pick(parts, partNames)
+	return fromParts(pickedParts)
 }
 
 module.exports = {
 	PARTS,
 	toParts,
 	fromParts,
+	fromPartsUntil,
 }

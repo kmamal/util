@@ -230,6 +230,16 @@ const {
 	trimStart,
 } = require('../string/trim')
 
+const {
+	toParts,
+	fromParts,
+	fromPartsUntil,
+} = require('../date/parts')
+
+const {
+	getWeek,
+} = require('../date/week')
+
 
 const { fromFactory: arrayFromFactory } = require('../array/from-factory')
 const { fromHandlers: arrayFromHandlers } = require('../array/from-handlers')
@@ -507,6 +517,11 @@ module.exports = {
 	trim: _fp(trim),
 	trimEnd: _fp(trimEnd),
 	trimStart: _fp(trimStart),
+
+	toParts: _fp(toParts),
+	fromParts: _fp(fromParts),
+	fromPartsUntil: _fp(fromPartsUntil),
+	getWeek: _fp(getWeek),
 
 	util: {
 		arrayFromFactory,
