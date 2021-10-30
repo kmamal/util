@@ -28,7 +28,7 @@ const fromParts = (parts) => {
 	for (const key of PARTS) {
 		const part = parts[key]
 		if (part === undefined) { break }
-		args.push(part)
+		args.push(key === 'month' ? part - 1 : part)
 	}
 	if (args.length === 1) { args.push(0) }
 	return new Date(...args).getTime()
