@@ -1,8 +1,8 @@
 
 const after = (fn, n) => {
-	let count = 0
+	let count = 1
 	return (...args) => {
-		if (count < n) {
+		if (count <= n) {
 			count += 1
 			return undefined
 		}
