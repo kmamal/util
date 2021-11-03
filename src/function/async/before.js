@@ -1,13 +1,13 @@
 
 const before = (fn, n) => {
 	let count = 1
-	let last_result
+	let lastResult
 	return (...args) => {
 		if (count < n) {
 			count += 1
-			last_result = fn(...args)
+			lastResult = fn(...args)
 		}
-		return last_result
+		return lastResult
 	}
 }
 
