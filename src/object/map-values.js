@@ -1,18 +1,18 @@
 
-const __mapValues = (dst, src, fn_map) => {
+const __mapValues = (dst, src, fnMap) => {
 	for (const key of Object.keys(src)) {
-		dst[key] = fn_map(src[key])
+		dst[key] = fnMap(src[key])
 	}
 }
 
-const mapValues$$$ = (obj, fn_map) => {
-	__mapValues(obj, obj, fn_map)
+const mapValues$$$ = (obj, fnMap) => {
+	__mapValues(obj, obj, fnMap)
 	return obj
 }
 
-const mapValues = (obj, fn_map) => {
+const mapValues = (obj, fnMap) => {
 	const res = {}
-	__mapValues(res, obj, fn_map)
+	__mapValues(res, obj, fnMap)
 	return res
 }
 

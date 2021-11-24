@@ -17,7 +17,7 @@ test("sampling.sampleValues Frequencies", (t) => {
 	const counts = withHooks({ factory: () => 0 })
 	for (let i = 0; i < R; i++) {
 		const sampled = [ ...sampleValues(a, N) ]
-		t.assert(() => sampled.length === N)
+		t.equal(sampled.length, N)
 
 		for (const index of sampled) {
 			counts.set(index, counts.get(index) + 1)
@@ -28,6 +28,6 @@ test("sampling.sampleValues Frequencies", (t) => {
 	for (const x of a) {
 		const count = counts.get(x)
 		const ratio = count / expected
-		t.assert(() => ratio > 0.9 && ratio < 1.1)
+		t.ok(ratio > 0.9 && ratio < 1.1, { ratio })
 	}
 })

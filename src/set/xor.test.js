@@ -6,7 +6,7 @@ test("set.xor", (t) => {
 	const b = new Set([ 2, 3, 4 ])
 	const set = xor(a, b)
 
-	t.assert(() => set.size <= a.size)
+	t.ok(set.size <= a.size)
 
 	// The xor contains only values of a or b, but not of both
 	for (const x of set) {

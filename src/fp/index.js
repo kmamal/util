@@ -137,8 +137,10 @@ const {
 	matches,
 	matchesWith,
 } = require('../object/matches')
-const { omit } = require('../object/omit')
-const { pick } = require('../object/pick')
+const {
+	omit,
+	pick,
+} = require('../object/pick')
 const { toEntries } = require('../object/to-entries')
 const { values } = require('../object/values')
 const { zip: zipObject } = require('../object/zip')

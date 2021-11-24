@@ -24,5 +24,5 @@ test("map.withHooks Argument", (t) => {
 	t.equal(map.get(null), null)
 
 	const a = { foo: 42 }
-	t.assert(() => map.get(a) === a)
+	t.equal(map.get(a), a)
 })

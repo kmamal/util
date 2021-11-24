@@ -6,7 +6,7 @@ test("set.union", (t) => {
 	const b = new Set([ 2, 3, 4 ])
 	const set = union(a, b)
 
-	t.assert(() => set.size >= a.size)
+	t.ok(set.size >= a.size)
 
 	// The union contains only values from a and b
 	for (const x of set) {

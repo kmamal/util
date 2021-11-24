@@ -6,7 +6,7 @@ test("set.difference", (t) => {
 	const b = new Set([ 2, 3, 4 ])
 	const set = difference(a, b)
 
-	t.assert(() => set.size <= a.size)
+	t.ok(set.size <= a.size)
 
 	// The difference contains only values of a that are not in b
 	for (const x of set) {

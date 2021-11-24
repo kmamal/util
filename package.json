@@ -167,7 +167,7 @@
     "./object/clone": "./src/object/clone.js",
     "./object/keys": "./src/object/keys.js",
     "./object/defaults": "./src/object/defaults.js",
-    "./object/omit": "./src/object/omit.js",
+    "./object/merge": "./src/object/merge.js",
     "./random/choose-n": "./src/random/choose-n.js",
     "./random/rand-int": "./src/random/rand-int.js",
     "./random/random": "./src/random/random.js",

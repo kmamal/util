@@ -23,6 +23,6 @@ test("sampling.chooseIndexFromWeighted Frequencies", (t) => {
 		const count = counts.get(i)
 		const expected = N * arr[i] / total
 		const ratio = count / expected
-		t.assert(() => ratio > 0.9 && ratio < 1.1)
+		t.ok(ratio > 0.9 && ratio < 1.1, { ratio })
 	}
 })

@@ -6,7 +6,7 @@ test("set.intersection", (t) => {
 	const b = new Set([ 2, 3, 4 ])
 	const set = intersection(a, b)
 
-	t.assert(() => set.size <= a.size)
+	t.ok(set.size <= a.size)
 
 	// The intercetion contains only values that are both in a and b
 	for (const x of set) {

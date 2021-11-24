@@ -1,7 +1,7 @@
 
-const _step_regex = /\[(?<key1>[^.\]+])\]|\.?(?<key2>[^[.]+)/ug
+const _stepRegex = /\[(?<key1>[^.\]+])\]|\.?(?<key2>[^[.]+)/ug
 
-const _makeSteps = (path) => [ ...path.matchAll(_step_regex) ]
+const _makeSteps = (path) => [ ...path.matchAll(_stepRegex) ]
 	.map(({ groups }) => groups.key1 || groups.key2)
 
 const _get = (obj, steps) => {
@@ -19,18 +19,18 @@ const get = (obj, path) => {
 
 const _set = (_obj, steps, value) => {
 	const { length } = steps
-	const last_index = length - 1
-	const last_step = steps[last_index]
+	const lastIndex = length - 1
+	const lastStep = steps[lastIndex]
 
 	let obj = _obj
-	for (let i = 0; i < last_index; i++) {
+	for (let i = 0; i < lastIndex; i++) {
 		const step = steps[i]
 		obj = obj[step]
 	}
 
-	const last_value = obj[last_step]
-	obj[last_step] = value
-	return last_value
+	const lastValue = obj[lastStep]
+	obj[lastStep] = value
+	return lastValue
 }
 
 const set = (obj, path, value) => {
