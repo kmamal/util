@@ -124,6 +124,7 @@
     "./misc/chronometer": "./src/misc/chronometer.js",
     "./date/week": "./src/date/week.js",
     "./date/parts": "./src/date/parts.js",
+    "./date/shift": "./src/date/shift.js",
     "./map/with-hooks": "./src/map/with-hooks.js",
     "./operators/arithmetic/pow": "./src/operators/arithmetic/pow.js",
     "./operators/arithmetic/mul": "./src/operators/arithmetic/mul.js",

@@ -225,7 +225,6 @@ const {
 	kebabCase,
 	isKebabCase,
 } = require('../string/case/kebab')
-
 const {
 	trim,
 	trimEnd,
@@ -237,7 +236,7 @@ const {
 	fromParts,
 	fromPartsUntil,
 } = require('../date/parts')
-
+const { shift } = require('../date/shift')
 const {
 	getWeek,
 } = require('../date/week')
@@ -523,6 +522,7 @@ module.exports = {
 	toParts: _fp(toParts),
 	fromParts: _fp(fromParts),
 	fromPartsUntil: _fp(fromPartsUntil),
+	shiftDate: _fp(shift),
 	getWeek: _fp(getWeek),
 
 	util: {
