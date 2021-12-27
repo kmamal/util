@@ -11,9 +11,6 @@
     "test": "./scripts/run-tests.sh",
     "update-exports": "./scripts/update-exports.sh"
   },
-  "devDependencies": {
-    "@kmamal/testing": "^0.0.10"
-  },
   "exports": {
     "./array/slice": "./src/array/slice.js",
     "./array/reduce": "./src/array/reduce.js",
@@ -304,5 +301,8 @@
     "./set/intersection": "./src/set/intersection.js",
     "./set/xor": "./src/set/xor.js",
     "./set/difference": "./src/set/difference.js"
+  },
+  "devDependencies": {
+    "@kmamal/testing": "^0.0.17"
   }
 }

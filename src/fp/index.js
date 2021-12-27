@@ -231,6 +231,7 @@ const {
 	trimStart,
 } = require('../string/trim')
 
+const { duration } = require('../date/duration')
 const {
 	toParts,
 	fromParts,
@@ -303,7 +304,15 @@ const { noop } = require('../function/noop')
 
 const { interpolate } = require('../number/interpolate')
 
+const { allSettled } = require('../promise/all-settled')
+const { all } = require('../promise/all')
+const { catch: promiseCatch } = require('../promise/catch')
+const { finally: promiseFinally } = require('../promise/finally')
+const { race } = require('../promise/race')
+const { reject } = require('../promise/reject')
+const { resolve } = require('../promise/resolve')
 const { sleep } = require('../promise/sleep')
+const { then: promiseThen } = require('../promise/then')
 const { timeout } = require('../promise/timeout')
 
 const { rand } = require('../random/rand')
@@ -473,9 +482,9 @@ module.exports = {
 	not: _fp(not),
 	or: _fp(or),
 
-	choose: _fp(choose),
+	choose: (arr) => choose(arr),
 	chooseN: _fp(chooseN),
-	shuffle: _fp(shuffle),
+	shuffle: (arr) => shuffle(arr),
 
 	rand: (...args) => () => rand(...args),
 	randFloat: (...args) => () => randFloat(...args),
@@ -524,6 +533,17 @@ module.exports = {
 	fromPartsUntil: _fp(fromPartsUntil),
 	shiftDate: _fp(shift),
 	getWeek: _fp(getWeek),
+
+	promiseAllSettled: allSettled,
+	promiseAll: all,
+	promiseRace: race,
+
+	promiseReject: reject,
+	promiseResolve: resolve,
+
+	promiseCatch,
+	promiseFinally,
+	promiseThen,
 
 	util: {
 		arrayFromFactory,
@@ -582,6 +602,10 @@ module.exports = {
 		sleep,
 		timeout,
 
+		choose,
+		chooseN,
+		shuffle,
+
 		rand,
 		randFloat,
 		randInt,
@@ -589,6 +613,8 @@ module.exports = {
 
 		range,
 		xrange,
+
+		duration,
 
 		times: (n, fn) => {
 			const res = new Array(n)

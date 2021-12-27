@@ -1,4 +1,4 @@
 
-const all = Promise.all
+const all = (promises) => Promise.all(promises)
 
 module.exports = { all }

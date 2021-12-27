@@ -1,4 +1,4 @@
 
-const resolve = Promise.resolve
+const resolve = (value) => Promise.resolve(value)
 
 module.exports = { resolve }
