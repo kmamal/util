@@ -118,6 +118,8 @@ const {
 	uniqWith,
 	uniqWithSorted,
 } = require('../array/uniq')
+const { unweave } = require('../array/unweave')
+const { weave } = require('../array/weave')
 const { zip } = require('../array/zip')
 
 const {
@@ -276,7 +278,6 @@ const {
 	intersectionWith,
 	intersectionWithSorted,
 } = require('../array/intersection')
-const { interweave } = require('../array/interweave')
 const { join: joinArray } = require('../array/join')
 const {
 	merge,
@@ -284,7 +285,7 @@ const {
 	mergeByPure,
 	mergeWith,
 } = require('../array/merge')
-const swap = require('../array/swap')
+const { swap } = require('../array/swap')
 const {
 	xor,
 	xorBy,
@@ -424,6 +425,8 @@ module.exports = {
 	uniqSorted: _fp(uniqSorted),
 	uniqWith: _fp(uniqWith),
 	uniqWithSorted: _fp(uniqWithSorted),
+	unweave: _fp(unweave),
+	weave: _fp(weave),
 	zip: _fp(zip),
 
 	get: _fp(get),
@@ -573,7 +576,6 @@ module.exports = {
 		intersectionSorted,
 		intersectionWith,
 		intersectionWithSorted,
-		interweave,
 		joinArray,
 		merge,
 		mergeBy,

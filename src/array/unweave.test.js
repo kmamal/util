@@ -1,0 +1,17 @@
+const { test } = require('@kmamal/testing')
+const { unweave } = require('./unweave')
+
+test("array.unweave", (t) => {
+	t.equal(unweave([], 1), [ [] ])
+	t.equal(unweave([], 3), [ [], [], [] ])
+	t.equal(unweave([ 1 ], 3), [ [ 1 ], [ ], [] ])
+	t.equal(unweave([ 1, 2 ], 3), [ [ 1 ], [ 2 ], [] ])
+	t.equal(unweave([ 1, 2, 3 ], 3), [ [ 1 ], [ 2 ], [ 3 ] ])
+	t.equal(unweave([ 1, 2, 3, 4 ], 3), [ [ 1, 4 ], [ 2 ], [ 3 ] ])
+	t.equal(unweave([ 1, 2, 3, 4, 5 ], 3), [ [ 1, 4 ], [ 2, 5 ], [ 3 ] ])
+	t.equal(unweave([ 1, 2, 3, 4, 5, 6 ], 3), [ [ 1, 4 ], [ 2, 5 ], [ 3, 6 ] ])
+	t.equal(unweave([ 1, 2, 3, 4, 5, 6 ], 2), [ [ 1, 3, 5 ], [ 2, 4, 6 ] ])
+	t.equal(unweave([ 1, 2, 3, 4, 5, 6 ], 1), [ [ 1, 2, 3, 4, 5, 6 ] ])
+	t.equal(unweave([ 1, 2, 3, 4, 5, 6 ], 4), [ [ 1, 5 ], [ 2, 6 ], [ 3 ], [ 4 ] ])
+	t.equal(unweave([ 1, 2, 3, 4, 5, 6 ], 5), [ [ 1, 6 ], [ 2 ], [ 3 ], [ 4 ], [ 5 ] ])
+})
