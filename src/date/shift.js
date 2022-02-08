@@ -1,6 +1,6 @@
 
-const shift$$$ = (date, key, x) => {
-	switch (key) {
+const shift$$$ = (date, part, x) => {
+	switch (part) {
 		case 'years':
 		case 'year': {
 			date.setUTCFullYear(date.getUTCFullYear() + x)
@@ -34,9 +34,9 @@ const shift$$$ = (date, key, x) => {
 	return date
 }
 
-const shift = (date, key, x) => {
+const shift = (date, part, x) => {
 	const res = new Date(date)
-	shift$$$(res, key, x)
+	shift$$$(res, part, x)
 	return res
 }
 

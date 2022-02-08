@@ -1,4 +1,4 @@
-const { BASES } = require('./duration')
+const { DURATION } = require('./duration')
 
 const getWeek = (date) => {
 	const year = date.getUTCFullYear()
@@ -8,7 +8,7 @@ const getWeek = (date) => {
 	let janOneDay = janOne.getUTCDay() || 7
 	let offset = janOneDay > 4 ? -1 : 0
 	let padding = janOneDay - 1
-	let numDays = Math.round((today - janOne) / BASES.days)
+	let numDays = Math.round((today - janOne) / DURATION.days)
 	let week = Math.floor((numDays + padding) / 7) + 1 + offset
 
 	if (week > 0) { return week }
@@ -17,7 +17,7 @@ const getWeek = (date) => {
 	janOneDay = janOne.getUTCDay() || 7
 	offset = janOneDay > 4 ? -1 : 0
 	padding = janOneDay - 1
-	numDays = Math.round((today - janOne) / BASES.days)
+	numDays = Math.round((today - janOne) / DURATION.days)
 	week = Math.floor((numDays + padding) / 7) + 1 + offset
 
 	return week

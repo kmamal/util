@@ -1,4 +1,3 @@
-const { pick } = require('../object/pick')
 
 const PARTS = [
 	'year',
@@ -10,22 +9,44 @@ const PARTS = [
 	'millisecond',
 ]
 
-const getPart = (date, key) => {
-	switch (key) {
-		case 'years':
-		case 'year': return date.getUTCFullYear()
-		case 'months':
-		case 'month': return date.getUTCMonth() + 1
-		case 'days':
-		case 'day': return date.getUTCDate()
-		case 'hours':
-		case 'hour': return date.getUTCHours()
-		case 'minutes':
-		case 'minute': return date.getUTCMinutes()
-		case 'seconds':
-		case 'second': return date.getUTCSeconds()
-		case 'milliseconds':
-		case 'millisecond': return date.getUTCMilliseconds()
+const getYear = (date) => date.getUTCFullYear()
+const getMonth = (date) => date.getUTCMonth() + 1
+const getDay = (date) => date.getUTCDate()
+const getHour = (date) => date.getUTCHours()
+const getMinute = (date) => date.getUTCMinutes()
+const getSecond = (date) => date.getUTCSeconds()
+const getMillisecond = (date) => date.getUTCMilliseconds()
+
+const setYear = (date, value) => date.setUTCFullYear(value)
+const setMonth = (date, value) => date.setUTCMonth(value - 1)
+const setDay = (date, value) => date.setUTCDay(value)
+const setHour = (date, value) => date.setUTCHours(value)
+const setMinute = (date, value) => date.setUTCMinutes(value)
+const setSecond = (date, value) => date.setUTCSeconds(value)
+const setMillisecond = (date, value) => date.setUTCMilliseconds(value)
+
+const getPart = (date, part) => {
+	switch (part) {
+		case 'years': case 'year': return getYear(date)
+		case 'months': case 'month': return getMonth(date)
+		case 'days': case 'day': return getDay(date)
+		case 'hours': case 'hour': return getHour(date)
+		case 'minutes': case 'minute': return getMinute(date)
+		case 'seconds': case 'second': return getSecond(date)
+		case 'milliseconds': case 'millisecond': return getMillisecond(date)
+		default: return null
+	}
+}
+
+const setPart = (date, part, value) => {
+	switch (part) {
+		case 'years': case 'year': return setYear(date, value)
+		case 'months': case 'month': return setMonth(date, value)
+		case 'days': case 'day': return setDay(date, value)
+		case 'hours': case 'hour': return setHour(date, value)
+		case 'minutes': case 'minute': return setMinute(date, value)
+		case 'seconds': case 'second': return setSecond(date, value)
+		case 'milliseconds': case 'millisecond': return setMillisecond(date, value)
 		default: return null
 	}
 }
@@ -33,7 +54,6 @@ const getPart = (date, key) => {
 const toParts = (date) => ({
 	year: getPart(date, 'year'),
 	month: getPart(date, 'month'),
-	week: getPart(date, 'week'),
 	day: getPart(date, 'day'),
 	hour: getPart(date, 'hour'),
 	minute: getPart(date, 'minute'),
@@ -41,26 +61,41 @@ const toParts = (date) => ({
 	millisecond: getPart(date, 'millisecond'),
 })
 
-const fromParts = (parts) => {
+const _fromParts = (parts, partNames) => {
 	const args = []
-	for (const key of PARTS) {
-		const part = parts[key]
-		if (part === undefined) { break }
-		args.push(key === 'month' ? part - 1 : part)
+	for (const part of partNames) {
+		const value = parts[part]
+		if (value === undefined) { break }
+		args.push(part === 'month' ? value - 1 : value)
 	}
 	return new Date(Date.UTC(...args))
 }
 
+const fromParts = (parts) => _fromParts(parts, PARTS)
+
 const fromPartsUntil = (parts, until) => {
-	const untilIndex = PARTS.indexOf(until) + 1
-	const partNames = PARTS.slice(0, untilIndex)
-	const pickedParts = pick(parts, partNames)
-	return fromParts(pickedParts)
+	const partNames = PARTS.slice(0, PARTS.indexOf(until) + 1)
+	return _fromParts(parts, partNames)
 }
 
 module.exports = {
 	PARTS,
+	getYear,
+	getMonth,
+	getDay,
+	getHour,
+	getMinute,
+	getSecond,
+	getMillisecond,
+	setYear,
+	setMonth,
+	setDay,
+	setHour,
+	setMinute,
+	setSecond,
+	setMillisecond,
 	getPart,
+	setPart,
 	toParts,
 	fromParts,
 	fromPartsUntil,

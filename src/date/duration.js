@@ -4,11 +4,10 @@ const seconds = 1e3 * milliseconds
 const minutes = 60 * seconds
 const hours = 60 * minutes
 const days = 24 * hours
-const weeks = 7 * days
 const months = 30 * days
 const years = 365 * days
 
-const BASES = {
+const DURATION = {
 	milliseconds,
 	millisecond: milliseconds,
 	seconds,
@@ -25,12 +24,12 @@ const BASES = {
 	year: years,
 }
 
-const duration = (value, unit) => {
-	const base = BASES[unit]
+const duration = (value, part) => {
+	const base = DURATION[part]
 	return base ? base * value : null
 }
 
 module.exports = {
-	BASES,
+	DURATION,
 	duration,
 }
