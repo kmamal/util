@@ -8,7 +8,7 @@ const weeks = 7 * days
 const months = 30 * days
 const years = 365 * days
 
-const bases = {
+const BASES = {
 	milliseconds,
 	millisecond: milliseconds,
 	seconds,
@@ -19,8 +19,6 @@ const bases = {
 	hour: hours,
 	days,
 	day: days,
-	weeks,
-	week: weeks,
 	months,
 	month: months,
 	years,
@@ -28,8 +26,11 @@ const bases = {
 }
 
 const duration = (value, unit) => {
-	const base = bases[unit]
+	const base = BASES[unit]
 	return base ? base * value : null
 }
 
-module.exports = { duration }
+module.exports = {
+	BASES,
+	duration,
+}

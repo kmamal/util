@@ -234,15 +234,14 @@ const {
 } = require('../string/trim')
 
 const { duration } = require('../date/duration')
+const { elapsed } = require('../date/elapsed')
 const {
 	toParts,
 	fromParts,
 	fromPartsUntil,
 } = require('../date/parts')
 const { shift } = require('../date/shift')
-const {
-	getWeek,
-} = require('../date/week')
+const { getWeek } = require('../date/week')
 
 
 const { fromFactory: arrayFromFactory } = require('../array/from-factory')
@@ -531,6 +530,7 @@ module.exports = {
 	trimEnd: _fp(trimEnd),
 	trimStart: _fp(trimStart),
 
+	elapsed: _fp(elapsed),
 	toParts: _fp(toParts),
 	fromParts: _fp(fromParts),
 	fromPartsUntil: _fp(fromPartsUntil),

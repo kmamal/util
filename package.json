@@ -122,6 +122,7 @@
     "./misc/chronometer": "./src/misc/chronometer.js",
     "./date/week": "./src/date/week.js",
     "./date/parts": "./src/date/parts.js",
+    "./date/elapsed": "./src/date/elapsed.js",
     "./date/shift": "./src/date/shift.js",
     "./date/duration": "./src/date/duration.js",
     "./map/with-hooks": "./src/map/with-hooks.js",

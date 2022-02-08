@@ -10,18 +10,36 @@ const PARTS = [
 	'millisecond',
 ]
 
-const toParts = (timestamp) => {
-	const date = new Date(timestamp)
-	return {
-		year: date.getFullYear(),
-		month: date.getMonth() + 1,
-		day: date.getDate(),
-		hour: date.getHours(),
-		minute: date.getMinutes(),
-		second: date.getSeconds(),
-		millisecond: date.getMilliseconds(),
+const getPart = (date, key) => {
+	switch (key) {
+		case 'years':
+		case 'year': return date.getUTCFullYear()
+		case 'months':
+		case 'month': return date.getUTCMonth() + 1
+		case 'days':
+		case 'day': return date.getUTCDate()
+		case 'hours':
+		case 'hour': return date.getUTCHours()
+		case 'minutes':
+		case 'minute': return date.getUTCMinutes()
+		case 'seconds':
+		case 'second': return date.getUTCSeconds()
+		case 'milliseconds':
+		case 'millisecond': return date.getUTCMilliseconds()
+		default: return null
 	}
 }
+
+const toParts = (date) => ({
+	year: getPart(date, 'year'),
+	month: getPart(date, 'month'),
+	week: getPart(date, 'week'),
+	day: getPart(date, 'day'),
+	hour: getPart(date, 'hour'),
+	minute: getPart(date, 'minute'),
+	second: getPart(date, 'second'),
+	millisecond: getPart(date, 'millisecond'),
+})
 
 const fromParts = (parts) => {
 	const args = []
@@ -30,8 +48,7 @@ const fromParts = (parts) => {
 		if (part === undefined) { break }
 		args.push(key === 'month' ? part - 1 : part)
 	}
-	if (args.length === 1) { args.push(0) }
-	return new Date(...args).getTime()
+	return new Date(Date.UTC(...args))
 }
 
 const fromPartsUntil = (parts, until) => {
@@ -43,6 +60,7 @@ const fromPartsUntil = (parts, until) => {
 
 module.exports = {
 	PARTS,
+	getPart,
 	toParts,
 	fromParts,
 	fromPartsUntil,
