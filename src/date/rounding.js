@@ -1,26 +1,34 @@
 const { PARTS, getPart } = require('./parts')
 const { shift } = require('./shift')
 
-const floor$$$ = (date, targetPart) => {
+const _floorTimestamp = (date, targetPart) => {
 	const args = []
 	for (const part of PARTS) {
 		args.push(getPart(date, part, true))
 		if (part === targetPart) { break }
 	}
-	date.setTime(Date.UTC(...args))
+	return Date.UTC(...args)
+}
+
+const floor$$$ = (date, targetPart) => {
+	date.setTime(_floorTimestamp(date, targetPart))
 	return date
 }
 
 const floor = (date, targetPart) => {
-	const res = new Date(date)
-	return floor$$$(res, targetPart)
+	const timestamp = _floorTimestamp(date, targetPart)
+	return new Date(timestamp)
 }
 
 floor.$$$ = floor$$$
 
 const ceil$$$ = (date, targetPart) => {
-	floor$$$(date, targetPart)
-	shift.$$$(date, targetPart, 1)
+	const origTimestamp = date.getTime()
+	const floorTimestamp = _floorTimestamp(date, targetPart)
+	if (origTimestamp !== floorTimestamp) {
+		date.setTime(floorTimestamp)
+		shift.$$$(date, targetPart, 1)
+	}
 	return date
 }
 
@@ -32,18 +40,23 @@ const ceil = (date, targetPart) => {
 ceil.$$$ = ceil$$$
 
 const round$$$ = (date, targetPart) => {
-	const r = round(date, targetPart)
-	date.setTime(r.getTime())
+	const t = date.getTime()
+
+	floor.$$$(date, targetPart)
+	const at = date.getTime()
+	if (t === at) { return date }
+
+	const b = shift.$$$(date, targetPart, 1)
+	const bt = b.getTime()
+	if ((bt - t) <= (t - at)) { return date }
+
+	date.setTime(at)
 	return date
 }
 
 const round = (date, targetPart) => {
-	const a = floor(date, targetPart)
-	const b = shift(a, targetPart, 1)
-	const t = date.getTime()
-	const at = a.getTime()
-	const bt = b.getTime()
-	return (t - at) <= (bt - t) ? a : b
+	const res = new Date(date)
+	return round$$$(res, targetPart)
 }
 
 round.$$$ = round$$$
