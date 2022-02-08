@@ -4,8 +4,7 @@ const { shift } = require('./shift')
 const floor$$$ = (date, targetPart) => {
 	const args = []
 	for (const part of PARTS) {
-		const value = getPart(date, part)
-		args.push(part === 'month' ? value - 1 : value)
+		args.push(getPart(date, part, true))
 		if (part === targetPart) { break }
 	}
 	date.setTime(Date.UTC(...args))

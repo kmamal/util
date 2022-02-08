@@ -11,6 +11,7 @@ const PARTS = [
 
 const getYear = (date) => date.getUTCFullYear()
 const getMonth = (date) => date.getUTCMonth() + 1
+const getMonthRaw = (date) => date.getUTCMonth()
 const getDay = (date) => date.getUTCDate()
 const getHour = (date) => date.getUTCHours()
 const getMinute = (date) => date.getUTCMinutes()
@@ -19,16 +20,19 @@ const getMillisecond = (date) => date.getUTCMilliseconds()
 
 const setYear = (date, value) => date.setUTCFullYear(value)
 const setMonth = (date, value) => date.setUTCMonth(value - 1)
+const setMonthRaw = (date, value) => date.setUTCMonth(value)
 const setDay = (date, value) => date.setUTCDay(value)
 const setHour = (date, value) => date.setUTCHours(value)
 const setMinute = (date, value) => date.setUTCMinutes(value)
 const setSecond = (date, value) => date.setUTCSeconds(value)
 const setMillisecond = (date, value) => date.setUTCMilliseconds(value)
 
-const getPart = (date, part) => {
+const getPart = (date, part, raw = false) => {
 	switch (part) {
 		case 'years': case 'year': return getYear(date)
-		case 'months': case 'month': return getMonth(date)
+		case 'months': case 'month': return raw
+			? getMonthRaw(date)
+			: getMonth(date)
 		case 'days': case 'day': return getDay(date)
 		case 'hours': case 'hour': return getHour(date)
 		case 'minutes': case 'minute': return getMinute(date)
@@ -38,10 +42,12 @@ const getPart = (date, part) => {
 	}
 }
 
-const setPart = (date, part, value) => {
+const setPart = (date, part, value, raw = false) => {
 	switch (part) {
 		case 'years': case 'year': return setYear(date, value)
-		case 'months': case 'month': return setMonth(date, value)
+		case 'months': case 'month': return raw
+			? setMonthRaw(date, value)
+			: setMonth(date, value)
 		case 'days': case 'day': return setDay(date, value)
 		case 'hours': case 'hour': return setHour(date, value)
 		case 'minutes': case 'minute': return setMinute(date, value)
