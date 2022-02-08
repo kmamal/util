@@ -14,8 +14,6 @@ const elapsed = (a, b, part) => {
 	const c = shift(a, part, estimate)
 	const cmp = getPart(c, part) - getPart(b, part)
 
-	console.log({ estimate, c, cmp })
-
 	if (cmp) {
 		const ct = c.getTime()
 		estimate += Math.sign(bt - ct)
