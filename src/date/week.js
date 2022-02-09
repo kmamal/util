@@ -23,12 +23,25 @@ const getWeek = (date) => {
 	return week
 }
 
-const startOfWeek = (date) => {
-	const monday = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()))
-	const day = monday.getUTCDay() || 7
-	monday.setUTCDate(monday.getUTCDate() + 1 - day)
-	return monday
+const offset = [ -6, null, -1, -2, -3, -4, -5 ]
+
+const startOfWeek$$$ = (date) => {
+	date.setTime(Date.UTC(
+		date.getUTCFullYear(),
+		date.getUTCMonth(),
+		date.getUTCDate(),
+	))
+	const day = date.getUTCDay()
+	if (day !== 1) { date.setUTCDate(date.getUTCDate() + offset[day]) }
+	return date
 }
+
+const startOfWeek = (date) => {
+	const res = new Date(date)
+	return startOfWeek$$$(res)
+}
+
+startOfWeek.$$$ = startOfWeek$$$
 
 module.exports = {
 	getWeek,
