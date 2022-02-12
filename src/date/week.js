@@ -2,19 +2,17 @@ const { DURATION } = require('./duration')
 const {
 	_fromTimestamp,
 	toTimestamp,
-	calcDaysSinceEpoch,
-	calcDayOfWeek,
 } = require('./date')
 const { clone } = require('./clone')
 
 const dDay = DURATION.day
 const dWeek = 7 * dDay
-
+const offset = 3 * dDay
 
 const calcTimestampStartOfWeek = (timestamp) => {
-	const daysSinceEpoch = calcDaysSinceEpoch(timestamp)
-	const dayOfWeek = calcDayOfWeek(daysSinceEpoch)
-	return (daysSinceEpoch - dayOfWeek) * dDay
+	const adjusted = timestamp + offset
+	const week = Math.floor(adjusted / dWeek)
+	return week * dWeek - offset
 }
 
 const calcStartOfWeek$$$ = (date) => {
