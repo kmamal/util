@@ -121,12 +121,14 @@
     "./misc/_units": "./src/misc/_units.js",
     "./misc/chronometer": "./src/misc/chronometer.js",
     "./date/week": "./src/date/week.js",
-    "./date/parts": "./src/date/parts.js",
+    "./date/copy": "./src/date/copy.js",
     "./date/rounding": "./src/date/rounding.js",
+    "./date/iso-string": "./src/date/iso-string.js",
     "./date/elapsed": "./src/date/elapsed.js",
-    "./date/month": "./src/date/month.js",
-    "./date/year": "./src/date/year.js",
+    "./date/race": "./src/date/race.js",
+    "./date/clone": "./src/date/clone.js",
     "./date/shift": "./src/date/shift.js",
+    "./date/date": "./src/date/date.js",
     "./date/duration": "./src/date/duration.js",
     "./map/with-hooks": "./src/map/with-hooks.js",
     "./operators/arithmetic/pow": "./src/operators/arithmetic/pow.js",
@@ -270,6 +272,7 @@
     "./function/noop": "./src/function/noop.js",
     "./number/clamp": "./src/number/clamp.js",
     "./number/interpolate": "./src/number/interpolate.js",
+    "./number/rounding": "./src/number/rounding.js",
     "./number/stringify/to-precision": "./src/number/stringify/to-precision.js",
     "./number/stringify/to-fixed": "./src/number/stringify/to-fixed.js",
     "./number/stringify/to-exponential": "./src/number/stringify/to-exponential.js",
@@ -308,7 +311,7 @@
     "./set/xor": "./src/set/xor.js",
     "./set/difference": "./src/set/difference.js"
   },
-  "devDependencies": {
-    "@kmamal/testing": "^0.0.17"
+  "dependencies": {
+    "@kmamal/testing": "^0.0.18"
   }
 }

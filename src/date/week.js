@@ -1,49 +1,74 @@
 const { DURATION } = require('./duration')
+const {
+	_fromTimestamp,
+	toTimestamp,
+	calcDaysSinceEpoch,
+	calcDayOfWeek,
+} = require('./date')
+const { clone } = require('./clone')
 
-const getWeek = (date) => {
-	const year = date.getUTCFullYear()
-	const janOne = new Date(Date.UTC(year, 0, 1))
-	const today = new Date(Date.UTC(year, date.getUTCMonth(), date.getUTCDate()))
+const dDay = DURATION.day
+const dWeek = 7 * dDay
 
-	let janOneDay = janOne.getUTCDay() || 7
-	let offset = janOneDay > 4 ? -1 : 0
-	let padding = janOneDay - 1
-	let numDays = Math.round((today - janOne) / DURATION.days)
-	let week = Math.floor((numDays + padding) / 7) + 1 + offset
 
-	if (week > 0) { return week }
-
-	janOne.setFullYear(year - 1)
-	janOneDay = janOne.getUTCDay() || 7
-	offset = janOneDay > 4 ? -1 : 0
-	padding = janOneDay - 1
-	numDays = Math.round((today - janOne) / DURATION.days)
-	week = Math.floor((numDays + padding) / 7) + 1 + offset
-
-	return week
+const calcTimestampStartOfWeek = (timestamp) => {
+	const daysSinceEpoch = calcDaysSinceEpoch(timestamp)
+	const dayOfWeek = calcDayOfWeek(daysSinceEpoch)
+	return (daysSinceEpoch - dayOfWeek) * dDay
 }
 
-const offset = [ -6, null, -1, -2, -3, -4, -5 ]
-
-const startOfWeek$$$ = (date) => {
-	date.setTime(Date.UTC(
-		date.getUTCFullYear(),
-		date.getUTCMonth(),
-		date.getUTCDate(),
-	))
-	const day = date.getUTCDay()
-	if (day !== 1) { date.setUTCDate(date.getUTCDate() + offset[day]) }
+const calcStartOfWeek$$$ = (date) => {
+	const timestamp = calcTimestampStartOfWeek(date.timestamp)
+	_fromTimestamp(date, timestamp)
 	return date
 }
 
-const startOfWeek = (date) => {
-	const res = new Date(date)
-	return startOfWeek$$$(res)
+const calcStartOfWeek = (date) => {
+	const res = clone(date)
+	return calcStartOfWeek$$$(res)
 }
 
-startOfWeek.$$$ = startOfWeek$$$
+calcStartOfWeek.$$$ = calcStartOfWeek$$$
+
+
+const _cachedfirstWeekOfYear = {}
+
+const _doCalcFirstWeekOfYear = (year) => {
+	const timestamp = toTimestamp({ year, month: 1, day: 4 })
+	return calcTimestampStartOfWeek(timestamp)
+}
+
+const _calcFirstWeekOfYear = (year) => {
+	const cached = _cachedfirstWeekOfYear[year]
+	if (cached !== undefined) { return cached }
+	const res = _doCalcFirstWeekOfYear(year)
+	_cachedfirstWeekOfYear[year] = res
+	return res
+}
+
+
+const calcWeek = (date) => {
+	const { year, month, day, timestamp } = date
+	let yearStartTimestamp
+	if (month === 1 && day <= 10) {
+		yearStartTimestamp = _calcFirstWeekOfYear(year)
+		if (yearStartTimestamp > timestamp) {
+			yearStartTimestamp = _calcFirstWeekOfYear(year - 1)
+		}
+	} else if (month === 12 && day >= 29) {
+		yearStartTimestamp = _calcFirstWeekOfYear(year + 1)
+		if (yearStartTimestamp > timestamp) {
+			yearStartTimestamp = _calcFirstWeekOfYear(year)
+		}
+	} else {
+		yearStartTimestamp = _calcFirstWeekOfYear(year)
+	}
+	return Math.floor((timestamp - yearStartTimestamp) / dWeek) + 1
+}
+
 
 module.exports = {
-	getWeek,
-	startOfWeek,
+	calcTimestampStartOfWeek,
+	calcStartOfWeek,
+	calcWeek,
 }
