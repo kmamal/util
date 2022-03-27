@@ -29,8 +29,20 @@ const makeAsyncMiddleware = (handlers) => async (...args) => {
 	return handled ? result : undefined
 }
 
-const middleware = (handlers, options) => options?.sync
-	? makeSyncMiddleware(handlers)
-	: makeAsyncMiddleware(handlers)
+const AsyncFunction = Object.getPrototypeOf(async () => {}).constructor
 
-module.exports = { middleware }
+const makeMiddleware = (handlers) => {
+	let isAsync = false
+	for (const handler of handlers) {
+		if (handler instanceof AsyncFunction) {
+			isAsync = true
+			break
+		}
+	}
+
+	return isAsync
+		? makeAsyncMiddleware(handlers)
+		: makeSyncMiddleware(handlers)
+}
+
+module.exports = { makeMiddleware }
