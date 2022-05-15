@@ -1,25 +1,25 @@
 const { reduce } = require('./reduce')
 const { identity } = require('../function/identity')
 
-const __zip = (dst, dst_start, src, src_start, src_end, inner_start, inner_end, fn_map) => {
-	const length = src_end - src_start
-	let write_index = dst_start
-	let inner_index = inner_start
-	while (inner_index < inner_end) {
+const __zip = (dst, dstStart, src, srcStart, srcEnd, innerStart, innerEnd, fnMap) => {
+	const length = srcEnd - srcStart
+	let writeIndex = dstStart
+	let innerIndex = innerStart
+	while (innerIndex < innerEnd) {
 		const tuple = new Array(length)
 		for (let i = 0; i < length; i++) {
-			tuple[i] = src[i][inner_index]
+			tuple[i] = src[i][innerIndex]
 		}
-		dst[write_index++] = fn_map(tuple)
-		inner_index += 1
+		dst[writeIndex++] = fnMap(tuple)
+		innerIndex += 1
 	}
-	return write_index - dst_start
+	return writeIndex - dstStart
 }
 
-const zipWith = (arr, fn_map) => {
+const zipWith = (arr, fnMap) => {
 	const width = reduce(arr, (max, { length }) => Math.max(max, length), 0)
 	const res = new Array(width)
-	__zip(res, 0, arr, 0, arr.length, 0, width, fn_map)
+	__zip(res, 0, arr, 0, arr.length, 0, width, fnMap)
 	return res
 }
 
