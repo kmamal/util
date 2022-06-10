@@ -233,24 +233,6 @@ const {
 	trimStart,
 } = require('../string/trim')
 
-const { copy: dateCopy } = require('../date/copy')
-const { clone: dateClone } = require('../date/clone')
-const {
-	fromTimestamp: dateFromTimestamp,
-	toTimestamp: dateToTimestamp,
-	fromPartial: dateFromPartial,
-} = require('../date/date')
-const { duration } = require('../date/duration')
-const { elapsed } = require('../date/elapsed')
-const { toString: dateToString } = require('../date/iso-string')
-const {
-	floor: dateFloor,
-	ceil: dateCeil,
-	round: dateRound,
-} = require('../date/rounding')
-const { shift: dateShift } = require('../date/shift')
-
-
 const { fromFactory: arrayFromFactory } = require('../array/from-factory')
 const { fromHandlers: arrayFromHandlers } = require('../array/from-handlers')
 
@@ -536,18 +518,6 @@ module.exports = {
 	trim: _fp(trim),
 	trimEnd: _fp(trimEnd),
 	trimStart: _fp(trimStart),
-
-	dateCopy: _fp(dateCopy),
-	dateClone: _fp(dateClone),
-	dateFromTimestamp: _fp(dateFromTimestamp),
-	dateToTimestamp: _fp(dateToTimestamp),
-	dateFromPartial: _fp(dateFromPartial),
-	elapsed: _fp(elapsed),
-	dateShift: _fp(dateShift),
-	dateToString: _fp(dateToString),
-	dateFloor: _fp(dateFloor),
-	dateCeil: _fp(dateCeil),
-	dateRound: _fp(dateRound),
 
 	promiseAllSettled: allSettled,
 	promiseAll: all,
