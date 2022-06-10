@@ -598,8 +598,6 @@ module.exports = {
 		range,
 		xrange,
 
-		duration,
-
 		times: (n, fn) => {
 			const res = new Array(n)
 			for (let i = 0; i < n; i++) {
