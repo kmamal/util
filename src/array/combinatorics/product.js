@@ -5,11 +5,10 @@ const __recurse = function * (dst, src, index, length) {
 		return
 	}
 
-
-	const next_index = index + 1
+	const nextIndex = index + 1
 	for (const x of src[index]) {
 		dst[index] = x
-		yield* __recurse(dst, src, next_index, length)
+		yield* __recurse(dst, src, nextIndex, length)
 	}
 }
 

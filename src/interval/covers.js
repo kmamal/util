@@ -1,9 +1,9 @@
 
 const covers = (
-	[ a_start, a_end ],
-	[ b_start, b_end ],
+	[ aStart, aEnd ],
+	[ bStart, bEnd ],
 ) => true
-	&& a_start <= b_start
-	&& b_end <= a_end
+	&& aStart <= bStart
+	&& bEnd <= aEnd
 
 module.exports = { covers }

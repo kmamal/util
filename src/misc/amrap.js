@@ -1,6 +1,6 @@
 
-const amrap = (iterate, time_limit, options = {}) => {
-	const start_time = Date.now()
+const amrap = (iterate, timeLimit, options = {}) => {
+	const startTime = Date.now()
 
 	const {
 		initial = 1,
@@ -8,19 +8,19 @@ const amrap = (iterate, time_limit, options = {}) => {
 		safety = 1,
 	} = options
 
-	let remaining = time_limit
+	let remaining = timeLimit
 	let next = (safety * initial) | 0
 	let reps = 0
 
 	for (;;) {
 		const done = iterate(next, remaining)
 
-		const ellapsed = Date.now() - start_time
-		remaining = time_limit - ellapsed
+		const ellapsed = Date.now() - startTime
+		remaining = timeLimit - ellapsed
 		reps += next
 
-		const time_per_rep = ellapsed / reps
-		next = Math.floor(safety * Math.min(next * scaling, remaining / time_per_rep))
+		const timePerRep = ellapsed / reps
+		next = Math.floor(safety * Math.min(next * scaling, remaining / timePerRep))
 
 		if (done || remaining <= 0 || next === 0) {
 			return { ellapsed, reps }

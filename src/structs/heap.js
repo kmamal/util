@@ -27,9 +27,9 @@ class Heap {
 	}
 
 	update (entry, prio) {
-		const old_prio = entry.prio
+		const oldPrio = entry.prio
 		entry.prio = prio
-		this._compare(prio, old_prio) < 0
+		this._compare(prio, oldPrio) < 0
 			? this._bubbleUp(entry)
 			: this._bubbleDown(entry)
 	}
@@ -55,14 +55,14 @@ class Heap {
 	_bubbleDown (entry) {
 		for (;;) {
 			const { index } = entry
-			const left_child = this._array[getLeft(index)]
-			if (!left_child) { break }
+			const leftChild = this._array[getLeft(index)]
+			if (!leftChild) { break }
 
-			const right_child = this._array[getRight(index)]
-			const min_child = !right_child || this._compare(left_child.prio, right_child.prio) <= 0 ? left_child : right_child
-			if (this._compare(entry.prio, min_child.prio) < 0) { break }
+			const rightChild = this._array[getRight(index)]
+			const minChild = !rightChild || this._compare(leftChild.prio, rightChild.prio) <= 0 ? leftChild : rightChild
+			if (this._compare(entry.prio, minChild.prio) < 0) { break }
 
-			this._swap(entry, min_child)
+			this._swap(entry, minChild)
 		}
 	}
 

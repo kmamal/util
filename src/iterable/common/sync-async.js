@@ -1,34 +1,34 @@
 const { map } = require('../../array/map')
 
 const wrapIterables = (iterables, fn) => {
-	let some_async = false
+	let someAsync = false
 	const iterators = map(iterables, (iterable) => {
 		const generator = iterable[Symbol.iterator] || iterable[Symbol.asyncIterator]
-		const is_async = generator === iterable[Symbol.asyncIterator]
-		if (is_async) { some_async = true }
+		const isAsync = generator === iterable[Symbol.asyncIterator]
+		if (isAsync) { someAsync = true }
 		const iterator = generator.call(iterable)
-		return { iterator, is_async }
+		return { iterator, isAsync }
 	})
 
 	const emitted = []
 	const emit = (value) => { emitted.push(value) }
-	const fn_iterator = fn(iterators, emit)
+	const fnIterator = fn(iterators, emit)
 
 	let key
 	let next
 	let entry
-	if (some_async) {
+	if (someAsync) {
 		key = Symbol.asyncIterator
 		next = async () => {
 			let pulled
 			while (emitted.length === 0) {
 				if (entry) {
 					pulled = entry.iterator.next()
-					if (entry.is_async) { pulled = await pulled }
+					if (entry.isAsync) { pulled = await pulled }
 					entry = null
 				}
 
-				const { value, done } = fn_iterator.next(pulled)
+				const { value, done } = fnIterator.next(pulled)
 				if (done) { break }
 				entry = value
 			}
@@ -46,7 +46,7 @@ const wrapIterables = (iterables, fn) => {
 					pulled = entry.iterator.next()
 					entry = null
 				}
-				const { value, done } = fn_iterator.next(pulled)
+				const { value, done } = fnIterator.next(pulled)
 				if (done) { break }
 				entry = value
 			}
