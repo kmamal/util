@@ -134,6 +134,8 @@ const {
 	isEqualWith,
 } = require('../object/is-equal')
 const { keys } = require('../object/keys')
+const { mapEntries } = require('../object/map-entries')
+const { mapKeys } = require('../object/map-keys')
 const { mapValues } = require('../object/map-values')
 const {
 	matches,
@@ -425,6 +427,8 @@ module.exports = {
 	isEqual: _fp(isEqual),
 	isEqualWith: _fp(isEqualWith),
 	keys: _fp(keys),
+	mapEntries: _fp(mapEntries),
+	mapKeys: _fp(mapKeys),
 	mapValues: _fp(mapValues),
 	matches: _fp(matches),
 	matchesWith: _fp(matchesWith),
