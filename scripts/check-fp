@@ -1,0 +1,84 @@
+#!/usr/bin/env node
+
+const Path = require('path')
+
+const cwd = Path.join(Path.dirname(__dirname), 'src')
+
+const indexModule = require(Path.join(cwd, 'index.js'))
+const fpModule = require(Path.join(cwd, 'fp.js'))
+
+const ignoredPrefixes = [
+	'array2d',
+	'heap',
+	'tree',
+	'binsertionsort',
+	'insertionsort',
+	'introsort',
+	'mergesort',
+	'shellsort',
+	'timsort',
+	'quicksort',
+	'combinations',
+	'permutations',
+	'product',
+
+	'endIndex',
+	'startIndex',
+
+	'combine',
+	'comm',
+	'copy',
+	'difference',
+	'makeProxy',
+	'merge',
+	'swap',
+
+	'ieeeFloat',
+
+	'compare',
+	'identity',
+	'noop',
+
+	'object.zip',
+
+	'interpolate',
+
+	'range',
+	'xrange',
+
+	'sets.difference',
+]
+
+const ordA = 'A'.charCodeAt(0)
+const ordZ = 'Z'.charCodeAt(0)
+const isClass = (key) => {
+	const ord = key.charCodeAt(0)
+	return ordA <= ord && ord <= ordZ
+}
+
+let hasMissing = false
+const recurse = (a, b, path) => {
+	for (const [ key, value ] of Object.entries(a)) {
+		if (key.startsWith('__') || isClass(key)) { continue }
+
+		const propPath = `${path}.${key}`
+		const withoutFp = propPath.slice(3)
+		const isIgnored = ignoredPrefixes.find((pre) => withoutFp.startsWith(pre))
+		if (isIgnored) { continue }
+
+		if (typeof value === 'object') {
+			recurse(a[key], b?.[key], `${path}.${key}`)
+			continue
+		}
+
+		if (b?.[key]) { continue }
+
+
+		console.error("missing", `${path}.${key}`)
+		hasMissing = true
+	}
+}
+
+recurse(indexModule, fpModule, 'fp')
+
+if (hasMissing) { process.exit(1) }

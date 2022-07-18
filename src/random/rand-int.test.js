@@ -1,5 +1,5 @@
 const { test } = require('@kmamal/testing')
-const { withHooks } = require('../map/with-hooks')
+const { addDefault } = require('../map/add-default')
 const { randInt } = require('./rand-int')
 
 test("random.randInt", (t) => {
@@ -9,7 +9,8 @@ test("random.randInt", (t) => {
 	let min = Infinity
 	let max = -Infinity
 	let sum = 0
-	const buckets = withHooks({ factory: () => 0 })
+	const buckets = new Map()
+	addDefault(buckets, () => 0)
 
 	for (let i = 0; i < N; i++) {
 		const r = randInt(A, B)

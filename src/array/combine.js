@@ -1,6 +1,3 @@
-const { startIndex } = require('./start-index')
-const { endIndex } = require('./end-index')
-const { __copy } = require('./copy')
 
 const __combine = (dst, dstStart, a, aStart, b, bStart, length, fn) => {
 	const dstEnd = dstStart + length

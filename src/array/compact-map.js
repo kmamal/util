@@ -1,25 +1,25 @@
 
-const __compactMap = (dst, dst_start, src, src_start, src_end, fn_map) => {
-	let write_index = dst_start
-	let read_index = src_start
-	while (read_index < src_end) {
-		const item = src[read_index++]
-		const mapped = fn_map(item)
+const __compactMap = (dst, dstStart, src, srcStart, srcEnd, fnMap) => {
+	let writeIndex = dstStart
+	let readIndex = srcStart
+	while (readIndex < srcEnd) {
+		const item = src[readIndex++]
+		const mapped = fnMap(item)
 		if (!mapped) { continue }
-		dst[write_index++] = mapped
+		dst[writeIndex++] = mapped
 	}
-	return write_index - dst_start
+	return writeIndex - dstStart
 }
 
-const compactMap$$$ = (arr, fn_map) => {
-	const n = __compactMap(arr, 0, arr, 0, arr.length, fn_map)
+const compactMap$$$ = (arr, fnMap) => {
+	const n = __compactMap(arr, 0, arr, 0, arr.length, fnMap)
 	arr.length = n
 	return arr
 }
 
-const compactMap = (arr, fn_map) => {
+const compactMap = (arr, fnMap) => {
 	const res = []
-	__compactMap(res, 0, arr, 0, arr.length, fn_map)
+	__compactMap(res, 0, arr, 0, arr.length, fnMap)
 	return res
 }
 

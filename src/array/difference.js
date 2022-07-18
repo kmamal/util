@@ -7,15 +7,15 @@ const { map } = require('./map')
 
 const extract = ({ x }) => x
 
-const __difference = (dst, dst_start, a, a_start, a_end, b, b_start, b_end, fn) => {
-	const pred = (x) => !__includes(b, b_start, b_end, x, fn)
-	return __filter(dst, dst_start, a, a_start, a_end, pred)
+const __difference = (dst, dstStart, a, aStart, aEnd, b, bStart, bEnd, fn) => {
+	const pred = (x) => !__includes(b, bStart, bEnd, x, fn)
+	return __filter(dst, dstStart, a, aStart, aEnd, pred)
 }
 
-const __differenceSorted = (dst, dst_start, a, a_start, a_end, b, b_start, b_end, fn) => {
-	const diff = { arr: dst, index: dst_start }
-	__comm(diff, null, null, a, a_start, a_end, b, b_start, b_end, fn)
-	return diff.index - dst_start
+const __differenceSorted = (dst, dstStart, a, aStart, aEnd, b, bStart, bEnd, fn) => {
+	const diff = { arr: dst, index: dstStart }
+	__comm(diff, null, null, a, aStart, aEnd, b, bStart, bEnd, fn)
+	return diff.index - dstStart
 }
 
 const differenceWith$$$ = (a, b, fn) => {
@@ -84,38 +84,38 @@ differenceBySorted.$$$ = differenceBySorted$$$
 
 // HACK: Depends on knowing the algo internals
 const differenceByPureSorted$$$ = (a, b, fn) => {
-	let last_x = NaN
-	let last_y = NaN
-	let x_value = NaN
-	let y_value = NaN
+	let lastX = NaN
+	let lastY = NaN
+	let xValue = NaN
+	let yValue = NaN
 	return differenceWithSorted$$$(a, b, (x, y) => {
-		if (x !== last_x) {
-			last_x = x
-			x_value = fn(x)
+		if (x !== lastX) {
+			lastX = x
+			xValue = fn(x)
 		}
-		if (y !== last_y) {
-			last_y = y
-			y_value = fn(y)
+		if (y !== lastY) {
+			lastY = y
+			yValue = fn(y)
 		}
-		return compare(x_value, y_value)
+		return compare(xValue, yValue)
 	})
 }
 
 const differenceByPureSorted = (a, b, fn) => {
-	let last_x = NaN
-	let last_y = NaN
-	let x_value = NaN
-	let y_value = NaN
+	let lastX = NaN
+	let lastY = NaN
+	let xValue = NaN
+	let yValue = NaN
 	return differenceWithSorted(a, b, (x, y) => {
-		if (x !== last_x) {
-			last_x = x
-			x_value = fn(x)
+		if (x !== lastX) {
+			lastX = x
+			xValue = fn(x)
 		}
-		if (y !== last_y) {
-			last_y = y
-			y_value = fn(y)
+		if (y !== lastY) {
+			lastY = y
+			yValue = fn(y)
 		}
-		return compare(x_value, y_value)
+		return compare(xValue, yValue)
 	})
 }
 

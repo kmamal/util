@@ -16,11 +16,11 @@ const isSortedBy = (arr, fn) => isSortedWith(arr, (a, b) => compare(fn(a), fn(b)
 
 // HACK: Depends on knowing the algo internals
 const isSortedByPure = (arr, fn) => {
-	let a_value = fn(arr[0])
+	let aValue = fn(arr[0])
 	return isSortedWith(arr, (a, b) => {
-		const b_value = fn(b)
-		const result = compare(a_value, b_value)
-		a_value = b_value
+		const bValue = fn(b)
+		const result = compare(aValue, bValue)
+		aValue = bValue
 		return result
 	})
 }

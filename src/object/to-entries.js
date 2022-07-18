@@ -1,4 +1,4 @@
 
-const toEntries = (obj) => Object.entries(obj)
+const toEntries = Object.entries
 
 module.exports = { toEntries }

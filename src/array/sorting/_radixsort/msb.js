@@ -16,35 +16,35 @@ const __recurse1a = (a, start, end, fn, depth, cutoff, takeover) => {
 
 	const mask = 1 << (31 - depth)
 
-	let start_index = start
-	let end_index = end - 1
+	let startIndex = start
+	let endIndex = end - 1
 	for (;;) {
-		while (start_index < end) {
-			const item = a[start_index]
-			const should_swap = fn(item) & mask
-			if (should_swap) { break }
-			start_index += 1
+		while (startIndex < end) {
+			const item = a[startIndex]
+			const shouldSwap = fn(item) & mask
+			if (shouldSwap) { break }
+			startIndex += 1
 		}
 
-		while (end_index > start) {
-			const item = a[end_index]
-			const should_swap = ~fn(item) & mask
-			if (should_swap) { break }
-			end_index -= 1
+		while (endIndex > start) {
+			const item = a[endIndex]
+			const shouldSwap = ~fn(item) & mask
+			if (shouldSwap) { break }
+			endIndex -= 1
 		}
 
-		if (start_index >= end_index) { break }
+		if (startIndex >= endIndex) { break }
 
-		const tmp = a[end_index]
-		a[end_index] = a[start_index]
-		a[start_index] = tmp
-		start_index += 1
-		end_index -= 1
+		const tmp = a[endIndex]
+		a[endIndex] = a[startIndex]
+		a[startIndex] = tmp
+		startIndex += 1
+		endIndex -= 1
 	}
-	// console.log({ a, start_index })
+	// console.log({ a, startIndex })
 
-	__recurse1a(a, start, start_index, fn, depth + 1, cutoff, takeover)
-	__recurse1a(a, start_index, end, fn, depth + 1, cutoff, takeover)
+	__recurse1a(a, start, startIndex, fn, depth + 1, cutoff, takeover)
+	__recurse1a(a, startIndex, end, fn, depth + 1, cutoff, takeover)
 	// console.log({ depth, start, end, a })
 	// console.groupEnd()
 }
@@ -70,8 +70,8 @@ const __recurse1b = (a, start, end, fn, depth, cutoff, takeover) => {
 	let partition = start
 	for (let i = start; i < end; i++) {
 		const item = a[i]
-		const should_swap = ~fn(item) & mask
-		if (should_swap) {
+		const shouldSwap = ~fn(item) & mask
+		if (shouldSwap) {
 			a[i] = a[partition]
 			a[partition] = item
 			partition += 1
@@ -116,36 +116,36 @@ const __recurse2 = (arr, buffer, start, end, fn, depth, cutoff, takeover) => {
 
 	const mask = 1 << (31 - depth)
 
-	let start_index = start
-	let end_index = end - 1
+	let startIndex = start
+	let endIndex = end - 1
 	for (;;) {
-		while (start_index <= end_index) {
-			const item = arr[start_index]
-			buffer[start_index] = item
-			const should_swap = fn(item) & mask
-			if (should_swap) { break }
-			start_index += 1
+		while (startIndex <= endIndex) {
+			const item = arr[startIndex]
+			buffer[startIndex] = item
+			const shouldSwap = fn(item) & mask
+			if (shouldSwap) { break }
+			startIndex += 1
 		}
 
-		while (end_index >= start_index) {
-			const item = arr[end_index]
-			buffer[end_index] = item
-			const should_swap = ~fn(item) & mask
-			if (should_swap) { break }
-			end_index -= 1
+		while (endIndex >= startIndex) {
+			const item = arr[endIndex]
+			buffer[endIndex] = item
+			const shouldSwap = ~fn(item) & mask
+			if (shouldSwap) { break }
+			endIndex -= 1
 		}
 
-		if (start_index >= end_index) { break }
+		if (startIndex >= endIndex) { break }
 
-		buffer[end_index] = arr[start_index]
-		buffer[start_index] = arr[end_index]
-		start_index += 1
-		end_index -= 1
+		buffer[endIndex] = arr[startIndex]
+		buffer[startIndex] = arr[endIndex]
+		startIndex += 1
+		endIndex -= 1
 	}
-	// console.log({ buffer, start_index })
+	// console.log({ buffer, startIndex })
 
-	__recurse2(buffer, arr, start, start_index, fn, depth + 1, cutoff, takeover)
-	__recurse2(buffer, arr, start_index, end, fn, depth + 1, cutoff, takeover)
+	__recurse2(buffer, arr, start, startIndex, fn, depth + 1, cutoff, takeover)
+	__recurse2(buffer, arr, startIndex, end, fn, depth + 1, cutoff, takeover)
 	// console.log({ depth, start, end, arr })
 	// console.groupEnd()
 }

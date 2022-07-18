@@ -1,126 +1,126 @@
 const { sub } = require('../../operators/arithmetic/sub')
 
-const __interpolationSearch = (arr, start, end, x, fn_dist) => {
+const __interpolationSearch = (arr, start, end, x, fnDist) => {
 	let low = start
 	let high = end
-	let low_value = arr[low]
-	let high_value = arr[high - 1]
+	let lowValue = arr[low]
+	let highValue = arr[high - 1]
 
-	let low_dist = fn_dist(x, low_value)
-	if (low_dist <= 0) { return low }
+	let lowDist = fnDist(x, lowValue)
+	if (lowDist <= 0) { return low }
 
-	let high_dist = -fn_dist(x, high_value)
-	if (high_dist === 0) { return high - 1 }
-	if (high_dist < 0) { return high }
+	let highDist = -fnDist(x, highValue)
+	if (highDist === 0) { return high - 1 }
+	if (highDist < 0) { return high }
 
 	while (low < high) {
-		const range = high_dist + low_dist
+		const range = highDist + lowDist
 		if (range === 0) { return low }
 
-		const ratio = low_dist / range
+		const ratio = lowDist / range
 		const mid = Math.floor((high - low) * ratio) + low
-		const mid_value = arr[mid]
-		const dist = fn_dist(x, mid_value)
+		const midValue = arr[mid]
+		const dist = fnDist(x, midValue)
 		if (dist === 0) { return mid }
 		if (dist < 0) {
 			high = mid
-			high_value = mid_value
-			high_dist = -dist
+			highValue = midValue
+			highDist = -dist
 		} else {
 			low = mid + 1
-			low_value = mid_value
-			low_dist = dist
+			lowValue = midValue
+			lowDist = dist
 		}
 	}
 	return low
 }
 
-const __interpolationSearchLeft = (arr, start, end, x, fn_dist) => {
+const __interpolationSearchLeft = (arr, start, end, x, fnDist) => {
 	let low = start
 	let high = end
-	let low_value = arr[low]
-	let high_value = arr[high - 1]
+	let lowValue = arr[low]
+	let highValue = arr[high - 1]
 
-	let low_dist = fn_dist(x, low_value)
-	if (low_dist <= 0) { return low }
+	let lowDist = fnDist(x, lowValue)
+	if (lowDist <= 0) { return low }
 
-	let high_dist = -fn_dist(x, high_value)
-	if (high_dist < 0) { return high }
+	let highDist = -fnDist(x, highValue)
+	if (highDist < 0) { return high }
 
 	while (low < high) {
-		const range = high_dist + low_dist
+		const range = highDist + lowDist
 		if (range === 0) { return low }
 
-		const ratio = low_dist / range
+		const ratio = lowDist / range
 		const mid = Math.floor((high - low - 1) * ratio) + low
-		const mid_value = arr[mid]
-		const dist = fn_dist(x, mid_value)
+		const midValue = arr[mid]
+		const dist = fnDist(x, midValue)
 		if (dist <= 0) {
 			high = mid
-			high_value = mid_value
-			high_dist = -dist
+			highValue = midValue
+			highDist = -dist
 		} else {
 			low = mid + 1
-			low_value = mid_value
-			low_dist = dist
+			lowValue = midValue
+			lowDist = dist
 		}
 	}
 	return low
 }
 
-const __interpolationSearchRight = (arr, start, end, x, fn_dist) => {
+const __interpolationSearchRight = (arr, start, end, x, fnDist) => {
 	let low = start
 	let high = end
-	let low_value = arr[low]
-	let high_value = arr[high - 1]
+	let lowValue = arr[low]
+	let highValue = arr[high - 1]
 
-	let low_dist = fn_dist(x, low_value)
-	if (low_dist < 0) { return low }
+	let lowDist = fnDist(x, lowValue)
+	if (lowDist < 0) { return low }
 
-	let high_dist = -fn_dist(x, high_value)
-	if (high_dist <= 0) { return high }
+	let highDist = -fnDist(x, highValue)
+	if (highDist <= 0) { return high }
 
 	while (low < high) {
-		const range = high_dist + low_dist
+		const range = highDist + lowDist
 		if (range === 0) { return high }
 
-		const ratio = low_dist / range
+		const ratio = lowDist / range
 		const mid = Math.floor((high - low - 1) * ratio) + low
-		const mid_value = arr[mid]
-		const dist = fn_dist(x, mid_value)
+		const midValue = arr[mid]
+		const dist = fnDist(x, midValue)
 		if (dist < 0) {
 			high = mid
-			high_value = mid_value
-			high_dist = -dist
+			highValue = midValue
+			highDist = -dist
 		} else {
 			low = mid + 1
-			low_value = mid_value
-			low_dist = dist
+			lowValue = midValue
+			lowDist = dist
 		}
 	}
 	return low
 }
 
-const interpolationSearchWith = (arr, x, fn_dist) => __interpolationSearch(arr, 0, arr.length, x, fn_dist)
-const interpolationSearchLeftWith = (arr, x, fn_dist) => __interpolationSearchLeft(arr, 0, arr.length, x, fn_dist)
-const interpolationSearchRightWith = (arr, x, fn_dist) => __interpolationSearchRight(arr, 0, arr.length, x, fn_dist)
+const interpolationSearchWith = (arr, x, fnDist) => __interpolationSearch(arr, 0, arr.length, x, fnDist)
+const interpolationSearchLeftWith = (arr, x, fnDist) => __interpolationSearchLeft(arr, 0, arr.length, x, fnDist)
+const interpolationSearchRightWith = (arr, x, fnDist) => __interpolationSearchRight(arr, 0, arr.length, x, fnDist)
 
-const interpolationSearchBy = (arr, x, fn_map) => interpolationSearchWith(arr, x, (a, b) => sub(fn_map(a), fn_map(b)))
-const interpolationSearchLeftBy = (arr, x, fn_map) => interpolationSearchLeftWith(arr, x, (a, b) => sub(fn_map(a), fn_map(b)))
-const interpolationSearchRightBy = (arr, x, fn_map) => interpolationSearchRightWith(arr, x, (a, b) => sub(fn_map(a), fn_map(b)))
+const interpolationSearchBy = (arr, x, fnMap) => interpolationSearchWith(arr, x, (a, b) => sub(fnMap(a), fnMap(b)))
+const interpolationSearchLeftBy = (arr, x, fnMap) => interpolationSearchLeftWith(arr, x, (a, b) => sub(fnMap(a), fnMap(b)))
+const interpolationSearchRightBy = (arr, x, fnMap) => interpolationSearchRightWith(arr, x, (a, b) => sub(fnMap(a), fnMap(b)))
 
 // HACK: The first argument to dist is always x
-const interpolationSearchByPure = (arr, x, fn_map) => {
-	const x_value = fn_map(x)
-	return interpolationSearchWith(arr, x, (a, b) => sub(x_value, fn_map(b)))
+const interpolationSearchByPure = (arr, x, fnMap) => {
+	const xValue = fnMap(x)
+	return interpolationSearchWith(arr, x, (a, b) => sub(xValue, fnMap(b)))
 }
-const interpolationSearchLeftByPure = (arr, x, fn_map) => {
-	const x_value = fn_map(x)
-	return interpolationSearchLeftWith(arr, x, (a, b) => sub(x_value, fn_map(b)))
+const interpolationSearchLeftByPure = (arr, x, fnMap) => {
+	const xValue = fnMap(x)
+	return interpolationSearchLeftWith(arr, x, (a, b) => sub(xValue, fnMap(b)))
 }
-const interpolationSearchRightByPure = (arr, x, fn_map) => {
-	const x_value = fn_map(x)
-	return interpolationSearchRightWith(arr, x, (a, b) => sub(x_value, fn_map(b)))
+const interpolationSearchRightByPure = (arr, x, fnMap) => {
+	const xValue = fnMap(x)
+	return interpolationSearchRightWith(arr, x, (a, b) => sub(xValue, fnMap(b)))
 }
 
 const interpolationSearch = (arr, x) => interpolationSearchWith(arr, x, sub)

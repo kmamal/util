@@ -1,77 +1,77 @@
 const { __copy, __copyRight } = require('./copy')
 const { compare } = require('../function/compare')
 
-const __merge = (dst, dst_start, a, a_start, a_end, b, b_start, b_end, fn) => {
-	let write_index = dst_start
+const __merge = (dst, dstStart, a, aStart, aEnd, b, bStart, bEnd, fn) => {
+	let writeIndex = dstStart
 
-	let a_index = a_start
-	let b_index = b_start
-	let a_item = a[a_index]
-	let b_item = b[b_index]
+	let aIndex = aStart
+	let bIndex = bStart
+	let aItem = a[aIndex]
+	let bItem = b[bIndex]
 
-	while (a_index < a_end && b_index < b_end) {
-		const cmp = fn(a_item, b_item)
+	while (aIndex < aEnd && bIndex < bEnd) {
+		const cmp = fn(aItem, bItem)
 		if (cmp <= 0) {
-			dst[write_index++] = a_item
-			a_item = a[++a_index]
+			dst[writeIndex++] = aItem
+			aItem = a[++aIndex]
 		} else {
-			dst[write_index++] = b_item
-			b_item = b[++b_index]
+			dst[writeIndex++] = bItem
+			bItem = b[++bIndex]
 		}
 	}
 
-	const a_remaining = a_end - a_index
-	a_remaining > 0 && __copy(dst, write_index, a, a_index, a_end)
+	const aRemaining = aEnd - aIndex
+	aRemaining > 0 && __copy(dst, writeIndex, a, aIndex, aEnd)
 
-	write_index += a_remaining
+	writeIndex += aRemaining
 
-	const b_remaining = b_end - b_index
-	b_remaining > 0 && __copy(dst, write_index, b, b_index, b_end)
+	const bRemaining = bEnd - bIndex
+	bRemaining > 0 && __copy(dst, writeIndex, b, bIndex, bEnd)
 }
 
-const __mergeRight = (dst, dst_start, a, a_start, a_end, b, b_start, b_end, fn) => {
-	const a_length = a_end - a_start
-	const b_length = b_end - b_start
-	let write_index = dst_start + a_length + b_length - 1
+const __mergeRight = (dst, dstStart, a, aStart, aEnd, b, bStart, bEnd, fn) => {
+	const aLength = aEnd - aStart
+	const bLength = bEnd - bStart
+	let writeIndex = dstStart + aLength + bLength - 1
 
-	let a_index = a_end - 1
-	let b_index = b_end - 1
-	let a_item = a[a_index]
-	let b_item = b[b_index]
+	let aIndex = aEnd - 1
+	let bIndex = bEnd - 1
+	let aItem = a[aIndex]
+	let bItem = b[bIndex]
 
-	while (a_index >= a_start && b_index >= b_start) {
-		const cmp = fn(a_item, b_item)
+	while (aIndex >= aStart && bIndex >= bStart) {
+		const cmp = fn(aItem, bItem)
 		if (cmp > 0) {
-			dst[write_index--] = a_item
-			a_item = a[--a_index]
+			dst[writeIndex--] = aItem
+			aItem = a[--aIndex]
 		} else {
-			dst[write_index--] = b_item
-			b_item = b[--b_index]
+			dst[writeIndex--] = bItem
+			bItem = b[--bIndex]
 		}
 	}
 
-	const b_remaining = (b_index - b_start) + 1
-	if (b_remaining > 0) {
-		write_index -= b_remaining
-		__copyRight(dst, write_index + 1, b, b_start, b_index + 1)
+	const bRemaining = (bIndex - bStart) + 1
+	if (bRemaining > 0) {
+		writeIndex -= bRemaining
+		__copyRight(dst, writeIndex + 1, b, bStart, bIndex + 1)
 	}
 
-	const a_remaining = (a_index - a_start) + 1
-	if (a_remaining > 0) {
-		write_index -= a_remaining
-		__copyRight(dst, write_index + 1, a, a_start, a_index + 1)
+	const aRemaining = (aIndex - aStart) + 1
+	if (aRemaining > 0) {
+		writeIndex -= aRemaining
+		__copyRight(dst, writeIndex + 1, a, aStart, aIndex + 1)
 	}
 }
 
 const __mergeInplace = (arr, start, sep, end, buffer, fn) => {
-	const a_length = sep - start
-	const b_length = end - sep
-	if (a_length <= b_length) {
+	const aLength = sep - start
+	const bLength = end - sep
+	if (aLength <= bLength) {
 		__copy(buffer, 0, arr, start, sep)
-		__merge(arr, start, buffer, 0, a_length, arr, sep, end, fn)
+		__merge(arr, start, buffer, 0, aLength, arr, sep, end, fn)
 	} else {
 		__copy(buffer, 0, arr, sep, end)
-		__mergeRight(arr, start, arr, start, sep, buffer, 0, b_length, fn)
+		__mergeRight(arr, start, arr, start, sep, buffer, 0, bLength, fn)
 	}
 }
 
@@ -84,20 +84,20 @@ const mergeWith = (a, b, fn) => {
 const mergeBy = (a, b, fn) => mergeWith(a, b, (x, y) => compare(fn(x), fn(y)))
 
 const mergeByPure = (a, b, fn) => {
-	let last_x = NaN
-	let last_y = NaN
-	let x_value = NaN
-	let y_value = NaN
+	let lastX = NaN
+	let lastY = NaN
+	let xValue = NaN
+	let yValue = NaN
 	return mergeWith(a, b, (x, y) => {
-		if (x !== last_x) {
-			last_x = x
-			x_value = fn(x)
+		if (x !== lastX) {
+			lastX = x
+			xValue = fn(x)
 		}
-		if (y !== last_y) {
-			last_y = y
-			y_value = fn(y)
+		if (y !== lastY) {
+			lastY = y
+			yValue = fn(y)
 		}
-		return compare(x_value, y_value)
+		return compare(xValue, yValue)
 	})
 }
 

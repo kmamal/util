@@ -1,34 +1,31 @@
 
-const __cycle = (dst, dst_start, src, src_start, src_end, n) => {
-	const length = src_end - src_start
-	if (length === 0) { return 0 }
+const __cycle = (dst, dstStart, src, srcStart, srcEnd, n) => {
+	const length = srcEnd - srcStart
+	if (length === 0) { return }
 
 	const remainder = n % length
-	const full_loops = (n - remainder) / length
+	const fullLoops = (n - remainder) / length
 
-	let write_index = dst_start
-	let read_index
+	let writeIndex = dstStart
+	let readIndex
 
-	for (let i = 0; i < full_loops; i++) {
-		read_index = src_start
-		while (read_index < src_end) {
-			dst[write_index++] = src[read_index++]
+	for (let i = 0; i < fullLoops; i++) {
+		readIndex = srcStart
+		while (readIndex < srcEnd) {
+			dst[writeIndex++] = src[readIndex++]
 		}
 	}
 
-	read_index = src_start
-	while (read_index < src_start + remainder) {
-		dst[write_index++] = src[read_index++]
+	readIndex = srcStart
+	while (readIndex < srcStart + remainder) {
+		dst[writeIndex++] = src[readIndex++]
 	}
 }
 
 const cycle$$$ = (arr, n) => {
 	const { length } = arr
 
-	if (length === 0) {
-		arr.length = 0
-		return arr
-	}
+	if (length === 0) { return arr }
 
 	arr.length = n
 	__cycle(arr, length, arr, 0, length, n - length)
@@ -38,13 +35,10 @@ const cycle$$$ = (arr, n) => {
 const cycle = (arr, n) => {
 	const { length } = arr
 
-	if (length === 0) {
-		arr.length = 0
-		return arr
-	}
+	if (length === 0) { return [] }
 
 	const res = new Array(n)
-	__cycle(res, 0, arr, 0, arr.length, n)
+	__cycle(res, 0, arr, 0, length, n)
 	return res
 }
 

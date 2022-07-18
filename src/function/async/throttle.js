@@ -3,25 +3,25 @@ const throttle = (fn, time, options) => {
 	const leading = options && options.leading
 	const trailing = !options || options.trailing
 	let timeout = null
-	let last_args = null
-	let last_result
+	let lastArgs = null
+	let lastResult
 
 	const invoke = () => {
-		if (last_args && trailing) {
-			last_result = fn(...last_args)
+		if (lastArgs && trailing) {
+			lastResult = fn(...lastArgs)
 		}
-		last_args = null
+		lastArgs = null
 	}
 
 	const throtled = (...args) => {
-		last_args = args
+		lastArgs = args
 
 		if (!timeout) {
 			if (leading) { invoke() }
 			setTimeout(invoke, time)
 		}
 
-		return last_result
+		return lastResult
 	}
 
 	throtled.cancel = () => {
@@ -32,7 +32,7 @@ const throttle = (fn, time, options) => {
 
 	throtled.flush = () => {
 		invoke()
-		return last_result
+		return lastResult
 	}
 
 	return throtled

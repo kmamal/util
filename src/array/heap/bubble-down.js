@@ -4,31 +4,31 @@ const { compare } = require('../../function/compare')
 const __bubbleDown = (arr, start, end, _index, fn) => {
 	let index = _index
 	for (;;) {
-		const adjusted_index = index - start
-		const left_child_index = start + getLeft(adjusted_index)
-		if (left_child_index >= end) { break }
-		const left_child = arr[left_child_index]
+		const adjustedIndex = index - start
+		const leftChildIndex = start + getLeft(adjustedIndex)
+		if (leftChildIndex >= end) { break }
+		const leftChild = arr[leftChildIndex]
 
-		const right_child_index = start + getRight(adjusted_index)
-		const right_child = arr[right_child_index]
+		const rightChildIndex = start + getRight(adjustedIndex)
+		const rightChild = arr[rightChildIndex]
 
-		const is_left = right_child_index >= end || fn(left_child, right_child) <= 0
-		let min_child_index
-		let min_child
-		if (is_left) {
-			min_child_index = left_child_index
-			min_child = left_child
+		const isLeft = rightChildIndex >= end || fn(leftChild, rightChild) <= 0
+		let minChildIndex
+		let minChild
+		if (isLeft) {
+			minChildIndex = leftChildIndex
+			minChild = leftChild
 		} else {
-			min_child_index = right_child_index
-			min_child = right_child
+			minChildIndex = rightChildIndex
+			minChild = rightChild
 		}
 
 		const value = arr[index]
-		if (fn(value, min_child) < 0) { break }
+		if (fn(value, minChild) < 0) { break }
 
-		arr[min_child_index] = value
-		arr[index] = min_child
-		index = min_child_index
+		arr[minChildIndex] = value
+		arr[index] = minChild
+		index = minChildIndex
 	}
 }
 

@@ -1,6 +1,6 @@
 const { some } = require('../array/some')
 
-const sym_await = Symbol("await")
+const kAwait = Symbol("await")
 
 const passSync = (_value, funcs) => {
 	let value = _value
@@ -13,7 +13,7 @@ const passSync = (_value, funcs) => {
 const passAsync = async (_value, funcs) => {
 	let value = _value
 	for (const func of funcs) {
-		if (func === sym_await) {
+		if (func === kAwait) {
 			value = await value
 		} else {
 			value = func(value)
@@ -23,12 +23,12 @@ const passAsync = async (_value, funcs) => {
 }
 
 const pass = (value, ...funcs) => {
-	const is_async = some(funcs, (x) => x === sym_await)
-	return is_async
+	const isAsync = some(funcs, (x) => x === kAwait)
+	return isAsync
 		? passAsync(value, funcs)
 		: passSync(value, funcs)
 }
 
-pass.await = sym_await
+pass.await = kAwait
 
 module.exports = { pass }

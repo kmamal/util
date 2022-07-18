@@ -36,13 +36,13 @@ const __contractExponentialSearch = (state, cmp) => {
 	return false
 }
 
-const __exponentialSearch = (arr, start, end, x, fn_cmp) => {
+const __exponentialSearch = (arr, start, end, x, fnCmp) => {
 	const state = __initExponentialSearch(start, end)
 	if (state.last < start) { return 0 }
 
 	for (;;) {
 		const value = arr[state.low]
-		const cmp = fn_cmp(x, value)
+		const cmp = fnCmp(x, value)
 		if (cmp === 0) { return state.low }
 		const done = __expandExponentialSearch(state, cmp)
 		if (done) {
@@ -53,14 +53,14 @@ const __exponentialSearch = (arr, start, end, x, fn_cmp) => {
 
 	for (;;) {
 		const value = arr[state.mid]
-		const cmp = fn_cmp(x, value)
+		const cmp = fnCmp(x, value)
 		if (cmp === 0) { return state.mid }
 		const done = __contractExponentialSearch(state, cmp)
 		if (done) { return state.low }
 	}
 }
 
-const __exponentialSearch2 = (arr, start, end, x, fn_cmp) => {
+const __exponentialSearch2 = (arr, start, end, x, fnCmp) => {
 	const last = end - 1
 	if (last < start) { return 0 }
 
@@ -70,7 +70,7 @@ const __exponentialSearch2 = (arr, start, end, x, fn_cmp) => {
 
 	for (;;) {
 		const value = arr[low]
-		const cmp = fn_cmp(x, value)
+		const cmp = fnCmp(x, value)
 		if (cmp === 0) { return low }
 		if (cmp < 0) {
 			if (low === start) { return low }
@@ -85,7 +85,7 @@ const __exponentialSearch2 = (arr, start, end, x, fn_cmp) => {
 
 	for (;;) {
 		const value = arr[mid]
-		const cmp = fn_cmp(x, value)
+		const cmp = fnCmp(x, value)
 		if (cmp === 0) { return mid }
 		if (cmp < 0) {
 			high = mid
@@ -97,13 +97,13 @@ const __exponentialSearch2 = (arr, start, end, x, fn_cmp) => {
 	}
 }
 
-const __exponentialSearchLeft = (arr, start, end, x, fn_cmp) => {
+const __exponentialSearchLeft = (arr, start, end, x, fnCmp) => {
 	const state = __initExponentialSearch(start, end)
 	if (state.last === -1) { return 0 }
 
 	for (;;) {
 		const value = arr[state.low]
-		const cmp = fn_cmp(x, value)
+		const cmp = fnCmp(x, value)
 		const done = __expandExponentialSearch(state, cmp || -1)
 		if (done) {
 			if (state.high === null) { return state.low }
@@ -113,19 +113,19 @@ const __exponentialSearchLeft = (arr, start, end, x, fn_cmp) => {
 
 	for (;;) {
 		const value = arr[state.mid]
-		const cmp = fn_cmp(x, value)
+		const cmp = fnCmp(x, value)
 		const done = __contractExponentialSearch(state, cmp || -1)
 		if (done) { return state.low }
 	}
 }
 
-const __exponentialSearchRight = (arr, start, end, x, fn_cmp) => {
+const __exponentialSearchRight = (arr, start, end, x, fnCmp) => {
 	const state = __initExponentialSearch(start, end)
 	if (state.last === -1) { return 0 }
 
 	for (;;) {
 		const value = arr[state.low]
-		const cmp = fn_cmp(x, value)
+		const cmp = fnCmp(x, value)
 		const done = __expandExponentialSearch(state, cmp || 1)
 		if (done) {
 			if (state.high === null) { return state.low }
@@ -135,40 +135,40 @@ const __exponentialSearchRight = (arr, start, end, x, fn_cmp) => {
 
 	for (;;) {
 		const value = arr[state.mid]
-		const cmp = fn_cmp(x, value)
+		const cmp = fnCmp(x, value)
 		const done = __contractExponentialSearch(state, cmp || 1)
 		if (done) { return state.low }
 	}
 }
 
-const exponentialSearchWith = (arr, x, fn_cmp) => __exponentialSearch(arr, 0, arr.length, x, fn_cmp)
-const exponentialSearchLeftWith = (arr, x, fn_cmp) => __exponentialSearchLeft(arr, 0, arr.length, x, fn_cmp)
-const exponentialSearchRightWith = (arr, x, fn_cmp) => __exponentialSearchRight(arr, 0, arr.length, x, fn_cmp)
+const exponentialSearchWith = (arr, x, fnCmp) => __exponentialSearch(arr, 0, arr.length, x, fnCmp)
+const exponentialSearchLeftWith = (arr, x, fnCmp) => __exponentialSearchLeft(arr, 0, arr.length, x, fnCmp)
+const exponentialSearchRightWith = (arr, x, fnCmp) => __exponentialSearchRight(arr, 0, arr.length, x, fnCmp)
 
-const exponentialSearchBy = (arr, x, fn_map) => {
-	const fn_cmp = (a, b) => compare(fn_map(a), fn_map(b))
-	return exponentialSearchWith(arr, x, fn_cmp)
+const exponentialSearchBy = (arr, x, fnMap) => {
+	const fnCmp = (a, b) => compare(fnMap(a), fnMap(b))
+	return exponentialSearchWith(arr, x, fnCmp)
 }
-const exponentialSearchLeftBy = (arr, x, fn_map) => {
-	const fn_cmp = (a, b) => compare(fn_map(a), fn_map(b))
-	return exponentialSearchLeftWith(arr, x, fn_cmp)
+const exponentialSearchLeftBy = (arr, x, fnMap) => {
+	const fnCmp = (a, b) => compare(fnMap(a), fnMap(b))
+	return exponentialSearchLeftWith(arr, x, fnCmp)
 }
-const exponentialSearchRightBy = (arr, x, fn_map) => {
-	const fn_cmp = (a, b) => compare(fn_map(a), fn_map(b))
-	return exponentialSearchRightWith(arr, x, fn_cmp)
+const exponentialSearchRightBy = (arr, x, fnMap) => {
+	const fnCmp = (a, b) => compare(fnMap(a), fnMap(b))
+	return exponentialSearchRightWith(arr, x, fnCmp)
 }
 
-const exponentialSearchByPure = (arr, x, fn_map) => {
-	const x_value = fn_map(x)
-	return exponentialSearchWith(arr, x, (a, b) => compare(x_value, fn_map(b)))
+const exponentialSearchByPure = (arr, x, fnMap) => {
+	const xValue = fnMap(x)
+	return exponentialSearchWith(arr, x, (a, b) => compare(xValue, fnMap(b)))
 }
-const exponentialSearchLeftByPure = (arr, x, fn_map) => {
-	const x_value = fn_map(x)
-	return exponentialSearchLeftWith(arr, x, (a, b) => compare(x_value, fn_map(b)))
+const exponentialSearchLeftByPure = (arr, x, fnMap) => {
+	const xValue = fnMap(x)
+	return exponentialSearchLeftWith(arr, x, (a, b) => compare(xValue, fnMap(b)))
 }
-const exponentialSearchRightByPure = (arr, x, fn_map) => {
-	const x_value = fn_map(x)
-	return exponentialSearchRightWith(arr, x, (a, b) => compare(x_value, fn_map(b)))
+const exponentialSearchRightByPure = (arr, x, fnMap) => {
+	const xValue = fnMap(x)
+	return exponentialSearchRightWith(arr, x, (a, b) => compare(xValue, fnMap(b)))
 }
 
 const exponentialSearch = (arr, x) => exponentialSearchWith(arr, x, compare)

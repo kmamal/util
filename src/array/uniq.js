@@ -5,43 +5,43 @@ const { compare } = require('../function/compare')
 
 const extract = ({ x }) => x
 
-const __uniq = (dst, dst_start, src, src_start, src_end, fn) => {
-	if (src_end - src_start === 0) { return 0 }
+const __uniq = (dst, dstStart, src, srcStart, srcEnd, fn) => {
+	if (srcEnd - srcStart === 0) { return 0 }
 
-	let write_index = dst_start
-	let read_index = src_start
+	let writeIndex = dstStart
+	let readIndex = srcStart
 
-	let item = src[read_index++]
-	dst[write_index++] = item
+	let item = src[readIndex++]
+	dst[writeIndex++] = item
 
-	while (read_index < src_end) {
-		item = src[read_index++]
-		const exists = __includes(dst, dst_start, write_index, item, fn)
+	while (readIndex < srcEnd) {
+		item = src[readIndex++]
+		const exists = __includes(dst, dstStart, writeIndex, item, fn)
 		if (exists) { continue }
-		dst[write_index++] = item
+		dst[writeIndex++] = item
 	}
 
-	return write_index - dst_start
+	return writeIndex - dstStart
 }
 
-const __uniqSorted = (dst, dst_start, src, src_start, src_end, fn) => {
-	if (src_end - src_start === 0) { return 0 }
+const __uniqSorted = (dst, dstStart, src, srcStart, srcEnd, fn) => {
+	if (srcEnd - srcStart === 0) { return 0 }
 
-	let write_index = dst_start
-	let read_index = src_start
+	let writeIndex = dstStart
+	let readIndex = srcStart
 
-	let item = src[read_index++]
-	dst[write_index++] = item
+	let item = src[readIndex++]
+	dst[writeIndex++] = item
 	let prev = item
 
-	while (read_index < src_end) {
-		item = src[read_index++]
+	while (readIndex < srcEnd) {
+		item = src[readIndex++]
 		if (fn(item, prev) === 0) { continue }
-		dst[write_index++] = item
+		dst[writeIndex++] = item
 		prev = item
 	}
 
-	return write_index - dst_start
+	return writeIndex - dstStart
 }
 
 const uniqWith$$$ = (arr, fn) => {

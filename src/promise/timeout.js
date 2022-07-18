@@ -1,10 +1,7 @@
+const { sleep } = require('./sleep')
 
-const timeout = (time, info) => new Promise((resolve, reject) => {
-	setTimeout(() => {
-		const error = new Error("timeout")
-		Object.assign(error, info)
-		reject(error)
-	}, time)
+const timeout = (time, info) => sleep(time).then(() => {
+	throw Object.assign(new Error("timeout"), info)
 })
 
 module.exports = { timeout }

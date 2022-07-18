@@ -1,19 +1,19 @@
 
-const __reverse = (dst, dst_start, src, src_start, src_end) => {
-	const offset = (src_end - src_start) - 1
-	let write_index_start = dst_start
-	let write_index_end = dst_start + offset
-	let read_index_start = src_start
-	let read_index_end = src_start + offset
-	while (read_index_start < read_index_end) {
-		const front = src[read_index_start++]
-		const back = src[read_index_end--]
-		dst[write_index_start++] = back
-		dst[write_index_end--] = front
+const __reverse = (dst, dstStart, src, srcStart, srcEnd) => {
+	const offset = (srcEnd - srcStart) - 1
+	let writeIndexStart = dstStart
+	let writeIndexEnd = dstStart + offset
+	let readIndexStart = srcStart
+	let readIndexEnd = srcStart + offset
+	while (readIndexStart < readIndexEnd) {
+		const front = src[readIndexStart++]
+		const back = src[readIndexEnd--]
+		dst[writeIndexStart++] = back
+		dst[writeIndexEnd--] = front
 	}
 
-	if (read_index_start === read_index_end) {
-		dst[write_index_start] = src[read_index_start]
+	if (readIndexStart === readIndexEnd) {
+		dst[writeIndexStart] = src[readIndexStart]
 	}
 }
 

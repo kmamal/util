@@ -3,10 +3,10 @@ const { compare } = require('../../function/compare')
 
 const __pop = (arr, start, end, fn) => {
 	const top = arr[start]
-	const last_index = end - 1
-	arr[start] = arr[last_index]
-	arr[last_index] = top
-	__bubbleDown(arr, start, last_index, start, fn)
+	const lastIndex = end - 1
+	arr[start] = arr[lastIndex]
+	arr[lastIndex] = top
+	__bubbleDown(arr, start, lastIndex, start, fn)
 }
 
 const popWith = (arr, fn) => {

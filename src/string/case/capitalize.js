@@ -7,4 +7,9 @@ const capitalize = (str) => {
 	return words.join(' ')
 }
 
-module.exports = { capitalize }
+const isCapitalized = (str) => str === capitalize(str)
+
+module.exports = {
+	capitalize,
+	isCapitalized,
+}

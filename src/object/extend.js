@@ -1,5 +1,5 @@
 
-const extend$$$ = (dst, ...srcs) => Object.assign(dst, ...srcs)
+const extend$$$ = Object.assign
 
 const extend = (...srcs) => Object.assign({}, ...srcs)
 

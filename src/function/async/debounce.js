@@ -8,11 +8,11 @@ const debounce = (fn, time, options) => {
 	}
 
 	let timeout = null
-	let last_args
-	let last_result
+	let lastArgs
+	let lastResult
 
 	const invoke = () => {
-		last_result = fn(...last_args)
+		lastResult = fn(...lastArgs)
 	}
 
 	const cancel = () => {
@@ -21,7 +21,7 @@ const debounce = (fn, time, options) => {
 	}
 
 	const debounced = (...args) => {
-		last_args = args
+		lastArgs = args
 
 		if (timeout) {
 			cancel()
@@ -34,7 +34,7 @@ const debounce = (fn, time, options) => {
 			if (!trailing) { return }
 			invoke()
 		}, time)
-		return last_result
+		return lastResult
 	}
 
 	debounced.cancel = () => {
@@ -47,7 +47,7 @@ const debounce = (fn, time, options) => {
 			cancel()
 			if (trailing) { invoke() }
 		}
-		return last_result
+		return lastResult
 	}
 
 	return debounced

@@ -11,9 +11,9 @@ const __recurse = function * (arr, start, end) {
 	const last = end - 1
 	yield* __recurse(arr, start, last)
 
-	const is_even = (length % 2) === 0
+	const isEven = (length % 2) === 0
 	for (let i = start; i < last; i++) {
-		const index = is_even ? i : start
+		const index = isEven ? i : start
 		swap.$$$(arr, index, last)
 		yield* __recurse(arr, start, last)
 	}

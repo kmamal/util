@@ -1,4 +1,4 @@
 
-const allSettled = (promises) => Promise.allSettled(promises)
+const allSettled = Promise.allSettled.bind(Promise)
 
 module.exports = { allSettled }

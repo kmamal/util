@@ -1,15 +1,15 @@
 const { sumBy } = require('./sum')
 
-const __concat = (dst, dst_start, src, src_start, src_end) => {
-	let write_index = dst_start
-	let read_index = src_start
-	while (read_index < src_end) {
-		const arr = src[read_index++]
+const __concat = (dst, dstStart, src, srcStart, srcEnd) => {
+	let writeIndex = dstStart
+	let readIndex = srcStart
+	while (readIndex < srcEnd) {
+		const arr = src[readIndex++]
 		for (let j = 0; j < arr.length; j++) {
-			dst[write_index++] = arr[j]
+			dst[writeIndex++] = arr[j]
 		}
 	}
-	return write_index - dst_start
+	return writeIndex - dstStart
 }
 
 const concat = (arrs) => {

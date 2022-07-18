@@ -1,4 +1,4 @@
 
-const race = (promises) => Promise.race(promises)
+const race = Promise.race.bind(Promise)
 
 module.exports = { race }

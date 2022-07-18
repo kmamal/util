@@ -1,26 +1,26 @@
 const { __copy, __copyRight } = require('./copy')
 
-const __rotate = (dst, dst_start, src, src_start, src_end, n) => {
-	const length = src_end - src_start
-	const split_index = (src_start + length - n) % length
-	const join_index = dst_start + length - (split_index - src_start)
-	__copy(dst, dst_start, src, split_index, src_end)
-	__copy(dst, join_index, src, src_start, split_index)
+const __rotate = (dst, dstStart, src, srcStart, srcEnd, n) => {
+	const length = srcEnd - srcStart
+	const splitIndex = (srcStart + length - n) % length
+	const joinIndex = dstStart + length - (splitIndex - srcStart)
+	__copy(dst, dstStart, src, splitIndex, srcEnd)
+	__copy(dst, joinIndex, src, srcStart, splitIndex)
 }
 
 const __rotateInplace = (arr, start, end, n) => {
 	const length = end - start
-	const split_index = (start + length + n) % length
-	const join_index = start + length - (split_index - start)
+	const splitIndex = (start + length + n) % length
+	const joinIndex = start + length - (splitIndex - start)
 
 	const tmp = new Array(n)
-	if (split_index <= (start + end) / 2) {
-		__copy(tmp, 0, arr, start, split_index)
-		__copy(arr, start, arr, split_index, end)
-		__copy(arr, join_index, tmp, 0, n)
+	if (splitIndex <= (start + end) / 2) {
+		__copy(tmp, 0, arr, start, splitIndex)
+		__copy(arr, start, arr, splitIndex, end)
+		__copy(arr, joinIndex, tmp, 0, n)
 	} else {
-		__copy(tmp, 0, arr, split_index, end)
-		__copyRight(arr, join_index, arr, start, split_index)
+		__copy(tmp, 0, arr, splitIndex, end)
+		__copyRight(arr, joinIndex, arr, start, splitIndex)
 		__copy(arr, start, tmp, 0, n)
 	}
 }

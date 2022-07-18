@@ -1,10 +1,10 @@
-const { LinkedList } = require('../structs/linked-list')
+const { LinkedList } = require('@kmamal/structs/linked-list')
 const { mergeWith } = require('./merge')
 
 let _state
 const _alternate = () => (_state *= -1)
 
-const _weaveTwo = (a, b) => {
+const weaveTwo = (a, b) => {
 	_state = 1
 	return mergeWith(a, b, _alternate)
 }
@@ -12,7 +12,7 @@ const _weaveTwo = (a, b) => {
 const weave = (arr) => {
 	if (arr.length === 0) { return [] }
 	if (arr.length === 1) { return Array.from(arr[0]) }
-	if (arr.length === 2) { return _weaveTwo(arr[0], arr[1]) }
+	if (arr.length === 2) { return weaveTwo(arr[0], arr[1]) }
 
 	const sources = new LinkedList()
 	let totalLength = 0
@@ -65,6 +65,6 @@ const weave = (arr) => {
 }
 
 module.exports = {
-	_weaveTwo,
+	weaveTwo,
 	weave,
 }

@@ -1,5 +1,3 @@
-const { startIndex } = require('./start-index')
-const { endIndex } = require('./end-index')
 
 const __copy = (a, offset, b, start, end) => {
 	let writeIndex = offset

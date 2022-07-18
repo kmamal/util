@@ -1,5 +1,5 @@
 const { test } = require('@kmamal/testing')
-const { nAry } = require('.')
+const { nAry } = require('./n-ary')
 
 test("function.arity", (t) => {
 	t.expect(5)

@@ -1,31 +1,31 @@
 
-const __split = (dst, dst_start, src, src_start, src_end, fn_pred) => {
-	let write_index = dst_start
+const __split = (dst, dstStart, src, srcStart, srcEnd, fnPred) => {
+	let writeIndex = dstStart
 	let chunk = []
-	let read_index = src_start
-	while (read_index < src_end) {
-		const item = src[read_index++]
-		if (fn_pred(item)) {
-			dst[write_index++] = chunk
+	let readIndex = srcStart
+	while (readIndex < srcEnd) {
+		const item = src[readIndex++]
+		if (fnPred(item)) {
+			dst[writeIndex++] = chunk
 			chunk = []
 			continue
 		}
 		chunk.push(item)
 	}
-	dst[write_index++] = chunk
+	dst[writeIndex++] = chunk
 
-	return write_index
+	return writeIndex
 }
 
-const splitWith = (arr, fn_pred) => {
+const splitWith = (arr, fnPred) => {
 	const res = []
-	__split(res, 0, arr, 0, arr.length, fn_pred)
+	__split(res, 0, arr, 0, arr.length, fnPred)
 	return res
 }
 
-const splitBy = (arr, value, fn_map) => {
-	const fn_pred = (x) => fn_map(x) === value
-	return splitWith(arr, fn_pred)
+const splitBy = (arr, value, fnMap) => {
+	const fnPred = (x) => fnMap(x) === value
+	return splitWith(arr, fnPred)
 }
 
 const split = (arr, value) => splitWith(arr, (x) => x === value)
