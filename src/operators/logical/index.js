@@ -1,7 +1,1 @@
-
-module.exports = {
-	...require('./and'),
-	...require('./nil'),
-	...require('./not'),
-	...require('./or'),
-}
+require('@kmamal/util/meta/build-index')(exports, __dirname)

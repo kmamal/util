@@ -141,6 +141,7 @@
     "./operators/logical": "./src/operators/logical/index.js",
     "./operators/logical/nil": "./src/operators/logical/nil.js",
     "./operators/logical/and": "./src/operators/logical/and.js",
+    "./meta/build-index": "./src/meta/build-index.js",
     "./object/map-keys": "./src/object/map-keys.js",
     "./object/extend": "./src/object/extend.js",
     "./object/map-values": "./src/object/map-values.js",

@@ -607,6 +607,8 @@ module.exports.ieeeFloat.single.nextToward = ieeeFloatSingle.nextToward
 const mapAddDefault = require('./map/add-default.js')
 module.exports.addDefault = mapAddDefault.addDefault
 
+const metaBuildIndex = require('./meta/build-index.js')
+
 const numberClamp = require('./number/clamp.js')
 module.exports.clamp = numberClamp.clamp
 
