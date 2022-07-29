@@ -14,7 +14,11 @@ EXPORTS=$(find "./src/" -name *.js \
 	| jq --raw-input --slurp '.
 			| split("\n") | .[:-1]
 			| map(.
-				| (if .|endswith("/index.js") then .[5:-10] else .[5:-3] end) as $key
+				| (
+					if . == "./src/index.js" then ""
+					elif .|endswith("/index.js") then .[5:-9]
+					else .[5:-3] end
+				) as $key
 				| {("." + $key): (.)}
 			)
 			| add
