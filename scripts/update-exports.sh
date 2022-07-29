@@ -14,8 +14,8 @@ EXPORTS=$(find "./src/" -name *.js \
 	| jq --raw-input --slurp '.
 			| split("\n") | .[:-1]
 			| map(.
-				| (if .|endswith("/index.js") then .[6:-9] else .[6:-3] end) as $key
-				| {("./" + $key): (.)}
+				| (if .|endswith("/index.js") then .[5:-10] else .[5:-3] end) as $key
+				| {("." + $key): (.)}
 			)
 			| add
 		')
