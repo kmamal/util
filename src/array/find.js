@@ -1,4 +1,4 @@
-const { __linearSearch, __linearSearchRight } = require('./search/linear')
+const { __linearSearch, __linearSearchRight } = require('./searching/linear')
 
 const findIndex = (arr, fnPred) => __linearSearch(arr, 0, arr.length, fnPred)
 

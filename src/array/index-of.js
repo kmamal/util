@@ -1,5 +1,5 @@
-const { __linearSearch, __linearSearchRight } = require('./search/linear')
-const { __binarySearchLeft, __binarySearchRight } = require('./search/binary')
+const { __linearSearch, __linearSearchRight } = require('./searching/linear')
+const { __binarySearchLeft, __binarySearchRight } = require('./searching/binary')
 const { eq } = require('../operators')
 const { compare } = require('../function/compare')
 

@@ -1,4 +1,4 @@
-const { __binarySearchRight } = require('../search/binary')
+const { __binarySearchRight } = require('../searching/binary')
 const { compare } = require('../../function/compare')
 const { clone } = require('../clone')
 const { map } = require('../map')
