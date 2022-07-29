@@ -26,6 +26,7 @@ module.exports = {
 		}
 	},
 
+	at: _fp(_.at),
 	chunk: _fp(_.chunk),
 	clone: _fp(_.clone),
 	compact: _fp(_.compact),

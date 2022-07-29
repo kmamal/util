@@ -107,6 +107,7 @@
     "./array/merge": "./src/array/merge.js",
     "./array/uniq": "./src/array/uniq.js",
     "./array/includes": "./src/array/includes.js",
+    "./array/at": "./src/array/at.js",
     "./array/end-index": "./src/array/end-index.js",
     ".": "./src/index.js",
     "./fp": "./src/fp.js",

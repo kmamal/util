@@ -52,6 +52,10 @@ module.exports.array2d.startIndex = array2dStartIndex.startIndex
 const array2dStartPoint = require('./array/2d/start-point.js')
 module.exports.array2d.startPoint = array2dStartPoint.startPoint
 
+const arrayAt = require('./array/at.js')
+module.exports.atIndex = arrayAt.atIndex
+module.exports.at = arrayAt.at
+
 const arrayChunk = require('./array/chunk.js')
 module.exports.__chunk = arrayChunk.__chunk
 module.exports.chunk = arrayChunk.chunk
