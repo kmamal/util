@@ -1,9 +1,9 @@
-const { permutations } = require('../../permutations')
+const { permutations } = require('../../combinatorics/permutations')
 const { clone } = require('../../clone')
 const { isEqual } = require('../../../object/is-equal')
 
-const { __timsort } = require('../timsort')
-const { sub } = require('../../../operators')
+const { radixsortBy } = require('../radixsort')
+const { identity } = require('../../../function/identity')
 
 let length = 0
 for (;;) {
@@ -12,7 +12,7 @@ for (;;) {
 	for (const B of permutations(A)) {
 		const C = clone(B)
 		try {
-			__timsort(C, 0, length, sub)
+			radixsortBy.$$$(C, identity)
 		} catch (error) {
 			console.log({ in: B, error })
 			process.exit(1)

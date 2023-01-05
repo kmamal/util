@@ -4,8 +4,6 @@ const {
 	intersectionSorted,
 	intersectionBy,
 	intersectionBySorted,
-	intersectionByPure,
-	intersectionByPureSorted,
 } = require('./intersection')
 
 test("array.intersection", (t) => {
@@ -62,32 +60,4 @@ test("array.intersectionBySorted.$$$", (t) => {
 	t.equal(intersectionBySorted.$$$([], [ 1 ], (x) => 2 * x), [])
 	t.equal(intersectionBySorted.$$$([ 1 ], [], (x) => 2 * x), [])
 	t.equal(intersectionBySorted.$$$([ 1, 2, 3 ], [ 2, 3, 4 ], (x) => 2 * x), [ 2, 3 ])
-})
-
-test("array.intersectionByPure", (t) => {
-	t.equal(intersectionByPure([], [], (x) => 2 * x), [])
-	t.equal(intersectionByPure([], [ 1 ], (x) => 2 * x), [])
-	t.equal(intersectionByPure([ 1 ], [], (x) => 2 * x), [])
-	t.equal(intersectionByPure([ 1, 2, 3 ], [ 2, 3, 4 ], (x) => 2 * x), [ 2, 3 ])
-})
-
-test("array.intersectionByPure.$$$", (t) => {
-	t.equal(intersectionByPure.$$$([], [], (x) => 2 * x), [])
-	t.equal(intersectionByPure.$$$([], [ 1 ], (x) => 2 * x), [])
-	t.equal(intersectionByPure.$$$([ 1 ], [], (x) => 2 * x), [])
-	t.equal(intersectionByPure.$$$([ 1, 2, 3 ], [ 2, 3, 4 ], (x) => 2 * x), [ 2, 3 ])
-})
-
-test("array.intersectionByPureSorted", (t) => {
-	t.equal(intersectionByPureSorted([], [], (x) => 2 * x), [])
-	t.equal(intersectionByPureSorted([], [ 1 ], (x) => 2 * x), [])
-	t.equal(intersectionByPureSorted([ 1 ], [], (x) => 2 * x), [])
-	t.equal(intersectionByPureSorted([ 1, 2, 3 ], [ 2, 3, 4 ], (x) => 2 * x), [ 2, 3 ])
-})
-
-test("array.intersectionByPureSorted.$$$", (t) => {
-	t.equal(intersectionByPureSorted.$$$([], [], (x) => 2 * x), [])
-	t.equal(intersectionByPureSorted.$$$([], [ 1 ], (x) => 2 * x), [])
-	t.equal(intersectionByPureSorted.$$$([ 1 ], [], (x) => 2 * x), [])
-	t.equal(intersectionByPureSorted.$$$([ 1, 2, 3 ], [ 2, 3, 4 ], (x) => 2 * x), [ 2, 3 ])
 })

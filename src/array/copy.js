@@ -25,16 +25,22 @@ const __copyInplace = (arr, offset, start, end) => {
 	}
 }
 
-const copy$$$ = (a, b) => {
-	if (a === b) { return a }
-	__copy(a, 0, b, 0, b.length)
+const copy$$$ = (a, b, start = 0, end = b.length, offset = 0) => {
+	if (a === b) {
+		__copyInplace(a, offset, start, end)
+	} else {
+		__copy(a, offset, b, start, end)
+	}
 	return a
 }
 
-const copy = (a, b) => {
-	if (a === b) { return a }
-	const res = new Array(b.length)
-	__copy(res, 0, b, 0, b.length)
+const copy = (a, b, start = 0, end = b.length, offset = 0) => {
+	const length = end - start
+	const writeEnd = offset + length
+	const res = new Array(Math.max(a.length, writeEnd))
+	__copy(res, 0, a, 0, offset)
+	__copy(res, offset, b, start, end)
+	__copy(res, writeEnd, a, writeEnd, a.length)
 	return res
 }
 

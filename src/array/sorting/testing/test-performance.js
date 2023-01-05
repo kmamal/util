@@ -1,40 +1,33 @@
-// NOTE: Must be run with `--expose-gc`
+const { run } = require('../../../testing/speedtest')
 
-const { run } = require('../../../misc/speedtest')
+const { __insertionsort } = require('../insertionsort')
+const { __shellsort } = require('../shellsort')
+const { __binsertionsort } = require('../binsertionsort')
+const { __heapsort } = require('../heapsort')
+const { __mergesort } = require('../mergesort')
+const { __quicksort } = require('../quicksort')
+const { __introsort } = require('../introsort')
+const { __timsort } = require('../timsort')
+const { __radixsort } = require('../radixsort')
 
-const {
-	__insertionsort,
-	__shellsort,
-	__binsertionsort,
-	__heapsort,
-	__mergesort,
-	__quicksort,
-	__introsort,
-	__timsort,
-} = require('..')
-
-const {
-	__radixsort1a,
-	__radixsort1b,
-	__radixsort2,
-	__radixsort3,
-	__radixsort4,
-} = require('../_radixsort/msb')
-
-const { reverse, swap, fill, map } = require('../..')
-const { shuffle, randInt } = require('../../../random')
-const { sub } = require('../../../operators')
-const { identity } = require('../../../function')
+const { reverse } = require('../../reverse')
+const { swap } = require('../../swap')
+const { fill } = require('../../fill')
+const { map } = require('../../map')
+const { randInt } = require('../../../random/rand-int')
+const { shuffle } = require('../../../random/shuffle')
+const { sub } = require('../../../operators/arithmetic/sub')
+const { identity } = require('../../../function/identity')
 
 const description = {
 	parameters: {
 		n: {
 			name: "Array size",
 			values: [
-				// 10,
-				// 100,
+				10,
+				100,
 				1000,
-				// 10000,
+				10000,
 				// 100000,
 				// 1000000,
 			],
@@ -105,10 +98,10 @@ const description = {
 		algo: {
 			name: "Algorithm",
 			options: [
-				{
-					name: "built-in sort",
-					value: (arr) => arr.sort(sub),
-				},
+				// {
+				// 	name: "built-in sort",
+				// 	value: (arr) => arr.sort(sub),
+				// },
 				// {
 				// 	name: "insertion sort",
 				// 	filter: ({ n }) => n <= 1000,
@@ -127,25 +120,25 @@ const description = {
 				// 	name: "heap sort",
 				// 	value: (arr) => __heapsort(arr, 0, arr.length, sub),
 				// },
-				{
-					name: "merge sort",
-					value: (arr) => __mergesort(arr, 0, arr.length, sub, 16, __insertionsort),
-				},
-				{
-					name: "quick sort",
-					value: (arr) => __quicksort(arr, 0, arr.length, sub, 16, Infinity, __insertionsort),
-				},
-				{
-					name: "intro sort",
-					value: (arr) => __introsort(arr, 0, arr.length, sub),
-				},
+				// {
+				// 	name: "merge sort",
+				// 	value: (arr) => __mergesort(arr, 0, arr.length, sub, 16, __insertionsort),
+				// },
+				// {
+				// 	name: "quick sort",
+				// 	value: (arr) => __quicksort(arr, 0, arr.length, sub, 16, Infinity, __insertionsort),
+				// },
+				// {
+				// 	name: "intro sort",
+				// 	value: (arr) => __introsort(arr, 0, arr.length, sub),
+				// },
 				{
 					name: "tim sort",
 					value: (arr) => __timsort(arr, 0, arr.length, sub),
 				},
 				// {
 				// 	name: "radix sort",
-				// 	value: (arr) => __radixsort1a(arr, 0, arr.length, identity),
+				// 	value: (arr) => __radixsort(arr, 0, arr.length, new Array(arr.length), 4, identity),
 				// },
 			],
 		},
@@ -177,10 +170,10 @@ const toCsv = (keys, record) => {
 const main = async () => {
 	let keys
 
-	for await (const { type, data } of run(description)) {
+	for await (const { type, message, data } of run(description)) {
 		switch (type) {
 			case 'warning': {
-				console.error("WARN", data)
+				console.error("WARN", message, data)
 				break
 			}
 			case 'info': {

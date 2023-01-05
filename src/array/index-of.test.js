@@ -8,10 +8,6 @@ const {
 	indexOfByRight,
 	indexOfBySorted,
 	indexOfBySortedRight,
-	indexOfByPure,
-	indexOfByPureRight,
-	indexOfByPureSorted,
-	indexOfByPureSortedRight,
 } = require('./index-of')
 
 test("array.indexOf", (t) => {
@@ -108,52 +104,4 @@ test("array.indexOfBySortedRight", (t) => {
 	t.equal(indexOfBySortedRight([ 1, 2, 3 ], 3, (x) => 2 * x), 2)
 	t.equal(indexOfBySortedRight([ 1, 2, 3 ], 0, (x) => 2 * x), -1)
 	t.equal(indexOfBySortedRight([ 1, 2, 3 ], 5, (x) => 2 * x), -1)
-})
-
-test("array.indexOfByPure", (t) => {
-	t.equal(indexOfByPure([], 1, (x) => 2 * x), -1)
-	t.equal(indexOfByPure([], undefined, (x) => 2 * x), -1)
-	t.equal(indexOfByPure([ 1 ], 1, (x) => 2 * x), 0)
-	t.equal(indexOfByPure([ 1 ], 2, (x) => 2 * x), -1)
-	t.equal(indexOfByPure([ 1, 2, 3 ], 1, (x) => 2 * x), 0)
-	t.equal(indexOfByPure([ 1, 2, 3 ], 2, (x) => 2 * x), 1)
-	t.equal(indexOfByPure([ 1, 2, 3 ], 3, (x) => 2 * x), 2)
-	t.equal(indexOfByPure([ 1, 2, 3 ], 0, (x) => 2 * x), -1)
-	t.equal(indexOfByPure([ 1, 2, 3 ], 5, (x) => 2 * x), -1)
-})
-
-test("array.indexOfByPureRight", (t) => {
-	t.equal(indexOfByPureRight([], 1, (x) => 2 * x), -1)
-	t.equal(indexOfByPureRight([], undefined, (x) => 2 * x), -1)
-	t.equal(indexOfByPureRight([ 1 ], 1, (x) => 2 * x), 0)
-	t.equal(indexOfByPureRight([ 1 ], 2, (x) => 2 * x), -1)
-	t.equal(indexOfByPureRight([ 1, 2, 3 ], 1, (x) => 2 * x), 0)
-	t.equal(indexOfByPureRight([ 1, 2, 3 ], 2, (x) => 2 * x), 1)
-	t.equal(indexOfByPureRight([ 1, 2, 3 ], 3, (x) => 2 * x), 2)
-	t.equal(indexOfByPureRight([ 1, 2, 3 ], 0, (x) => 2 * x), -1)
-	t.equal(indexOfByPureRight([ 1, 2, 3 ], 5, (x) => 2 * x), -1)
-})
-
-test("array.indexOfByPureSorted", (t) => {
-	t.equal(indexOfByPureSorted([], 1, (x) => 2 * x), -1)
-	t.equal(indexOfByPureSorted([], undefined, (x) => 2 * x), -1)
-	t.equal(indexOfByPureSorted([ 1 ], 1, (x) => 2 * x), 0)
-	t.equal(indexOfByPureSorted([ 1 ], 2, (x) => 2 * x), -1)
-	t.equal(indexOfByPureSorted([ 1, 2, 3 ], 1, (x) => 2 * x), 0)
-	t.equal(indexOfByPureSorted([ 1, 2, 3 ], 2, (x) => 2 * x), 1)
-	t.equal(indexOfByPureSorted([ 1, 2, 3 ], 3, (x) => 2 * x), 2)
-	t.equal(indexOfByPureSorted([ 1, 2, 3 ], 0, (x) => 2 * x), -1)
-	t.equal(indexOfByPureSorted([ 1, 2, 3 ], 5, (x) => 2 * x), -1)
-})
-
-test("array.indexOfByPureSortedRight", (t) => {
-	t.equal(indexOfByPureSortedRight([], 1, (x) => 2 * x), -1)
-	t.equal(indexOfByPureSortedRight([], undefined, (x) => 2 * x), -1)
-	t.equal(indexOfByPureSortedRight([ 1 ], 1, (x) => 2 * x), 0)
-	t.equal(indexOfByPureSortedRight([ 1 ], 2, (x) => 2 * x), -1)
-	t.equal(indexOfByPureSortedRight([ 1, 2, 3 ], 1, (x) => 2 * x), 0)
-	t.equal(indexOfByPureSortedRight([ 1, 2, 3 ], 2, (x) => 2 * x), 1)
-	t.equal(indexOfByPureSortedRight([ 1, 2, 3 ], 3, (x) => 2 * x), 2)
-	t.equal(indexOfByPureSortedRight([ 1, 2, 3 ], 0, (x) => 2 * x), -1)
-	t.equal(indexOfByPureSortedRight([ 1, 2, 3 ], 5, (x) => 2 * x), -1)
 })

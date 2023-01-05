@@ -1,9 +1,6 @@
 const { __heapify, __pop } = require('../heap')
-const { compare } = require('../../function/compare')
+const { compare, compareBy } = require('../../function/compare')
 const { clone } = require('../clone')
-const { map } = require('../map')
-
-const extract = ({ x }) => x
 
 const __heapsort = (arr, start, end, _fnCmp) => {
 	const fnCmp = (a, b) => -_fnCmp(a, b)
@@ -24,27 +21,11 @@ const heapsortWith = (arr, fnCmp) => heapsortWith$$$(clone(arr), fnCmp)
 
 heapsortWith.$$$ = heapsortWith$$$
 
-const heapsortBy$$$ = (arr, fnMap) => heapsortWith$$$(arr, (a, b) => compare(fnMap(a), fnMap(b)))
+const heapsortBy$$$ = (arr, fnMap) => heapsortWith$$$(arr, compareBy(fnMap))
 
-const heapsortBy = (arr, fnMap) => heapsortWith(arr, (a, b) => compare(fnMap(a), fnMap(b)))
+const heapsortBy = (arr, fnMap) => heapsortWith(arr, compareBy(fnMap))
 
 heapsortBy.$$$ = heapsortBy$$$
-
-const heapsortByPure$$$ = (arr, fnMap) => {
-	if (arr.length <= 1) { return arr }
-	map.$$$(arr, (x) => ({ x, value: fnMap(x) }))
-	heapsortWith$$$(arr, (a, b) => compare(a.value, b.value))
-	return map.$$$(arr, extract)
-}
-
-const heapsortByPure = (arr, fnMap) => {
-	if (arr.length <= 1) { return clone(arr) }
-	const res = map(arr, (x) => ({ x, value: fnMap(x) }))
-	heapsortWith$$$(res, (a, b) => compare(a.value, b.value))
-	return map.$$$(res, extract)
-}
-
-heapsortByPure.$$$ = heapsortByPure$$$
 
 const heapsort$$$ = (arr) => heapsortWith$$$(arr, compare)
 
@@ -56,6 +37,5 @@ module.exports = {
 	__heapsort,
 	heapsortWith,
 	heapsortBy,
-	heapsortByPure,
 	heapsort,
 }

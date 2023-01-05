@@ -31,15 +31,49 @@ const isEqualWith = (a, b, fnCmp) => {
 		return true
 	}
 
+	// Map
+	const aIsMap = a instanceof Map
+	const bIsMap = b instanceof Map
+	if (aIsMap !== bIsMap) { return false }
+	if (aIsMap) {
+		if (a.size !== b.size) { return false }
+
+		for (const [ aKey, aValue ] of a.entries()) {
+			const bValue = b.get(aKey)
+			if ((bValue === undefined && !b.has(aKey)) || !isEqual(aValue, bValue)) { return false }
+		}
+		return true
+	}
+
+	// Set
+	const aIsSet = a instanceof Set
+	const bIsSet = b instanceof Set
+	if (aIsSet !== bIsSet) { return false }
+	if (aIsSet) {
+		if (a.size !== b.size) { return false }
+
+		const bValuesSet = new Set(b.values())
+		forEachA:
+		for (const aValue of a.values()) {
+			for (const bValue of bValuesSet.values()) {
+				if (isEqual(aValue, bValue)) {
+					bValuesSet.delete(bValue)
+					continue forEachA
+				}
+			}
+			return false
+		}
+		return true
+	}
+
 	// Object
-	for (const key of Object.keys(a)) {
-		if (!isEqual(a[key], b[key])) { return false }
-	}
+	const aKeys = Object.keys(a)
+	const bKeys = Object.keys(b)
+	if (aKeys.length !== bKeys.length) { return false }
 
-	for (const key of Object.keys(b)) {
-		if (!isEqual(a[key], b[key])) { return false }
+	for (const aKey of aKeys) {
+		if (!Object.hasOwn(b, aKey) || !isEqual(a[aKey], b[aKey])) { return false }
 	}
-
 	return true
 }
 

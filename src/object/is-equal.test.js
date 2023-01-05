@@ -55,10 +55,10 @@ test("object.isEqual", (t) => {
 	t.ok(isEqual({ foo: 42 }, { foo: 42 }))
 	t.ok(isEqual({ foo: 42, bar: 69 }, { foo: 42, bar: 69 }))
 	t.ok(isEqual({ foo: 42, bar: 69 }, { bar: 69, foo: 42 }))
-	t.ok(isEqual({ foo: 42 }, { foo: 42, bar: undefined }))
 	t.ok(!isEqual({ foo: 42 }, { bar: 69 }))
 	t.ok(!isEqual({ foo: 42 }, { foo: 42, bar: 69 }))
 	t.ok(!isEqual({ foo: 42, bar: 69 }, { foo: 42 }))
+	t.ok(!isEqual({ foo: 42 }, { foo: 42, bar: undefined }))
 	t.ok(!isEqual({ foo: 42 }, { foo: 5 }))
 	t.ok(!isEqual(null, {}))
 

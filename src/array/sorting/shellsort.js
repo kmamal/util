@@ -1,8 +1,5 @@
-const { compare } = require('../../function/compare')
+const { compare, compareBy } = require('../../function/compare')
 const { clone } = require('../clone')
-const { map } = require('../map')
-
-const extract = ({ x }) => x
 
 // Marcin Ciura's gap sequence
 const GAPS = [ 1750, 701, 301, 132, 57, 23, 10, 4, 1 ]
@@ -38,27 +35,11 @@ const shellsortWith = (arr, fnCmp) => shellsortWith$$$(clone(arr), fnCmp)
 
 shellsortWith.$$$ = shellsortWith$$$
 
-const shellsortBy$$$ = (arr, fnMap) => shellsortWith$$$(arr, (a, b) => compare(fnMap(a), fnMap(b)))
+const shellsortBy$$$ = (arr, fnMap) => shellsortWith$$$(arr, compareBy(fnMap))
 
-const shellsortBy = (arr, fnMap) => shellsortWith(arr, (a, b) => compare(fnMap(a), fnMap(b)))
+const shellsortBy = (arr, fnMap) => shellsortWith(arr, compareBy(fnMap))
 
 shellsortBy.$$$ = shellsortBy$$$
-
-const shellsortByPure$$$ = (arr, fnMap) => {
-	if (arr.length <= 1) { return arr }
-	map.$$$(arr, (x) => ({ x, value: fnMap(x) }))
-	shellsortWith$$$(arr, (a, b) => compare(a.value, b.value))
-	return map.$$$(arr, extract)
-}
-
-const shellsortByPure = (arr, fnMap) => {
-	if (arr.length <= 1) { return clone(arr) }
-	const res = map(arr, (x) => ({ x, value: fnMap(x) }))
-	shellsortWith$$$(res, (a, b) => compare(a.value, b.value))
-	return map.$$$(res, extract)
-}
-
-shellsortByPure.$$$ = shellsortByPure$$$
 
 const shellsort$$$ = (arr) => shellsortWith$$$(arr, compare)
 
@@ -70,6 +51,5 @@ module.exports = {
 	__shellsort,
 	shellsortWith,
 	shellsortBy,
-	shellsortByPure,
 	shellsort,
 }

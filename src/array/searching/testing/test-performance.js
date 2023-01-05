@@ -1,13 +1,13 @@
 // NOTE: Must be run with `--expose-gc`
 
-const { run } = require('../../../misc/speedtest')
+const { run } = require('../../../testing/speedtest')
 
 const { __linearSearch } = require('../linear')
 const { __binarySearch } = require('../binary')
 const { __interpolationSearch } = require('../interpolation')
 const { __exponentialSearch } = require('../exponential')
 
-const { fromFactory } = require('../../from-factory')
+const { fillWith } = require('../../fill')
 const { identity } = require('../../../function/identity')
 const { rand } = require('../../../random/rand')
 
@@ -68,13 +68,13 @@ const description = {
 				{
 					name: "exponential search",
 					value: (arr, x, get) => {
-						__exponentialSearch(arr, 0, arr.length, x, (_, y) => x - get(y))
+						__exponentialSearch(arr, 0, arr.length - 1, x, (_, y) => x - get(y))
 					},
 				},
 			],
 		},
 	},
-	pre: ({ n, funcs }) => fromFactory(n, funcs.map),
+	pre: ({ n, funcs }) => fillWith.$$$(new Array(n), funcs.map),
 	callback: ({ algo, n, funcs }, arr) => {
 		const x = funcs.get(arr[rand(n)])
 		algo(arr, x, funcs.get)
@@ -99,10 +99,10 @@ const toCsv = (keys, record) => {
 const main = async () => {
 	let keys
 
-	for await (const { type, data } of run(description)) {
+	for await (const { type, message, data } of run(description)) {
 		switch (type) {
 			case 'warning': {
-				console.error("WARN", data)
+				console.error("WARN", message, data)
 				break
 			}
 			case 'info': {

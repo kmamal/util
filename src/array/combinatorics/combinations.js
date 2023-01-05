@@ -1,6 +1,6 @@
 
 const __recurse = function * (dst, dstIndex, src, n, k, index) {
-	const remaining = dstIndex - k
+	const remaining = k - dstIndex
 	if (remaining === 0) {
 		yield dst.slice()
 		return

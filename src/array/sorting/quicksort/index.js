@@ -1,11 +1,8 @@
 const { __selectPivotMedianOfThree } = require('./select-pivot-median-of-three')
 const { __partitionLeftRight } = require('./partition-left-right')
 const { __insertionsort } = require('../insertionsort')
-const { compare } = require('../../../function/compare')
+const { compare, compareBy } = require('../../../function/compare')
 const { clone } = require('../../clone')
-const { map } = require('../../map')
-
-const extract = ({ x }) => x
 
 const INSERTION_SORT_CUTOFF = 16
 
@@ -41,25 +38,11 @@ const quicksortWith = (arr, fnCmp) => quicksortWith$$$(clone(arr), fnCmp)
 
 quicksortWith.$$$ = quicksortWith$$$
 
-const quicksortBy$$$ = (arr, fnMap) => quicksortWith$$$(arr, (a, b) => compare(fnMap(a), fnMap(b)))
+const quicksortBy$$$ = (arr, fnMap) => quicksortWith$$$(arr, compareBy(fnMap))
 
-const quicksortBy = (arr, fnMap) => quicksortWith(arr, (a, b) => compare(fnMap(a), fnMap(b)))
+const quicksortBy = (arr, fnMap) => quicksortWith(arr, compareBy(fnMap))
 
 quicksortBy.$$$ = quicksortBy$$$
-
-const quicksortByPure$$$ = (arr, fnMap) => {
-	map.$$$(arr, (x) => ({ x, value: fnMap(x) }))
-	quicksortWith$$$(arr, (a, b) => compare(a.value, b.value))
-	return map.$$$(arr, extract)
-}
-
-const quicksortByPure = (arr, fnMap) => {
-	const res = map(arr, (x) => ({ x, value: fnMap(x) }))
-	quicksortWith$$$(res, (a, b) => compare(a.value, b.value))
-	return map.$$$(res, extract)
-}
-
-quicksortByPure.$$$ = quicksortByPure$$$
 
 const quicksort$$$ = (arr) => quicksortWith$$$(arr, compare)
 
@@ -71,6 +54,5 @@ module.exports = {
 	__quicksort,
 	quicksortWith,
 	quicksortBy,
-	quicksortByPure,
 	quicksort,
 }

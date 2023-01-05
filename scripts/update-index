@@ -12,6 +12,7 @@ const pattern = [
 	'!**/testing',
 	'!**/*.test.js',
 	'!**/index.js',
+	'!meta/build-index.js',
 ]
 
 const cwd = Path.join(Path.dirname(__dirname), 'src')

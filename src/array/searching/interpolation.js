@@ -35,7 +35,7 @@ const __interpolationSearch = (arr, start, end, x, fnDist) => {
 	return low
 }
 
-const __interpolationSearchLeft = (arr, start, end, x, fnDist) => {
+const __interpolationSearchFirst = (arr, start, end, x, fnDist) => {
 	let low = start
 	let high = end
 	let lowValue = arr[low]
@@ -68,7 +68,7 @@ const __interpolationSearchLeft = (arr, start, end, x, fnDist) => {
 	return low
 }
 
-const __interpolationSearchRight = (arr, start, end, x, fnDist) => {
+const __interpolationSearchLast = (arr, start, end, x, fnDist) => {
 	let low = start
 	let high = end
 	let lowValue = arr[low]
@@ -102,45 +102,40 @@ const __interpolationSearchRight = (arr, start, end, x, fnDist) => {
 }
 
 const interpolationSearchWith = (arr, x, fnDist) => __interpolationSearch(arr, 0, arr.length, x, fnDist)
-const interpolationSearchLeftWith = (arr, x, fnDist) => __interpolationSearchLeft(arr, 0, arr.length, x, fnDist)
-const interpolationSearchRightWith = (arr, x, fnDist) => __interpolationSearchRight(arr, 0, arr.length, x, fnDist)
+const interpolationSearchFirstWith = (arr, x, fnDist) => __interpolationSearchFirst(arr, 0, arr.length, x, fnDist)
+const interpolationSearchLastWith = (arr, x, fnDist) => __interpolationSearchLast(arr, 0, arr.length, x, fnDist)
 
-const interpolationSearchBy = (arr, x, fnMap) => interpolationSearchWith(arr, x, (a, b) => sub(fnMap(a), fnMap(b)))
-const interpolationSearchLeftBy = (arr, x, fnMap) => interpolationSearchLeftWith(arr, x, (a, b) => sub(fnMap(a), fnMap(b)))
-const interpolationSearchRightBy = (arr, x, fnMap) => interpolationSearchRightWith(arr, x, (a, b) => sub(fnMap(a), fnMap(b)))
-
-// HACK: The first argument to dist is always x
-const interpolationSearchByPure = (arr, x, fnMap) => {
+const interpolationSearchBy = (arr, x, fnMap) => {
+	// HACK: The first argument to dist is always x
 	const xValue = fnMap(x)
 	return interpolationSearchWith(arr, x, (a, b) => sub(xValue, fnMap(b)))
 }
-const interpolationSearchLeftByPure = (arr, x, fnMap) => {
+const interpolationSearchFirstBy = (arr, x, fnMap) => {
+	// HACK: The first argument to dist is always x
 	const xValue = fnMap(x)
-	return interpolationSearchLeftWith(arr, x, (a, b) => sub(xValue, fnMap(b)))
+	return interpolationSearchFirstWith(arr, x, (a, b) => sub(xValue, fnMap(b)))
 }
-const interpolationSearchRightByPure = (arr, x, fnMap) => {
+const interpolationSearchLastBy = (arr, x, fnMap) => {
+	// HACK: The first argument to dist is always x
 	const xValue = fnMap(x)
-	return interpolationSearchRightWith(arr, x, (a, b) => sub(xValue, fnMap(b)))
+	return interpolationSearchLastWith(arr, x, (a, b) => sub(xValue, fnMap(b)))
 }
 
 const interpolationSearch = (arr, x) => interpolationSearchWith(arr, x, sub)
-const interpolationSearchLeft = (arr, x) => interpolationSearchLeftWith(arr, x, sub)
-const interpolationSearchRight = (arr, x) => interpolationSearchRightWith(arr, x, sub)
+const interpolationSearchFirst = (arr, x) => interpolationSearchFirstWith(arr, x, sub)
+const interpolationSearchLast = (arr, x) => interpolationSearchLastWith(arr, x, sub)
 
 module.exports = {
 	__interpolationSearch,
-	__interpolationSearchLeft,
-	__interpolationSearchRight,
+	__interpolationSearchFirst,
+	__interpolationSearchLast,
 	interpolationSearchWith,
-	interpolationSearchLeftWith,
-	interpolationSearchRightWith,
+	interpolationSearchFirstWith,
+	interpolationSearchLastWith,
 	interpolationSearchBy,
-	interpolationSearchLeftBy,
-	interpolationSearchRightBy,
-	interpolationSearchByPure,
-	interpolationSearchLeftByPure,
-	interpolationSearchRightByPure,
+	interpolationSearchFirstBy,
+	interpolationSearchLastBy,
 	interpolationSearch,
-	interpolationSearchLeft,
-	interpolationSearchRight,
+	interpolationSearchFirst,
+	interpolationSearchLast,
 }

@@ -4,8 +4,6 @@ const {
 	xorSorted,
 	xorBy,
 	xorBySorted,
-	xorByPure,
-	xorByPureSorted,
 } = require('./xor')
 
 test("array.xor", (t) => {
@@ -42,22 +40,4 @@ test("array.xorBySorted", (t) => {
 	t.equal(xorBySorted([ 1, 2, 3 ], [], (x) => 2 * x), [ 1, 2, 3 ])
 	t.equal(xorBySorted([], [ 1, 2, 3 ], (x) => 2 * x), [ 1, 2, 3 ])
 	t.equal(xorBySorted([ 1, 2, 3, 5 ], [ 2, 3, 4 ], (x) => 2 * x), [ 1, 4, 5 ])
-})
-
-test("array.xorByPure", (t) => {
-	t.equal(xorByPure([], [], (x) => 2 * x), [])
-	t.equal(xorByPure([], [ 1 ], (x) => 2 * x), [ 1 ])
-	t.equal(xorByPure([ 1 ], [], (x) => 2 * x), [ 1 ])
-	t.equal(xorByPure([ 1, 3, 2 ], [], (x) => 2 * x), [ 1, 3, 2 ])
-	t.equal(xorByPure([], [ 1, 3, 2 ], (x) => 2 * x), [ 1, 3, 2 ])
-	t.equal(xorByPure([ 1, 3, 2, 5 ], [ 3, 2, 4 ], (x) => 2 * x), [ 1, 5, 4 ])
-})
-
-test("array.xorByPureSorted", (t) => {
-	t.equal(xorByPureSorted([], [], (x) => 2 * x), [])
-	t.equal(xorByPureSorted([], [ 1 ], (x) => 2 * x), [ 1 ])
-	t.equal(xorByPureSorted([ 1 ], [], (x) => 2 * x), [ 1 ])
-	t.equal(xorByPureSorted([ 1, 2, 3 ], [], (x) => 2 * x), [ 1, 2, 3 ])
-	t.equal(xorByPureSorted([], [ 1, 2, 3 ], (x) => 2 * x), [ 1, 2, 3 ])
-	t.equal(xorByPureSorted([ 1, 2, 3, 5 ], [ 2, 3, 4 ], (x) => 2 * x), [ 1, 4, 5 ])
 })

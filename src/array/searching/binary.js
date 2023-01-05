@@ -13,7 +13,7 @@ const __binarySearch = (arr, start, end, x, fnCmp) => {
 	}
 }
 
-const __binarySearchLeft = (arr, start, end, x, fnCmp) => {
+const __binarySearchFirst = (arr, start, end, x, fnCmp) => {
 	let low = start
 	let high = end
 	for (;;) {
@@ -25,7 +25,7 @@ const __binarySearchLeft = (arr, start, end, x, fnCmp) => {
 	}
 }
 
-const __binarySearchRight = (arr, start, end, x, fnCmp) => {
+const __binarySearchLast = (arr, start, end, x, fnCmp) => {
 	let low = start
 	let high = end
 	for (;;) {
@@ -38,45 +38,40 @@ const __binarySearchRight = (arr, start, end, x, fnCmp) => {
 }
 
 const binarySearchWith = (arr, x, fnCmp) => __binarySearch(arr, 0, arr.length, x, fnCmp)
-const binarySearchLeftWith = (arr, x, fnCmp) => __binarySearchLeft(arr, 0, arr.length, x, fnCmp)
-const binarySearchRightWith = (arr, x, fnCmp) => __binarySearchRight(arr, 0, arr.length, x, fnCmp)
+const binarySearchFirstWith = (arr, x, fnCmp) => __binarySearchFirst(arr, 0, arr.length, x, fnCmp)
+const binarySearchLastWith = (arr, x, fnCmp) => __binarySearchLast(arr, 0, arr.length, x, fnCmp)
 
-const binarySearchBy = (arr, x, fnMap) => binarySearchWith(arr, x, (a, b) => compare(fnMap(a), fnMap(b)))
-const binarySearchLeftBy = (arr, x, fnMap) => binarySearchLeftWith(arr, x, (a, b) => compare(fnMap(a), fnMap(b)))
-const binarySearchRightBy = (arr, x, fnMap) => binarySearchRightWith(arr, x, (a, b) => compare(fnMap(a), fnMap(b)))
-
-// HACK: The first argument to compare is always x
-const binarySearchByPure = (arr, x, fnMap) => {
+const binarySearchBy = (arr, x, fnMap) => {
+	// HACK: The first argument to compare is always x
 	const xValue = fnMap(x)
 	return binarySearchWith(arr, x, (a, b) => compare(xValue, fnMap(b)))
 }
-const binarySearchLeftByPure = (arr, x, fnMap) => {
+const binarySearchFirstBy = (arr, x, fnMap) => {
+	// HACK: The first argument to compare is always x
 	const xValue = fnMap(x)
-	return binarySearchLeftWith(arr, x, (a, b) => compare(xValue, fnMap(b)))
+	return binarySearchFirstWith(arr, x, (a, b) => compare(xValue, fnMap(b)))
 }
-const binarySearchRightByPure = (arr, x, fnMap) => {
+const binarySearchLastBy = (arr, x, fnMap) => {
+	// HACK: The first argument to compare is always x
 	const xValue = fnMap(x)
-	return binarySearchRightWith(arr, x, (a, b) => compare(xValue, fnMap(b)))
+	return binarySearchLastWith(arr, x, (a, b) => compare(xValue, fnMap(b)))
 }
 
 const binarySearch = (arr, x) => binarySearchWith(arr, x, compare)
-const binarySearchLeft = (arr, x) => binarySearchLeftWith(arr, x, compare)
-const binarySearchRight = (arr, x) => binarySearchRightWith(arr, x, compare)
+const binarySearchFirst = (arr, x) => binarySearchFirstWith(arr, x, compare)
+const binarySearchLast = (arr, x) => binarySearchLastWith(arr, x, compare)
 
 module.exports = {
 	__binarySearch,
-	__binarySearchLeft,
-	__binarySearchRight,
+	__binarySearchFirst,
+	__binarySearchLast,
 	binarySearchWith,
-	binarySearchLeftWith,
-	binarySearchRightWith,
+	binarySearchFirstWith,
+	binarySearchLastWith,
 	binarySearchBy,
-	binarySearchLeftBy,
-	binarySearchRightBy,
-	binarySearchByPure,
-	binarySearchLeftByPure,
-	binarySearchRightByPure,
+	binarySearchFirstBy,
+	binarySearchLastBy,
 	binarySearch,
-	binarySearchLeft,
-	binarySearchRight,
+	binarySearchFirst,
+	binarySearchLast,
 }

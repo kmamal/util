@@ -4,8 +4,6 @@ const {
 	includesSorted,
 	includesBy,
 	includesBySorted,
-	includesByPure,
-	includesByPureSorted,
 } = require('./includes')
 
 test("array.includes", (t) => {
@@ -50,26 +48,4 @@ test("array.includesBySorted", (t) => {
 	t.equal(includesBySorted([ 1, 2, 3 ], 5, (x) => 2 * x), false)
 
 	t.equal(includesBySorted([ 1, 2, 3 ], '1', (x) => 2 * x), true) // !!!
-})
-
-test("array.includesByPure", (t) => {
-	t.equal(includesByPure([], 1, (x) => 2 * x), false)
-	t.equal(includesByPure([ 1, 3, 2 ], 1, (x) => 2 * x), true)
-	t.equal(includesByPure([ 1, 3, 2 ], 2, (x) => 2 * x), true)
-	t.equal(includesByPure([ 1, 3, 2 ], 3, (x) => 2 * x), true)
-	t.equal(includesByPure([ 1, 3, 2 ], 0, (x) => 2 * x), false)
-	t.equal(includesByPure([ 1, 3, 2 ], 5, (x) => 2 * x), false)
-
-	t.equal(includesByPure([ 1, 3, 2 ], '1', (x) => 2 * x), true) // !!!
-})
-
-test("array.includesByPureSorted", (t) => {
-	t.equal(includesByPureSorted([], 1, (x) => 2 * x), false)
-	t.equal(includesByPureSorted([ 1, 2, 3 ], 1, (x) => 2 * x), true)
-	t.equal(includesByPureSorted([ 1, 2, 3 ], 2, (x) => 2 * x), true)
-	t.equal(includesByPureSorted([ 1, 2, 3 ], 3, (x) => 2 * x), true)
-	t.equal(includesByPureSorted([ 1, 2, 3 ], 0, (x) => 2 * x), false)
-	t.equal(includesByPureSorted([ 1, 2, 3 ], 5, (x) => 2 * x), false)
-
-	t.equal(includesByPureSorted([ 1, 2, 3 ], '1', (x) => 2 * x), true) // !!!
 })

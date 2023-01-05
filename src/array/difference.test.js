@@ -4,8 +4,6 @@ const {
 	differenceSorted,
 	differenceBy,
 	differenceBySorted,
-	differenceByPure,
-	differenceByPureSorted,
 } = require('./difference')
 
 test("array.difference", (t) => {
@@ -70,37 +68,4 @@ test("array.differenceBySorted.$$$", (t) => {
 	t.equal(differenceBySorted.$$$([ 1 ], [], (x) => 2 * x), [ 1 ])
 	t.equal(differenceBySorted.$$$([ 1, 2, 3 ], [], (x) => 2 * x), [ 1, 2, 3 ])
 	t.equal(differenceBySorted.$$$([ 1, 2, 3 ], [ 2, 3, 4 ], (x) => 2 * x), [ 1 ])
-})
-
-
-test("array.differenceByPure", (t) => {
-	t.equal(differenceByPure([], [], (x) => 2 * x), [])
-	t.equal(differenceByPure([], [ 1 ], (x) => 2 * x), [])
-	t.equal(differenceByPure([ 1 ], [], (x) => 2 * x), [ 1 ])
-	t.equal(differenceByPure([ 1, 2, 3 ], [], (x) => 2 * x), [ 1, 2, 3 ])
-	t.equal(differenceByPure([ 1, 2, 3 ], [ 2, 3, 4 ], (x) => 2 * x), [ 1 ])
-})
-
-test("array.differenceByPure.$$$", (t) => {
-	t.equal(differenceByPure.$$$([], [], (x) => 2 * x), [])
-	t.equal(differenceByPure.$$$([], [ 1 ], (x) => 2 * x), [])
-	t.equal(differenceByPure.$$$([ 1 ], [], (x) => 2 * x), [ 1 ])
-	t.equal(differenceByPure.$$$([ 1, 2, 3 ], [], (x) => 2 * x), [ 1, 2, 3 ])
-	t.equal(differenceByPure.$$$([ 1, 2, 3 ], [ 2, 3, 4 ], (x) => 2 * x), [ 1 ])
-})
-
-test("array.differenceByPureSorted", (t) => {
-	t.equal(differenceByPureSorted([], [], (x) => 2 * x), [])
-	t.equal(differenceByPureSorted([], [ 1 ], (x) => 2 * x), [])
-	t.equal(differenceByPureSorted([ 1 ], [], (x) => 2 * x), [ 1 ])
-	t.equal(differenceByPureSorted([ 1, 2, 3 ], [], (x) => 2 * x), [ 1, 2, 3 ])
-	t.equal(differenceByPureSorted([ 1, 2, 3 ], [ 2, 3, 4 ], (x) => 2 * x), [ 1 ])
-})
-
-test("array.differenceByPureSorted.$$$", (t) => {
-	t.equal(differenceByPureSorted.$$$([], [], (x) => 2 * x), [])
-	t.equal(differenceByPureSorted.$$$([], [ 1 ], (x) => 2 * x), [])
-	t.equal(differenceByPureSorted.$$$([ 1 ], [], (x) => 2 * x), [ 1 ])
-	t.equal(differenceByPureSorted.$$$([ 1, 2, 3 ], [], (x) => 2 * x), [ 1, 2, 3 ])
-	t.equal(differenceByPureSorted.$$$([ 1, 2, 3 ], [ 2, 3, 4 ], (x) => 2 * x), [ 1 ])
 })

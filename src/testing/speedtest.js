@@ -1,5 +1,9 @@
+if (!global.gc) {
+	throw new Error("speedtest requires the `--expose-gc` flag")
+}
+
 const { amrap } = require('../function/async/amrap')
-const { chronometer } = require('../function/async/time')
+const { time } = require('../function/async/time')
 const { product } = require('../array/combinatorics/product')
 const { map } = require('../array/map')
 const { every } = require('../array/every')
@@ -8,7 +12,7 @@ const { zip: zipObject } = require('../object/zip')
 
 const makeOption = (x) => ({ name: x, value: x })
 
-const run = async function * ({ parameters: _p, pre, post, callback, time }) {
+const run = async function * ({ parameters: _p, pre, post, callback, time: timePerCase }) {
 	const parameters = Object.entries(_p)
 	const numParameters = parameters.length
 	const parameterKeys = new Array(numParameters)
@@ -43,10 +47,10 @@ const run = async function * ({ parameters: _p, pre, post, callback, time }) {
 			const data = zipObject(parameterKeys, values)
 
 			const preData = pre ? pre(data) : null
-			const elapsed = chronometer(() => callback(data, preData))
+			const elapsed = time(() => callback(data, preData))
 			post && post(preData)
 
-			if (elapsed * 10 <= time) {
+			if (elapsed * 10 <= timePerCase) {
 				cases.push({ info, data })
 			} else {
 				yield { type: 'warning', message: 'too slow', data: info }
@@ -54,7 +58,7 @@ const run = async function * ({ parameters: _p, pre, post, callback, time }) {
 		}
 
 		const numCases = cases.length
-		const totalTimeEstimate = time * numCases
+		const totalTimeEstimate = timePerCase * numCases
 		yield { type: 'info', data: { numCases, totalTimeEstimate } }
 	}
 
@@ -74,7 +78,7 @@ const run = async function * ({ parameters: _p, pre, post, callback, time }) {
 			for (let i = 0; i < reps; i++) {
 				callback(data, preData)
 			}
-		}, time)
+		}, timePerCase)
 
 		post && post(preData)
 

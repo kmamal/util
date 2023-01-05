@@ -1,9 +1,6 @@
 const { __includes } = require('./includes')
-const { map } = require('./map')
 const { eq } = require('../operators')
 const { compare } = require('../function/compare')
-
-const extract = ({ x }) => x
 
 const __uniq = (dst, dstStart, src, srcStart, srcEnd, fn) => {
 	if (srcEnd - srcStart === 0) { return 0 }
@@ -64,20 +61,6 @@ const uniqBy = (arr, fn) => uniqWith(arr, (x, y) => eq(fn(x), fn(y)))
 
 uniqBy.$$$ = uniqBy$$$
 
-const uniqByPure$$$ = (arr, fn) => {
-	map.$$$(arr, (x) => ({ x, value: fn(x) }))
-	uniqWith$$$(arr, (x, y) => eq(x.value, y.value))
-	return map.$$$(arr, extract)
-}
-
-const uniqByPure = (arr, fn) => {
-	const res = map(arr, (x) => ({ x, value: fn(x) }))
-	uniqWith$$$(res, (x, y) => eq(x.value, y.value))
-	return map.$$$(res, extract)
-}
-
-uniqByPure.$$$ = uniqByPure$$$
-
 const uniq$$$ = (arr) => uniqWith$$$(arr, eq)
 
 const uniq = (arr) => uniqWith(arr, eq)
@@ -104,20 +87,6 @@ const uniqBySorted = (arr, fn) => uniqWithSorted(arr, (x, y) => compare(fn(x), f
 
 uniqBySorted.$$$ = uniqBySorted$$$
 
-const uniqByPureSorted$$$ = (arr, fn) => {
-	map.$$$(arr, (x) => ({ x, value: fn(x) }))
-	uniqWithSorted$$$(arr, (x, y) => compare(x.value, y.value))
-	return map.$$$(arr, extract)
-}
-
-const uniqByPureSorted = (arr, fn) => {
-	const res = map(arr, (x) => ({ x, value: fn(x) }))
-	uniqWithSorted$$$(res, (x, y) => compare(x.value, y.value))
-	return map.$$$(res, extract)
-}
-
-uniqByPureSorted.$$$ = uniqByPureSorted$$$
-
 const uniqSorted$$$ = (arr) => uniqWithSorted$$$(arr, compare)
 
 const uniqSorted = (arr) => uniqWithSorted(arr, compare)
@@ -128,10 +97,8 @@ module.exports = {
 	__uniq,
 	uniqWith,
 	uniqBy,
-	uniqByPure,
 	uniq,
 	uniqWithSorted,
 	uniqBySorted,
-	uniqByPureSorted,
 	uniqSorted,
 }

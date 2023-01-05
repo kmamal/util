@@ -1,17 +1,17 @@
 const {
 	__binarySearch,
-	__binarySearchLeft,
-	__binarySearchRight,
+	__binarySearchFirst,
+	__binarySearchLast,
 } = require('../binary')
 const {
 	__interpolationSearch,
-	__interpolationSearchLeft,
-	__interpolationSearchRight,
+	__interpolationSearchFirst,
+	__interpolationSearchLast,
 } = require('../interpolation')
 const {
 	__exponentialSearch,
-	__exponentialSearchLeft,
-	__exponentialSearchRight,
+	__exponentialSearchFirst,
+	__exponentialSearchLast,
 } = require('../exponential')
 const {
 	__linearSearch,
@@ -35,28 +35,33 @@ for (let i = 0; i < T; i++) {
 
 	for (let x = 0; x < K; x++) {
 		const a = __binarySearch(A, 0, N, x, sub)
-		const al = __binarySearchLeft(A, 0, N, x, sub)
-		const ar = __binarySearchRight(A, 0, N, x, sub)
+		const af = __binarySearchFirst(A, 0, N, x, sub)
+		const al = __binarySearchLast(A, 0, N, x, sub)
 
 		const b = __interpolationSearch(A, 0, N, x, sub)
-		const bl = __interpolationSearchLeft(A, 0, N, x, sub)
-		const br = __interpolationSearchRight(A, 0, N, x, sub)
+		const bf = __interpolationSearchFirst(A, 0, N, x, sub)
+		const bl = __interpolationSearchLast(A, 0, N, x, sub)
 
-		const c = __exponentialSearch(A, 0, N, x, sub)
-		const cl = __exponentialSearchLeft(A, 0, N, x, sub)
-		const cr = __exponentialSearchRight(A, 0, N, x, sub)
+		const c1 = __exponentialSearch(A, 0, N - 1, x, sub)
+		const cf1 = __exponentialSearchFirst(A, 0, N - 1, x, sub)
+		const cl1 = __exponentialSearchLast(A, 0, N - 1, x, sub)
+
+		const c2 = __exponentialSearch(A, N - 1, 0, x, sub)
+		const cf2 = __exponentialSearchFirst(A, N - 1, 0, x, sub)
+		const cl2 = __exponentialSearchLast(A, N - 1, 0, x, sub)
 
 		const dl = __linearSearch(A, 0, N, (y) => x === y)
 		const dr = __linearSearchRight(A, 0, N, (y) => x === y)
 
 		if (false
-			|| al !== bl || bl !== cl || (dl !== -1 && al !== dl)
-			|| ar !== br || br !== cr || (dr !== -1 && ar !== dr + 1)
-			|| a < al || ar < a
-			|| b < bl || br < b
-			|| c < cl || cr < c
+			|| af !== bf || bf !== cf1 || cf1 !== cf2 || (dl !== -1 && af !== dl)
+			|| al !== bl || bl !== cl1 || cl1 !== cl2 || (dr !== -1 && al !== dr + 1)
+			|| a < af || al < a
+			|| b < bf || bl < b
+			|| c1 < cf1 || cl1 < c1
+			|| c2 < cf2 || cl2 < c2
 		) {
-			console.log({ A, x, a, al, ar, b, bl, br, c, cl, cr, dl, dr })
+			console.log({ A, x, a, af, al, b, bf, bl, c1, cf1, cl1, c2, cf2, cl2, dl, dr })
 			process.stdout.write('\n')
 			process.exit()
 		}

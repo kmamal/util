@@ -80,7 +80,6 @@ const arrayComm = require('./array/comm.js')
 module.exports.__comm = arrayComm.__comm
 module.exports.commWith = arrayComm.commWith
 module.exports.commBy = arrayComm.commBy
-module.exports.commByPure = arrayComm.commByPure
 module.exports.comm = arrayComm.comm
 
 const arrayCompactMap = require('./array/compact-map.js')
@@ -113,11 +112,9 @@ const arrayDifference = require('./array/difference.js')
 module.exports.__difference = arrayDifference.__difference
 module.exports.differenceWith = arrayDifference.differenceWith
 module.exports.differenceBy = arrayDifference.differenceBy
-module.exports.differenceByPure = arrayDifference.differenceByPure
 module.exports.difference = arrayDifference.difference
 module.exports.differenceWithSorted = arrayDifference.differenceWithSorted
 module.exports.differenceBySorted = arrayDifference.differenceBySorted
-module.exports.differenceByPureSorted = arrayDifference.differenceByPureSorted
 module.exports.differenceSorted = arrayDifference.differenceSorted
 
 const arrayEndIndex = require('./array/end-index.js')
@@ -194,11 +191,9 @@ module.exports.__includes = arrayIncludes.__includes
 module.exports.__includesSorted = arrayIncludes.__includesSorted
 module.exports.includesWith = arrayIncludes.includesWith
 module.exports.includesBy = arrayIncludes.includesBy
-module.exports.includesByPure = arrayIncludes.includesByPure
 module.exports.includes = arrayIncludes.includes
 module.exports.includesWithSorted = arrayIncludes.includesWithSorted
 module.exports.includesBySorted = arrayIncludes.includesBySorted
-module.exports.includesByPureSorted = arrayIncludes.includesByPureSorted
 module.exports.includesSorted = arrayIncludes.includesSorted
 
 const arrayIndexOf = require('./array/index-of.js')
@@ -210,16 +205,12 @@ module.exports.indexOfWith = arrayIndexOf.indexOfWith
 module.exports.indexOfWithRight = arrayIndexOf.indexOfWithRight
 module.exports.indexOfBy = arrayIndexOf.indexOfBy
 module.exports.indexOfByRight = arrayIndexOf.indexOfByRight
-module.exports.indexOfByPure = arrayIndexOf.indexOfByPure
-module.exports.indexOfByPureRight = arrayIndexOf.indexOfByPureRight
 module.exports.indexOf = arrayIndexOf.indexOf
 module.exports.indexOfRight = arrayIndexOf.indexOfRight
 module.exports.indexOfWithSorted = arrayIndexOf.indexOfWithSorted
 module.exports.indexOfWithSortedRight = arrayIndexOf.indexOfWithSortedRight
 module.exports.indexOfBySorted = arrayIndexOf.indexOfBySorted
 module.exports.indexOfBySortedRight = arrayIndexOf.indexOfBySortedRight
-module.exports.indexOfByPureSorted = arrayIndexOf.indexOfByPureSorted
-module.exports.indexOfByPureSortedRight = arrayIndexOf.indexOfByPureSortedRight
 module.exports.indexOfSorted = arrayIndexOf.indexOfSorted
 module.exports.indexOfSortedRight = arrayIndexOf.indexOfSortedRight
 
@@ -233,18 +224,15 @@ const arrayIntersection = require('./array/intersection.js')
 module.exports.__intersection = arrayIntersection.__intersection
 module.exports.intersectionWith = arrayIntersection.intersectionWith
 module.exports.intersectionBy = arrayIntersection.intersectionBy
-module.exports.intersectionByPure = arrayIntersection.intersectionByPure
 module.exports.intersection = arrayIntersection.intersection
 module.exports.intersectionWithSorted = arrayIntersection.intersectionWithSorted
 module.exports.intersectionBySorted = arrayIntersection.intersectionBySorted
-module.exports.intersectionByPureSorted = arrayIntersection.intersectionByPureSorted
 module.exports.intersectionSorted = arrayIntersection.intersectionSorted
 
 const arrayIsSorted = require('./array/is-sorted.js')
 module.exports.__isSorted = arrayIsSorted.__isSorted
 module.exports.isSortedWith = arrayIsSorted.isSortedWith
 module.exports.isSortedBy = arrayIsSorted.isSortedBy
-module.exports.isSortedByPure = arrayIsSorted.isSortedByPure
 module.exports.isSorted = arrayIsSorted.isSorted
 
 const arrayJoin = require('./array/join.js')
@@ -270,7 +258,6 @@ module.exports.__mergeRight = arrayMerge.__mergeRight
 module.exports.__mergeInplace = arrayMerge.__mergeInplace
 module.exports.mergeWith = arrayMerge.mergeWith
 module.exports.mergeBy = arrayMerge.mergeBy
-module.exports.mergeByPure = arrayMerge.mergeByPure
 module.exports.merge = arrayMerge.merge
 
 const arrayMin = require('./array/min.js')
@@ -316,61 +303,70 @@ module.exports.scanRight = arrayScan.scanRight
 
 const arraySearchingBinary = require('./array/searching/binary.js')
 module.exports.searching.__binarySearch = arraySearchingBinary.__binarySearch
-module.exports.searching.__binarySearchLeft = arraySearchingBinary.__binarySearchLeft
-module.exports.searching.__binarySearchRight = arraySearchingBinary.__binarySearchRight
+module.exports.searching.__binarySearchFirst = arraySearchingBinary.__binarySearchFirst
+module.exports.searching.__binarySearchLast = arraySearchingBinary.__binarySearchLast
 module.exports.searching.binarySearchWith = arraySearchingBinary.binarySearchWith
-module.exports.searching.binarySearchLeftWith = arraySearchingBinary.binarySearchLeftWith
-module.exports.searching.binarySearchRightWith = arraySearchingBinary.binarySearchRightWith
+module.exports.searching.binarySearchFirstWith = arraySearchingBinary.binarySearchFirstWith
+module.exports.searching.binarySearchLastWith = arraySearchingBinary.binarySearchLastWith
 module.exports.searching.binarySearchBy = arraySearchingBinary.binarySearchBy
-module.exports.searching.binarySearchLeftBy = arraySearchingBinary.binarySearchLeftBy
-module.exports.searching.binarySearchRightBy = arraySearchingBinary.binarySearchRightBy
-module.exports.searching.binarySearchByPure = arraySearchingBinary.binarySearchByPure
-module.exports.searching.binarySearchLeftByPure = arraySearchingBinary.binarySearchLeftByPure
-module.exports.searching.binarySearchRightByPure = arraySearchingBinary.binarySearchRightByPure
+module.exports.searching.binarySearchFirstBy = arraySearchingBinary.binarySearchFirstBy
+module.exports.searching.binarySearchLastBy = arraySearchingBinary.binarySearchLastBy
 module.exports.searching.binarySearch = arraySearchingBinary.binarySearch
-module.exports.searching.binarySearchLeft = arraySearchingBinary.binarySearchLeft
-module.exports.searching.binarySearchRight = arraySearchingBinary.binarySearchRight
+module.exports.searching.binarySearchFirst = arraySearchingBinary.binarySearchFirst
+module.exports.searching.binarySearchLast = arraySearchingBinary.binarySearchLast
 
 const arraySearchingExponential = require('./array/searching/exponential.js')
 module.exports.searching.__initExponentialSearch = arraySearchingExponential.__initExponentialSearch
 module.exports.searching.__expandExponentialSearch = arraySearchingExponential.__expandExponentialSearch
 module.exports.searching.__contractExponentialSearch = arraySearchingExponential.__contractExponentialSearch
 module.exports.searching.__exponentialSearch = arraySearchingExponential.__exponentialSearch
-module.exports.searching.__exponentialSearchLeft = arraySearchingExponential.__exponentialSearchLeft
-module.exports.searching.__exponentialSearchRight = arraySearchingExponential.__exponentialSearchRight
+module.exports.searching.__exponentialSearchFirst = arraySearchingExponential.__exponentialSearchFirst
+module.exports.searching.__exponentialSearchLast = arraySearchingExponential.__exponentialSearchLast
 module.exports.searching.exponentialSearchWith = arraySearchingExponential.exponentialSearchWith
-module.exports.searching.exponentialSearchLeftWith = arraySearchingExponential.exponentialSearchLeftWith
-module.exports.searching.exponentialSearchRightWith = arraySearchingExponential.exponentialSearchRightWith
+module.exports.searching.exponentialSearchFirstWith = arraySearchingExponential.exponentialSearchFirstWith
+module.exports.searching.exponentialSearchLastWith = arraySearchingExponential.exponentialSearchLastWith
+module.exports.searching.exponentialSearchWithRight = arraySearchingExponential.exponentialSearchWithRight
+module.exports.searching.exponentialSearchFirstWithRight = arraySearchingExponential.exponentialSearchFirstWithRight
+module.exports.searching.exponentialSearchLastWithRight = arraySearchingExponential.exponentialSearchLastWithRight
 module.exports.searching.exponentialSearchBy = arraySearchingExponential.exponentialSearchBy
-module.exports.searching.exponentialSearchLeftBy = arraySearchingExponential.exponentialSearchLeftBy
-module.exports.searching.exponentialSearchRightBy = arraySearchingExponential.exponentialSearchRightBy
-module.exports.searching.exponentialSearchByPure = arraySearchingExponential.exponentialSearchByPure
-module.exports.searching.exponentialSearchLeftByPure = arraySearchingExponential.exponentialSearchLeftByPure
-module.exports.searching.exponentialSearchRightByPure = arraySearchingExponential.exponentialSearchRightByPure
+module.exports.searching.exponentialSearchFirstBy = arraySearchingExponential.exponentialSearchFirstBy
+module.exports.searching.exponentialSearchLastBy = arraySearchingExponential.exponentialSearchLastBy
+module.exports.searching.exponentialSearchByRight = arraySearchingExponential.exponentialSearchByRight
+module.exports.searching.exponentialSearchFirstByRight = arraySearchingExponential.exponentialSearchFirstByRight
+module.exports.searching.exponentialSearchLastByRight = arraySearchingExponential.exponentialSearchLastByRight
 module.exports.searching.exponentialSearch = arraySearchingExponential.exponentialSearch
-module.exports.searching.exponentialSearchLeft = arraySearchingExponential.exponentialSearchLeft
+module.exports.searching.exponentialSearchFirst = arraySearchingExponential.exponentialSearchFirst
+module.exports.searching.exponentialSearchLast = arraySearchingExponential.exponentialSearchLast
 module.exports.searching.exponentialSearchRight = arraySearchingExponential.exponentialSearchRight
+module.exports.searching.exponentialSearchFirstRight = arraySearchingExponential.exponentialSearchFirstRight
+module.exports.searching.exponentialSearchLastRight = arraySearchingExponential.exponentialSearchLastRight
 
 const arraySearchingInterpolation = require('./array/searching/interpolation.js')
 module.exports.searching.__interpolationSearch = arraySearchingInterpolation.__interpolationSearch
-module.exports.searching.__interpolationSearchLeft = arraySearchingInterpolation.__interpolationSearchLeft
-module.exports.searching.__interpolationSearchRight = arraySearchingInterpolation.__interpolationSearchRight
+module.exports.searching.__interpolationSearchFirst = arraySearchingInterpolation.__interpolationSearchFirst
+module.exports.searching.__interpolationSearchLast = arraySearchingInterpolation.__interpolationSearchLast
 module.exports.searching.interpolationSearchWith = arraySearchingInterpolation.interpolationSearchWith
-module.exports.searching.interpolationSearchLeftWith = arraySearchingInterpolation.interpolationSearchLeftWith
-module.exports.searching.interpolationSearchRightWith = arraySearchingInterpolation.interpolationSearchRightWith
+module.exports.searching.interpolationSearchFirstWith = arraySearchingInterpolation.interpolationSearchFirstWith
+module.exports.searching.interpolationSearchLastWith = arraySearchingInterpolation.interpolationSearchLastWith
 module.exports.searching.interpolationSearchBy = arraySearchingInterpolation.interpolationSearchBy
-module.exports.searching.interpolationSearchLeftBy = arraySearchingInterpolation.interpolationSearchLeftBy
-module.exports.searching.interpolationSearchRightBy = arraySearchingInterpolation.interpolationSearchRightBy
-module.exports.searching.interpolationSearchByPure = arraySearchingInterpolation.interpolationSearchByPure
-module.exports.searching.interpolationSearchLeftByPure = arraySearchingInterpolation.interpolationSearchLeftByPure
-module.exports.searching.interpolationSearchRightByPure = arraySearchingInterpolation.interpolationSearchRightByPure
+module.exports.searching.interpolationSearchFirstBy = arraySearchingInterpolation.interpolationSearchFirstBy
+module.exports.searching.interpolationSearchLastBy = arraySearchingInterpolation.interpolationSearchLastBy
 module.exports.searching.interpolationSearch = arraySearchingInterpolation.interpolationSearch
-module.exports.searching.interpolationSearchLeft = arraySearchingInterpolation.interpolationSearchLeft
-module.exports.searching.interpolationSearchRight = arraySearchingInterpolation.interpolationSearchRight
+module.exports.searching.interpolationSearchFirst = arraySearchingInterpolation.interpolationSearchFirst
+module.exports.searching.interpolationSearchLast = arraySearchingInterpolation.interpolationSearchLast
 
 const arraySearchingLinear = require('./array/searching/linear.js')
 module.exports.searching.__linearSearch = arraySearchingLinear.__linearSearch
 module.exports.searching.__linearSearchRight = arraySearchingLinear.__linearSearchRight
+
+const arraySelect = require('./array/select.js')
+module.exports.__select = arraySelect.__select
+module.exports.selectIndexWith = arraySelect.selectIndexWith
+module.exports.selectIndexBy = arraySelect.selectIndexBy
+module.exports.selectIndex = arraySelect.selectIndex
+module.exports.selectWith = arraySelect.selectWith
+module.exports.selectBy = arraySelect.selectBy
+module.exports.select = arraySelect.select
 
 const arraySlice = require('./array/slice.js')
 module.exports.slice = arraySlice.slice
@@ -383,43 +379,50 @@ const arraySort = require('./array/sort.js')
 module.exports.__sort = arraySort.__sort
 module.exports.sortWith = arraySort.sortWith
 module.exports.sortBy = arraySort.sortBy
-module.exports.sortByPure = arraySort.sortByPure
 module.exports.sort = arraySort.sort
 
 const arraySortingBinsertionsort = require('./array/sorting/binsertionsort.js')
 module.exports.sorting.__binsertionsort = arraySortingBinsertionsort.__binsertionsort
 module.exports.sorting.binsertionsortWith = arraySortingBinsertionsort.binsertionsortWith
 module.exports.sorting.binsertionsortBy = arraySortingBinsertionsort.binsertionsortBy
-module.exports.sorting.binsertionsortByPure = arraySortingBinsertionsort.binsertionsortByPure
 module.exports.sorting.binsertionsort = arraySortingBinsertionsort.binsertionsort
+
+const arraySortingCountingsort = require('./array/sorting/countingsort.js')
+module.exports.sorting.__countingsortInitCounts = arraySortingCountingsort.__countingsortInitCounts
+module.exports.sorting.__countingsortCount = arraySortingCountingsort.__countingsortCount
+module.exports.sorting.__countingsortAssign = arraySortingCountingsort.__countingsortAssign
+module.exports.sorting.__countingsortDistribute = arraySortingCountingsort.__countingsortDistribute
+module.exports.sorting.countingsortBy = arraySortingCountingsort.countingsortBy
+module.exports.sorting.countingsort = arraySortingCountingsort.countingsort
 
 const arraySortingHeapsort = require('./array/sorting/heapsort.js')
 module.exports.sorting.__heapsort = arraySortingHeapsort.__heapsort
 module.exports.sorting.heapsortWith = arraySortingHeapsort.heapsortWith
 module.exports.sorting.heapsortBy = arraySortingHeapsort.heapsortBy
-module.exports.sorting.heapsortByPure = arraySortingHeapsort.heapsortByPure
 module.exports.sorting.heapsort = arraySortingHeapsort.heapsort
 
 const arraySortingInsertionsort = require('./array/sorting/insertionsort.js')
 module.exports.sorting.__insertionsort = arraySortingInsertionsort.__insertionsort
 module.exports.sorting.insertionsortWith = arraySortingInsertionsort.insertionsortWith
 module.exports.sorting.insertionsortBy = arraySortingInsertionsort.insertionsortBy
-module.exports.sorting.insertionsortByPure = arraySortingInsertionsort.insertionsortByPure
 module.exports.sorting.insertionsort = arraySortingInsertionsort.insertionsort
 
 const arraySortingIntrosort = require('./array/sorting/introsort.js')
 module.exports.sorting.__introsort = arraySortingIntrosort.__introsort
 module.exports.sorting.introsortWith = arraySortingIntrosort.introsortWith
 module.exports.sorting.introsortBy = arraySortingIntrosort.introsortBy
-module.exports.sorting.introsortByPure = arraySortingIntrosort.introsortByPure
 module.exports.sorting.introsort = arraySortingIntrosort.introsort
 
 const arraySortingMergesort = require('./array/sorting/mergesort.js')
 module.exports.sorting.__mergesort = arraySortingMergesort.__mergesort
 module.exports.sorting.mergesortWith = arraySortingMergesort.mergesortWith
 module.exports.sorting.mergesortBy = arraySortingMergesort.mergesortBy
-module.exports.sorting.mergesortByPure = arraySortingMergesort.mergesortByPure
 module.exports.sorting.mergesort = arraySortingMergesort.mergesort
+
+const arraySortingPigeonholesort = require('./array/sorting/pigeonholesort.js')
+module.exports.sorting.__pigeonholesort = arraySortingPigeonholesort.__pigeonholesort
+module.exports.sorting.pigeonholesortBy = arraySortingPigeonholesort.pigeonholesortBy
+module.exports.sorting.pigeonholesort = arraySortingPigeonholesort.pigeonholesort
 
 const arraySortingQuicksortPartitionByHoare = require('./array/sorting/quicksort/partition-by-hoare.js')
 module.exports.sorting.__partitionByHoare = arraySortingQuicksortPartitionByHoare.__partitionByHoare
@@ -436,18 +439,21 @@ module.exports.sorting.__selectPivotLast = arraySortingQuicksortSelectPivotLast.
 const arraySortingQuicksortSelectPivotMedianOfThree = require('./array/sorting/quicksort/select-pivot-median-of-three.js')
 module.exports.sorting.__selectPivotMedianOfThree = arraySortingQuicksortSelectPivotMedianOfThree.__selectPivotMedianOfThree
 
+const arraySortingRadixsort = require('./array/sorting/radixsort.js')
+module.exports.sorting.__radixsort = arraySortingRadixsort.__radixsort
+module.exports.sorting.radixsortBy = arraySortingRadixsort.radixsortBy
+module.exports.sorting.radixsort = arraySortingRadixsort.radixsort
+
 const arraySortingShellsort = require('./array/sorting/shellsort.js')
 module.exports.sorting.__shellsort = arraySortingShellsort.__shellsort
 module.exports.sorting.shellsortWith = arraySortingShellsort.shellsortWith
 module.exports.sorting.shellsortBy = arraySortingShellsort.shellsortBy
-module.exports.sorting.shellsortByPure = arraySortingShellsort.shellsortByPure
 module.exports.sorting.shellsort = arraySortingShellsort.shellsort
 
 const arraySortingTimsort = require('./array/sorting/timsort.js')
 module.exports.sorting.__timsort = arraySortingTimsort.__timsort
 module.exports.sorting.timsortWith = arraySortingTimsort.timsortWith
 module.exports.sorting.timsortBy = arraySortingTimsort.timsortBy
-module.exports.sorting.timsortByPure = arraySortingTimsort.timsortByPure
 module.exports.sorting.timsort = arraySortingTimsort.timsort
 
 const arraySplit = require('./array/split.js')
@@ -494,11 +500,9 @@ const arrayUniq = require('./array/uniq.js')
 module.exports.__uniq = arrayUniq.__uniq
 module.exports.uniqWith = arrayUniq.uniqWith
 module.exports.uniqBy = arrayUniq.uniqBy
-module.exports.uniqByPure = arrayUniq.uniqByPure
 module.exports.uniq = arrayUniq.uniq
 module.exports.uniqWithSorted = arrayUniq.uniqWithSorted
 module.exports.uniqBySorted = arrayUniq.uniqBySorted
-module.exports.uniqByPureSorted = arrayUniq.uniqByPureSorted
 module.exports.uniqSorted = arrayUniq.uniqSorted
 
 const arrayUnweave = require('./array/unweave.js')
@@ -513,11 +517,9 @@ module.exports.__xor = arrayXor.__xor
 module.exports.__xorSorted = arrayXor.__xorSorted
 module.exports.xorWith = arrayXor.xorWith
 module.exports.xorBy = arrayXor.xorBy
-module.exports.xorByPure = arrayXor.xorByPure
 module.exports.xor = arrayXor.xor
 module.exports.xorWithSorted = arrayXor.xorWithSorted
 module.exports.xorBySorted = arrayXor.xorBySorted
-module.exports.xorByPureSorted = arrayXor.xorByPureSorted
 module.exports.xorSorted = arrayXor.xorSorted
 
 const arrayZip = require('./array/zip.js')
@@ -566,6 +568,7 @@ module.exports.time = functionAsyncTime.time
 
 const functionCompare = require('./function/compare.js')
 module.exports.compare = functionCompare.compare
+module.exports.compareBy = functionCompare.compareBy
 
 const functionIdentity = require('./function/identity.js')
 module.exports.identity = functionIdentity.identity
@@ -611,8 +614,6 @@ module.exports.ieeeFloat.single.nextToward = ieeeFloatSingle.nextToward
 
 const mapAddDefault = require('./map/add-default.js')
 module.exports.addDefault = mapAddDefault.addDefault
-
-const metaBuildIndex = require('./meta/build-index.js')
 
 const numberClamp = require('./number/clamp.js')
 module.exports.clamp = numberClamp.clamp

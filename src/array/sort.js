@@ -2,21 +2,19 @@ const {
 	__timsort,
 	timsortWith,
 	timsortBy,
-	timsortByPure,
 	timsort,
 } = require('./sorting/timsort')
 
-const __sort = __timsort // NOTE: They are not all that nice
+// NOTE: They are not all that nice
+const __sort = __timsort
 
 const sortWith = timsortWith
 const sortBy = timsortBy
-const sortByPure = timsortByPure
 const sort = timsort
 
 module.exports = {
 	__sort,
 	sortWith,
 	sortBy,
-	sortByPure,
 	sort,
 }

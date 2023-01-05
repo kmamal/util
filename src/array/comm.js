@@ -1,4 +1,4 @@
-const { compare } = require('../function/compare')
+const { compare, compareBy } = require('../function/compare')
 
 const __comm = (onlyA, both, onlyB, a, aStart, aEnd, b, bStart, bEnd, fnCmp) => {
 	let aIndex = aStart
@@ -48,25 +48,7 @@ const commWith = (a, b, fnCmp) => {
 	}
 }
 
-const commBy = (a, b, fnMap) => commWith(a, b, (x, y) => compare(fnMap(x), fnMap(y)))
-
-const commByPure = (a, b, fnMap) => {
-	let lastX = NaN
-	let lastY = NaN
-	let xValue = NaN
-	let yValue = NaN
-	return commWith(a, b, (x, y) => {
-		if (x !== lastX) {
-			lastX = x
-			xValue = fnMap(x)
-		}
-		if (y !== lastY) {
-			lastY = y
-			yValue = fnMap(y)
-		}
-		return compare(xValue, yValue)
-	})
-}
+const commBy = (a, b, fnMap) => commWith(a, b, compareBy(fnMap))
 
 const comm = (a, b) => commWith(a, b, compare)
 
@@ -74,6 +56,5 @@ module.exports = {
 	__comm,
 	commWith,
 	commBy,
-	commByPure,
 	comm,
 }
