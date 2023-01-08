@@ -1,29 +1,37 @@
 const { LinkedList } = require('@kmamal/structs/linked-list')
-const { mergeWith } = require('./merge')
+const { __copy } = require('./copy')
+const { __merge } = require('./merge')
+const { sumBy } = require('./sum')
 
 let _state
 const _alternate = () => (_state *= -1)
 
-const weaveTwo = (a, b) => {
+const __weaveTwo = (dst, dstStart, a, aStart, aEnd, b, bStart, bEnd) => {
 	_state = 1
-	return mergeWith(a, b, _alternate)
+	__merge(dst, dstStart, a, aStart, aEnd, b, bStart, bEnd, _alternate)
 }
 
-const weave = (arr) => {
-	if (arr.length === 0) { return [] }
-	if (arr.length === 1) { return Array.from(arr[0]) }
-	if (arr.length === 2) { return weaveTwo(arr[0], arr[1]) }
-
-	const sources = new LinkedList()
-	let totalLength = 0
-	for (let i = arr.length - 1; i >= 0; i--) {
-		const a = arr[i]
-		totalLength += a.length
-		sources.unshift(a)
+const __weave = (dst, dstStart, srcArray) => {
+	const num = srcArray.length
+	if (num === 0) { return }
+	if (num === 1) {
+		const a = srcArray[0]
+		__copy(dst, dstStart, a, 0, a.length)
+		return
+	}
+	if (num === 2) {
+		const a = srcArray[0]
+		const b = srcArray[1]
+		__weaveTwo(dst, dstStart, a, 0, a.length, b, 0, b.length)
+		return
 	}
 
-	const res = new Array(totalLength)
-	let writeIndex = 0
+	const sources = new LinkedList()
+	for (let i = num - 1; i >= 0; i--) {
+		sources.unshift(srcArray[i])
+	}
+
+	let writeIndex = dstStart
 
 	let depth = 0
 	let node
@@ -31,7 +39,7 @@ const weave = (arr) => {
 	while (sources.size() > 1) {
 		node = sources._head
 		for (;;) {
-			if (!node) { return res }
+			if (!node) { return }
 			value = node.value
 			if (value.length > depth) { break }
 			sources.shift(node)
@@ -40,7 +48,7 @@ const weave = (arr) => {
 
 		loop:
 		for (;;) {
-			res[writeIndex++] = value[depth]
+			dst[writeIndex++] = value[depth]
 
 			for (;;) {
 				const next = node.next
@@ -59,12 +67,50 @@ const weave = (arr) => {
 
 	const rest = sources._head.value
 	while (depth < rest.length) {
-		res[writeIndex++] = rest[depth++]
+		dst[writeIndex++] = rest[depth++]
 	}
+}
+
+
+const weaveTwo = (a, b) => {
+	const aLength = a.length
+	const bLength = b.length
+	const res = new Array(aLength + bLength)
+	__weaveTwo(res, 0, a, 0, aLength, b, 0, bLength)
 	return res
 }
 
+const weaveTwoTo = (dst, a, b) => {
+	const aLength = a.length
+	const bLength = b.length
+	dst.length = aLength + bLength
+	__weaveTwo(dst, 0, a, 0, aLength, b, 0, bLength)
+	return dst
+}
+
+weaveTwo.to = weaveTwoTo
+
+
+const weave = (arr) => {
+	const totalLength = sumBy(arr, (x) => x.length)
+	const res = new Array(totalLength)
+	__weave(res, 0, arr)
+	return res
+}
+
+const weaveTo = (dst, arr) => {
+	const totalLength = sumBy(arr, (x) => x.length)
+	dst.length = totalLength
+	__weave(dst, 0, arr)
+	return dst
+}
+
+weave.to = weaveTo
+
+
 module.exports = {
+	__weaveTwo,
+	__weave,
 	weaveTwo,
 	weave,
 }

@@ -12,15 +12,11 @@ const __reverse = (dst, dstStart, src, srcStart, srcEnd) => {
 		dst[writeIndexEnd--] = front
 	}
 
-	if (readIndexStart === readIndexEnd) {
+	if (dst !== src && readIndexStart === readIndexEnd) {
 		dst[writeIndexStart] = src[readIndexStart]
 	}
 }
 
-const reverse$$$ = (arr) => {
-	__reverse(arr, 0, arr, 0, arr.length)
-	return arr
-}
 
 const reverse = (arr) => {
 	const { length } = arr
@@ -29,7 +25,21 @@ const reverse = (arr) => {
 	return res
 }
 
+const reverseTo = (dst, arr) => {
+	const { length } = arr
+	dst.length = length
+	__reverse(dst, 0, arr, 0, length)
+	return dst
+}
+
+const reverse$$$ = (arr) => {
+	__reverse(arr, 0, arr, 0, arr.length)
+	return arr
+}
+
+reverse.to = reverseTo
 reverse.$$$ = reverse$$$
+
 
 module.exports = {
 	__reverse,

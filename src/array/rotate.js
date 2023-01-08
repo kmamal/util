@@ -25,10 +25,6 @@ const __rotateInplace = (arr, start, end, n) => {
 	}
 }
 
-const rotate$$$ = (arr, n) => {
-	__rotateInplace(arr, 0, arr.length, n)
-	return arr
-}
 
 const rotate = (arr, n) => {
 	const { length } = arr
@@ -37,7 +33,21 @@ const rotate = (arr, n) => {
 	return res
 }
 
+const rotateTo = (dst, arr, n) => {
+	const { length } = arr
+	dst.length = length
+	__rotate(dst, 0, arr, 0, length, n)
+	return dst
+}
+
+const rotate$$$ = (arr, n) => {
+	__rotateInplace(arr, 0, arr.length, n)
+	return arr
+}
+
+rotate.to = rotateTo
 rotate.$$$ = rotate$$$
+
 
 module.exports = {
 	__rotate,

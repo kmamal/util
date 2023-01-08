@@ -1,4 +1,6 @@
 
+const _ret = {}
+
 const __partitionLeftRight = (arr, start, end, pivot, fnCmp) => {
 	let left = start
 	for (let i = start; i < end; i++) {
@@ -20,7 +22,9 @@ const __partitionLeftRight = (arr, start, end, pivot, fnCmp) => {
 		}
 	}
 
-	return { left, right }
+	_ret.left = left
+	_ret.right = right
+	return _ret
 }
 
 module.exports = { __partitionLeftRight }

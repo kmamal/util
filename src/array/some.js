@@ -1,12 +1,12 @@
 
-const __some = (arr, start, end, fn) => {
+const __some = (arr, start, end, fnPred) => {
 	for (let i = start; i < end; i++) {
-		if (fn(arr[i])) { return true }
+		if (fnPred(arr[i])) { return true }
 	}
 	return false
 }
 
-const some = (arr, fn) => __some(arr, 0, arr.length, fn)
+const some = (arr, fnPred) => __some(arr, 0, arr.length, fnPred)
 
 module.exports = {
 	__some,

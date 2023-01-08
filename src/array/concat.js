@@ -13,11 +13,20 @@ const __concat = (dst, dstStart, src, srcStart, srcEnd) => {
 }
 
 const concat = (arrs) => {
-	const total = sumBy(arrs, ({ length: n }) => n)
+	const total = sumBy(arrs, (x) => x.length)
 	const res = new Array(total)
 	__concat(res, 0, arrs, 0, arrs.length)
 	return res
 }
+
+const concatTo = (dst, arrs) => {
+	const total = sumBy(arrs, (x) => x.length)
+	dst.length = total
+	__concat(dst, 0, arrs, 0, arrs.length)
+	return dst
+}
+
+concat.to = concatTo
 
 module.exports = {
 	__concat,

@@ -1,7 +1,7 @@
 const { test } = require('@kmamal/testing')
 const { groupBy } = require('./group-by')
 
-const getA = ({ a }) => a
+const getA = (x) => x.a
 
 test("array.groupBy", (t) => {
 	t.equal(groupBy([], getA), {})

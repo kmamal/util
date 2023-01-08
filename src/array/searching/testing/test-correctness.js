@@ -25,6 +25,7 @@ const A = new Array(N)
 
 const randomKey = () => Math.floor(Math.random() * K)
 const sub = (a, b) => a - b
+const eq = (a, b) => a === b
 
 for (let i = 0; i < T; i++) {
 	process.stdout.write('.')
@@ -50,8 +51,8 @@ for (let i = 0; i < T; i++) {
 		const cf2 = __exponentialSearchFirst(A, N - 1, 0, x, sub)
 		const cl2 = __exponentialSearchLast(A, N - 1, 0, x, sub)
 
-		const dl = __linearSearch(A, 0, N, (y) => x === y)
-		const dr = __linearSearchRight(A, 0, N, (y) => x === y)
+		const dl = __linearSearch(A, 0, N, x, eq)
+		const dr = __linearSearchRight(A, 0, N, x, eq)
 
 		if (false
 			|| af !== bf || bf !== cf1 || cf1 !== cf2 || (dl !== -1 && af !== dl)

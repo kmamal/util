@@ -1,6 +1,13 @@
 const { compare, compareBy } = require('../function/compare')
 
-const __comm = (onlyA, both, onlyB, a, aStart, aEnd, b, bStart, bEnd, fnCmp) => {
+const _ret = {}
+
+const __comm = (dstA, dstAStart, dstAB, dstABStart, dstB, dstBStart, dstX, dstXStart, a, aStart, aEnd, b, bStart, bEnd, fnCmp) => {
+	let dstAIndex = dstAStart
+	let dstABIndex = dstABStart
+	let dstBIndex = dstBStart
+	let dstXIndex = dstXStart
+
 	let aIndex = aStart
 	let bIndex = bStart
 	let aItem = a[aStart]
@@ -9,48 +16,106 @@ const __comm = (onlyA, both, onlyB, a, aStart, aEnd, b, bStart, bEnd, fnCmp) => 
 	while (aIndex < aEnd && bIndex < bEnd) {
 		const cmp = fnCmp(aItem, bItem)
 		if (cmp < 0) {
-			if (onlyA) { onlyA.arr[onlyA.index++] = aItem }
+			if (dstA) { dstA[dstAIndex++] = aItem }
+			if (dstX) { dstX[dstXIndex++] = aItem }
 			aItem = a[++aIndex]
 		} else if (cmp === 0) {
-			if (both) { both.arr[both.index++] = aItem }
+			if (dstAB) { dstAB[dstABIndex++] = aItem }
 			aItem = a[++aIndex]
 			bItem = b[++bIndex]
 		} else {
-			if (onlyB) { onlyB.arr[onlyB.index++] = bItem }
+			if (dstB) { dstB[dstBIndex++] = bItem }
+			if (dstX) { dstX[dstXIndex++] = bItem }
 			bItem = b[++bIndex]
 		}
 	}
 
-	if (onlyA) {
-		while (aIndex < aEnd) {
-			onlyA.arr[onlyA.index++] = a[aIndex++]
+	if (aIndex < aEnd) {
+		if (dstA && dstX) {
+			while (aIndex < aEnd) { dstX[dstXIndex++] = dstA[dstAIndex++] = a[aIndex++] }
+		} else if (dstA) {
+			while (aIndex < aEnd) { dstA[dstAIndex++] = a[aIndex++] }
+		} else if (dstX) {
+			while (aIndex < aEnd) { dstX[dstXIndex++] = a[aIndex++] }
+		}
+	} else if (bIndex < bEnd) {
+		if (dstB && dstX) {
+			while (bIndex < bEnd) { dstX[dstXIndex++] = dstB[dstBIndex++] = b[bIndex++] }
+		} else if (dstB) {
+			while (bIndex < bEnd) { dstB[dstBIndex++] = b[bIndex++] }
+		} else if (dstX) {
+			while (bIndex < bEnd) { dstX[dstXIndex++] = b[bIndex++] }
 		}
 	}
 
-	if (onlyB) {
-		while (bIndex < bEnd) {
-			onlyB.arr[onlyB.index++] = b[bIndex++]
-		}
-	}
+	_ret.a = dstAIndex
+	_ret.ab = dstABIndex
+	_ret.b = dstBIndex
+	_ret.x = dstXIndex
+	return _ret
 }
 
 const commWith = (a, b, fnCmp) => {
-	const onlyA = { arr: [], index: 0 }
-	const both = { arr: [], index: 0 }
-	const onlyB = { arr: [], index: 0 }
-
-	__comm(onlyA, both, onlyB, a, 0, a.length, b, 0, b.length, fnCmp)
-
-	return {
-		a: onlyA.arr,
-		ab: both.arr,
-		b: onlyB.arr,
-	}
+	const dstA = []
+	const dstAB = []
+	const dstB = []
+	const dstX = []
+	__comm(dstA, 0, dstAB, 0, dstB, 0, dstX, 0, a, 0, a.length, b, 0, b.length, fnCmp)
+	return { a: dstA, ab: dstAB, b: dstB, x: dstX }
 }
 
-const commBy = (a, b, fnMap) => commWith(a, b, compareBy(fnMap))
+const commWithTo = (dst, a, b, fnCmp) => {
+	const lengths = __comm(dst.a, 0, dst.ab, 0, dst.b, 0, dst.x, 0, a, 0, a.length, b, 0, b.length, fnCmp)
+	if (dst.a) { dst.a.length = lengths.a }
+	if (dst.ab) { dst.ab.length = lengths.ab }
+	if (dst.b) { dst.b.length = lengths.b }
+	if (dst.x) { dst.x.length = lengths.x }
+	return dst
+}
 
-const comm = (a, b) => commWith(a, b, compare)
+commWith.to = commWithTo
+
+
+const commBy = (a, b, fnMap) => {
+	const dstA = []
+	const dstAB = []
+	const dstB = []
+	const dstX = []
+	__comm(dstA, 0, dstAB, 0, dstB, 0, dstX, 0, a, 0, a.length, b, 0, b.length, compareBy(fnMap))
+	return { a: dstA, ab: dstAB, b: dstB, x: dstX }
+}
+
+const commByTo = (dst, a, b, fnMap) => {
+	const lengths = __comm(dst.a, 0, dst.ab, 0, dst.b, 0, dst.x, 0, a, 0, a.length, b, 0, b.length, compareBy(fnMap))
+	if (dst.a) { dst.a.length = lengths.a }
+	if (dst.ab) { dst.ab.length = lengths.ab }
+	if (dst.b) { dst.b.length = lengths.b }
+	if (dst.x) { dst.x.length = lengths.x }
+	return dst
+}
+
+commBy.to = commByTo
+
+
+const comm = (a, b) => {
+	const dstA = []
+	const dstAB = []
+	const dstB = []
+	const dstX = []
+	__comm(dstA, 0, dstAB, 0, dstB, 0, dstX, 0, a, 0, a.length, b, 0, b.length, compare)
+	return { a: dstA, ab: dstAB, b: dstB, x: dstX }
+}
+
+const commTo = (dst, a, b) => {
+	const lengths = __comm(dst.a, 0, dst.ab, 0, dst.b, 0, dst.x, 0, a, 0, a.length, b, 0, b.length, compare)
+	if (dst.a) { dst.a.length = lengths.a }
+	if (dst.ab) { dst.ab.length = lengths.ab }
+	if (dst.b) { dst.b.length = lengths.b }
+	if (dst.x) { dst.x.length = lengths.x }
+	return dst
+}
+
+comm.to = commTo
 
 module.exports = {
 	__comm,

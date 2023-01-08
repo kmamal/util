@@ -148,12 +148,15 @@ module.exports.__flatMap = arrayFlatMap.__flatMap
 module.exports.flatMap = arrayFlatMap.flatMap
 
 const arrayFlat = require('./array/flat.js')
+module.exports.__flat = arrayFlat.__flat
 module.exports.flat = arrayFlat.flat
 
 const arrayForEach = require('./array/for-each.js')
+module.exports.__forEach = arrayForEach.__forEach
 module.exports.forEach = arrayForEach.forEach
 
 const arrayGroupBy = require('./array/group-by.js')
+module.exports.__groupBy = arrayGroupBy.__groupBy
 module.exports.groupBy = arrayGroupBy.groupBy
 
 const arrayHeapAdd = require('./array/heap/add.js')
@@ -236,6 +239,7 @@ module.exports.isSortedBy = arrayIsSorted.isSortedBy
 module.exports.isSorted = arrayIsSorted.isSorted
 
 const arrayJoin = require('./array/join.js')
+module.exports.array.__join = arrayJoin.__join
 module.exports.array.join = arrayJoin.join
 
 const arrayLast = require('./array/last.js')
@@ -247,8 +251,10 @@ module.exports.map = arrayMap.map
 
 const arrayMax = require('./array/max.js')
 module.exports.__max = arrayMax.__max
+module.exports.maxIndexWith = arrayMax.maxIndexWith
 module.exports.maxIndexBy = arrayMax.maxIndexBy
 module.exports.maxIndex = arrayMax.maxIndex
+module.exports.maxWith = arrayMax.maxWith
 module.exports.maxBy = arrayMax.maxBy
 module.exports.max = arrayMax.max
 
@@ -262,8 +268,10 @@ module.exports.merge = arrayMerge.merge
 
 const arrayMin = require('./array/min.js')
 module.exports.__min = arrayMin.__min
+module.exports.minIndexWith = arrayMin.minIndexWith
 module.exports.minIndexBy = arrayMin.minIndexBy
 module.exports.minIndex = arrayMin.minIndex
+module.exports.minWith = arrayMin.minWith
 module.exports.minBy = arrayMin.minBy
 module.exports.min = arrayMin.min
 
@@ -506,9 +514,12 @@ module.exports.uniqBySorted = arrayUniq.uniqBySorted
 module.exports.uniqSorted = arrayUniq.uniqSorted
 
 const arrayUnweave = require('./array/unweave.js')
+module.exports.__unweave = arrayUnweave.__unweave
 module.exports.unweave = arrayUnweave.unweave
 
 const arrayWeave = require('./array/weave.js')
+module.exports.__weaveTwo = arrayWeave.__weaveTwo
+module.exports.__weave = arrayWeave.__weave
 module.exports.weaveTwo = arrayWeave.weaveTwo
 module.exports.weave = arrayWeave.weave
 
@@ -569,6 +580,7 @@ module.exports.time = functionAsyncTime.time
 const functionCompare = require('./function/compare.js')
 module.exports.compare = functionCompare.compare
 module.exports.compareBy = functionCompare.compareBy
+module.exports.eqBy = functionCompare.eqBy
 
 const functionIdentity = require('./function/identity.js')
 module.exports.identity = functionIdentity.identity

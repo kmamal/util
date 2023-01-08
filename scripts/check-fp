@@ -32,6 +32,7 @@ const ignoredPrefixes = [
 	'ieeeFloat',
 
 	'compare',
+	'eqBy',
 	'identity',
 	'noop',
 

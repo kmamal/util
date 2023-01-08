@@ -1,4 +1,3 @@
-const { slice } = require('./slice')
 
 const __flat = (dst, dstStart, src, srcStart, srcEnd, _maxDepth) => {
 	const maxDepth = _maxDepth + 1
@@ -6,7 +5,7 @@ const __flat = (dst, dstStart, src, srcStart, srcEnd, _maxDepth) => {
 
 	const stack = [ { arr: src, length: srcEnd - srcStart, index: 0 } ]
 	for (;;) {
-		const { length: depth } = stack
+		const depth = stack.length
 
 		const top = stack[depth - 1]
 		if (top.index === top.length) {
@@ -27,11 +26,6 @@ const __flat = (dst, dstStart, src, srcStart, srcEnd, _maxDepth) => {
 	return writeIndex - dstStart
 }
 
-const flat$$$ = (arr, _maxDepth = 1) => {
-	const n = __flat(arr, 0, slice(arr), 0, arr.length, _maxDepth)
-	arr.length = n
-	return arr
-}
 
 const flat = (arr, _maxDepth = 1) => {
 	const res = []
@@ -39,6 +33,16 @@ const flat = (arr, _maxDepth = 1) => {
 	return res
 }
 
-flat.$$$ = flat$$$
+const flatTo = (dst, arr, _maxDepth = 1) => {
+	const n = __flat(dst, 0, arr, 0, arr.length, _maxDepth)
+	dst.length = n
+	return dst
+}
 
-module.exports = { flat }
+flat.to = flatTo
+
+
+module.exports = {
+	__flat,
+	flat,
+}

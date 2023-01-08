@@ -11,11 +11,6 @@ const __filter = (dst, dstStart, src, srcStart, srcEnd, fnPred) => {
 	return writeIndex - dstStart
 }
 
-const filter$$$ = (arr, fnPred) => {
-	const n = __filter(arr, 0, arr, 0, arr.length, fnPred)
-	arr.length = n
-	return arr
-}
 
 const filter = (arr, fnPred) => {
 	const res = []
@@ -23,7 +18,21 @@ const filter = (arr, fnPred) => {
 	return res
 }
 
+const filterTo = (dst, arr, fnPred) => {
+	const n = __filter(dst, 0, arr, 0, arr.length, fnPred)
+	dst.length = n
+	return dst
+}
+
+const filter$$$ = (arr, fnPred) => {
+	const n = __filter(arr, 0, arr, 0, arr.length, fnPred)
+	arr.length = n
+	return arr
+}
+
+filter.to = filterTo
 filter.$$$ = filter$$$
+
 
 module.exports = {
 	__filter,

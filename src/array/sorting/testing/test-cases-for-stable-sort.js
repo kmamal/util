@@ -7,10 +7,10 @@ const createTests = (name) => {
 	const S = require(`../${name}`)
 
 	test(`array.sorting.${name}.stability`, (t) => {
-		const arr = Array.from({ length: 1000 }, (x, id) => ({ id, value: 1 }))
+		const arr = Array.from({ length: 1000 }, (_, id) => ({ id, value: 1 }))
 		const expected = Array.from(arr)
 		expected.sort((a, b) => a.value - b.value)
-		const sorted = S[`${name}By`](arr, ({ value }) => value)
+		const sorted = S[`${name}By`](arr, (x) => x.value)
 		t.equal(sorted, expected)
 	})
 }

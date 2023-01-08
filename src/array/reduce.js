@@ -29,9 +29,11 @@ const __reduceRight = (arr, start, end, fn, init) => {
 	return acc
 }
 
+
 const reduce = (arr, fn, init) => __reduce(arr, 0, arr.length, fn, init)
 
 const reduceRight = (arr, fn, init) => __reduceRight(arr, 0, arr.length, fn, init)
+
 
 module.exports = {
 	__reduce,

@@ -1,4 +1,4 @@
-const { __copy, __copyRight } = require('./copy')
+const { __copy } = require('./copy')
 const { __exponentialSearchRight } = require('./searching/exponential')
 const { compare, compareBy } = require('../function/compare')
 
@@ -21,15 +21,10 @@ const __merge = (dst, dstStart, a, aStart, aEnd, b, bStart, bEnd, fnCmp) => {
 		}
 	}
 
-	const aRemaining = aEnd - aIndex
-	if (aRemaining > 0) {
-		__copy(dst, writeIndex, a, aIndex, aEnd)
-		return
-	}
-
-	const bRemaining = bEnd - bIndex
-	if (bRemaining > 0) {
-		__copy(dst, writeIndex, b, bIndex, bEnd)
+	if (aIndex < aEnd) {
+		while (aIndex < aEnd) { dst[writeIndex++] = a[aIndex++] }
+	} else if (bIndex < bEnd) {
+		while (bIndex < bEnd) { dst[writeIndex++] = b[bIndex++] }
 	}
 }
 
@@ -96,15 +91,10 @@ const __mergeGalloping = (dst, dstStart, a, aStart, aEnd, b, bStart, bEnd, fnCmp
 		cmp = fnCmp(aItem, bItem)
 	}
 
-	const aRemaining = aEnd - aIndex
-	if (aRemaining > 0) {
-		__copy(dst, writeIndex, a, aIndex, aEnd)
-		return
-	}
-
-	const bRemaining = bEnd - bIndex
-	if (bRemaining > 0) {
-		__copy(dst, writeIndex, b, bIndex, bEnd)
+	if (aIndex < aEnd) {
+		while (aIndex < aEnd) { dst[writeIndex++] = a[aIndex++] }
+	} else if (bIndex < bEnd) {
+		while (bIndex < bEnd) { dst[writeIndex++] = b[bIndex++] }
 	}
 }
 
@@ -129,17 +119,10 @@ const __mergeRight = (dst, dstStart, a, aStart, aEnd, b, bStart, bEnd, fnCmp) =>
 		}
 	}
 
-	const aRemaining = (aIndex - aStart) + 1
-	if (aRemaining > 0) {
-		writeIndex -= aRemaining
-		__copyRight(dst, writeIndex + 1, a, aStart, aIndex + 1)
-		return
-	}
-
-	const bRemaining = (bIndex - bStart) + 1
-	if (bRemaining > 0) {
-		writeIndex -= bRemaining
-		__copyRight(dst, writeIndex + 1, b, bStart, bIndex + 1)
+	if (aStart - 1 < aIndex) {
+		while (aStart - 1 < aIndex) { dst[writeIndex--] = a[aIndex--] }
+	} else if (bStart - 1 < bIndex) {
+		while (bStart - 1 < bIndex) { dst[writeIndex--] = b[bIndex--] }
 	}
 }
 
@@ -155,15 +138,63 @@ const __mergeInplace = (arr, start, sep, end, buffer, fnCmp) => {
 	}
 }
 
+
 const mergeWith = (a, b, fnCmp) => {
-	const res = new Array(a.length + b.length)
-	__merge(res, 0, a, 0, a.length, b, 0, b.length, fnCmp)
+	const aLength = a.length
+	const bLength = b.length
+	const res = new Array(aLength + bLength)
+	__merge(res, 0, a, 0, aLength, b, 0, bLength, fnCmp)
 	return res
 }
 
-const mergeBy = (a, b, fnMap) => mergeWith(a, b, compareBy(fnMap))
+const mergeWithTo = (dst, a, b, fnCmp) => {
+	const aLength = a.length
+	const bLength = b.length
+	dst.length = aLength + bLength
+	__merge(dst, 0, a, 0, aLength, b, 0, bLength, fnCmp)
+	return dst
+}
 
-const merge = (a, b) => mergeWith(a, b, compare)
+mergeWith.to = mergeWithTo
+
+
+const mergeBy = (a, b, fnMap) => {
+	const aLength = a.length
+	const bLength = b.length
+	const res = new Array(aLength + bLength)
+	__merge(res, 0, a, 0, aLength, b, 0, bLength, compareBy(fnMap))
+	return res
+}
+
+const mergeByTo = (dst, a, b, fnMap) => {
+	const aLength = a.length
+	const bLength = b.length
+	dst.length = aLength + bLength
+	__merge(dst, 0, a, 0, aLength, b, 0, bLength, compareBy(fnMap))
+	return dst
+}
+
+mergeBy.to = mergeByTo
+
+
+const merge = (a, b) => {
+	const aLength = a.length
+	const bLength = b.length
+	const res = new Array(aLength + bLength)
+	__merge(res, 0, a, 0, aLength, b, 0, bLength, compare)
+	return res
+}
+
+const mergeTo = (dst, a, b) => {
+	const aLength = a.length
+	const bLength = b.length
+	dst.length = aLength + bLength
+	__merge(dst, 0, a, 0, aLength, b, 0, bLength, compare)
+	return dst
+}
+
+merge.to = mergeTo
+
 
 module.exports = {
 	__merge,

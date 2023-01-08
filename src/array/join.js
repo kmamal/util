@@ -20,13 +20,27 @@ const __join = (dst, dstStart, a, aStart, aEnd, b, bStart, bEnd) => {
 	}
 }
 
+
 const join = (arr, sep) => {
 	const { length: arrLen } = arr
 	const { length: sepLen } = sep
-	const resLen = Math.max(0, arrLen + (arrLen - 1) * sepLen)
-	const res = new Array(resLen)
+	const res = new Array(Math.max(0, arrLen + (arrLen - 1) * sepLen))
 	__join(res, 0, arr, 0, arrLen, sep, 0, sepLen)
 	return res
 }
 
-module.exports = { join }
+const joinTo = (dst, arr, sep) => {
+	const { length: arrLen } = arr
+	const { length: sepLen } = sep
+	dst.len = Math.max(0, arrLen + (arrLen - 1) * sepLen)
+	__join(dst, 0, arr, 0, arrLen, sep, 0, sepLen)
+	return dst
+}
+
+join.to = joinTo
+
+
+module.exports = {
+	__join,
+	join,
+}

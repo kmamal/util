@@ -57,10 +57,6 @@ const __select = (arr, _start, _end, _n, fnCmp) => {
 	}
 }
 
-const selectWith$$$ = (arr, n, fnCmp) => {
-	const index = __select(arr, 0, arr.length, n, fnCmp)
-	return arr[index]
-}
 
 const selectWith = (arr, n, fnCmp) => {
 	const copy = clone(arr)
@@ -68,21 +64,23 @@ const selectWith = (arr, n, fnCmp) => {
 	return copy[index]
 }
 
+const selectWith$$$ = (arr, n, fnCmp) => {
+	const index = __select(arr, 0, arr.length, n, fnCmp)
+	return arr[index]
+}
+
 selectWith.$$$ = selectWith$$$
 
-const selectIndexWith$$$ = (arr, n, fnCmp) => __select(arr, 0, arr.length, n, fnCmp)
 
 const selectIndexWith = (arr, n, fnCmp) => {
 	const item = selectWith(arr, n, fnCmp)
 	return indexOf(arr, item)
 }
 
+const selectIndexWith$$$ = (arr, n, fnCmp) => __select(arr, 0, arr.length, n, fnCmp)
+
 selectIndexWith.$$$ = selectIndexWith$$$
 
-const selectBy$$$ = (arr, n, fnMap) => {
-	const index = __select(arr, 0, arr.length, n, compareBy(fnMap))
-	return arr[index]
-}
 
 const selectBy = (arr, n, fnMap) => {
 	const copy = clone(arr)
@@ -90,21 +88,23 @@ const selectBy = (arr, n, fnMap) => {
 	return copy[index]
 }
 
+const selectBy$$$ = (arr, n, fnMap) => {
+	const index = __select(arr, 0, arr.length, n, compareBy(fnMap))
+	return arr[index]
+}
+
 selectBy.$$$ = selectBy$$$
 
-const selectIndexBy$$$ = (arr, n, fnMap) => __select(arr, 0, arr.length, n, compareBy(fnMap))
 
 const selectIndexBy = (arr, n, fnMap) => {
 	const item = selectBy(arr, n, fnMap)
 	return indexOf(arr, item)
 }
 
+const selectIndexBy$$$ = (arr, n, fnMap) => __select(arr, 0, arr.length, n, compareBy(fnMap))
+
 selectIndexBy.$$$ = selectIndexBy$$$
 
-const select$$$ = (arr, n) => {
-	const index = __select(arr, 0, arr.length, n, compare)
-	return arr[index]
-}
 
 const select = (arr, n) => {
 	const copy = clone(arr)
@@ -112,16 +112,23 @@ const select = (arr, n) => {
 	return copy[index]
 }
 
+const select$$$ = (arr, n) => {
+	const index = __select(arr, 0, arr.length, n, compare)
+	return arr[index]
+}
+
 select.$$$ = select$$$
 
-const selectIndex$$$ = (arr, n) => __select(arr, 0, arr.length, n, compare)
 
 const selectIndex = (arr, n) => {
 	const item = select(arr, n)
 	return indexOf(arr, item)
 }
 
+const selectIndex$$$ = (arr, n) => __select(arr, 0, arr.length, n, compare)
+
 selectIndex.$$$ = selectIndex$$$
+
 
 module.exports = {
 	__select,

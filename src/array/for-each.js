@@ -11,4 +11,7 @@ const forEach = (arr, fn) => {
 	return arr
 }
 
-module.exports = { forEach }
+module.exports = {
+	__forEach,
+	forEach,
+}

@@ -1,9 +1,9 @@
 const { reduce } = require('./reduce')
-const { identity } = require('../function/identity')
+const { add } = require('../operators/arithmetic/add')
 
-const sumBy = (arr, fn) => reduce(arr, (a, x) => a + fn(x), 0)
+const sumBy = (arr, fnMap) => reduce(arr, (a, x) => a + fnMap(x), 0)
 
-const sum = (arr) => sumBy(arr, identity)
+const sum = (arr) => reduce(arr, add, 0)
 
 module.exports = {
 	sumBy,

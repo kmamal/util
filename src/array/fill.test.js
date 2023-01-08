@@ -3,7 +3,7 @@ const { fill, fillWith } = require('./fill')
 
 test("array.fill", (t) => {
 	t.equal(fill([], 0), [])
-	t.equal(fill([], 0, 1, 3), [])
+	t.equal(fill([], 0, 1, 3), [ undefined, 0, 0 ])
 	t.equal(fill([ 1 ], 0), [ 0 ])
 	t.equal(fill([ 1 ], 0, 0, 1), [ 0 ])
 	t.equal(fill([ 1 ], 0, 0, 0), [ 1 ])
@@ -14,7 +14,7 @@ test("array.fill", (t) => {
 
 test("array.fill.$$$", (t) => {
 	t.equal(fill.$$$([], 0), [])
-	t.equal(fill.$$$([], 0, 1, 3), [])
+	t.equal(fill.$$$([], 0, 1, 3), [ undefined, 0, 0 ])
 	t.equal(fill.$$$([ 1 ], 0), [ 0 ])
 	t.equal(fill.$$$([ 1 ], 0, 0, 1), [ 0 ])
 	t.equal(fill.$$$([ 1 ], 0, 0, 0), [ 1 ])

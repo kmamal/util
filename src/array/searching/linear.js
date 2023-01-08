@@ -1,16 +1,16 @@
 
-const __linearSearch = (arr, start, end, fnPred) => {
+const __linearSearch = (arr, start, end, x, fnEq) => {
 	for (let i = start; i < end; i++) {
 		const item = arr[i]
-		if (fnPred(item)) { return i }
+		if (fnEq(item, x)) { return i }
 	}
 	return -1
 }
 
-const __linearSearchRight = (arr, start, end, fnPred) => {
+const __linearSearchRight = (arr, start, end, x, fnEq) => {
 	for (let i = end - 1; i >= start; i--) {
 		const item = arr[i]
-		if (fnPred(item)) { return i }
+		if (fnEq(item, x)) { return i }
 	}
 	return -1
 }
