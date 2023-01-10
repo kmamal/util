@@ -32,6 +32,7 @@ const namespaces = [
 	{ path: 'ieee-float/double.js', namespace: 'ieeeFloat.double' },
 	{ path: 'number/modular.js', namespace: 'modular' },
 	{ path: 'object/clone.js', namespace: 'object' },
+	{ path: 'object/copy.js', namespace: 'object' },
 	{ path: 'object/merge.js', namespace: 'object' },
 	{ path: 'object/zip.js', namespace: 'object' },
 	{ path: 'set/', namespace: 'sets' },

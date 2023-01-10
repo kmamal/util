@@ -1,8 +1,9 @@
-const { noop } = require('../function/noop')
 
 const isEqualWith = (a, b, fnCmp) => {
-	const cmp = fnCmp(a, b)
-	if (cmp !== undefined) { return cmp }
+	if (fnCmp) {
+		const cmp = fnCmp(a, b)
+		if (cmp !== undefined) { return cmp }
+	}
 
 	// Primitive types and functions
 	if (a === b) { return true }
@@ -77,7 +78,7 @@ const isEqualWith = (a, b, fnCmp) => {
 	return true
 }
 
-const isEqual = (a, b) => isEqualWith(a, b, noop)
+const isEqual = (a, b) => isEqualWith(a, b)
 
 module.exports = {
 	isEqualWith,

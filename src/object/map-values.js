@@ -1,3 +1,4 @@
+const { empty$$$ } = require('./empty')
 
 const __mapValues = (dst, src, fnMap) => {
 	for (const key of Object.keys(src)) {
@@ -5,10 +6,6 @@ const __mapValues = (dst, src, fnMap) => {
 	}
 }
 
-const mapValues$$$ = (obj, fnMap) => {
-	__mapValues(obj, obj, fnMap)
-	return obj
-}
 
 const mapValues = (obj, fnMap) => {
 	const res = {}
@@ -16,6 +13,22 @@ const mapValues = (obj, fnMap) => {
 	return res
 }
 
+const mapValuesTo = (dst, obj, fnMap) => {
+	empty$$$(dst)
+	__mapValues(dst, obj, fnMap)
+	return dst
+}
+
+const mapValues$$$ = (obj, fnMap) => {
+	__mapValues(obj, obj, fnMap)
+	return obj
+}
+
+mapValues.to = mapValuesTo
 mapValues.$$$ = mapValues$$$
 
-module.exports = { mapValues }
+
+module.exports = {
+	__mapValues,
+	mapValues,
+}

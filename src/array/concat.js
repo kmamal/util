@@ -5,7 +5,8 @@ const __concat = (dst, dstStart, src, srcStart, srcEnd) => {
 	let readIndex = srcStart
 	while (readIndex < srcEnd) {
 		const arr = src[readIndex++]
-		for (let j = 0; j < arr.length; j++) {
+		const { length } = arr
+		for (let j = 0; j < length; j++) {
 			dst[writeIndex++] = arr[j]
 		}
 	}

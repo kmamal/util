@@ -16,7 +16,8 @@ const __countingsortCount = (arr, start, end, counts, fnMap) => {
 
 const __countingsortAssign = (arr, start, counts) => {
 	let writeIndex = start
-	for (let i = 0; i < counts.length; i++) {
+	const { length } = counts
+	for (let i = 0; i < length; i++) {
 		const count = counts[i]
 		for (let j = 0; j < count; j++) {
 			arr[writeIndex++] = i
@@ -35,19 +36,6 @@ const __countingsortDistribute = (dst, dstStart, src, srcStart, srcEnd, counts, 
 	}
 }
 
-const countingsortBy$$$ = (arr, fnMap, _maxValue) => {
-	const { length } = arr
-	if (length <= 1) { return clone(arr) }
-
-	const maxValue = _maxValue ?? max(arr)
-	const counts = __countingsortInitCounts(maxValue)
-	__countingsortCount(arr, 0, length, counts, fnMap)
-
-	const res = new Array(length)
-	__countingsortDistribute(res, 0, arr, 0, length, counts)
-	copy.$$$(arr, res)
-	return arr
-}
 
 const countingsortBy = (arr, fnMap, _maxValue) => {
 	const { length } = arr
@@ -62,18 +50,36 @@ const countingsortBy = (arr, fnMap, _maxValue) => {
 	return res
 }
 
-countingsortBy.$$$ = countingsortBy$$$
-
-const countingsort$$$ = (arr, _maxValue) => {
+const countingsortByTo = (dst, arr, fnMap, _maxValue) => {
 	const { length } = arr
 	if (length <= 1) { return clone(arr) }
 
 	const maxValue = _maxValue ?? max(arr)
 	const counts = __countingsortInitCounts(maxValue)
-	__countingsortCount(arr, 0, length, counts, identity)
-	__countingsortAssign(arr, 0, counts)
+	__countingsortCount(arr, 0, length, counts, fnMap)
+
+	dst.length = length
+	__countingsortDistribute(dst, 0, arr, 0, length, counts)
+	return dst
+}
+
+const countingsortBy$$$ = (arr, fnMap, _maxValue) => {
+	const { length } = arr
+	if (length <= 1) { return arr }
+
+	const maxValue = _maxValue ?? max(arr)
+	const counts = __countingsortInitCounts(maxValue)
+	__countingsortCount(arr, 0, length, counts, fnMap)
+
+	const res = new Array(length)
+	__countingsortDistribute(res, 0, arr, 0, length, counts)
+	copy.$$$(arr, res)
 	return arr
 }
+
+countingsortBy.to = countingsortByTo
+countingsortBy.$$$ = countingsortBy$$$
+
 
 const countingsort = (arr, _maxValue) => {
 	const { length } = arr
@@ -88,7 +94,33 @@ const countingsort = (arr, _maxValue) => {
 	return res
 }
 
+const countingsortTo = (dst, arr, _maxValue) => {
+	const { length } = arr
+	if (length <= 1) { return clone(arr) }
+
+	const maxValue = _maxValue ?? max(arr)
+	const counts = __countingsortInitCounts(maxValue)
+	__countingsortCount(arr, 0, length, counts, identity)
+
+	dst.length = length
+	__countingsortAssign(dst, 0, counts)
+	return dst
+}
+
+const countingsort$$$ = (arr, _maxValue) => {
+	const { length } = arr
+	if (length <= 1) { return arr }
+
+	const maxValue = _maxValue ?? max(arr)
+	const counts = __countingsortInitCounts(maxValue)
+	__countingsortCount(arr, 0, length, counts, identity)
+	__countingsortAssign(arr, 0, counts)
+	return arr
+}
+
+countingsort.to = countingsortTo
 countingsort.$$$ = countingsort$$$
+
 
 module.exports = {
 	__countingsortInitCounts,

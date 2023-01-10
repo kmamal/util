@@ -1,23 +1,54 @@
-const { keys: getKeys } = require('./keys')
 const { sort } = require('../array/sort')
 const { differenceSorted } = require('../array/difference')
+const { empty$$$ } = require('./empty')
 
-const pick$$$ = (obj, keys) => {
-	const existingKeys = sort.$$$(getKeys(obj))
-	const pickedKeys = sort(keys)
-	const omittedKeys = differenceSorted(existingKeys, pickedKeys)
-	return omit$$$(obj, omittedKeys)
+const sortTo = sort.to
+const sort$$$ = sort.$$$
+const differenceSorted$$$ = differenceSorted.$$$
+
+const tmp = []
+
+const __pick = (dst, src, keys) => {
+	for (const key of keys) {
+		dst[key] = src[key]
+	}
 }
+
 
 const pick = (obj, keys) => {
 	const res = {}
-	for (const key of keys) {
-		res[key] = obj[key]
-	}
+	__pick(res, obj, keys)
 	return res
 }
 
+const pickTo = (dst, obj, keys) => {
+	empty$$$(dst)
+	__pick(dst, obj, keys)
+	return dst
+}
+
+const pick$$$ = (obj, keys) => {
+	const omittedKeys = sort$$$(Object.keys(obj))
+	differenceSorted$$$(omittedKeys, sortTo(tmp, keys))
+	return omit$$$(obj, omittedKeys)
+}
+
+pick.to = pickTo
 pick.$$$ = pick$$$
+
+
+const omit = (obj, keys) => {
+	const pickedKeys = sort$$$(Object.keys(obj))
+	differenceSorted$$$(pickedKeys, sortTo(tmp, keys))
+	return pick(obj, pickedKeys)
+}
+
+const omitTo = (dst, obj, keys) => {
+	empty$$$(dst)
+	const pickedKeys = sort$$$(Object.keys(obj))
+	differenceSorted$$$(pickedKeys, sortTo(tmp, keys))
+	return pickTo(dst, obj, pickedKeys)
+}
 
 const omit$$$ = (obj, keys) => {
 	for (const key of keys) {
@@ -26,16 +57,12 @@ const omit$$$ = (obj, keys) => {
 	return obj
 }
 
-const omit = (obj, keys) => {
-	const existingKeys = sort.$$$(getKeys(obj))
-	const omittedKeys = sort(keys)
-	const pickedKeys = differenceSorted(existingKeys, omittedKeys)
-	return pick(obj, pickedKeys)
-}
-
+omit.to = omitTo
 omit.$$$ = omit$$$
 
+
 module.exports = {
+	__pick,
 	pick,
 	omit,
 }

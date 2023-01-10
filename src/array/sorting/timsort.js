@@ -3,6 +3,7 @@ const { __reverse } = require('../reverse')
 const { __mergeInplace } = require('../merge')
 const { compare, compareBy } = require('../../function/compare')
 const { clone } = require('../clone')
+const { __copy } = require('../copy')
 
 const __findNextRunAscending = (arr, start, end, fnCmp) => {
 	let prev = arr[start]
@@ -177,28 +178,75 @@ const __timsort2 = (arr, start, end, fnCmp) => {
 	}
 }
 
+
+const timsortWith = (arr, fnCmp) => {
+	const res = clone(arr)
+	__timsort(res, 0, arr.length, fnCmp)
+	return res
+}
+
+const timsortWithTo = (dst, arr, fnCmp) => {
+	const { length } = arr
+	dst.length = length
+	__copy(dst, 0, arr, 0, length)
+	__timsort(dst, 0, arr.length, fnCmp)
+	return dst
+}
+
 const timsortWith$$$ = (arr, fnCmp) => {
-	if (arr.length > 1) {
-		__timsort(arr, 0, arr.length, fnCmp)
-	}
+	__timsort(arr, 0, arr.length, fnCmp)
 	return arr
 }
 
-const timsortWith = (arr, fnCmp) => timsortWith$$$(clone(arr), fnCmp)
-
+timsortWith.to = timsortWithTo
 timsortWith.$$$ = timsortWith$$$
 
-const timsortBy$$$ = (arr, fnMap) => timsortWith$$$(arr, compareBy(fnMap))
 
-const timsortBy = (arr, fnMap) => timsortWith(arr, compareBy(fnMap))
+const timsortBy = (arr, fnMap) => {
+	const res = clone(arr)
+	__timsort(res, 0, arr.length, compareBy(fnMap))
+	return res
+}
 
+const timsortByTo = (dst, arr, fnMap) => {
+	const { length } = arr
+	dst.length = length
+	__copy(dst, 0, arr, 0, length)
+	__timsort(dst, 0, arr.length, compareBy(fnMap))
+	return dst
+}
+
+const timsortBy$$$ = (arr, fnMap) => {
+	__timsort(arr, 0, arr.length, compareBy(fnMap))
+	return arr
+}
+
+timsortBy.to = timsortByTo
 timsortBy.$$$ = timsortBy$$$
 
-const timsort$$$ = (arr) => timsortWith$$$(arr, compare)
 
-const timsort = (arr) => timsortWith(arr, compare)
+const timsort = (arr) => {
+	const res = clone(arr)
+	__timsort(res, 0, arr.length, compare)
+	return res
+}
 
+const timsortTo = (dst, arr) => {
+	const { length } = arr
+	dst.length = length
+	__copy(dst, 0, arr, 0, length)
+	__timsort(dst, 0, arr.length, compare)
+	return dst
+}
+
+const timsort$$$ = (arr) => {
+	__timsort(arr, 0, arr.length, compare)
+	return arr
+}
+
+timsort.to = timsortTo
 timsort.$$$ = timsort$$$
+
 
 module.exports = {
 	__timsort,

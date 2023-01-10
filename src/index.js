@@ -657,21 +657,29 @@ const numberStringifyToPrecision = require('./number/stringify/to-precision.js')
 module.exports.toPrecision = numberStringifyToPrecision.toPrecision
 
 const objectAccessors = require('./object/accessors.js')
-module.exports._get = objectAccessors._get
+module.exports.__get = objectAccessors.__get
+module.exports.__set = objectAccessors.__set
 module.exports.get = objectAccessors.get
-module.exports._set = objectAccessors._set
 module.exports.set = objectAccessors.set
+module.exports.getter = objectAccessors.getter
 
 const objectClone = require('./object/clone.js')
 module.exports.object.clone = objectClone.clone
 
+const objectCopy = require('./object/copy.js')
+module.exports.object.__copy = objectCopy.__copy
+module.exports.object.__copyDeep = objectCopy.__copyDeep
+module.exports.object.copy = objectCopy.copy
+module.exports.object.copyDeep = objectCopy.copyDeep
+
 const objectDefaults = require('./object/defaults.js')
 module.exports.defaults = objectDefaults.defaults
 
-const objectExtend = require('./object/extend.js')
-module.exports.extend = objectExtend.extend
+const objectEmpty = require('./object/empty.js')
+module.exports.empty$$$ = objectEmpty.empty$$$
 
 const objectFromEntries = require('./object/from-entries.js')
+module.exports.__fromEntries = objectFromEntries.__fromEntries
 module.exports.fromEntries = objectFromEntries.fromEntries
 
 const objectIsEqual = require('./object/is-equal.js')
@@ -686,9 +694,11 @@ module.exports.__mapEntries = objectMapEntries.__mapEntries
 module.exports.mapEntries = objectMapEntries.mapEntries
 
 const objectMapKeys = require('./object/map-keys.js')
+module.exports.__mapKeys = objectMapKeys.__mapKeys
 module.exports.mapKeys = objectMapKeys.mapKeys
 
 const objectMapValues = require('./object/map-values.js')
+module.exports.__mapValues = objectMapValues.__mapValues
 module.exports.mapValues = objectMapValues.mapValues
 
 const objectMatches = require('./object/matches.js')
@@ -700,6 +710,7 @@ module.exports.object.__merge = objectMerge.__merge
 module.exports.object.merge = objectMerge.merge
 
 const objectPick = require('./object/pick.js')
+module.exports.__pick = objectPick.__pick
 module.exports.pick = objectPick.pick
 module.exports.omit = objectPick.omit
 
@@ -710,6 +721,7 @@ const objectValues = require('./object/values.js')
 module.exports.values = objectValues.values
 
 const objectZip = require('./object/zip.js')
+module.exports.object.__zip = objectZip.__zip
 module.exports.object.zip = objectZip.zip
 
 const operatorsArithmeticAdd = require('./operators/arithmetic/add.js')

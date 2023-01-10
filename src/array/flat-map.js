@@ -5,7 +5,8 @@ const __flatMap = (dst, dstStart, src, srcStart, srcEnd, fn) => {
 	while (readIndex < srcEnd) {
 		const item = src[readIndex++]
 		const mapped = fn(item)
-		for (let i = 0; i < mapped.length; i++) {
+		const { length } = mapped
+		for (let i = 0; i < length; i++) {
 			dst[writeIndex++] = mapped[i]
 		}
 	}

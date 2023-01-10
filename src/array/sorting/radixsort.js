@@ -3,7 +3,7 @@ const {
 } = require('./countingsort')
 const { fill } = require('../fill')
 const { clone } = require('../clone')
-const { copy$$$ } = require('../copy')
+const { __copy } = require('../copy')
 const { identity } = require('../../function/identity')
 
 const _getByte = [
@@ -66,15 +66,6 @@ const __radixsort = (arr, start, end, buffer, numBytes, fnMap) => {
 	}
 }
 
-const radixsortBy$$$ = (arr, fnMap) => {
-	const { length } = arr
-	if (length <= 1) { return arr }
-
-	const buffer = new Array(length)
-	const dst = __radixsort(arr, 0, length, buffer, 4, fnMap)
-	if (dst === buffer) { copy$$$(arr, buffer) }
-	return arr
-}
 
 const radixsortBy = (arr, fnMap) => {
 	const { length } = arr
@@ -85,17 +76,30 @@ const radixsortBy = (arr, fnMap) => {
 	return __radixsort(res, 0, length, buffer, 4, fnMap)
 }
 
-radixsortBy.$$$ = radixsortBy$$$
+const radixsortByTo = (dst, arr, fnMap) => {
+	const { length } = arr
+	if (length <= 1) { return clone(arr) }
 
-const radixsort$$$ = (arr) => {
+	dst.length = length
+	const buffer = clone(arr)
+	const out = __radixsort(buffer, 0, length, dst, 4, fnMap)
+	if (out === buffer) { __copy(dst, 0, buffer, 0, length) }
+	return dst
+}
+
+const radixsortBy$$$ = (arr, fnMap) => {
 	const { length } = arr
 	if (length <= 1) { return arr }
 
 	const buffer = new Array(length)
-	const dst = __radixsort(arr, 0, length, buffer, 4, identity)
-	if (dst === buffer) { copy$$$(arr, buffer) }
+	const out = __radixsort(arr, 0, length, buffer, 4, fnMap)
+	if (out === buffer) { __copy(arr, 0, buffer, 0, length) }
 	return arr
 }
+
+radixsortBy.to = radixsortByTo
+radixsortBy.$$$ = radixsortBy$$$
+
 
 const radixsort = (arr) => {
 	const { length } = arr
@@ -106,7 +110,29 @@ const radixsort = (arr) => {
 	return __radixsort(res, 0, length, buffer, 4, identity)
 }
 
+const radixsortTo = (dst, arr) => {
+	const { length } = arr
+	if (length <= 1) { return arr }
+
+	dst.length = length
+	const buffer = clone(arr)
+	const out = __radixsort(buffer, 0, length, dst, 4, identity)
+	if (out === buffer) { __copy(dst, 0, buffer, 0, length) }
+	return dst
+}
+
+const radixsort$$$ = (arr) => {
+	const { length } = arr
+	if (length <= 1) { return arr }
+
+	const buffer = new Array(length)
+	const out = __radixsort(arr, 0, length, buffer, 4, identity)
+	if (out === buffer) { __copy(arr, 0, buffer, 0, length) }
+	return arr
+}
+
 radixsort.$$$ = radixsort$$$
+
 
 module.exports = {
 	__radixsort,

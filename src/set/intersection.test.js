@@ -11,11 +11,11 @@ test("set.intersection", (t) => {
 	// The intercetion contains only values that are both in a and b
 	for (const x of set) {
 		if (!a.has(x)) {
-			t.fail({ reason: "value not removed", x, a })
+			t.fail({ reason: "value not removed", set, x, a, b })
 		}
 
 		if (!b.has(x)) {
-			t.fail({ reason: "value not removed", x, b })
+			t.fail({ reason: "value not removed", set, x, a, b })
 		}
 	}
 
@@ -23,10 +23,10 @@ test("set.intersection", (t) => {
 	for (const x of a) {
 		if (set.has(x)) {
 			if (!b.has(x)) {
-				t.fail({ reason: "value not removed", x, a })
+				t.fail({ reason: "value not removed", set, x, a, b })
 			}
 		} else if (b.has(x)) {
-			t.fail({ reason: "value missing", x, a })
+			t.fail({ reason: "value missing", set, x, a, b })
 		}
 	}
 
@@ -34,10 +34,10 @@ test("set.intersection", (t) => {
 	for (const x of b) {
 		if (set.has(x)) {
 			if (!a.has(x)) {
-				t.fail({ reason: "value not removed", x, a })
+				t.fail({ reason: "value not removed", set, x, a, b })
 			}
 		} else if (a.has(x)) {
-			t.fail({ reason: "value missing", x, a })
+			t.fail({ reason: "value missing", set, x, a, b })
 		}
 	}
 })

@@ -36,6 +36,8 @@ const ignoredPrefixes = [
 	'identity',
 	'noop',
 
+	'getter',
+	'empty$$$',
 	'object.zip',
 
 	'interpolate',

@@ -1,7 +1,9 @@
 const { eq } = require('../operators/comparison/eq')
 
 const matchesWith = (obj, pattern, fnEqProp) => {
-	for (const [ key, value ] of Object.entries(pattern)) {
+	for (const entry of Object.entries(pattern)) {
+		const key = entry[0]
+		const value = entry[1]
 		if (!fnEqProp(obj[key], value, key)) { return false }
 	}
 	return true

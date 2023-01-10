@@ -1,11 +1,24 @@
 
-const difference = (a, b) => {
-	const result = new Set()
+const difference = (a, b) => differenceTo(new Set(), a, b)
+
+const differenceTo = (dst, a, b) => {
+	dst.clear()
 	for (const x of a) {
 		if (b.has(x)) { continue }
-		result.add(x)
+		dst.add(x)
 	}
-	return result
+	return dst
 }
+
+const difference$$$ = (a, b) => {
+	for (const x of a) {
+		if (!b.has(x)) { continue }
+		a.delete(x)
+	}
+	return a
+}
+
+difference.to = differenceTo
+difference.$$$ = difference$$$
 
 module.exports = { difference }

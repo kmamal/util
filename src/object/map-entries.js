@@ -1,18 +1,14 @@
+const { empty$$$ } = require('./empty')
 
 const __mapEntries = (dst, src, fnMap) => {
 	for (const entry of Object.entries(src)) {
-		const [ key, value ] = fnMap(entry)
+		const mapped = fnMap(entry)
+		const key = mapped[0]
+		const value = mapped[1]
 		dst[key] = value
 	}
 }
 
-const mapEntries$$$ = (obj, fnMap) => {
-	const tmp = {}
-	__mapEntries(tmp, obj, fnMap)
-	for (const key of Object.keys(obj)) { delete obj[key] }
-	Object.assign(obj, tmp)
-	return obj
-}
 
 const mapEntries = (obj, fnMap) => {
 	const res = {}
@@ -20,7 +16,14 @@ const mapEntries = (obj, fnMap) => {
 	return res
 }
 
-mapEntries.$$$ = mapEntries$$$
+const mapEntriesTo = (dst, obj, fnMap) => {
+	empty$$$(dst)
+	__mapEntries(dst, obj, fnMap)
+	return dst
+}
+
+mapEntries.to = mapEntriesTo
+
 
 module.exports = {
 	__mapEntries,

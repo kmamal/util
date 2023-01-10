@@ -159,11 +159,10 @@ module.exports = {
 	addDefault: _fp(_.addDefault),
 
 	get: _fp(_.get),
-	_get: _fp(_._get),
+	__get: _fp(_.__get),
 	set: _fp(_.set),
-	_set: _fp(_._set),
+	__set: _fp(_.__set),
 	defaults: _fp(_.defaults),
-	extend: _fp(_.extend),
 	fromEntries: _fp(_.fromEntries),
 	isEqual: _fp(_.isEqual),
 	isEqualWith: _fp(_.isEqualWith),
@@ -179,6 +178,8 @@ module.exports = {
 	values: _fp(_.values),
 
 	object: {
+		copy: _fp(_.object.copy),
+		copyDeep: _fp(_.object.copyDeep),
 		clone: _fp(_.object.clone),
 		merge: _fp(_.object.merge),
 	},

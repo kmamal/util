@@ -25,14 +25,6 @@ const __copyInplace = (arr, offset, start, end) => {
 	}
 }
 
-const copy$$$ = (a, b, start = 0, end = b.length, offset = 0) => {
-	if (a === b) {
-		__copyInplace(a, offset, start, end)
-	} else {
-		__copy(a, offset, b, start, end)
-	}
-	return a
-}
 
 const copy = (a, b, start = 0, end = b.length, offset = 0) => {
 	const length = end - start
@@ -44,7 +36,28 @@ const copy = (a, b, start = 0, end = b.length, offset = 0) => {
 	return res
 }
 
+const copyTo = (dst, a, b, start = 0, end = b.length, offset = 0) => {
+	const length = end - start
+	const writeEnd = offset + length
+	dst.length = Math.max(a.length, writeEnd)
+	__copy(dst, 0, a, 0, offset)
+	__copy(dst, offset, b, start, end)
+	__copy(dst, writeEnd, a, writeEnd, a.length)
+	return dst
+}
+
+const copy$$$ = (a, b, start = 0, end = b.length, offset = 0) => {
+	if (a === b) {
+		__copyInplace(a, offset, start, end)
+	} else {
+		__copy(a, offset, b, start, end)
+	}
+	return a
+}
+
+copy.to = copyTo
 copy.$$$ = copy$$$
+
 
 module.exports = {
 	__copy,
