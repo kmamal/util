@@ -10,8 +10,8 @@
   "scripts": {
     "test": "npm run update-index && npm run check-fp && ./scripts/run-tests.sh",
     "update-exports": "node ./scripts/update-exports.mjs",
-    "update-index": "./scripts/update-index",
-    "check-fp": "./scripts/check-fp"
+    "update-index": "node ./scripts/update-index.mjs",
+    "check-fp": "node ./scripts/check-fp.mjs"
   },
   "exports": {
     "./array/slice": "./src/array/slice.js",
@@ -197,15 +197,7 @@
     "./string/normalize": "./src/string/normalize.js",
     "./ieee-float/double": "./src/ieee-float/double.js",
     "./ieee-float/single": "./src/ieee-float/single.js",
-    "./promise/resolve": "./src/promise/resolve.js",
-    "./promise/then": "./src/promise/then.js",
-    "./promise/all": "./src/promise/all.js",
-    "./promise/finally": "./src/promise/finally.js",
     "./promise/timeout": "./src/promise/timeout.js",
-    "./promise/race": "./src/promise/race.js",
-    "./promise/catch": "./src/promise/catch.js",
-    "./promise/reject": "./src/promise/reject.js",
-    "./promise/all-settled": "./src/promise/all-settled.js",
     "./promise/sleep": "./src/promise/sleep.js",
     "./range/xrange": "./src/range/xrange.js",
     "./range/range": "./src/range/range.js",
@@ -244,10 +236,10 @@
     "./set/difference": "./src/set/difference.js"
   },
   "dependencies": {
-    "@kmamal/structs": "^0.0.2"
+    "@kmamal/structs": "^0.0.3"
   },
   "devDependencies": {
-    "globby": "^13.1.3",
+    "@kmamal/fs": "^0.0.15",
     "@kmamal/testing": "^0.0.21"
   }
 }

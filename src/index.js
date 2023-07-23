@@ -796,32 +796,8 @@ module.exports.not = operatorsLogicalNot.not
 const operatorsLogicalOr = require('./operators/logical/or.js')
 module.exports.or = operatorsLogicalOr.or
 
-const promiseAllSettled = require('./promise/all-settled.js')
-module.exports.allSettled = promiseAllSettled.allSettled
-
-const promiseAll = require('./promise/all.js')
-module.exports.all = promiseAll.all
-
-const promiseCatch = require('./promise/catch.js')
-module.exports.catch = promiseCatch.catch
-
-const promiseFinally = require('./promise/finally.js')
-module.exports.finally = promiseFinally.finally
-
-const promiseRace = require('./promise/race.js')
-module.exports.race = promiseRace.race
-
-const promiseReject = require('./promise/reject.js')
-module.exports.reject = promiseReject.reject
-
-const promiseResolve = require('./promise/resolve.js')
-module.exports.resolve = promiseResolve.resolve
-
 const promiseSleep = require('./promise/sleep.js')
 module.exports.sleep = promiseSleep.sleep
-
-const promiseThen = require('./promise/then.js')
-module.exports.then = promiseThen.then
 
 const promiseTimeout = require('./promise/timeout.js')
 module.exports.timeout = promiseTimeout.timeout

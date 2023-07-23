@@ -1,11 +1,19 @@
 #!/usr/bin/env node
 
-const Path = require('path')
+import Path from 'node:path'
 
+import { fileURLToPath } from 'node:url'
+const __dirname = Path.dirname(fileURLToPath(import.meta.url))
 const cwd = Path.join(Path.dirname(__dirname), 'src')
 
-const indexModule = require(Path.join(cwd, 'index.js'))
-const fpModule = require(Path.join(cwd, 'fp.js'))
+const [
+	{ default: indexModule },
+	{ default: fpModule },
+] = await Promise.all([
+	import(Path.join(cwd, 'index.js')),
+	import(Path.join(cwd, 'fp.js')),
+])
+
 
 const ignoredPrefixes = [
 	'array2d',

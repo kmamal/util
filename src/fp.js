@@ -279,17 +279,6 @@ module.exports = {
 	trimEnd: _fp(_.trimEnd),
 	trimStart: _fp(_.trimStart),
 
-	allSettled: _fp(_.allSettled),
-	all: _fp(_.all),
-	race: _fp(_.race),
-
-	reject: _fp(_.reject),
-	resolve: _fp(_.resolve),
-
-	catch: _fp(_.catch),
-	finally: _fp(_.finally),
-	then: _fp(_.then),
-
 	sleep: _fp(_.sleep),
 	timeout: _fp(_.timeout),
 
