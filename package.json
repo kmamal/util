@@ -8,7 +8,7 @@
   },
   "license": "MIT",
   "scripts": {
-    "test": "npm run update-index && npm run check-fp && ./scripts/run-tests.sh",
+    "test": "npm run update-index && npm run check-fp && npx @kmamal/testing",
     "update-exports": "node ./scripts/update-exports.mjs",
     "update-index": "node ./scripts/update-index.mjs",
     "check-fp": "node ./scripts/check-fp.mjs"
@@ -235,11 +235,11 @@
     "./set/xor": "./src/set/xor.js",
     "./set/difference": "./src/set/difference.js"
   },
-  "dependencies": {
-    "@kmamal/structs": "^0.0.3"
-  },
   "devDependencies": {
     "@kmamal/fs": "^0.0.15",
-    "@kmamal/testing": "^0.0.21"
+    "@kmamal/testing": "^0.0.24"
+  },
+  "dependencies": {
+    "@kmamal/linked-list": "^0.0.1"
   }
 }
