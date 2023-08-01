@@ -17,7 +17,7 @@ const __fillWith = (arr, start, end, fn) => {
 
 const fill = (arr, value, _start, _end) => {
 	const { length } = arr
-	const start = Math.max(0, startIndex(length, _start))
+	const start = startIndex(length, _start)
 	const end = Math.max(start, endIndex(length, _end))
 
 	const res = new Array(Math.max(length, end))
@@ -29,7 +29,7 @@ const fill = (arr, value, _start, _end) => {
 
 const fillTo = (dst, arr, value, _start, _end) => {
 	const { length } = arr
-	const start = Math.max(0, startIndex(length, _start))
+	const start = startIndex(length, _start)
 	const end = Math.max(start, endIndex(length, _end))
 
 	dst.length = Math.max(length, end)
@@ -41,7 +41,7 @@ const fillTo = (dst, arr, value, _start, _end) => {
 
 const fill$$$ = (arr, value, _start, _end) => {
 	const { length } = arr
-	const start = Math.max(0, startIndex(length, _start))
+	const start = startIndex(length, _start)
 	const end = Math.max(start, endIndex(length, _end))
 
 	arr.length = Math.max(length, end)
@@ -55,7 +55,7 @@ fill.$$$ = fill$$$
 
 const fillWith = (arr, fn, _start, _end) => {
 	const { length } = arr
-	const start = Math.max(0, startIndex(length, _start))
+	const start = startIndex(length, _start)
 	const end = Math.max(start, endIndex(length, _end))
 
 	const res = new Array(Math.max(length, end))
@@ -67,7 +67,7 @@ const fillWith = (arr, fn, _start, _end) => {
 
 const fillWithTo = (dst, arr, fn, _start, _end) => {
 	const { length } = arr
-	const start = Math.max(0, startIndex(length, _start))
+	const start = startIndex(length, _start)
 	const end = Math.max(start, endIndex(length, _end))
 
 	dst.length = Math.max(length, end)
@@ -79,7 +79,7 @@ const fillWithTo = (dst, arr, fn, _start, _end) => {
 
 const fillWith$$$ = (arr, fn, _start, _end) => {
 	const { length } = arr
-	const start = Math.max(0, startIndex(length, _start))
+	const start = startIndex(length, _start)
 	const end = Math.max(start, endIndex(length, _end))
 
 	arr.length = Math.max(length, end)
