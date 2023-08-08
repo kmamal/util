@@ -2,7 +2,8 @@ const { compare, compareBy } = require('../function/compare')
 
 const lengthZeroResult = { item: undefined, index: -1 }
 const lengthOneResult = { item: null, index: 0 }
-const _ret = {}
+const _ret = { item: null, index: -1 }
+
 
 const __max = (arr, start, end, fnCmp) => {
 	const length = end - start

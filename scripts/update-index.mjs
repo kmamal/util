@@ -1,6 +1,6 @@
 import Fs from 'node:fs'
 import Path from 'node:path'
-import { Matcher } from '@kmamal/fs/globs/matcher'
+import { Matcher } from '@kmamal/globs/matcher'
 import { sort } from '../src/array/sort.js'
 import { camelCase } from '../src/string/case/camel.js'
 
@@ -9,16 +9,11 @@ const __dirname = Path.dirname(fileURLToPath(import.meta.url))
 const cwd = Path.join(Path.dirname(__dirname), 'src')
 
 const namespaces = [
-	{ path: 'array/2d/', namespace: 'array2d' },
 	{ path: 'array/join.js', namespace: 'array' },
 	{ path: 'array/repeat.js', namespace: 'array' },
 	{ path: 'array/split.js', namespace: 'array' },
 	{ path: 'array/searching/', namespace: 'searching' },
 	{ path: 'array/sorting/', namespace: 'sorting' },
-	{ path: 'array/heap/', namespace: 'heap' },
-	{ path: 'array/tree/binary.js', namespace: 'tree.binary' },
-	{ path: 'array/tree/quaternary.js', namespace: 'tree.quaternary' },
-	{ path: 'array/tree/octonary.js', namespace: 'tree.octonary' },
 	{ path: 'ieee-float/single.js', namespace: 'ieeeFloat.single' },
 	{ path: 'ieee-float/double.js', namespace: 'ieeeFloat.double' },
 	{ path: 'number/modular.js', namespace: 'modular' },

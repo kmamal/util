@@ -1,10 +1,10 @@
-const { __heapify, __pop } = require('../heap')
+const { __heapify, __pop } = require('@kmamal/heap')
 const { compare, compareBy } = require('../../function/compare')
 const { clone } = require('../clone')
 const { __copy } = require('../copy')
 
 const __heapsort = (arr, start, end, _fnCmp) => {
-	const fnCmp = (a, b) => -_fnCmp(a, b)
+	const fnCmp = (a, b) => _fnCmp(b, a)
 	__heapify(arr, start, end, fnCmp)
 	for (let i = end; i > start; i--) {
 		__pop(arr, start, i, fnCmp)

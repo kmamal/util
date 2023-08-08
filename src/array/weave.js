@@ -1,4 +1,4 @@
-const { LinkedList } = require('@kmamal/structs/linked-list')
+const { LinkedList } = require('@kmamal/linked-list')
 const { __copy } = require('./copy')
 const { __merge } = require('./merge')
 const { sumBy } = require('./sum')

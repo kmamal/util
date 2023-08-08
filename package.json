@@ -13,6 +13,14 @@
     "update-index": "node ./scripts/update-index.mjs",
     "check-fp": "node ./scripts/check-fp.mjs"
   },
+  "dependencies": {
+    "@kmamal/heap": "^0.0.7",
+    "@kmamal/linked-list": "^0.0.1"
+  },
+  "devDependencies": {
+    "@kmamal/globs": "^0.0.3",
+    "@kmamal/testing": "^0.0.24"
+  },
   "exports": {
     "./array/slice": "./src/array/slice.js",
     "./array/reduce": "./src/array/reduce.js",
@@ -24,40 +32,19 @@
     "./array/some": "./src/array/some.js",
     "./array/index-of": "./src/array/index-of.js",
     "./array/rotate": "./src/array/rotate.js",
-    "./array/heap/bubble-up": "./src/array/heap/bubble-up.js",
-    "./array/heap": "./src/array/heap/index.js",
-    "./array/heap/pop": "./src/array/heap/pop.js",
-    "./array/heap/heapify": "./src/array/heap/heapify.js",
-    "./array/heap/add": "./src/array/heap/add.js",
-    "./array/heap/bubble-down": "./src/array/heap/bubble-down.js",
     "./array/compact": "./src/array/compact.js",
-    "./array/tree/octonary": "./src/array/tree/octonary.js",
-    "./array/tree/quaternary": "./src/array/tree/quaternary.js",
-    "./array/tree/binary": "./src/array/tree/binary.js",
     "./array/copy": "./src/array/copy.js",
     "./array/weave": "./src/array/weave.js",
     "./array/split": "./src/array/split.js",
-    "./array/2d/slice": "./src/array/2d/slice.js",
-    "./array/2d/from-factory": "./src/array/2d/from-factory.js",
-    "./array/2d/copy": "./src/array/2d/copy.js",
-    "./array/2d": "./src/array/2d/index.js",
-    "./array/2d/class": "./src/array/2d/class.js",
-    "./array/2d/end-point": "./src/array/2d/end-point.js",
-    "./array/2d/start-index": "./src/array/2d/start-index.js",
-    "./array/2d/start-point": "./src/array/2d/start-point.js",
-    "./array/2d/clone": "./src/array/2d/clone.js",
-    "./array/2d/combine": "./src/array/2d/combine.js",
-    "./array/2d/fill": "./src/array/2d/fill.js",
-    "./array/2d/end-index": "./src/array/2d/end-index.js",
     "./array/sum": "./src/array/sum.js",
     "./array/group-by": "./src/array/group-by.js",
-    "./array/triangular": "./src/array/triangular/index.js",
     "./array/last": "./src/array/last.js",
     "./array/intersection": "./src/array/intersection.js",
     "./array/cycle": "./src/array/cycle.js",
     "./array/flat": "./src/array/flat.js",
     "./array/xor": "./src/array/xor.js",
     "./array/interpose": "./src/array/interpose.js",
+    "./array/min-n": "./src/array/min-n.js",
     "./array/start-index": "./src/array/start-index.js",
     "./array/first": "./src/array/first.js",
     "./array/difference": "./src/array/difference.js",
@@ -73,6 +60,7 @@
     "./array/chunk": "./src/array/chunk.js",
     "./array/reverse": "./src/array/reverse.js",
     "./array/zip": "./src/array/zip.js",
+    "./array/max-n": "./src/array/max-n.js",
     "./array/proxy": "./src/array/proxy.js",
     "./array/for-each": "./src/array/for-each.js",
     "./array/clone": "./src/array/clone.js",
@@ -234,12 +222,5 @@
     "./set/intersection": "./src/set/intersection.js",
     "./set/xor": "./src/set/xor.js",
     "./set/difference": "./src/set/difference.js"
-  },
-  "devDependencies": {
-    "@kmamal/fs": "^0.0.15",
-    "@kmamal/testing": "^0.0.24"
-  },
-  "dependencies": {
-    "@kmamal/linked-list": "^0.0.1"
   }
 }
