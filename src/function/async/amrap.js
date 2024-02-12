@@ -15,15 +15,15 @@ const amrap = (fnIterate, timeLimit, options = {}) => {
 	for (;;) {
 		const done = fnIterate(next, remaining)
 
-		const ellapsed = Date.now() - startTime
-		remaining = timeLimit - ellapsed
+		const elapsed = Date.now() - startTime
+		remaining = timeLimit - elapsed
 		reps += next
 
-		const timePerRep = ellapsed / reps
+		const timePerRep = elapsed / reps
 		next = Math.floor(safety * Math.min(next * scaling, remaining / timePerRep))
 
 		if (done || remaining <= 0 || next === 0) {
-			return { ellapsed, reps }
+			return { elapsed, reps }
 		}
 	}
 }
