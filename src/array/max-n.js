@@ -1,7 +1,7 @@
 const { compare, compareBy } = require('../function/compare')
 const { __heapify, __bubbleDown } = require('@kmamal/heap')
-
 const { map } = require('./map')
+
 const map$$$ = map.$$$
 
 
@@ -28,35 +28,32 @@ const __maxN = (dst, dstStart, src, srcStart, srcEnd, n, fnCmp) => {
 		}
 	}
 
-	let readIndex = srcStart
-	let writeIndex = dstStart
 	for (let i = 0; i < limit; i++) {
 		const entry = _cache[i]
-		entry.index = readIndex
-		entry.item = src[readIndex++]
-		dst[writeIndex++] = entry
+		entry.index = srcStart + i
+		entry.item = src[srcStart + i]
+		dst[dstStart + i] = entry
 	}
 
-	if (limit === length) { return writeIndex }
+	if (limit === length) { return limit }
 
 	const fnCmpEntries = (a, b) => fnCmp(a.item, b.item)
 	const dstEnd = dstStart + limit
 
-	__heapify(dst, dstStart, dstEnd, fnCmpEntries)
+	__heapify(dst, dstStart, dstEnd, fnCmpEntries, false)
 
 	let topEntry = dst[dstStart]
-	while (readIndex !== srcEnd) {
-		const item = src[readIndex]
+	for (let i = limit; i < length; i++) {
+		const item = src[srcStart + i]
 		if (fnCmp(item, topEntry.item) > 0) {
 			topEntry.item = item
-			topEntry.index = readIndex
-			__bubbleDown(dst, dstStart, dstEnd, dstStart, fnCmpEntries)
+			topEntry.index = srcStart + i
+			__bubbleDown(dst, dstStart, dstEnd, dstStart, fnCmpEntries, false)
 			topEntry = dst[dstStart]
 		}
-		readIndex++
 	}
 
-	return writeIndex
+	return limit
 }
 
 

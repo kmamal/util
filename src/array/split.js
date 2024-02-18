@@ -1,11 +1,12 @@
 const { eq } = require('../operators/comparison/eq')
 
 const __split = (dst, dstStart, src, srcStart, srcEnd, x, fnEq) => {
+	const n = srcEnd - srcStart
+
 	let writeIndex = dstStart
 	let chunk = []
-	let readIndex = srcStart
-	while (readIndex < srcEnd) {
-		const item = src[readIndex++]
+	for (let i = 0; i < n; i++) {
+		const item = src[srcStart + i]
 		if (fnEq(item, x)) {
 			dst[writeIndex++] = chunk
 			chunk = []
@@ -15,7 +16,7 @@ const __split = (dst, dstStart, src, srcStart, srcEnd, x, fnEq) => {
 	}
 	dst[writeIndex++] = chunk
 
-	return writeIndex
+	return writeIndex - dstStart
 }
 
 

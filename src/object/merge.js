@@ -6,7 +6,9 @@ const _isObject = (x) => x
 	&& !Array.isArray(x)
 
 const __merge = (dst, a, b) => {
-	for (const key of Object.keys(b)) {
+	const keys = Object.keys(b)
+	for (let i = 0; i < keys.length; i++) {
+		const key = keys[i]
 		const bValue = b[key]
 		if (!_isObject(bValue)) {
 			dst[key] = bValue

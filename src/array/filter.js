@@ -1,9 +1,9 @@
 
 const __filter = (dst, dstStart, src, srcStart, srcEnd, fnPred) => {
+	const n = srcEnd - srcStart
 	let writeIndex = dstStart
-	let readIndex = srcStart
-	while (readIndex < srcEnd) {
-		const item = src[readIndex++]
+	for (let i = 0; i < n; i++) {
+		const item = src[srcStart + i]
 		const keep = fnPred(item)
 		if (!keep) { continue }
 		dst[writeIndex++] = item
@@ -13,8 +13,10 @@ const __filter = (dst, dstStart, src, srcStart, srcEnd, fnPred) => {
 
 
 const filter = (arr, fnPred) => {
-	const res = []
-	__filter(res, 0, arr, 0, arr.length, fnPred)
+	const { length } = arr
+	const res = new Array(length)
+	const n = __filter(res, 0, arr, 0, length, fnPred)
+	res.length = n
 	return res
 }
 

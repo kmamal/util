@@ -1,5 +1,4 @@
 const { compare, compareBy } = require('../../function/compare')
-const { clone } = require('../clone')
 const { __copy } = require('../copy')
 
 const __insertionsort = (arr, start, sortedEnd, end, fnCmp) => {
@@ -18,7 +17,7 @@ const __insertionsort = (arr, start, sortedEnd, end, fnCmp) => {
 
 
 const insertionsortWith = (arr, fnCmp) => {
-	const res = clone(arr)
+	const res = Array.from(arr)
 	__insertionsort(res, 0, 1, arr.length, fnCmp)
 	return res
 }
@@ -41,7 +40,7 @@ insertionsortWith.$$$ = insertionsortWith$$$
 
 
 const insertionsortBy = (arr, fnMap) => {
-	const res = clone(arr)
+	const res = Array.from(arr)
 	__insertionsort(res, 0, 1, arr.length, compareBy(fnMap))
 	return res
 }
@@ -64,7 +63,7 @@ insertionsortBy.$$$ = insertionsortBy$$$
 
 
 const insertionsort = (arr) => {
-	const res = clone(arr)
+	const res = Array.from(arr)
 	__insertionsort(res, 0, 1, arr.length, compare)
 	return res
 }

@@ -8,9 +8,16 @@ test("array.reverse", (t) => {
 	t.equal(reverse([ 1, 2, 3 ]), [ 3, 2, 1 ])
 })
 
+test("array.reverse.to", (t) => {
+	t.equal(reverse.to([], []), [])
+	t.equal(reverse.to([], [ 1 ]), [ 1 ])
+	t.equal(reverse.to([], [ 1, 1 ]), [ 1, 1 ])
+	t.equal(reverse.to([], [ 1, 2, 3 ]), [ 3, 2, 1 ])
+})
+
 test("array.reverse.$$$", (t) => {
-	t.equal(reverse([]), [])
-	t.equal(reverse([ 1 ]), [ 1 ])
-	t.equal(reverse([ 1, 1 ]), [ 1, 1 ])
-	t.equal(reverse([ 1, 2, 3 ]), [ 3, 2, 1 ])
+	t.equal(reverse.$$$([]), [])
+	t.equal(reverse.$$$([ 1 ]), [ 1 ])
+	t.equal(reverse.$$$([ 1, 1 ]), [ 1, 1 ])
+	t.equal(reverse.$$$([ 1, 2, 3 ]), [ 3, 2, 1 ])
 })

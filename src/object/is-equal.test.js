@@ -62,6 +62,82 @@ test("object.isEqual", (t) => {
 	t.ok(!isEqual({ foo: 42 }, { foo: 5 }))
 	t.ok(!isEqual(null, {}))
 
+	t.ok(isEqual(new Set(), new Set()))
+	t.ok(isEqual(new Map(), new Map()))
+	t.ok(!isEqual(new Map(), new Set()))
+	t.ok(isEqual(
+		new Set([ 1, 2, 3, 4 ]),
+		new Set([ 1, 2, 3, 4 ]),
+	))
+	t.ok(!isEqual(
+		new Set([ 1, 2, 3 ]),
+		new Set([ 1, 2, 3, 4 ]),
+	))
+	t.ok(!isEqual(
+		new Set([ 1, 2, 3, 4 ]),
+		new Set([ 1, 2, 3 ]),
+	))
+	t.ok(isEqual(
+		new Map([ [ 1, 2 ], [ 3, 4 ] ]),
+		new Map([ [ 1, 2 ], [ 3, 4 ] ]),
+	))
+	t.ok(!isEqual(
+		new Map([ [ 1, 2 ], [ 3, 5 ] ]),
+		new Map([ [ 1, 2 ], [ 3, 4 ] ]),
+	))
+	t.ok(!isEqual(
+		new Map([ [ 1, 2 ], [ 3, 4 ] ]),
+		new Map([ [ 1, 2 ], [ 3, 5 ] ]),
+	))
+	t.ok(!isEqual(
+		new Map([ [ 1, 2 ] ]),
+		new Map([ [ 1, 2 ], [ 3, 4 ] ]),
+	))
+	t.ok(!isEqual(
+		new Map([ [ 1, 2 ], [ 3, 4 ] ]),
+		new Map([ [ 1, 2 ] ]),
+	))
+	t.ok(isEqual(
+		new Set([ { a: 1 }, { b: 2 } ]),
+		new Set([ { a: 1 }, { b: 2 } ]),
+	))
+	t.ok(!isEqual(
+		new Set([ { a: 1 }, { b: 3 } ]),
+		new Set([ { a: 1 }, { b: 2 } ]),
+	))
+	t.ok(!isEqual(
+		new Set([ { a: 1 }, { b: 2 } ]),
+		new Set([ { a: 1 }, { b: 3 } ]),
+	))
+	t.ok(!isEqual(
+		new Set([ { a: 1 } ]),
+		new Set([ { a: 1 }, { b: 2 } ]),
+	))
+	t.ok(!isEqual(
+		new Set([ { a: 1 }, { b: 2 } ]),
+		new Set([ { a: 1 } ]),
+	))
+	t.ok(isEqual(
+		new Map([ [ { a: 1 }, { b: 2 } ] ]),
+		new Map([ [ { a: 1 }, { b: 2 } ] ]),
+	))
+	t.ok(!isEqual(
+		new Map([ [ { a: 1 }, { b: 3 } ] ]),
+		new Map([ [ { a: 1 }, { b: 2 } ] ]),
+	))
+	t.ok(!isEqual(
+		new Map([ [ { a: 1 }, { b: 2 } ] ]),
+		new Map([ [ { a: 1 }, { b: 3 } ] ]),
+	))
+	t.ok(!isEqual(
+		new Map([ [ { a: 1 } ] ]),
+		new Map([ [ { a: 1 }, { b: 2 } ] ]),
+	))
+	t.ok(!isEqual(
+		new Map([ [ { a: 1 }, { b: 2 } ] ]),
+		new Map([ [ { a: 1 } ] ]),
+	))
+
 	t.ok(isEqual(
 		{
 			a: [

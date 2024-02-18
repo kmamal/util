@@ -1,28 +1,25 @@
 
 const __chunk = (dst, dstStart, src, srcStart, srcEnd, chunkSize, chunkNum) => {
-	let writeIndex = dstStart
 	let readIndex = srcStart
-	const dstEnd = dstStart + chunkNum
 
-	while (writeIndex < dstEnd - 1) {
+	for (let i = 0; i < chunkNum - 1; i++) {
 		const chunk = new Array(chunkSize)
-		for (let i = 0; i < chunkSize; i++) {
-			chunk[i] = src[readIndex++]
+		for (let j = 0; j < chunkSize; j++) {
+			chunk[j] = src[readIndex + j]
 		}
-		dst[writeIndex++] = chunk
+		readIndex += chunkSize
+		dst[dstStart + i] = chunk
 	}
 
-	if (writeIndex < dstEnd) {
+	{
 		const available = Math.max(0, srcEnd - readIndex)
 		const lastChunkSize = Math.min(available, chunkSize)
 		const chunk = new Array(lastChunkSize)
-		for (let i = 0; i < lastChunkSize; i++) {
-			chunk[i] = src[readIndex++]
+		for (let j = 0; j < lastChunkSize; j++) {
+			chunk[j] = src[readIndex + j]
 		}
-		dst[writeIndex++] = chunk
+		dst[dstStart + chunkNum - 1] = chunk
 	}
-
-	return writeIndex - dstStart
 }
 
 const chunk = (arr, n) => {

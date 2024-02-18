@@ -2,7 +2,6 @@ const { __selectPivotMedianOfThree } = require('./select-pivot-median-of-three')
 const { __partitionLeftRight } = require('./partition-left-right')
 const { __insertionsort } = require('../insertionsort')
 const { compare, compareBy } = require('../../../function/compare')
-const { clone } = require('../../clone')
 const { __copy } = require('../../copy')
 
 const INSERTION_SORT_CUTOFF = 16
@@ -32,7 +31,7 @@ const __quicksort = (arr, _start, _end, fnCmp, sizeCutoff, depthCutoff, takeover
 
 
 const quicksortWith = (arr, fnCmp) => {
-	const res = clone(arr)
+	const res = Array.from(arr)
 	__quicksort(res, 0, res.length, fnCmp, INSERTION_SORT_CUTOFF, Infinity, __insertionsort)
 	return res
 }
@@ -55,7 +54,7 @@ quicksortWith.$$$ = quicksortWith$$$
 
 
 const quicksortBy = (arr, fnMap) => {
-	const res = clone(arr)
+	const res = Array.from(arr)
 	__quicksort(res, 0, res.length, compareBy(fnMap), INSERTION_SORT_CUTOFF, Infinity, __insertionsort)
 	return res
 }
@@ -78,7 +77,7 @@ quicksortBy.$$$ = quicksortBy$$$
 
 
 const quicksort = (arr) => {
-	const res = clone(arr)
+	const res = Array.from(arr)
 	__quicksort(res, 0, res.length, compare, INSERTION_SORT_CUTOFF, Infinity, __insertionsort)
 	return res
 }

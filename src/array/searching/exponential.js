@@ -1,12 +1,20 @@
-const { compare } = require('../../function/compare')
+const {
+	compare,
+	compareStrictLess,
+	compareStrictGreater,
+	strictLess,
+	strictGreater,
+} = require('../../function/compare')
 
-const __initExponentialSearch = (first, last, step) => ({
+const __initExponentialSearch = (first, last, sign) => ({
 	first,
 	last,
 	a: first,
 	b: null,
+	mid: null,
 	prev: first,
-	step,
+	step: sign,
+	sign,
 })
 
 const __expandExponentialSearch = (state, cmp) => {
@@ -17,7 +25,7 @@ const __expandExponentialSearch = (state, cmp) => {
 
 		state.b = a
 		state.a = state.prev
-		state.mid = Math.floor((state.b + state.a) / 2)
+		state.mid = Math.floor((state.a + state.b) / 2)
 		return true
 	}
 
@@ -31,14 +39,15 @@ const __expandExponentialSearch = (state, cmp) => {
 }
 
 const __contractExponentialSearch = (state, cmp) => {
-	if (cmp < 0) {
-		state.b = state.mid
+	const { sign } = state
+	if (cmp * sign < 0) {
+		state.b = state.mid - sign
 	} else {
-		state.a = state.mid + 1
+		state.a = state.mid + sign
 	}
 	const { a, b } = state
-	if (b <= a) { return true }
-	state.mid = Math.floor((b + a) / 2)
+	if (Math.sign(b - a) * sign < 0) { return true }
+	state.mid = Math.floor((a + b) / 2)
 	return false
 }
 
@@ -46,145 +55,81 @@ const __exponentialSearch = (arr, start, end, x, fnCmp) => {
 	const sign = Math.sign(end - start)
 	if (sign === 0) { return start }
 
-	const state = __initExponentialSearch(start, end - sign, sign)
+	let first
+	let last
+	let nudge
+	if (sign > 0) {
+		first = start
+		last = end - 1
+		nudge = 0
+	} else {
+		first = start - 1
+		last = end
+		nudge = 1
+	}
+
+	const state = __initExponentialSearch(first, last, sign)
 
 	let cmp
 	for (;;) {
 		const value = arr[state.a]
 		cmp = fnCmp(x, value)
-		if (cmp === 0) { return state.a }
+		if (cmp === 0) { return state.a + nudge }
 		const done = __expandExponentialSearch(state, cmp)
 		if (done) { break }
 	}
 
 	if (state.b === null) {
-		return sign > 0
-			? cmp > 0 ? state.a + 1 : state.a
-			: cmp < 0 ? state.a - 1 : state.a
-	}
-
-	if (sign < 0) {
-		const tmp = state.a
-		state.a = state.b
-		state.b = tmp
+		return (cmp * sign > 0 ? state.a + sign : state.a) + nudge
 	}
 
 	for (;;) {
 		const value = arr[state.mid]
 		cmp = fnCmp(x, value)
-		if (cmp === 0) { return state.mid }
+		if (cmp === 0) { return state.mid + nudge }
 		const done = __contractExponentialSearch(state, cmp)
-		if (done) { return state.a }
-	}
-}
-
-const __exponentialSearchFirst = (arr, start, end, x, fnCmp) => {
-	const sign = Math.sign(end - start)
-	if (sign === 0) { return start }
-
-	const state = __initExponentialSearch(start, end - sign, sign)
-
-	let cmp
-	for (;;) {
-		const value = arr[state.a]
-		cmp = fnCmp(x, value) || -1
-		const done = __expandExponentialSearch(state, cmp)
-		if (done) { break }
-	}
-
-	if (state.b === null) {
-		return sign > 0
-			? cmp > 0 ? state.a + 1 : state.a
-			: cmp < 0 ? state.a - 1 : state.a
-	}
-
-	if (sign < 0) {
-		const tmp = state.a
-		state.a = state.b
-		state.b = tmp
-	}
-
-	for (;;) {
-		const value = arr[state.mid]
-		cmp = fnCmp(x, value) || -1
-		const done = __contractExponentialSearch(state, cmp)
-		if (done) { return state.a }
-	}
-}
-
-const __exponentialSearchLast = (arr, start, end, x, fnCmp) => {
-	const sign = Math.sign(end - start)
-	if (sign === 0) { return start }
-
-	const state = __initExponentialSearch(start, end - sign, sign)
-
-	let cmp
-	for (;;) {
-		const value = arr[state.a]
-		cmp = fnCmp(x, value) || 1
-		const done = __expandExponentialSearch(state, cmp)
-		if (done) { break }
-	}
-
-	if (state.b === null) {
-		return sign > 0
-			? cmp > 0 ? state.a + 1 : state.a
-			: cmp < 0 ? state.a - 1 : state.a
-	}
-
-	if (sign < 0) {
-		const tmp = state.a
-		state.a = state.b
-		state.b = tmp
-	}
-
-	for (;;) {
-		const value = arr[state.mid]
-		cmp = fnCmp(x, value) || 1
-		const done = __contractExponentialSearch(state, cmp)
-
-		if (done) { return state.a }
+		if (done) { return state.a + nudge }
 	}
 }
 
 const exponentialSearchWith = (arr, x, fnCmp) => __exponentialSearch(arr, 0, arr.length, x, fnCmp)
-const exponentialSearchFirstWith = (arr, x, fnCmp) => __exponentialSearchFirst(arr, 0, arr.length, x, fnCmp)
-const exponentialSearchLastWith = (arr, x, fnCmp) => __exponentialSearchLast(arr, 0, arr.length, x, fnCmp)
+const exponentialSearchFirstWith = (arr, x, fnCmp) => exponentialSearchWith(arr, x, strictLess(fnCmp))
+const exponentialSearchLastWith = (arr, x, fnCmp) => exponentialSearchWith(arr, x, strictGreater(fnCmp))
 
-const exponentialSearchWithRight = (arr, x, fnCmp) => __exponentialSearch(arr, arr.length - 1, -1, x, fnCmp)
-const exponentialSearchFirstWithRight = (arr, x, fnCmp) => __exponentialSearchFirst(arr, arr.length - 1, -1, x, fnCmp)
-const exponentialSearchLastWithRight = (arr, x, fnCmp) => __exponentialSearchLast(arr, arr.length - 1, -1, x, fnCmp)
+const exponentialSearchWithRight = (arr, x, fnCmp) => __exponentialSearch(arr, arr.length, 0, x, fnCmp)
+const exponentialSearchFirstWithRight = (arr, x, fnCmp) => exponentialSearchWithRight(arr, x, strictGreater(fnCmp))
+const exponentialSearchLastWithRight = (arr, x, fnCmp) => exponentialSearchWithRight(arr, x, strictLess(fnCmp))
 
 const exponentialSearchBy = (arr, x, fnMap) => {
 	// HACK: The first argument to compare is always x
 	const xValue = fnMap(x)
-	return exponentialSearchWith(arr, x, (a, b) => compare(xValue, fnMap(b)))
+	return exponentialSearchWith(arr, x, (_, b) => compare(xValue, fnMap(b)))
 }
 const exponentialSearchFirstBy = (arr, x, fnMap) => {
 	// HACK: The first argument to compare is always x
 	const xValue = fnMap(x)
-	return exponentialSearchFirstWith(arr, x, (a, b) => compare(xValue, fnMap(b)))
+	return exponentialSearchFirstWith(arr, x, (_, b) => compareStrictLess(xValue, fnMap(b)))
 }
 const exponentialSearchLastBy = (arr, x, fnMap) => {
 	// HACK: The first argument to compare is always x
 	const xValue = fnMap(x)
-	return exponentialSearchLastWith(arr, x, (a, b) => compare(xValue, fnMap(b)))
+	return exponentialSearchLastWith(arr, x, (_, b) => compareStrictGreater(xValue, fnMap(b)))
 }
 
 const exponentialSearchByRight = (arr, x, fnMap) => {
 	// HACK: The first argument to compare is always x
 	const xValue = fnMap(x)
-	return exponentialSearchWithRight(arr, x, (a, b) => compare(xValue, fnMap(b)))
+	return exponentialSearchWithRight(arr, x, (_, b) => compare(xValue, fnMap(b)))
 }
 const exponentialSearchFirstByRight = (arr, x, fnMap) => {
 	// HACK: The first argument to compare is always x
 	const xValue = fnMap(x)
-	return exponentialSearchFirstWithRight(arr, x, (a, b) => compare(xValue, fnMap(b)))
+	return exponentialSearchFirstWithRight(arr, x, (_, b) => compareStrictGreater(xValue, fnMap(b)))
 }
 const exponentialSearchLastByRight = (arr, x, fnMap) => {
 	// HACK: The first argument to compare is always x
 	const xValue = fnMap(x)
-	return exponentialSearchLastWithRight(arr, x, (a, b) => compare(xValue, fnMap(b)))
+	return exponentialSearchLastWithRight(arr, x, (_, b) => compareStrictLess(xValue, fnMap(b)))
 }
 
 const exponentialSearch = (arr, x) => exponentialSearchWith(arr, x, compare)
@@ -200,8 +145,6 @@ module.exports = {
 	__expandExponentialSearch,
 	__contractExponentialSearch,
 	__exponentialSearch,
-	__exponentialSearchFirst,
-	__exponentialSearchLast,
 	exponentialSearchWith,
 	exponentialSearchFirstWith,
 	exponentialSearchLastWith,

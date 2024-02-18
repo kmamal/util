@@ -1,8 +1,11 @@
 const { prefixSums } = require('../prefix-sums')
 const { identity } = require('../../function/identity')
-const { clone } = require('../clone')
 const { copy } = require('../copy')
 const { max } = require('../max')
+
+const prefixSums$$$ = prefixSums.$$$
+const copy$$$ = copy.$$$
+
 
 const __countingsortInitCounts = (maxValue) => new Array(maxValue + 1).fill(0)
 
@@ -26,7 +29,7 @@ const __countingsortAssign = (arr, start, counts) => {
 }
 
 const __countingsortDistribute = (dst, dstStart, src, srcStart, srcEnd, counts, fnMap) => {
-	prefixSums.$$$(counts)
+	prefixSums$$$(counts)
 
 	for (let i = srcEnd - 1; i >= srcStart; i--) {
 		const item = src[i]
@@ -39,7 +42,7 @@ const __countingsortDistribute = (dst, dstStart, src, srcStart, srcEnd, counts, 
 
 const countingsortBy = (arr, fnMap, _maxValue) => {
 	const { length } = arr
-	if (length <= 1) { return clone(arr) }
+	if (length <= 1) { return Array.from(arr) }
 
 	const maxValue = _maxValue ?? max(arr)
 	const counts = __countingsortInitCounts(maxValue)
@@ -52,7 +55,7 @@ const countingsortBy = (arr, fnMap, _maxValue) => {
 
 const countingsortByTo = (dst, arr, fnMap, _maxValue) => {
 	const { length } = arr
-	if (length <= 1) { return clone(arr) }
+	if (length <= 1) { return Array.from(arr) }
 
 	const maxValue = _maxValue ?? max(arr)
 	const counts = __countingsortInitCounts(maxValue)
@@ -73,7 +76,7 @@ const countingsortBy$$$ = (arr, fnMap, _maxValue) => {
 
 	const res = new Array(length)
 	__countingsortDistribute(res, 0, arr, 0, length, counts)
-	copy.$$$(arr, res)
+	copy$$$(arr, res)
 	return arr
 }
 
@@ -83,7 +86,7 @@ countingsortBy.$$$ = countingsortBy$$$
 
 const countingsort = (arr, _maxValue) => {
 	const { length } = arr
-	if (length <= 1) { return clone(arr) }
+	if (length <= 1) { return Array.from(arr) }
 
 	const maxValue = _maxValue ?? max(arr)
 	const counts = __countingsortInitCounts(maxValue)
@@ -96,7 +99,7 @@ const countingsort = (arr, _maxValue) => {
 
 const countingsortTo = (dst, arr, _maxValue) => {
 	const { length } = arr
-	if (length <= 1) { return clone(arr) }
+	if (length <= 1) { return Array.from(arr) }
 
 	const maxValue = _maxValue ?? max(arr)
 	const counts = __countingsortInitCounts(maxValue)

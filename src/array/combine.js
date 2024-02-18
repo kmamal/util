@@ -1,13 +1,9 @@
 
 const __combine = (dst, dstStart, a, aStart, b, bStart, length, fn) => {
-	const dstEnd = dstStart + length
-	let writeIndex = dstStart
-	let aIndex = aStart
-	let bIndex = bStart
-	while (writeIndex < dstEnd) {
-		const aItem = a[aIndex++]
-		const bItem = b[bIndex++]
-		dst[writeIndex++] = fn(aItem, bItem)
+	for (let i = 0; i < length; i++) {
+		const aItem = a[aStart + i]
+		const bItem = b[bStart + i]
+		dst[dstStart + i] = fn(aItem, bItem)
 	}
 }
 

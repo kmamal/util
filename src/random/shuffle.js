@@ -1,5 +1,4 @@
 const { randInt } = require('./rand-int')
-const { clone } = require('../array/clone')
 
 const __shuffle = (arr, start, end, limit, options) => {
 	const stop = Math.min(end, limit) - 1
@@ -20,7 +19,7 @@ const shuffle$$$ = (arr, options) => {
 
 const shuffle = (arr, options) => {
 	const { length } = arr
-	const res = clone(arr)
+	const res = Array.from(arr)
 	__shuffle(res, 0, length, length, options)
 	return res
 }

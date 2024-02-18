@@ -1,7 +1,9 @@
 const { empty$$$ } = require('./empty')
 
 const __mapValues = (dst, src, fnMap) => {
-	for (const key of Object.keys(src)) {
+	const keys = Object.keys(src)
+	for (let i = 0; i < keys.length; i++) {
+		const key = keys[i]
 		dst[key] = fnMap(src[key])
 	}
 }

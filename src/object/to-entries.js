@@ -1,8 +1,7 @@
 
 const toEntries = (obj) => {
 	const res = Object.keys(obj)
-	const { length } = res
-	for (let i = 0; i < length; i++) {
+	for (let i = 0; i < res.length; i++) {
 		const key = res[i]
 		res[i] = [ key, obj[key] ]
 	}
@@ -12,7 +11,7 @@ const toEntries = (obj) => {
 const toEntriesTo = (dst, obj) => {
 	const keys = Object.keys(obj)
 	const { length } = keys
-	dst.length = keys.length
+	dst.length = length
 	for (let i = 0; i < length; i++) {
 		const key = keys[i]
 		dst[i] = [ key, obj[key] ]

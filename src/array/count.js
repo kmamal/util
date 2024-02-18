@@ -1,4 +1,5 @@
 const { identity } = require('../function/identity')
+const { empty$$$ } = require('../object/empty')
 
 const __count = (dst, arr, start, end, fnMap) => {
 	for (let i = start; i < end; i++) {
@@ -16,7 +17,7 @@ const countBy = (arr, fnMap) => {
 }
 
 const countByTo = (dst, arr, fnMap) => {
-	for (const key of Object.keys(dst)) { delete dst[key] }
+	empty$$$(dst)
 	__count(dst, arr, 0, arr.length, fnMap)
 	return dst
 }
@@ -30,7 +31,7 @@ const count = (arr) => {
 }
 
 const countTo = (dst, arr) => {
-	for (const key of Object.keys(dst)) { delete dst[key] }
+	empty$$$(dst)
 	__count(dst, arr, 0, arr.length, identity)
 	return dst
 }

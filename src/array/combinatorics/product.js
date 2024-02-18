@@ -1,13 +1,14 @@
 
 const __recurse = function * (dst, src, index, length) {
 	if (index === length) {
-		yield dst.slice()
+		yield Array.from(dst)
 		return
 	}
 
 	const nextIndex = index + 1
-	for (const x of src[index]) {
-		dst[index] = x
+	const arr = src[index]
+	for (let i = 0; i < arr.length; i++) {
+		dst[index] = arr[i]
 		yield* __recurse(dst, src, nextIndex, length)
 	}
 }

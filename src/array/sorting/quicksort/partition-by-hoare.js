@@ -3,16 +3,14 @@ const __partitionByHoare = (arr, start, end, pivot, fnCmp) => {
 	let startIndex = start
 	let endIndex = end - 1
 	for (;;) {
-		while (startIndex < end) {
+		for (; startIndex < end; startIndex++) {
 			const item = arr[startIndex]
 			if (fnCmp(item, pivot) > 0) { break }
-			startIndex += 1
 		}
 
-		while (endIndex > start) {
+		for (; endIndex > start; endIndex--) {
 			const item = arr[endIndex]
 			if (fnCmp(item, pivot) < 0) { break }
-			endIndex -= 1
 		}
 
 		if (startIndex >= endIndex) { break }

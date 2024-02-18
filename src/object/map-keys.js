@@ -1,7 +1,9 @@
 const { empty$$$ } = require('./empty')
 
 const __mapKeys = (dst, src, fnMap) => {
-	for (const key of Object.keys(src)) {
+	const keys = Object.keys(src)
+	for (let i = 0; i < keys.length; i++) {
+		const key = keys[i]
 		dst[fnMap(key)] = src[key]
 	}
 }
@@ -19,7 +21,16 @@ const mapKeysTo = (dst, obj, fnMap) => {
 	return dst
 }
 
+const mapKeys$$$ = (_obj, fnMap) => {
+	const res = _obj
+	const obj = { ...obj }
+	empty$$$(res)
+	__mapKeys(res, obj, fnMap)
+	return res
+}
+
 mapKeys.to = mapKeysTo
+mapKeys.$$$ = mapKeys$$$
 
 
 module.exports = {

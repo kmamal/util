@@ -1,4 +1,3 @@
-const { clone } = require('./clone')
 const { __copy } = require('./copy')
 
 const __swap = (arr, aIndex, bIndex) => {
@@ -10,7 +9,7 @@ const __swap = (arr, aIndex, bIndex) => {
 
 
 const swap = (arr, aIndex, bIndex) => {
-	const res = clone(arr)
+	const res = Array.from(arr)
 	__swap(res, aIndex, bIndex)
 	return res
 }

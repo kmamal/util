@@ -1,19 +1,18 @@
 const { __heapify, __pop } = require('@kmamal/heap')
 const { compare, compareBy } = require('../../function/compare')
-const { clone } = require('../clone')
 const { __copy } = require('../copy')
 
 const __heapsort = (arr, start, end, _fnCmp) => {
 	const fnCmp = (a, b) => _fnCmp(b, a)
-	__heapify(arr, start, end, fnCmp)
+	__heapify(arr, start, end, fnCmp, false)
 	for (let i = end; i > start; i--) {
-		__pop(arr, start, i, fnCmp)
+		__pop(arr, start, i, fnCmp, false)
 	}
 }
 
 
 const heapsortWith = (arr, fnCmp) => {
-	const res = clone(arr)
+	const res = Array.from(arr)
 	__heapsort(res, 0, arr.length, fnCmp)
 	return res
 }
@@ -36,7 +35,7 @@ heapsortWith.$$$ = heapsortWith$$$
 
 
 const heapsortBy = (arr, fnMap) => {
-	const res = clone(arr)
+	const res = Array.from(arr)
 	__heapsort(res, 0, arr.length, compareBy(fnMap))
 	return res
 }
@@ -59,7 +58,7 @@ heapsortBy.$$$ = heapsortBy$$$
 
 
 const heapsort = (arr) => {
-	const res = clone(arr)
+	const res = Array.from(arr)
 	__heapsort(res, 0, arr.length, compare)
 	return res
 }

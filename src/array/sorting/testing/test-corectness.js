@@ -1,5 +1,4 @@
 const { permutations } = require('../../combinatorics/permutations')
-const { clone } = require('../../clone')
 const { isEqual } = require('../../../object/is-equal')
 
 const { radixsortBy } = require('../radixsort')
@@ -10,7 +9,7 @@ for (;;) {
 	const A = Array.from({ length }, (x, i) => i)
 
 	for (const B of permutations(A)) {
-		const C = clone(B)
+		const C = Array.from(B)
 		try {
 			radixsortBy.$$$(C, identity)
 		} catch (error) {

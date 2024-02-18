@@ -1,22 +1,25 @@
 
 const __copy = (a, offset, b, start, end) => {
-	let writeIndex = offset
-	let readIndex = start
-	while (readIndex < end) {
-		a[writeIndex++] = b[readIndex++]
+	if (a === b && offset === start) { return }
+
+	const n = end - start
+	for (let i = 0; i < n; i++) {
+		a[offset + i] = b[start + i]
 	}
 }
 
 const __copyRight = (a, offset, b, start, end) => {
-	const length = end - start
-	let writeIndex = offset + length - 1
-	let readIndex = end - 1
-	while (readIndex >= start) {
-		a[writeIndex--] = b[readIndex--]
+	if (a === b && offset === start) { return }
+
+	const n = end - start
+	for (let i = n - 1; i >= 0; i--) {
+		a[offset + i] = b[start + i]
 	}
 }
 
 const __copyInplace = (arr, offset, start, end) => {
+	if (offset === start) { return }
+
 	const overlapsBadly = start < offset && offset < end
 	if (!overlapsBadly) {
 		__copy(arr, offset, arr, start, end)

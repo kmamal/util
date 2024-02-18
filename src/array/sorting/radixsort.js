@@ -1,8 +1,6 @@
 const {
 	__countingsortDistribute,
 } = require('./countingsort')
-const { fill } = require('../fill')
-const { clone } = require('../clone')
 const { __copy } = require('../copy')
 const { identity } = require('../../function/identity')
 
@@ -24,7 +22,7 @@ const __radixsort = (arr, start, end, buffer, numBytes, fnMap) => {
 	const length = end - start
 
 	for (let i = 0; i < numBytes; i++) {
-		fill.$$$(_counts[i], 0)
+		_counts[i].fill(0)
 	}
 
 	for (let i = start; i < end; i++) {
@@ -69,19 +67,19 @@ const __radixsort = (arr, start, end, buffer, numBytes, fnMap) => {
 
 const radixsortBy = (arr, fnMap) => {
 	const { length } = arr
-	if (length <= 1) { return clone(arr) }
+	if (length <= 1) { return Array.from(arr) }
 
-	const res = clone(arr)
+	const res = Array.from(arr)
 	const buffer = new Array(length)
 	return __radixsort(res, 0, length, buffer, 4, fnMap)
 }
 
 const radixsortByTo = (dst, arr, fnMap) => {
 	const { length } = arr
-	if (length <= 1) { return clone(arr) }
+	if (length <= 1) { return Array.from(arr) }
 
 	dst.length = length
-	const buffer = clone(arr)
+	const buffer = Array.from(arr)
 	const out = __radixsort(buffer, 0, length, dst, 4, fnMap)
 	if (out === buffer) { __copy(dst, 0, buffer, 0, length) }
 	return dst
@@ -103,9 +101,9 @@ radixsortBy.$$$ = radixsortBy$$$
 
 const radixsort = (arr) => {
 	const { length } = arr
-	if (length <= 1) { return clone(arr) }
+	if (length <= 1) { return Array.from(arr) }
 
-	const res = clone(arr)
+	const res = Array.from(arr)
 	const buffer = new Array(length)
 	return __radixsort(res, 0, length, buffer, 4, identity)
 }
@@ -115,7 +113,7 @@ const radixsortTo = (dst, arr) => {
 	if (length <= 1) { return arr }
 
 	dst.length = length
-	const buffer = clone(arr)
+	const buffer = Array.from(arr)
 	const out = __radixsort(buffer, 0, length, dst, 4, identity)
 	if (out === buffer) { __copy(dst, 0, buffer, 0, length) }
 	return dst

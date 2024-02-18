@@ -1,47 +1,48 @@
 
 const __scan = (dst, dstStart, src, srcStart, srcEnd, fn, init) => {
-	if (srcStart === srcEnd) { return }
+	const n = srcEnd - srcStart
+	if (n <= 0) { return }
 
-	let writeIndex = dstStart
-	let readIndex = srcStart
+	const first = src[srcStart]
 
-	let acc = init
-
-	const first = src[readIndex++]
-	if (acc === undefined) {
+	let acc
+	let index
+	if (init === undefined) {
 		acc = first
+		dst[dstStart] = first
+		index = 1
 	} else {
-		acc = fn(acc, first)
+		acc = init
+		index = 0
 	}
-	dst[writeIndex++] = acc
 
-	while (readIndex < srcEnd) {
-		acc = fn(acc, src[readIndex++])
-		dst[writeIndex++] = acc
+	for (; index < n; index++) {
+		acc = fn(acc, src[srcStart + index])
+		dst[dstStart + index] = acc
 	}
 }
 
 const __scanRight = (dst, dstStart, src, srcStart, srcEnd, fn, init) => {
-	if (srcStart === srcEnd) { return }
+	const n = srcEnd - srcStart
+	if (n <= 0) { return }
 
-	const length = srcEnd - srcStart
-	const dstEnd = dstStart + length
-	let writeIndex = dstEnd - 1
-	let readIndex = srcEnd - 1
+	const last = src[srcEnd - 1]
+	const dstEnd = dstStart + n
 
-	let acc = init
-
-	const last = src[readIndex--]
-	if (acc === undefined) {
+	let acc
+	let index
+	if (init === undefined) {
 		acc = last
+		dst[dstEnd - 1] = last
+		index = srcEnd - 2
 	} else {
-		acc = fn(acc, last)
+		acc = init
+		index = srcEnd - 1
 	}
-	dst[writeIndex--] = acc
 
-	while (readIndex >= srcStart) {
-		acc = fn(acc, src[readIndex--])
-		dst[writeIndex--] = acc
+	for (; index >= 0; index--) {
+		acc = fn(acc, src[srcStart + index])
+		dst[dstStart + index] = acc
 	}
 }
 

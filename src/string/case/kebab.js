@@ -1,6 +1,9 @@
 const { map } = require('../../array/map')
 const { isUpperCase } = require('./upper')
 
+const map$$$ = map.$$$
+
+
 const _kebabCase = (str) => {
 	const { length } = str
 	const res = new Array(length)
@@ -45,7 +48,7 @@ const _kebabCase = (str) => {
 
 const kebabCase = (str) => {
 	const parts = str.split(' ')
-	map.$$$(parts, _kebabCase)
+	map$$$(parts, _kebabCase)
 	return parts.join(' ')
 }
 

@@ -1,9 +1,11 @@
 const { __partitionLeftRight } = require('./sorting/quicksort/partition-left-right')
 const { __insertionsort } = require('./sorting/insertionsort')
 const { swap } = require('./swap')
-const { clone } = require('./clone')
 const { indexOf } = require('./index-of')
 const { compare, compareBy } = require('../function/compare')
+
+const swap$$$ = swap.$$$
+
 
 const __medianOfMedians = (arr, start, end, fnCmp) => {
 	const length = end - start
@@ -17,13 +19,13 @@ const __medianOfMedians = (arr, start, end, fnCmp) => {
 		__insertionsort(arr, readIndex, readIndex + 1, nextReadIndex, fnCmp)
 		const medianIndex = readIndex + 2
 		readIndex = nextReadIndex
-		swap.$$$(arr, writeIndex++, medianIndex)
+		swap$$$(arr, writeIndex++, medianIndex)
 	}
 
 	if (numRest) {
 		if (numRest > 1) { __insertionsort(arr, readIndex, readIndex + 1, end, fnCmp) }
 		const medianIndex = readIndex + Math.floor((end - readIndex) / 2)
-		swap.$$$(arr, writeIndex++, medianIndex)
+		swap$$$(arr, writeIndex++, medianIndex)
 	}
 
 	return __select(arr, start, writeIndex, Math.floor(numWhole / 2), fnCmp)
@@ -59,7 +61,7 @@ const __select = (arr, _start, _end, _n, fnCmp) => {
 
 
 const selectWith = (arr, n, fnCmp) => {
-	const copy = clone(arr)
+	const copy = Array.from(arr)
 	const index = __select(copy, 0, arr.length, n, fnCmp)
 	return copy[index]
 }
@@ -83,7 +85,7 @@ selectIndexWith.$$$ = selectIndexWith$$$
 
 
 const selectBy = (arr, n, fnMap) => {
-	const copy = clone(arr)
+	const copy = Array.from(arr)
 	const index = __select(copy, 0, arr.length, n, compareBy(fnMap))
 	return copy[index]
 }
@@ -107,7 +109,7 @@ selectIndexBy.$$$ = selectIndexBy$$$
 
 
 const select = (arr, n) => {
-	const copy = clone(arr)
+	const copy = Array.from(arr)
 	const index = __select(copy, 0, arr.length, n, compare)
 	return copy[index]
 }

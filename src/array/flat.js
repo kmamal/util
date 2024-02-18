@@ -1,22 +1,25 @@
 
+const _stack = [ null ]
+
 const __flat = (dst, dstStart, src, srcStart, srcEnd, _maxDepth) => {
 	const maxDepth = _maxDepth + 1
 	let writeIndex = dstStart
 
-	const stack = [ { arr: src, length: srcEnd - srcStart, index: 0 } ]
-	for (;;) {
-		const depth = stack.length
+	_stack[0] = { arr: src, length: srcEnd - srcStart, index: 0 }
 
-		const top = stack[depth - 1]
+	for (;;) {
+		const depth = _stack.length
+
+		const top = _stack[depth - 1]
 		if (top.index === top.length) {
 			if (depth === 1) { break }
-			stack.pop()
+			_stack.pop()
 			continue
 		}
 
 		const item = top.arr[top.index++]
 		if (Array.isArray(item) && depth < maxDepth) {
-			stack.push({ arr: item, length: item.length, index: 0 })
+			_stack.push({ arr: item, length: item.length, index: 0 })
 			continue
 		}
 
@@ -39,7 +42,16 @@ const flatTo = (dst, arr, _maxDepth = 1) => {
 	return dst
 }
 
+const flat$$$ = (_arr, _maxDepth = 1) => {
+	const res = _arr
+	const arr = Array.from(_arr)
+	const n = __flat(res, 0, arr, 0, arr.length, _maxDepth)
+	res.length = n
+	return res
+}
+
 flat.to = flatTo
+flat.$$$ = flat$$$
 
 
 module.exports = {

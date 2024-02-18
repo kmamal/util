@@ -1,7 +1,8 @@
 
 const empty$$$ = (obj) => {
-	for (const key of Object.keys(obj)) {
-		delete obj[key]
+	const keys = Object.keys(obj)
+	for (let i = 0; i < keys.length; i++) {
+		delete obj[keys[i]]
 	}
 	return obj
 }

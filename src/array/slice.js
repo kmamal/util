@@ -3,8 +3,6 @@ const { endIndex } = require('./end-index')
 const { __copy } = require('./copy')
 const { clamp } = require('../number/clamp')
 
-const slice = (arr, start, end) => arr.slice(start, end)
-
 const sliceTo = (dst, arr, _start, _end) => {
 	const { length } = arr
 	const start = clamp(startIndex(length, _start), 0, length)
@@ -25,7 +23,7 @@ const slice$$$ = (arr, _start, _end) => {
 	return arr
 }
 
-slice.to = sliceTo
-slice.$$$ = slice$$$
-
-module.exports = { slice }
+module.exports = {
+	sliceTo,
+	slice$$$,
+}

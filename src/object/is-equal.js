@@ -1,9 +1,7 @@
 
-const isEqualWith = (a, b, fnCmp) => {
-	if (fnCmp) {
-		const cmp = fnCmp(a, b)
-		if (cmp !== undefined) { return cmp }
-	}
+const isEqualWith = (a, b, fnEq) => {
+	const res = fnEq(a, b)
+	if (res !== undefined) { return res }
 
 	// Primitive types and functions
 	if (a === b) { return true }
@@ -27,7 +25,7 @@ const isEqualWith = (a, b, fnCmp) => {
 		if (aLength !== bLength) { return false }
 
 		for (let i = 0; i < aLength; i++) {
-			if (!isEqual(a[i], b[i])) { return false }
+			if (!isEqualWith(a[i], b[i], fnEq)) { return false }
 		}
 		return true
 	}
@@ -39,9 +37,18 @@ const isEqualWith = (a, b, fnCmp) => {
 	if (aIsMap) {
 		if (a.size !== b.size) { return false }
 
+		const bKeySet = new Set(b.keys())
+		forEachA:
 		for (const [ aKey, aValue ] of a.entries()) {
-			const bValue = b.get(aKey)
-			if ((bValue === undefined && !b.has(aKey)) || !isEqual(aValue, bValue)) { return false }
+			for (const bKey of bKeySet.values()) {
+				if (isEqualWith(aKey, bKey, fnEq)) {
+					const bValue = b.get(bKey)
+					if ((bValue === undefined && !b.has(bKey)) || !isEqualWith(aValue, bValue, fnEq)) { return false }
+					bKeySet.delete(bKey)
+					continue forEachA
+				}
+			}
+			return false
 		}
 		return true
 	}
@@ -57,7 +64,7 @@ const isEqualWith = (a, b, fnCmp) => {
 		forEachA:
 		for (const aValue of a.values()) {
 			for (const bValue of bValuesSet.values()) {
-				if (isEqual(aValue, bValue)) {
+				if (isEqualWith(aValue, bValue, fnEq)) {
 					bValuesSet.delete(bValue)
 					continue forEachA
 				}
@@ -72,13 +79,14 @@ const isEqualWith = (a, b, fnCmp) => {
 	const bKeys = Object.keys(b)
 	if (aKeys.length !== bKeys.length) { return false }
 
-	for (const aKey of aKeys) {
-		if (!Object.hasOwn(b, aKey) || !isEqual(a[aKey], b[aKey])) { return false }
+	for (let i = 0; i < aKeys.length; i++) {
+		const aKey = aKeys[i]
+		if (!Object.hasOwn(b, aKey) || !isEqualWith(a[aKey], b[aKey], fnEq)) { return false }
 	}
 	return true
 }
 
-const isEqual = (a, b) => isEqualWith(a, b)
+const isEqual = (a, b) => isEqualWith(a, b, () => undefined)
 
 module.exports = {
 	isEqualWith,

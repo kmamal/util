@@ -3,6 +3,9 @@ const { __copy } = require('./copy')
 const { __merge } = require('./merge')
 const { sumBy } = require('./sum')
 
+const _getLength = (x) => x.length
+
+
 let _state
 const _alternate = () => (_state *= -1)
 
@@ -13,62 +16,65 @@ const __weaveTwo = (dst, dstStart, a, aStart, aEnd, b, bStart, bEnd) => {
 
 const __weave = (dst, dstStart, srcArray) => {
 	const num = srcArray.length
-	if (num === 0) { return }
+	if (num === 0) { return 0 }
 	if (num === 1) {
 		const a = srcArray[0]
-		__copy(dst, dstStart, a, 0, a.length)
-		return
+		const { length } = a
+		__copy(dst, dstStart, a, 0, length)
+		return length
 	}
 	if (num === 2) {
-		const a = srcArray[0]
-		const b = srcArray[1]
-		__weaveTwo(dst, dstStart, a, 0, a.length, b, 0, b.length)
-		return
+		const [ a, b ] = srcArray
+		const { length: aLength } = a
+		const { length: bLength } = b
+		__weaveTwo(dst, dstStart, a, 0, aLength, b, 0, bLength)
+		return aLength + bLength
 	}
 
 	const sources = new LinkedList()
+	let maxDepth = 0
 	for (let i = num - 1; i >= 0; i--) {
-		sources.unshift(srcArray[i])
+		const src = srcArray[i]
+		sources.unshift(src)
+		maxDepth = Math.max(maxDepth, src.length)
 	}
+	if (maxDepth === 0) { return 0 }
 
 	let writeIndex = dstStart
-
-	let depth = 0
-	let node
-	let value
-	while (sources.size() > 1) {
-		node = sources._head
-		for (;;) {
-			if (!node) { return }
-			value = node.value
-			if (value.length > depth) { break }
-			sources.shift(node)
-			node = sources._head
-		}
-
-		loop:
-		for (;;) {
-			dst[writeIndex++] = value[depth]
-
-			for (;;) {
-				const next = node.next
-				if (!next) { break loop }
-				value = next.value
-				if (value.length === depth) {
-					sources._removeAfter(node)
-					continue
-				}
-				node = next
-				break
+	for (let depth = 0; depth < maxDepth; depth++) {
+		const n = sources.size()
+		if (n <= 1) {
+			const rest = sources._head.value
+			const numRemaining = maxDepth - depth
+			for (let i = 0; i < numRemaining; i++) {
+				dst[writeIndex + i] = rest[depth + i]
 			}
+			return writeIndex + numRemaining
 		}
-		depth++
+
+		let node = sources._head
+		let prev = null
+
+		for (let i = 0; i < n; i++) {
+			const { value: src } = node
+			dst[writeIndex + i] = src[depth]
+
+			const next = node.next
+			if (src.length === depth + 1) {
+				if (prev === null) {
+					sources.shift()
+				} else {
+					sources._removeAfter(prev)
+				}
+			} else {
+				prev = node
+			}
+			node = next
+		}
+		writeIndex += n
 	}
 
-	const rest = sources._head.value
-	while (depth < rest.length) {
-		dst[writeIndex++] = rest[depth++]
-	}
+	return maxDepth - dstStart
 }
 
 
@@ -88,24 +94,45 @@ const weaveTwoTo = (dst, a, b) => {
 	return dst
 }
 
+const weaveTwo$$$ = (_a, b) => {
+	const res = _a
+	const a = Array.from(a)
+	const aLength = a.length
+	const bLength = b.length
+	res.length = aLength + bLength
+	__weaveTwo(res, 0, a, 0, aLength, b, 0, bLength)
+	return res
+}
+
 weaveTwo.to = weaveTwoTo
+weaveTwo.$$$ = weaveTwo$$$
 
 
 const weave = (arr) => {
-	const totalLength = sumBy(arr, (x) => x.length)
+	const totalLength = sumBy(arr, _getLength)
 	const res = new Array(totalLength)
 	__weave(res, 0, arr)
 	return res
 }
 
 const weaveTo = (dst, arr) => {
-	const totalLength = sumBy(arr, (x) => x.length)
+	const totalLength = sumBy(arr, _getLength)
 	dst.length = totalLength
 	__weave(dst, 0, arr)
 	return dst
 }
 
+const weave$$$ = (_arr) => {
+	const res = _arr
+	const arr = Array.from(_arr)
+	const totalLength = sumBy(arr, _getLength)
+	res.length = totalLength
+	__weave(res, 0, arr)
+	return res
+}
+
 weave.to = weaveTo
+weave.$$$ = weave$$$
 
 
 module.exports = {

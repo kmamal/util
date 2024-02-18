@@ -1,9 +1,8 @@
 const { empty$$$ } = require('./empty')
 
 const __fromEntries = (dst, entries) => {
-	for (const entry of entries) {
-		const key = entry[0]
-		const value = entry[1]
+	for (let i = 0; i < entries.length; i++) {
+		const [ key, value ] = entries[i]
 		dst[key] = value
 	}
 }

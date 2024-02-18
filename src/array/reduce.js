@@ -1,29 +1,43 @@
 
 const __reduce = (arr, start, end, fn, init) => {
-	let acc = init
-	let index = start
+	const n = end - start
+	if (n <= 0) { return init }
 
-	if (acc === undefined) {
-		acc = arr[index++]
+	let acc
+	let index
+
+	if (init === undefined) {
+		acc = arr[start]
+		index = 1
+	} else {
+		acc = init
+		index = 0
 	}
 
-	while (index < end) {
-		acc = fn(acc, arr[index++])
+	for (;index < n; index++) {
+		acc = fn(acc, arr[start + index])
 	}
 
 	return acc
 }
 
 const __reduceRight = (arr, start, end, fn, init) => {
-	let acc = init
-	let index = end - 1
+	const n = end - start
+	if (n <= 0) { return init }
 
-	if (acc === undefined) {
-		acc = arr[index--]
+	let acc
+	let index
+
+	if (init === undefined) {
+		acc = arr[end - 1]
+		index = end - 2
+	} else {
+		acc = init
+		index = end - 1
 	}
 
-	while (index >= start) {
-		acc = fn(acc, arr[index--])
+	for (; index >= 0; index--) {
+		acc = fn(acc, arr[start + index])
 	}
 
 	return acc

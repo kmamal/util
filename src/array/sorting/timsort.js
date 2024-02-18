@@ -2,29 +2,26 @@ const { __insertionsort } = require('./insertionsort')
 const { __reverse } = require('../reverse')
 const { __mergeInplace } = require('../merge')
 const { compare, compareBy } = require('../../function/compare')
-const { clone } = require('../clone')
 const { __copy } = require('../copy')
 
 const __findNextRunAscending = (arr, start, end, fnCmp) => {
 	let prev = arr[start]
-	let index = start + 1
-	while (index < end) {
+	let index
+	for (index = start + 1; index < end; index++) {
 		const item = arr[index]
 		if (fnCmp(prev, item) > 0) { break }
 		prev = item
-		index += 1
 	}
 	return index
 }
 
 const __findNextRunDescending = (arr, start, end, fnCmp) => {
 	let prev = arr[start]
-	let index = start + 1
-	while (index < end) {
+	let index
+	for (index = start + 1; index < end; index++) {
 		const item = arr[index]
 		if (fnCmp(prev, item) <= 0) { break }
 		prev = item
-		index += 1
 	}
 	return index
 }
@@ -180,7 +177,7 @@ const __timsort2 = (arr, start, end, fnCmp) => {
 
 
 const timsortWith = (arr, fnCmp) => {
-	const res = clone(arr)
+	const res = Array.from(arr)
 	__timsort(res, 0, arr.length, fnCmp)
 	return res
 }
@@ -203,7 +200,7 @@ timsortWith.$$$ = timsortWith$$$
 
 
 const timsortBy = (arr, fnMap) => {
-	const res = clone(arr)
+	const res = Array.from(arr)
 	__timsort(res, 0, arr.length, compareBy(fnMap))
 	return res
 }
@@ -226,7 +223,7 @@ timsortBy.$$$ = timsortBy$$$
 
 
 const timsort = (arr) => {
-	const res = clone(arr)
+	const res = Array.from(arr)
 	__timsort(res, 0, arr.length, compare)
 	return res
 }

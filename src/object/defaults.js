@@ -11,7 +11,9 @@ const defaultsTo = (dst, obj, def) => {
 }
 
 const defaults$$$ = (obj, def) => {
-	for (const key of Object.keys(def)) {
+	const keys = Object.keys(def)
+	for (let i = 0; i < keys.length; i++) {
+		const key = keys[i]
 		if (obj[key] !== undefined) { continue }
 		obj[key] = def[key]
 	}

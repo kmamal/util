@@ -1,5 +1,8 @@
 const { map } = require('../../array/map')
 
+const map$$$ = map.$$$
+
+
 const _pascalCase = (str) => {
 	const { length } = str
 	const res = new Array(length)
@@ -37,7 +40,7 @@ const _pascalCase = (str) => {
 
 const pascalCase = (str) => {
 	const parts = str.split(' ')
-	map.$$$(parts, _pascalCase)
+	map$$$(parts, _pascalCase)
 	return parts.join(' ')
 }
 

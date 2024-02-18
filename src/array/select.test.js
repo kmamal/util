@@ -3,9 +3,10 @@ const {
 	selectIndex,
 	select,
 } = require('./select')
-const { fillWith } = require('./fill')
+const { fillWith } = require('./fill-with')
 const { identity } = require('../function/identity')
 const { shuffle } = require('../random/shuffle')
+
 
 const nums = fillWith.$$$(new Array(10), identity)
 

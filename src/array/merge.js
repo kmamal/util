@@ -1,6 +1,6 @@
 const { __copy } = require('./copy')
-const { __exponentialSearchRight } = require('./searching/exponential')
-const { compare, compareBy } = require('../function/compare')
+const { __exponentialSearch } = require('./searching/exponential')
+const { compare, compareBy, strictGreater } = require('../function/compare')
 
 const __merge = (dst, dstStart, a, aStart, aEnd, b, bStart, bEnd, fnCmp) => {
 	let writeIndex = dstStart
@@ -22,13 +22,14 @@ const __merge = (dst, dstStart, a, aStart, aEnd, b, bStart, bEnd, fnCmp) => {
 	}
 
 	if (aIndex < aEnd) {
-		while (aIndex < aEnd) { dst[writeIndex++] = a[aIndex++] }
+		const n = aEnd - aIndex
+		for (let i = 0; i < n; i++) { dst[writeIndex + i] = a[aIndex + i] }
 	} else if (bIndex < bEnd) {
-		while (bIndex < bEnd) { dst[writeIndex++] = b[bIndex++] }
+		const n = bEnd - bIndex
+		for (let i = 0; i < n; i++) { dst[writeIndex + i] = b[bIndex + i] }
 	}
 }
 
-// TODO
 const __mergeGalloping = (dst, dstStart, a, aStart, aEnd, b, bStart, bEnd, fnCmp) => {
 	let writeIndex = dstStart
 
@@ -40,6 +41,8 @@ const __mergeGalloping = (dst, dstStart, a, aStart, aEnd, b, bStart, bEnd, fnCmp
 	let minGalloping = 7
 	let count = 0
 
+	const fnCmpGt = strictGreater(fnCmp)
+
 	let cmp = fnCmp(aItem, bItem)
 	while (aIndex < aEnd && bIndex < bEnd) {
 		if (cmp <= 0) {
@@ -48,7 +51,7 @@ const __mergeGalloping = (dst, dstStart, a, aStart, aEnd, b, bStart, bEnd, fnCmp
 
 			count = count > 0 ? -1 : count - 1
 			if (-count > minGalloping) {
-				const nextIndex = __exponentialSearchRight(a, aIndex, aEnd, bItem, fnCmp)
+				const nextIndex = __exponentialSearch(a, aIndex, aEnd, bItem, fnCmpGt)
 				const numJumped = nextIndex - aIndex
 				if (numJumped === 0) {
 					minGalloping++
@@ -70,7 +73,7 @@ const __mergeGalloping = (dst, dstStart, a, aStart, aEnd, b, bStart, bEnd, fnCmp
 
 			count = count < 0 ? 1 : count + 1
 			if (count > minGalloping) {
-				const nextIndex = __exponentialSearchRight(b, bIndex, bEnd, aItem, fnCmp)
+				const nextIndex = __exponentialSearch(b, bIndex, bEnd, aItem, fnCmpGt)
 				const numJumped = nextIndex - bIndex
 				if (numJumped === 0) {
 					minGalloping++
@@ -92,9 +95,11 @@ const __mergeGalloping = (dst, dstStart, a, aStart, aEnd, b, bStart, bEnd, fnCmp
 	}
 
 	if (aIndex < aEnd) {
-		while (aIndex < aEnd) { dst[writeIndex++] = a[aIndex++] }
+		const n = aEnd - aIndex
+		for (let i = 0; i < n; i++) { dst[writeIndex + i] = a[aIndex + i] }
 	} else if (bIndex < bEnd) {
-		while (bIndex < bEnd) { dst[writeIndex++] = b[bIndex++] }
+		const n = bEnd - bIndex
+		for (let i = 0; i < n; i++) { dst[writeIndex + i] = b[bIndex + i] }
 	}
 }
 
@@ -123,6 +128,14 @@ const __mergeRight = (dst, dstStart, a, aStart, aEnd, b, bStart, bEnd, fnCmp) =>
 		while (aStart - 1 < aIndex) { dst[writeIndex--] = a[aIndex--] }
 	} else if (bStart - 1 < bIndex) {
 		while (bStart - 1 < bIndex) { dst[writeIndex--] = b[bIndex--] }
+	}
+
+	if (aStart - 1 < aIndex) {
+		const n = aIndex - aStart + 1
+		for (let i = 0; i < n; i++) { dst[writeIndex - i] = a[aIndex - i] }
+	} else if (bStart - 1 < bIndex) {
+		const n = bIndex - bStart + 1
+		for (let i = 0; i < n; i++) { dst[writeIndex - i] = b[bIndex - i] }
 	}
 }
 
@@ -198,6 +211,7 @@ merge.to = mergeTo
 
 module.exports = {
 	__merge,
+	__mergeGalloping,
 	__mergeRight,
 	__mergeInplace,
 	mergeWith,

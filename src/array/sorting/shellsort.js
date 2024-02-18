@@ -1,5 +1,4 @@
 const { compare, compareBy } = require('../../function/compare')
-const { clone } = require('../clone')
 const { __copy } = require('../copy')
 
 // Marcin Ciura's gap sequence
@@ -13,13 +12,11 @@ const __shellsort = (arr, start, sortedEnd, end, fnCmp) => {
 		for (let i = sortedEnd + gap - 1; i < end; i++) {
 			const item = arr[i]
 			let lastJ = i
-			let j = lastJ - gap
-			while (j >= start) {
+			for (let j = lastJ - gap; j >= start; j -= gap) {
 				const current = arr[j]
 				if (fnCmp(current, item) <= 0) { break }
 				arr[lastJ] = current
 				lastJ = j
-				j -= gap
 			}
 			arr[lastJ] = item
 		}
@@ -28,7 +25,7 @@ const __shellsort = (arr, start, sortedEnd, end, fnCmp) => {
 
 
 const shellsortWith = (arr, fnCmp) => {
-	const res = clone(arr)
+	const res = Array.from(arr)
 	__shellsort(res, 0, 1, arr.length, fnCmp)
 	return res
 }
@@ -51,7 +48,7 @@ shellsortWith.$$$ = shellsortWith$$$
 
 
 const shellsortBy = (arr, fnMap) => {
-	const res = clone(arr)
+	const res = Array.from(arr)
 	__shellsort(res, 0, 1, arr.length, compareBy(fnMap))
 	return res
 }
@@ -74,7 +71,7 @@ shellsortBy.$$$ = shellsortBy$$$
 
 
 const shellsort = (arr) => {
-	const res = clone(arr)
+	const res = Array.from(arr)
 	__shellsort(res, 0, 1, arr.length, compare)
 	return res
 }

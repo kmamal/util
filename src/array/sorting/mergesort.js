@@ -1,7 +1,6 @@
 const { __mergeInplace } = require('../merge')
 const { __insertionsort } = require('./insertionsort')
 const { compare, compareBy } = require('../../function/compare')
-const { clone } = require('../clone')
 const { __copy } = require('../copy')
 
 const INSERTION_SORT_CUTOFF = 16
@@ -29,7 +28,7 @@ const __mergesort = (arr, start, end, fnCmp, cutoff, takeover) => {
 
 
 const mergesortWith = (arr, fnCmp) => {
-	const res = clone(arr)
+	const res = Array.from(arr)
 	__mergesort(res, 0, arr.length, fnCmp, INSERTION_SORT_CUTOFF, __insertionsort)
 	return res
 }
@@ -52,7 +51,7 @@ mergesortWith.$$$ = mergesortWith$$$
 
 
 const mergesortBy = (arr, fnMap) => {
-	const res = clone(arr)
+	const res = Array.from(arr)
 	__mergesort(res, 0, arr.length, compareBy(fnMap), INSERTION_SORT_CUTOFF, __insertionsort)
 	return res
 }
@@ -75,7 +74,7 @@ mergesortBy.$$$ = mergesortBy$$$
 
 
 const mergesort = (arr) => {
-	const res = clone(arr)
+	const res = Array.from(arr)
 	__mergesort(res, 0, arr.length, compare, INSERTION_SORT_CUTOFF, __insertionsort)
 	return res
 }

@@ -1,3 +1,5 @@
+const { empty$$$ } = require('../object/empty')
+
 
 const __groupBy = (dst, arr, start, end, fnMap) => {
 	for (let i = start; i < end; i++) {
@@ -17,7 +19,7 @@ const groupBy = (arr, fnMap) => {
 }
 
 const groupByTo = (dst, arr, fnMap) => {
-	for (const key of Object.keys(dst)) { delete dst[key] }
+	empty$$$(dst)
 	__groupBy(dst, arr, 0, arr.length, fnMap)
 	return dst
 }

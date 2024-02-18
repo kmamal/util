@@ -2,7 +2,6 @@ const { __quicksort } = require('./quicksort')
 const { __heapsort } = require('./heapsort')
 const { __insertionsort } = require('./insertionsort')
 const { compare, compareBy } = require('../../function/compare')
-const { clone } = require('../clone')
 const { __copy } = require('../copy')
 
 const INSERTION_SORT_CUTOFF = 16
@@ -18,7 +17,7 @@ const __introsort = (arr, start, end, fnCmp) => {
 
 
 const introsortWith = (arr, fnCmp) => {
-	const res = clone(arr)
+	const res = Array.from(arr)
 	__introsort(res, 0, arr.length, fnCmp)
 	return res
 }
@@ -41,7 +40,7 @@ introsortWith.$$$ = introsortWith$$$
 
 
 const introsortBy = (arr, fnMap) => {
-	const res = clone(arr)
+	const res = Array.from(arr)
 	__introsort(res, 0, arr.length, compareBy(fnMap))
 	return res
 }
@@ -64,7 +63,7 @@ introsortBy.$$$ = introsortBy$$$
 
 
 const introsort = (arr) => {
-	const res = clone(arr)
+	const res = Array.from(arr)
 	__introsort(res, 0, arr.length, compare)
 	return res
 }

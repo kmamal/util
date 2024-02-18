@@ -1,5 +1,4 @@
 const { max } = require('../max')
-const { clone } = require('../clone')
 const { identity } = require('../../function/identity')
 
 const __pigeonholesortInitBuckets = (maxValue) => {
@@ -19,9 +18,10 @@ const __pigeonholesort = (dst, dstStart, src, srcStart, srcEnd, buckets, fnMap) 
 	}
 
 	let writeIndex = dstStart
-	for (const bucket of buckets) {
-		for (const item of bucket) {
-			dst[writeIndex++] = item
+	for (let i = 0; i < buckets.length; i++) {
+		const bucket = buckets[i]
+		for (let j = 0; j < bucket.length; j++) {
+			dst[writeIndex++] = bucket[j]
 		}
 	}
 }
@@ -29,7 +29,7 @@ const __pigeonholesort = (dst, dstStart, src, srcStart, srcEnd, buckets, fnMap) 
 
 const pigeonholesortBy = (arr, fnMap, _maxValue) => {
 	const { length } = arr
-	if (length <= 1) { return clone(arr) }
+	if (length <= 1) { return Array.from(arr) }
 
 	const maxValue = _maxValue ?? max(arr)
 	const buckets = __pigeonholesortInitBuckets(maxValue)
@@ -41,7 +41,7 @@ const pigeonholesortBy = (arr, fnMap, _maxValue) => {
 
 const pigeonholesortByTo = (dst, arr, fnMap, _maxValue) => {
 	const { length } = arr
-	if (length <= 1) { return clone(arr) }
+	if (length <= 1) { return Array.from(arr) }
 
 	const maxValue = _maxValue ?? max(arr)
 	const buckets = __pigeonholesortInitBuckets(maxValue)
@@ -53,7 +53,7 @@ const pigeonholesortByTo = (dst, arr, fnMap, _maxValue) => {
 
 const pigeonholesortBy$$$ = (arr, fnMap, _maxValue) => {
 	const { length } = arr
-	if (length <= 1) { return clone(arr) }
+	if (length <= 1) { return Array.from(arr) }
 
 	const maxValue = _maxValue ?? max(arr)
 	const buckets = __pigeonholesortInitBuckets(maxValue)
@@ -68,7 +68,7 @@ pigeonholesortBy.$$$ = pigeonholesortBy$$$
 
 const pigeonholesort = (arr, _maxValue) => {
 	const { length } = arr
-	if (length <= 1) { return clone(arr) }
+	if (length <= 1) { return Array.from(arr) }
 
 	const maxValue = _maxValue ?? max(arr)
 	const buckets = __pigeonholesortInitBuckets(maxValue)
@@ -79,7 +79,7 @@ const pigeonholesort = (arr, _maxValue) => {
 
 const pigeonholesortTo = (dst, arr, _maxValue) => {
 	const { length } = arr
-	if (length <= 1) { return clone(arr) }
+	if (length <= 1) { return Array.from(arr) }
 
 	const maxValue = _maxValue ?? max(arr)
 	const buckets = __pigeonholesortInitBuckets(maxValue)
@@ -91,7 +91,7 @@ const pigeonholesortTo = (dst, arr, _maxValue) => {
 
 const pigeonholesort$$$ = (arr, _maxValue) => {
 	const { length } = arr
-	if (length <= 1) { return clone(arr) }
+	if (length <= 1) { return Array.from(arr) }
 
 	const maxValue = _maxValue ?? max(arr)
 	const buckets = __pigeonholesortInitBuckets(maxValue)

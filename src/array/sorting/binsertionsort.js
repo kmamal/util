@@ -1,12 +1,12 @@
-const { __binarySearchLast } = require('../searching/binary')
-const { compare, compareBy } = require('../../function/compare')
-const { clone } = require('../clone')
+const { __binarySearch } = require('../searching/binary')
+const { compare, compareBy, strictGreater } = require('../../function/compare')
 const { __copy } = require('../copy')
 
 const __binsertionsort = (arr, start, sortedEnd, end, fnCmp) => {
+	const fnCmpGt = strictGreater(fnCmp)
 	for (let i = sortedEnd; i < end; i++) {
 		const item = arr[i]
-		const position = __binarySearchLast(arr, start, i, item, fnCmp)
+		const position = __binarySearch(arr, start, i, item, fnCmpGt)
 		for (let j = i; j > position; j--) {
 			arr[j] = arr[j - 1]
 		}
@@ -15,7 +15,7 @@ const __binsertionsort = (arr, start, sortedEnd, end, fnCmp) => {
 }
 
 const binsertionsortWith = (arr, fnCmp) => {
-	const res = clone(arr)
+	const res = Array.from(arr)
 	__binsertionsort(res, 0, 1, arr.length, fnCmp)
 	return res
 }
@@ -38,7 +38,7 @@ binsertionsortWith.$$$ = binsertionsortWith$$$
 
 
 const binsertionsortBy = (arr, fnMap) => {
-	const res = clone(arr)
+	const res = Array.from(arr)
 	__binsertionsort(res, 0, 1, arr.length, compareBy(fnMap))
 	return res
 }
@@ -61,7 +61,7 @@ binsertionsortBy.$$$ = binsertionsortBy$$$
 
 
 const binsertionsort = (arr) => {
-	const res = clone(arr)
+	const res = Array.from(arr)
 	__binsertionsort(res, 0, 1, arr.length, compare)
 	return res
 }

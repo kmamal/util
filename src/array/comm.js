@@ -1,6 +1,6 @@
 const { compare, compareBy } = require('../function/compare')
 
-const _ret = {}
+const _lengths = { a: 0, ab: 0, b: 0, x: 0 }
 
 const __comm = (dstA, dstAStart, dstAB, dstABStart, dstB, dstBStart, dstX, dstXStart, a, aStart, aEnd, b, bStart, bEnd, fnCmp) => {
 	let dstAIndex = dstAStart
@@ -31,28 +31,38 @@ const __comm = (dstA, dstAStart, dstAB, dstABStart, dstB, dstBStart, dstX, dstXS
 	}
 
 	if (aIndex < aEnd) {
+		const n = aEnd - aIndex
 		if (dstA && dstX) {
-			while (aIndex < aEnd) { dstX[dstXIndex++] = dstA[dstAIndex++] = a[aIndex++] }
+			for (let i = 0; i < n; i++) { dstX[dstXIndex + i] = dstA[dstAIndex + i] = a[aIndex + i] }
+			dstXIndex += n
+			dstAIndex += n
 		} else if (dstA) {
-			while (aIndex < aEnd) { dstA[dstAIndex++] = a[aIndex++] }
+			for (let i = 0; i < n; i++) { dstA[dstAIndex + i] = a[aIndex + i] }
+			dstAIndex += n
 		} else if (dstX) {
-			while (aIndex < aEnd) { dstX[dstXIndex++] = a[aIndex++] }
+			for (let i = 0; i < n; i++) { dstX[dstXIndex + i] = a[aIndex + i] }
+			dstXIndex += n
 		}
 	} else if (bIndex < bEnd) {
+		const n = bEnd - bIndex
 		if (dstB && dstX) {
-			while (bIndex < bEnd) { dstX[dstXIndex++] = dstB[dstBIndex++] = b[bIndex++] }
+			for (let i = 0; i < n; i++) { dstX[dstXIndex + i] = dstB[dstBIndex + i] = b[bIndex + i] }
+			dstXIndex += n
+			dstBIndex += n
 		} else if (dstB) {
-			while (bIndex < bEnd) { dstB[dstBIndex++] = b[bIndex++] }
+			for (let i = 0; i < n; i++) { dstB[dstBIndex + i] = b[bIndex + i] }
+			dstBIndex += n
 		} else if (dstX) {
-			while (bIndex < bEnd) { dstX[dstXIndex++] = b[bIndex++] }
+			for (let i = 0; i < n; i++) { dstX[dstXIndex + i] = b[bIndex + i] }
+			dstXIndex += n
 		}
 	}
 
-	_ret.a = dstAIndex
-	_ret.ab = dstABIndex
-	_ret.b = dstBIndex
-	_ret.x = dstXIndex
-	return _ret
+	_lengths.a = dstAIndex
+	_lengths.ab = dstABIndex
+	_lengths.b = dstBIndex
+	_lengths.x = dstXIndex
+	return _lengths
 }
 
 const commWith = (a, b, fnCmp) => {
@@ -65,11 +75,11 @@ const commWith = (a, b, fnCmp) => {
 }
 
 const commWithTo = (dst, a, b, fnCmp) => {
-	const lengths = __comm(dst.a, 0, dst.ab, 0, dst.b, 0, dst.x, 0, a, 0, a.length, b, 0, b.length, fnCmp)
-	if (dst.a) { dst.a.length = lengths.a }
-	if (dst.ab) { dst.ab.length = lengths.ab }
-	if (dst.b) { dst.b.length = lengths.b }
-	if (dst.x) { dst.x.length = lengths.x }
+	__comm(dst.a, 0, dst.ab, 0, dst.b, 0, dst.x, 0, a, 0, a.length, b, 0, b.length, fnCmp)
+	if (dst.a) { dst.a.length = _lengths.a }
+	if (dst.ab) { dst.ab.length = _lengths.ab }
+	if (dst.b) { dst.b.length = _lengths.b }
+	if (dst.x) { dst.x.length = _lengths.x }
 	return dst
 }
 
@@ -86,11 +96,11 @@ const commBy = (a, b, fnMap) => {
 }
 
 const commByTo = (dst, a, b, fnMap) => {
-	const lengths = __comm(dst.a, 0, dst.ab, 0, dst.b, 0, dst.x, 0, a, 0, a.length, b, 0, b.length, compareBy(fnMap))
-	if (dst.a) { dst.a.length = lengths.a }
-	if (dst.ab) { dst.ab.length = lengths.ab }
-	if (dst.b) { dst.b.length = lengths.b }
-	if (dst.x) { dst.x.length = lengths.x }
+	__comm(dst.a, 0, dst.ab, 0, dst.b, 0, dst.x, 0, a, 0, a.length, b, 0, b.length, compareBy(fnMap))
+	if (dst.a) { dst.a.length = _lengths.a }
+	if (dst.ab) { dst.ab.length = _lengths.ab }
+	if (dst.b) { dst.b.length = _lengths.b }
+	if (dst.x) { dst.x.length = _lengths.x }
 	return dst
 }
 
@@ -107,11 +117,11 @@ const comm = (a, b) => {
 }
 
 const commTo = (dst, a, b) => {
-	const lengths = __comm(dst.a, 0, dst.ab, 0, dst.b, 0, dst.x, 0, a, 0, a.length, b, 0, b.length, compare)
-	if (dst.a) { dst.a.length = lengths.a }
-	if (dst.ab) { dst.ab.length = lengths.ab }
-	if (dst.b) { dst.b.length = lengths.b }
-	if (dst.x) { dst.x.length = lengths.x }
+	__comm(dst.a, 0, dst.ab, 0, dst.b, 0, dst.x, 0, a, 0, a.length, b, 0, b.length, compare)
+	if (dst.a) { dst.a.length = _lengths.a }
+	if (dst.ab) { dst.ab.length = _lengths.ab }
+	if (dst.b) { dst.b.length = _lengths.b }
+	if (dst.x) { dst.x.length = _lengths.x }
 	return dst
 }
 

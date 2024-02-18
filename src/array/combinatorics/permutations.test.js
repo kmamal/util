@@ -1,6 +1,5 @@
 const { test } = require('@kmamal/testing')
 const { permutations } = require('./permutations')
-const { clone } = require('../clone')
 
 test("array.permutations", (t) => {
 	t.equal([ ...permutations([]) ], [ [] ])
@@ -20,7 +19,7 @@ test("array.permutations.$$$", (t) => {
 	const getResult = (iterator) => {
 		const result = []
 		for (const x of iterator) {
-			result.push(clone(x))
+			result.push(Array.from(x))
 		}
 		return result
 	}

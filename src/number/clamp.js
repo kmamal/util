@@ -1,4 +1,4 @@
 
-const clamp = (x, min, max) => x < min ? min : x > max ? max : x
+const clamp = (x, min, max) => Math.min(Math.max(x, min), max)
 
 module.exports = { clamp }

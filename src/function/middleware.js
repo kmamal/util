@@ -1,13 +1,16 @@
 
+const AsyncFunction = Object.getPrototypeOf(async () => {}).constructor
+const _isAsync = (x) => x instanceof AsyncFunction
+
 const makeSyncMiddleware = (handlers) => (...args) => {
 	let result
 
 	let handled
 	const next = () => { handled = false }
 
-	for (const func of handlers) {
+	for (let i = 0; i < handlers.length; i++) {
 		handled = true
-		result = func(next, ...args)
+		result = handlers[i](next, ...args)
 		if (handled) { break }
 	}
 
@@ -20,26 +23,17 @@ const makeAsyncMiddleware = (handlers) => async (...args) => {
 	let handled
 	const next = () => { handled = false }
 
-	for (const func of handlers) {
+	for (let i = 0; i < handlers.length; i++) {
 		handled = true
-		result = await func(next, ...args)
+		result = await handlers[i](next, ...args)
 		if (handled) { break }
 	}
 
 	return handled ? result : undefined
 }
 
-const AsyncFunction = Object.getPrototypeOf(async () => {}).constructor
-
 const makeMiddleware = (handlers) => {
-	let isAsync = false
-	for (const handler of handlers) {
-		if (handler instanceof AsyncFunction) {
-			isAsync = true
-			break
-		}
-	}
-
+	const isAsync = handlers.some(_isAsync)
 	return isAsync
 		? makeAsyncMiddleware(handlers)
 		: makeSyncMiddleware(handlers)

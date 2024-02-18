@@ -1,25 +1,24 @@
 
 const __cycle = (dst, dstStart, src, srcStart, srcEnd, n) => {
 	const length = srcEnd - srcStart
-	if (length <= 0) { return }
+	if (length <= 0) { return 0 }
 
 	const remainder = n % length
 	const fullLoops = (n - remainder) / length
 
-	let writeIndex = dstStart
-	let readIndex
-
 	for (let i = 0; i < fullLoops; i++) {
-		readIndex = srcStart
-		while (readIndex < srcEnd) {
-			dst[writeIndex++] = src[readIndex++]
+		for (let j = 0; j < length; j++) {
+			dst[dstStart + i * length + j] = src[srcStart + j]
 		}
 	}
 
-	readIndex = srcStart
-	while (readIndex < srcStart + remainder) {
-		dst[writeIndex++] = src[readIndex++]
+	if (remainder > 0) {
+		for (let j = 0; j < remainder; j++) {
+			dst[dstStart + fullLoops * length + j] = src[srcStart + j]
+		}
 	}
+
+	return n
 }
 
 const cycle = (arr, n) => {

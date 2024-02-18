@@ -1,7 +1,7 @@
 const { __linearSearch, __linearSearchRight } = require('./searching/linear')
-const { __binarySearchFirst, __binarySearchLast } = require('./searching/binary')
+const { __binarySearch } = require('./searching/binary')
 const { eq } = require('../operators')
-const { compare } = require('../function/compare')
+const { compare, strictLess, strictGreater } = require('../function/compare')
 
 const LINEAR_SEARCH_CUTOFF = 8
 
@@ -15,8 +15,9 @@ const __indexOfSorted = (arr, start, end, x, fnCmp) => {
 	if (length <= LINEAR_SEARCH_CUTOFF) {
 		return __indexOf(arr, start, end, x, (a, b) => fnCmp(b, a) === 0)
 	}
-	const index = __binarySearchFirst(arr, start, end, x, fnCmp)
-	const found = index !== end && fnCmp(x, arr[index]) === 0
+	const fnCmpLt = strictLess(fnCmp)
+	const index = __binarySearch(arr, start, end, x, fnCmpLt)
+	const found = index !== end && fnCmpLt(x, arr[index]) === 0
 	return found ? index : -1
 }
 
@@ -26,8 +27,9 @@ const __indexOfSortedRight = (arr, start, end, x, fnCmp) => {
 	if (length <= LINEAR_SEARCH_CUTOFF) {
 		return __indexOfRight(arr, start, end, x, (a, b) => fnCmp(b, a) === 0)
 	}
-	const index = __binarySearchLast(arr, start, end, x, fnCmp) - 1
-	const found = index !== start - 1 && fnCmp(x, arr[index]) === 0
+	const fnCmpGt = strictGreater(fnCmp)
+	const index = __binarySearch(arr, start, end, x, fnCmpGt) - 1
+	const found = index !== start - 1 && fnCmpGt(x, arr[index]) === 0
 	return found ? index : -1
 }
 

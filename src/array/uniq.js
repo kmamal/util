@@ -1,18 +1,18 @@
 const { __includes } = require('./includes')
-const { eq } = require('../operators')
-const { compare, compareBy, eqBy } = require('../function/compare')
+const { __copy } = require('./copy')
+const { compare, compareBy } = require('../function/compare')
 
 const __uniq = (dst, dstStart, src, srcStart, srcEnd, fnEq) => {
-	if (srcEnd - srcStart <= 0) { return 0 }
+	const n = srcEnd - srcStart
+	if (n <= 0) { return 0 }
 
 	let writeIndex = dstStart
-	let readIndex = srcStart
 
-	let item = src[readIndex++]
+	let item = src[srcStart]
 	dst[writeIndex++] = item
 
-	while (readIndex < srcEnd) {
-		item = src[readIndex++]
+	for (let i = 1; i < n; i++) {
+		item = src[srcStart + i]
 		const exists = __includes(dst, dstStart, writeIndex, item, fnEq)
 		if (exists) { continue }
 		dst[writeIndex++] = item
@@ -21,18 +21,40 @@ const __uniq = (dst, dstStart, src, srcStart, srcEnd, fnEq) => {
 	return writeIndex - dstStart
 }
 
-const __uniqSorted = (dst, dstStart, src, srcStart, srcEnd, fnCmp) => {
-	if (srcEnd - srcStart <= 0) { return 0 }
+const __uniqBy = (dst, dstStart, src, srcStart, srcEnd, fnMap) => {
+	const n = srcEnd - srcStart
+	if (n <= 0) { return 0 }
 
 	let writeIndex = dstStart
-	let readIndex = srcStart
+	const first = src[srcStart]
+	dst[writeIndex++] = first
 
-	let item = src[readIndex++]
+	const set = new Set([ fnMap(first) ])
+	let size = 1
+	for (let i = 0; i < n; i++) {
+		const item = src[srcStart + i]
+		const mapped = fnMap(item)
+		set.add(mapped)
+		if (set.size === size) { continue }
+		size = set.size
+		dst[writeIndex++] = item
+	}
+
+	return writeIndex - dstStart
+}
+
+const __uniqSorted = (dst, dstStart, src, srcStart, srcEnd, fnCmp) => {
+	const n = srcEnd - srcStart
+	if (n <= 0) { return 0 }
+
+	let writeIndex = dstStart
+
+	let item = src[dstStart]
 	dst[writeIndex++] = item
 	let prev = item
 
-	while (readIndex < srcEnd) {
-		item = src[readIndex++]
+	for (let i = 1; i < n; i++) {
+		item = src[srcStart + i]
 		if (fnCmp(item, prev) === 0) { continue }
 		dst[writeIndex++] = item
 		prev = item
@@ -65,19 +87,21 @@ uniqWith.$$$ = uniqWith$$$
 
 
 const uniqBy = (arr, fnMap) => {
-	const res = []
-	__uniq(res, 0, arr, 0, arr.length, eqBy(fnMap))
+	const { length } = arr
+	const res = new Array(length)
+	const n = __uniqBy(res, 0, arr, 0, length, fnMap)
+	res.length = n
 	return res
 }
 
 const uniqByTo = (dst, arr, fnMap) => {
-	const n = __uniq(dst, 0, arr, 0, arr.length, eqBy(fnMap))
+	const n = __uniqBy(dst, 0, arr, 0, arr.length, fnMap)
 	dst.length = n
 	return dst
 }
 
 const uniqBy$$$ = (arr, fnMap) => {
-	const n = __uniq(arr, 0, arr, 0, arr.length, eqBy(fnMap))
+	const n = __uniqBy(arr, 0, arr, 0, arr.length, fnMap)
 	arr.length = n
 	return arr
 }
@@ -86,21 +110,21 @@ uniqBy.to = uniqByTo
 uniqBy.$$$ = uniqBy$$$
 
 
-const uniq = (arr) => {
-	const res = []
-	__uniq(res, 0, arr, 0, arr.length, eq)
-	return res
-}
+const uniq = (arr) => Array.from(new Set(arr))
 
 const uniqTo = (dst, arr) => {
-	const n = __uniq(dst, 0, arr, 0, arr.length, eq)
-	dst.length = n
+	const res = Array.from(new Set(arr))
+	const { length } = res
+	dst.length = length
+	__copy(dst, 0, res, 0, length)
 	return dst
 }
 
 const uniq$$$ = (arr) => {
-	const n = __uniq(arr, 0, arr, 0, arr.length, eq)
-	arr.length = n
+	const res = Array.from(new Set(arr))
+	const { length } = res
+	arr.length = length
+	__copy(arr, 0, res, 0, length)
 	return arr
 }
 

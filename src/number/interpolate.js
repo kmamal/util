@@ -1,4 +1,4 @@
 
-const interpolate = (a, b, r) => a + (b - a) * r
+const interpolate = (a, b, r) => a * (1 - r) + b * r
 
 module.exports = { interpolate }

@@ -1,42 +1,23 @@
 
 const __unweave = (dst, dstStart, src, srcStart, srcEnd, num) => {
-	const length = srcEnd - srcStart
+	const n = srcEnd - srcStart
+	const remaining = n % num
+	const fullLoops = (n - remaining) / num
 
-	const div = Math.floor(length / num)
-	const mod = length % num
-
-	let writeIndex = dstStart
-	let readIndex = srcStart
-	{
-		const divp1 = div + 1
-		while (writeIndex < mod) {
-			const chunk = new Array(divp1)
-			chunk[0] = src[readIndex++]
-			dst[writeIndex++] = chunk
-		}
-
-		if (div === 0) {
-			while (writeIndex < num) { dst[writeIndex++] = [] }
-			return
-		}
-
-		while (writeIndex < num) {
-			const chunk = new Array(div)
-			chunk[0] = src[readIndex++]
-			dst[writeIndex++] = chunk
-		}
+	for (let i = 0; i < remaining; i++) {
+		dst[dstStart + i] = new Array(fullLoops + 1)
+	}
+	for (let i = remaining; i < num; i++) {
+		dst[dstStart + i] = new Array(fullLoops)
 	}
 
-	let depth = 1
-	while (depth < div) {
+	for (let depth = 0; depth < fullLoops; depth++) {
 		for (let i = 0; i < num; i++) {
-			dst[i][depth] = src[readIndex++]
+			dst[dstStart + i][depth] = src[srcStart + depth * num + i]
 		}
-		depth++
 	}
-
-	for (let i = 0; i < mod; i++) {
-		dst[i][depth] = src[readIndex++]
+	for (let i = 0; i < remaining; i++) {
+		dst[dstStart + i][fullLoops] = src[srcStart + fullLoops * num + i]
 	}
 }
 

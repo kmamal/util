@@ -1,8 +1,7 @@
 
 const __forEach = (arr, start, end, fn) => {
 	for (let i = start; i < end; i++) {
-		const item = arr[i]
-		fn(item)
+		fn(arr[i])
 	}
 }
 
