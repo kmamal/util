@@ -1,21 +1,26 @@
 const { test } = require('@kmamal/testing')
-const { findIndex, findIndexRight, find, findRight } = require('./find')
+const {
+	// find,
+	findRight,
+	// findIndex,
+	findIndexRight,
+} = require('./find')
 
-test("array.findIndex", (t) => {
-	t.equal(findIndex([], () => true), -1)
-	t.equal(findIndex([ 1 ], (x) => x > 1), -1)
-	t.equal(findIndex([ 1 ], (x) => x === 1), 0)
-	t.equal(findIndex([ 1, 2, 3 ], (x) => x > 1), 1)
-	t.equal(findIndex([ 1, 2, 3 ], (x) => x > 5), -1)
-})
+// test("array.findIndex", (t) => {
+// 	t.equal(findIndex([], () => true), -1)
+// 	t.equal(findIndex([ 1 ], (x) => x > 1), -1)
+// 	t.equal(findIndex([ 1 ], (x) => x === 1), 0)
+// 	t.equal(findIndex([ 1, 2, 3 ], (x) => x > 1), 1)
+// 	t.equal(findIndex([ 1, 2, 3 ], (x) => x > 5), -1)
+// })
 
-test("array.find", (t) => {
-	t.equal(find([], () => true), undefined)
-	t.equal(find([ 1 ], (x) => x > 1), undefined)
-	t.equal(find([ 1 ], (x) => x === 1), 1)
-	t.equal(find([ 1, 2, 3 ], (x) => x > 1), 2)
-	t.equal(find([ 1, 2, 3 ], (x) => x > 5), undefined)
-})
+// test("array.find", (t) => {
+// 	t.equal(find([], () => true), undefined)
+// 	t.equal(find([ 1 ], (x) => x > 1), undefined)
+// 	t.equal(find([ 1 ], (x) => x === 1), 1)
+// 	t.equal(find([ 1, 2, 3 ], (x) => x > 1), 2)
+// 	t.equal(find([ 1, 2, 3 ], (x) => x > 5), undefined)
+// })
 
 test("array.findIndexRight", (t) => {
 	t.equal(findIndexRight([], () => true), -1)

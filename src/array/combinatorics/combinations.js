@@ -2,7 +2,7 @@
 const __recurse = function * (dst, dstIndex, src, n, k, index) {
 	const remaining = k - dstIndex
 	if (remaining === 0) {
-		yield Array.from(dst)
+		yield dst
 		return
 	}
 
@@ -17,9 +17,18 @@ const __recurse = function * (dst, dstIndex, src, n, k, index) {
 	}
 }
 
-const combinations = function * (arr, k) {
+const _combinations = function * (arr, k) {
 	const res = new Array(k)
 	yield* __recurse(res, 0, arr, arr.length, k, 0)
 }
 
-module.exports = { combinations }
+const combinations = function * (arr, k) {
+	for (const res of _combinations(arr, k)) {
+		yield Array.from(res)
+	}
+}
+
+module.exports = {
+	_combinations,
+	combinations,
+}

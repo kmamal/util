@@ -1,8 +1,8 @@
 const { test } = require('@kmamal/testing')
 const {
-	indexOf,
+	// indexOf,
 	indexOfRight,
-	indexOfSorted,
+	// indexOfSorted,
 	indexOfSortedRight,
 	indexOfBy,
 	indexOfByRight,
@@ -10,17 +10,17 @@ const {
 	indexOfBySortedRight,
 } = require('./index-of')
 
-test("array.indexOf", (t) => {
-	t.equal(indexOf([], 1), -1)
-	t.equal(indexOf([], undefined), -1)
-	t.equal(indexOf([ 1 ], 1), 0)
-	t.equal(indexOf([ 1 ], 2), -1)
-	t.equal(indexOf([ 1, 2, 3 ], 1), 0)
-	t.equal(indexOf([ 1, 2, 3 ], 2), 1)
-	t.equal(indexOf([ 1, 2, 3 ], 3), 2)
-	t.equal(indexOf([ 1, 2, 3 ], 0), -1)
-	t.equal(indexOf([ 1, 2, 3 ], 5), -1)
-})
+// test("array.indexOf", (t) => {
+// 	t.equal(indexOf([], 1), -1)
+// 	t.equal(indexOf([], undefined), -1)
+// 	t.equal(indexOf([ 1 ], 1), 0)
+// 	t.equal(indexOf([ 1 ], 2), -1)
+// 	t.equal(indexOf([ 1, 2, 3 ], 1), 0)
+// 	t.equal(indexOf([ 1, 2, 3 ], 2), 1)
+// 	t.equal(indexOf([ 1, 2, 3 ], 3), 2)
+// 	t.equal(indexOf([ 1, 2, 3 ], 0), -1)
+// 	t.equal(indexOf([ 1, 2, 3 ], 5), -1)
+// })
 
 test("array.indexOfRight", (t) => {
 	t.equal(indexOfRight([], 1), -1)
@@ -34,17 +34,17 @@ test("array.indexOfRight", (t) => {
 	t.equal(indexOfRight([ 1, 2, 3 ], 5), -1)
 })
 
-test("array.indexOfSorted", (t) => {
-	t.equal(indexOfSorted([], 1), -1)
-	t.equal(indexOfSorted([], undefined), -1)
-	t.equal(indexOfSorted([ 1 ], 1), 0)
-	t.equal(indexOfSorted([ 1 ], 2), -1)
-	t.equal(indexOfSorted([ 1, 2, 3 ], 1), 0)
-	t.equal(indexOfSorted([ 1, 2, 3 ], 2), 1)
-	t.equal(indexOfSorted([ 1, 2, 3 ], 3), 2)
-	t.equal(indexOfSorted([ 1, 2, 3 ], 0), -1)
-	t.equal(indexOfSorted([ 1, 2, 3 ], 5), -1)
-})
+// test("array.indexOfSorted", (t) => {
+// 	t.equal(indexOfSorted([], 1), -1)
+// 	t.equal(indexOfSorted([], undefined), -1)
+// 	t.equal(indexOfSorted([ 1 ], 1), 0)
+// 	t.equal(indexOfSorted([ 1 ], 2), -1)
+// 	t.equal(indexOfSorted([ 1, 2, 3 ], 1), 0)
+// 	t.equal(indexOfSorted([ 1, 2, 3 ], 2), 1)
+// 	t.equal(indexOfSorted([ 1, 2, 3 ], 3), 2)
+// 	t.equal(indexOfSorted([ 1, 2, 3 ], 0), -1)
+// 	t.equal(indexOfSorted([ 1, 2, 3 ], 5), -1)
+// })
 
 test("array.indexOfSortedRight", (t) => {
 	t.equal(indexOfSortedRight([], 1), -1)

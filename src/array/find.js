@@ -15,8 +15,8 @@ const findRight = (arr, fnPred) => {
 }
 
 module.exports = {
-	findIndex,
+	// findIndex,
 	findIndexRight,
-	find,
+	// find,
 	findRight,
 }

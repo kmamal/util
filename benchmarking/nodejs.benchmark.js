@@ -443,3 +443,21 @@ benchmark("array max", {
 	},
 	time: 1e2,
 })
+
+benchmark("generators vs callbacks", {
+	pre: () => ({
+		* generator () { for (let i = 0; i < 1000; i++) { yield i } },
+		callback (fn) { for (let i = 0; i < 1000; i++) { fn(i) } },
+	}),
+	cases: {
+		generator: ({ generator }) => {
+			const a = []
+			for (const x of generator()) { a.push(x) }
+		},
+		callback: ({ callback }) => {
+			const a = []
+			callback((x) => { a.push(x) })
+		},
+	},
+	time: 1e2,
+})

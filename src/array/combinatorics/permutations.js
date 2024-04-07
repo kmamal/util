@@ -25,14 +25,23 @@ const permutations$$$ = function * (arr) {
 	yield* __recurse(arr, 0, arr.length)
 }
 
-const permutations = function * (arr) {
+const _permutations = function * (arr) {
 	const other = Array.from(arr)
 	const iterator = __recurse(other, 0, other.length)
 	while (!iterator.next().done) {
-		yield Array.from(other)
+		yield other
+	}
+}
+
+const permutations = function * (arr) {
+	for (const res of _permutations(arr)) {
+		yield Array.from(res)
 	}
 }
 
 permutations.$$$ = permutations$$$
 
-module.exports = { permutations }
+module.exports = {
+	_permutations,
+	permutations,
+}

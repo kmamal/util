@@ -1,7 +1,7 @@
 
 const __recurse = function * (dst, src, index, length) {
 	if (index === length) {
-		yield Array.from(dst)
+		yield dst
 		return
 	}
 
@@ -13,12 +13,21 @@ const __recurse = function * (dst, src, index, length) {
 	}
 }
 
-const product = function * (arr) {
+const _product = function * (arr) {
 	const { length } = arr
 	if (length === 0) { return }
 	const res = new Array(length)
 	yield* __recurse(res, arr, 0, length)
 }
 
+const product = function * (arr) {
+	for (const res of _product(arr)) {
+		yield Array.from(res)
+	}
+}
 
-module.exports = { product }
+
+module.exports = {
+	_product,
+	product,
+}

@@ -1,7 +1,6 @@
 const { __partitionLeftRight } = require('./sorting/quicksort/partition-left-right')
 const { __insertionsort } = require('./sorting/insertionsort')
 const { swap } = require('./swap')
-const { indexOf } = require('./index-of')
 const { compare, compareBy } = require('../function/compare')
 
 const swap$$$ = swap.$$$
@@ -76,7 +75,7 @@ selectWith.$$$ = selectWith$$$
 
 const selectIndexWith = (arr, n, fnCmp) => {
 	const item = selectWith(arr, n, fnCmp)
-	return indexOf(arr, item)
+	return arr.indexOf(item)
 }
 
 const selectIndexWith$$$ = (arr, n, fnCmp) => __select(arr, 0, arr.length, n, fnCmp)
@@ -100,7 +99,7 @@ selectBy.$$$ = selectBy$$$
 
 const selectIndexBy = (arr, n, fnMap) => {
 	const item = selectBy(arr, n, fnMap)
-	return indexOf(arr, item)
+	return arr.indexOf(item)
 }
 
 const selectIndexBy$$$ = (arr, n, fnMap) => __select(arr, 0, arr.length, n, compareBy(fnMap))
@@ -124,7 +123,7 @@ select.$$$ = select$$$
 
 const selectIndex = (arr, n) => {
 	const item = select(arr, n)
-	return indexOf(arr, item)
+	return arr.indexOf(item)
 }
 
 const selectIndex$$$ = (arr, n) => __select(arr, 0, arr.length, n, compare)

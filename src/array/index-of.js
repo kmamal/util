@@ -3,7 +3,7 @@ const { __binarySearch } = require('./searching/binary')
 const { eq } = require('../operators')
 const { compare, strictLess, strictGreater } = require('../function/compare')
 
-const LINEAR_SEARCH_CUTOFF = 8
+const LINEAR_SEARCH_CUTOFF = 5000
 
 const __indexOf = (arr, start, end, x, fnEq) => __linearSearch(arr, start, end, x, fnEq)
 
@@ -83,12 +83,12 @@ module.exports = {
 	indexOfWithRight,
 	indexOfBy,
 	indexOfByRight,
-	indexOf,
+	// indexOf,
 	indexOfRight,
 	indexOfWithSorted,
 	indexOfWithSortedRight,
 	indexOfBySorted,
 	indexOfBySortedRight,
-	indexOfSorted,
+	// indexOfSorted,
 	indexOfSortedRight,
 }

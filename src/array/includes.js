@@ -40,8 +40,8 @@ module.exports = {
 	__includesSorted,
 	includesWith,
 	includesBy,
-	includes,
+	// includes,
 	includesWithSorted,
 	includesBySorted,
-	includesSorted,
+	// includesSorted,
 }

@@ -19,7 +19,7 @@
   "devDependencies": {
     "@kmamal/benchmarking": "^0.0.3",
     "@kmamal/globs": "^0.0.4",
-    "@kmamal/testing": "^0.0.29"
+    "@kmamal/testing": "^0.0.30"
   },
   "exports": {
     "./array/slice": "./src/array/slice.js",
@@ -53,6 +53,7 @@
     "./array/start-index": "./src/array/start-index.js",
     "./array/difference": "./src/array/difference.js",
     "./array/fill-with": "./src/array/fill-with.js",
+    "./array/aperture": "./src/array/aperture.js",
     "./array/swap": "./src/array/swap.js",
     "./array/is-sorted": "./src/array/is-sorted.js",
     "./array/select": "./src/array/select.js",
@@ -149,6 +150,8 @@
     "./object/matches": "./src/object/matches.js",
     "./object/from-entries": "./src/object/from-entries.js",
     "./object/is-equal": "./src/object/is-equal.js",
+    "./object/accessors": "./src/object/accessors.js",
+    "./object/invert": "./src/object/invert.js",
     "./object/to-entries": "./src/object/to-entries.js",
     "./object/from-entries.benchmark": "./src/object/from-entries.benchmark.js",
     "./object/defaults.benchmark": "./src/object/defaults.benchmark.js",
@@ -159,6 +162,7 @@
     "./object/defaults": "./src/object/defaults.js",
     "./object/merge": "./src/object/merge.js",
     "./object/to-entries.benchmark": "./src/object/to-entries.benchmark.js",
+    "./object/unwind": "./src/object/unwind.js",
     "./random/choose-n": "./src/random/choose-n.js",
     "./random/rand-int": "./src/random/rand-int.js",
     "./random/random.benchmark": "./src/random/random.benchmark.js",
@@ -168,6 +172,7 @@
     "./random/choose": "./src/random/choose.js",
     "./random/rand": "./src/random/rand.js",
     "./random/seeded/middle-square-weyl": "./src/random/seeded/middle-square-weyl.js",
+    "./string/unicode/utf-16": "./src/string/unicode/utf-16.js",
     "./string/case/locale-upper": "./src/string/case/locale-upper.js",
     "./string/case/upper-first": "./src/string/case/upper-first.js",
     "./string/case/kebab": "./src/string/case/kebab.js",
@@ -203,6 +208,7 @@
     "./function/arity/binary": "./src/function/arity/binary.js",
     "./function/arity/nullary": "./src/function/arity/nullary.js",
     "./function/noop": "./src/function/noop.js",
+    "./function/unfold": "./src/function/unfold.js",
     "./number/clamp": "./src/number/clamp.js",
     "./number/interpolate": "./src/number/interpolate.js",
     "./number/rounding": "./src/number/rounding.js",
