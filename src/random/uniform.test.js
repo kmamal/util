@@ -1,7 +1,7 @@
 const { test } = require('@kmamal/testing')
-const { random } = require('./random')
+const { uniform } = require('./uniform')
 
-test("random.random", (t) => {
+test("random.uniform", (t) => {
 	const N = 100000
 	let min = Infinity
 	let max = -Infinity
@@ -10,7 +10,7 @@ test("random.random", (t) => {
 	const buckets = new Array(A).fill(0)
 
 	for (let i = 0; i < N; i++) {
-		const r = random()
+		const r = uniform()
 		min = Math.min(min, r)
 		max = Math.max(max, r)
 		sum += r

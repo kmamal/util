@@ -3,7 +3,7 @@ const { random } = require('./random')
 
 benchmark("ransom :: random", {
 	cases: {
-		"@kmamal/random/random": () => {
+		"@kmamal/random/uniform": () => {
 			random()
 		},
 		"Math.random": () => {

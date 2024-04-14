@@ -1,7 +1,7 @@
-const { random } = require('./random')
+const { uniform } = require('./uniform')
 
 const randFloat = (_a, _b, options) => {
-	const getRandom = options?.random ?? random
+	const getRandom = options?.random ?? uniform
 
 	let a = _a
 	let b = _b

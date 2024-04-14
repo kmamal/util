@@ -26,7 +26,7 @@ class MiddleSquareWeyl {
 		return x
 	}
 
-	random () {
+	uniform () {
 		const a = this.next()
 		const b = this.next()
 		const c = this.next()

@@ -11,11 +11,11 @@ const __chooseN = (dst, dstStart, src, srcStart, srcEnd, _n, options) => {
 
 	if (3 * n > length) {
 		let readIndex = srcStart
-		for (let i = 0 ; i < n; i++) {
+		for (let i = 0; i < n; i++) {
 			dst[writeIndex++] = src[readIndex++]
 		}
 
-		for (let i = n ; i < length; i++) {
+		for (let i = n; i < length; i++) {
 			const r = rand(i + 1)
 			if (r < n) {
 				dst[dstStart + r] = src[srcStart + i]

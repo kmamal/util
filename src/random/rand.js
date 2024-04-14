@@ -1,7 +1,7 @@
-const { random } = require('./random')
+const { uniform } = require('./uniform')
 
 const rand = (n, options) => {
-	const getRandom = options?.random ?? random
+	const getRandom = options?.random ?? uniform
 	return Math.floor(getRandom() * n)
 }
 
