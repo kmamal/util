@@ -1,10 +1,10 @@
 const { benchmark } = require('@kmamal/benchmarking')
-const { random } = require('./random')
+const { uniform } = require('./uniform')
 
-benchmark("ransom :: random", {
+benchmark("random :: uniform", {
 	cases: {
 		"@kmamal/random/uniform": () => {
-			random()
+			uniform()
 		},
 		"Math.random": () => {
 			Math.random()
