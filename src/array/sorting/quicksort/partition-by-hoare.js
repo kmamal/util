@@ -1,3 +1,6 @@
+const { swap } = require('../../swap')
+
+const swap$$$ = swap.$$$
 
 const __partitionByHoare = (arr, start, end, pivot, fnCmp) => {
 	let startIndex = start
@@ -15,9 +18,7 @@ const __partitionByHoare = (arr, start, end, pivot, fnCmp) => {
 
 		if (startIndex >= endIndex) { break }
 
-		const tmp = arr[endIndex]
-		arr[endIndex] = arr[startIndex]
-		arr[startIndex] = tmp
+		swap$$$(arr, startIndex, endIndex)
 		startIndex += 1
 		endIndex -= 1
 	}

@@ -1,12 +1,13 @@
 const { randInt } = require('./rand-int')
+const { swap } = require('../array/swap')
+
+const swap$$$ = swap.$$$
 
 const __shuffle = (arr, start, end, limit, options) => {
 	const stop = Math.min(end, limit) - 1
 	for (let i = start; i < stop; i++) {
 		const index = randInt(i, end, options)
-		const tmp = arr[index]
-		arr[index] = arr[i]
-		arr[i] = tmp
+		swap$$$(arr, index, i)
 	}
 	return arr
 }

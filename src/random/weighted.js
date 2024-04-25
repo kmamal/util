@@ -5,11 +5,6 @@ const { compareBy, strictLess } = require('../function/compare')
 const { sub } = require('../operators/arithmetic/sub')
 
 
-const prefixSumsByTo = prefixSumsBy.to
-const prefixSumsTo = prefixSums.to
-const _tmp = []
-
-
 const __chooseFromPrefixSums = (arr, start, end, fnCmp, options) => {
 	const length = end - start
 	if (length === 0) { return -1 }
@@ -29,14 +24,14 @@ const chooseFromPrefixSums = (arr, options) => __chooseFromPrefixSums(arr, 0, ar
 
 
 const chooseFromWeights = (arr) => {
-	prefixSumsTo(_tmp, arr)
-	return __chooseFromPrefixSums(_tmp, 0, arr.length, sub)
+	const sums = prefixSums(arr)
+	return __chooseFromPrefixSums(sums, 0, arr.length, sub)
 }
 
 
 const chooseWeightedBy = (arr, fnMap) => {
-	prefixSumsByTo(_tmp, arr, fnMap)
-	const index = __chooseFromPrefixSums(_tmp, 0, arr.length, sub)
+	const sums = prefixSumsBy(arr, fnMap)
+	const index = __chooseFromPrefixSums(sums, 0, sums.length, sub)
 	return arr[index]
 }
 

@@ -1,11 +1,10 @@
-const { empty$$$ } = require('../object/empty')
-
 
 const __groupBy = (dst, arr, start, end, fnMap) => {
 	for (let i = start; i < end; i++) {
 		const item = arr[i]
 		const key = fnMap(item)
-		const list = dst[key] ??= []
+		let list = dst.get(key)
+		if (list === undefined) { dst.set(key, list = []) }
 		list.push(item)
 	}
 	return dst
@@ -13,13 +12,12 @@ const __groupBy = (dst, arr, start, end, fnMap) => {
 
 
 const groupBy = (arr, fnMap) => {
-	const res = Object.create(null)
+	const res = new Map()
 	__groupBy(res, arr, 0, arr.length, fnMap)
 	return res
 }
 
 const groupByTo = (dst, arr, fnMap) => {
-	empty$$$(dst)
 	__groupBy(dst, arr, 0, arr.length, fnMap)
 	return dst
 }
