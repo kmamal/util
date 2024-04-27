@@ -41,9 +41,9 @@ const parse = (value) => {
 
 const from = ({ sign: s = 0, exponent: e = 0, mantissa: m = 0 }) => {
 	const value = 0
-	| ((s & 0x01) << (MANTISSA_BITS + EXPONENT_BITS))
-	| ((e & EXPONENT_MASK) << MANTISSA_BITS)
-	| ((m & MANTISSA_MASK))
+		| ((s & 0x01) << (MANTISSA_BITS + EXPONENT_BITS))
+		| ((e & EXPONENT_MASK) << MANTISSA_BITS)
+		| ((m & MANTISSA_MASK))
 
 	const buffer = new ArrayBuffer(BYTES)
 	const view = new DataView(buffer)

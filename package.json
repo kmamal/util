@@ -34,6 +34,7 @@
     "./array/index-of.benchmark": "./src/array/index-of.benchmark.js",
     "./array/copy.benchmark": "./src/array/copy.benchmark.js",
     "./array/compact": "./src/array/compact.js",
+    "./array/partition": "./src/array/partition.js",
     "./array/copy": "./src/array/copy.js",
     "./array/for-each.benchmark": "./src/array/for-each.benchmark.js",
     "./array/weave": "./src/array/weave.js",

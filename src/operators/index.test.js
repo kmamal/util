@@ -13,9 +13,9 @@ test("operators", (t) => {
 	for (const [ a, b ] of pairs) {
 		t.equal(Ops.add(a, b), a + b)
 		t.equal(Ops.div(a, b), a / b)
-		t.equal(Ops.neg(a), -a)
 		t.equal(Ops.mod(a, b), a % b)
 		t.equal(Ops.mul(a, b), a * b)
+		t.equal(Ops.neg(a), -a)
 		t.equal(Ops.pow(a, b), a ** b)
 		t.equal(Ops.sub(a, b), a - b)
 
