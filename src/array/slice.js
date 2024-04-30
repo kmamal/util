@@ -1,5 +1,4 @@
-const { startIndex } = require('./start-index')
-const { endIndex } = require('./end-index')
+const { startIndex, endIndex } = require('./relative-indexing')
 const { __copy } = require('./copy')
 const { clamp } = require('../number/clamp')
 

@@ -107,6 +107,27 @@ benchmark("object iterate values", {
 	time: 1e2,
 })
 
+benchmark("map iterate values", {
+	cases: {
+		".keys": () => {
+			let _
+			const a = new Map([ [ 'a', 1 ], [ 'b', 2 ], [ 'c', 3 ], [ 'd', 4 ], [ 'e', 5 ] ])
+			for (const key of a.keys()) { _ = a.get(key) }
+		},
+		".values": () => {
+			let _
+			const a = new Map([ [ 'a', 1 ], [ 'b', 2 ], [ 'c', 3 ], [ 'd', 4 ], [ 'e', 5 ] ])
+			for (const value of a.values()) { _ = value }
+		},
+		".entries": () => {
+			let _
+			const a = new Map([ [ 'a', 1 ], [ 'b', 2 ], [ 'c', 3 ], [ 'd', 4 ], [ 'e', 5 ] ])
+			for (const entry of a.entries()) { _ = entry[1] }
+		},
+	},
+	time: 1e2,
+})
+
 benchmark("static string join", {
 	pre: () => [ 'a'.repeat(100), 'b'.repeat(200) ],
 	cases: {
@@ -457,6 +478,24 @@ benchmark("generators vs callbacks", {
 		callback: ({ callback }) => {
 			const a = []
 			callback((x) => { a.push(x) })
+		},
+	},
+	time: 1e2,
+})
+
+benchmark("log functions", {
+	pre: () => ({
+		a: Array.from({ length: 1000 }, () => (Math.random() - 0.5) * 5),
+	}),
+	cases: {
+		'Math.log': ({ a }) => {
+			for (let i = 0; i < a.length; i++) { Math.log(a[i]) }
+		},
+		'Math.log2': ({ a }) => {
+			for (let i = 0; i < a.length; i++) { Math.log2(a[i]) }
+		},
+		'Math.log10': ({ a }) => {
+			for (let i = 0; i < a.length; i++) { Math.log10(a[i]) }
 		},
 	},
 	time: 1e2,

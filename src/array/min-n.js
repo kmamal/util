@@ -40,16 +40,16 @@ const __minN = (dst, dstStart, src, srcStart, srcEnd, n, fnCmp) => {
 	const fnCmpEntries = (a, b) => fnCmp(b.item, a.item)
 	const dstEnd = dstStart + limit
 
-	__heapify(dst, dstStart, dstEnd, fnCmpEntries, false)
+	__heapify(dst, dstStart, dstEnd, fnCmpEntries)
 
-	let topEntry = dst[dstStart]
+	let worstEntry = dst[dstStart]
 	for (let i = limit; i < length; i++) {
 		const item = src[srcStart + i]
-		if (fnCmp(item, topEntry.item) < 0) {
-			topEntry.item = item
-			topEntry.index = srcStart + i
-			__bubbleDown(dst, dstStart, dstEnd, dstStart, fnCmpEntries, false)
-			topEntry = dst[dstStart]
+		if (fnCmp(item, worstEntry.item) < 0) {
+			worstEntry.item = item
+			worstEntry.index = srcStart + i
+			__bubbleDown(dst, dstStart, dstEnd, dstStart, fnCmpEntries)
+			worstEntry = dst[dstStart]
 		}
 	}
 

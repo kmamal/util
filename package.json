@@ -13,7 +13,7 @@
     "update-exports": "node ./scripts/update-exports.mjs"
   },
   "dependencies": {
-    "@kmamal/heap": "^0.0.8",
+    "@kmamal/heap": "^0.0.9",
     "@kmamal/linked-list": "^0.0.2"
   },
   "devDependencies": {
@@ -50,7 +50,6 @@
     "./array/xor": "./src/array/xor.js",
     "./array/interpose": "./src/array/interpose.js",
     "./array/min-n": "./src/array/min-n.js",
-    "./array/start-index": "./src/array/start-index.js",
     "./array/difference": "./src/array/difference.js",
     "./array/fill-with": "./src/array/fill-with.js",
     "./array/aperture": "./src/array/aperture.js",
@@ -101,11 +100,11 @@
     "./array/sorting/quicksort/partition-by-hoare": "./src/array/sorting/quicksort/partition-by-hoare.js",
     "./array/sorting/quicksort/select-pivot-last": "./src/array/sorting/quicksort/select-pivot-last.js",
     "./array/sorting/quicksort/partition-by-lomuto": "./src/array/sorting/quicksort/partition-by-lomuto.js",
+    "./array/relative-indexing": "./src/array/relative-indexing.js",
     "./array/merge": "./src/array/merge.js",
     "./array/uniq": "./src/array/uniq.js",
     "./array/find.benchmark": "./src/array/find.benchmark.js",
     "./array/includes": "./src/array/includes.js",
-    "./array/end-index": "./src/array/end-index.js",
     "./map/group-by": "./src/map/group-by.js",
     "./map/add-default": "./src/map/add-default.js",
     "./map/count": "./src/map/count.js",
