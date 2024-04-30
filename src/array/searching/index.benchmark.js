@@ -5,7 +5,7 @@ const { __binarySearch } = require('./binary')
 const { __interpolationSearch } = require('./interpolation')
 const { __exponentialSearch } = require('./exponential')
 
-const { fillWith } = require('../fill-with')
+const { create } = require('../create')
 const { identity } = require('../../function/identity')
 const { rand } = require('../../random/rand')
 
@@ -86,7 +86,7 @@ benchmark.complex("array :: search algorithms", {
 			],
 		},
 	},
-	pre: ({ n, funcs }) => fillWith.$$$(new Array(n), funcs.map),
+	pre: ({ n, funcs }) => create(n, funcs.map),
 	callback: ({ algo, n, funcs }, arr) => {
 		const x = funcs.get(arr[rand(n)])
 		algo(arr, x, funcs.get)

@@ -3,12 +3,12 @@ const {
 	selectIndex,
 	select,
 } = require('./select')
-const { fillWith } = require('./fill-with')
+const { create } = require('./create')
 const { identity } = require('../function/identity')
 const { shuffle } = require('../random/shuffle')
 
 
-const nums = fillWith.$$$(new Array(10), identity)
+const nums = create(10, identity)
 
 test("array.selectIndex", (t) => {
 	for (let i = 0; i < nums.length; i++) {
