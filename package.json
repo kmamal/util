@@ -54,6 +54,7 @@
     "./array/fill-with": "./src/array/fill-with.js",
     "./array/aperture": "./src/array/aperture.js",
     "./array/swap": "./src/array/swap.js",
+    "./array/create": "./src/array/create.js",
     "./array/is-sorted": "./src/array/is-sorted.js",
     "./array/select": "./src/array/select.js",
     "./array/repeat": "./src/array/repeat.js",
