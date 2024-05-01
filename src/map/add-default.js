@@ -1,5 +1,7 @@
 
 const addDefault = (map, fn) => {
+	map.getRaw = Map.prototype.get
+
 	map.get = (key) => {
 		if (!map.has(key)) {
 			const value = fn(key)
