@@ -2,11 +2,12 @@ const { permutations } = require('../../combinatorics/permutations')
 const { isEqual } = require('../../../object/is-equal')
 
 const { radixsortBy } = require('../radixsort')
+const { create } = require('../../create')
 const { identity } = require('../../../function/identity')
 
 let length = 0
 for (;;) {
-	const A = Array.from({ length }, (x, i) => i)
+	const A = create(length, identity)
 
 	for (const B of permutations(A)) {
 		const C = Array.from(B)
