@@ -45,13 +45,6 @@ const __chooseN = (dst, dstStart, src, srcStart, srcEnd, _n, options) => {
 	return n
 }
 
-const chooseN$$$ = (arr, n, options) => {
-	const { length } = arr
-	__shuffle(arr, 0, length, n, options)
-	arr.length = Math.min(length, n)
-	return arr
-}
-
 const chooseN = (arr, n, options) => {
 	const res = new Array(n)
 	const m = __chooseN(res, 0, arr, 0, arr.length, n, options)
@@ -59,7 +52,24 @@ const chooseN = (arr, n, options) => {
 	return res
 }
 
+const chooseNTo = (dst, arr, _n, options) => {
+	const { length } = arr
+	const n = Math.min(length, _n)
+	__shuffle(dst, 0, length, n, options)
+	dst.length = n
+	return dst
+}
+
+const chooseN$$$ = (arr, _n, options) => {
+	const { length } = arr
+	const n = Math.min(length, _n)
+	__shuffle(arr, 0, length, n, options)
+	arr.length = n
+	return arr
+}
+
 chooseN.$$$ = chooseN$$$
+chooseN.to = chooseNTo
 
 module.exports = {
 	__chooseN,
