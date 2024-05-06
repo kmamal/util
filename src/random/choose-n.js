@@ -52,11 +52,9 @@ const chooseN = (arr, n, options) => {
 	return res
 }
 
-const chooseNTo = (dst, arr, _n, options) => {
-	const { length } = arr
-	const n = Math.min(length, _n)
-	__shuffle(dst, 0, length, n, options)
-	dst.length = n
+const chooseNTo = (dst, arr, n, options) => {
+	const m = __chooseN(dst, 0, arr, 0, arr.length, n, options)
+	dst.length = m
 	return dst
 }
 
