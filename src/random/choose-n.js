@@ -45,16 +45,19 @@ const __chooseN = (dst, dstStart, src, srcStart, srcEnd, _n, options) => {
 	return n
 }
 
-const chooseN = (arr, n, options) => {
+const chooseN = (arr, _n, options) => {
+	const { length } = arr
+	const n = Math.min(length, _n)
 	const res = new Array(n)
-	const m = __chooseN(res, 0, arr, 0, arr.length, n, options)
-	res.length = m
+	__chooseN(res, 0, arr, 0, length, n, options)
 	return res
 }
 
-const chooseNTo = (dst, arr, n, options) => {
-	const m = __chooseN(dst, 0, arr, 0, arr.length, n, options)
-	dst.length = m
+const chooseNTo = (dst, arr, _n, options) => {
+	const { length } = arr
+	const n = Math.min(length, _n)
+	dst.length = n
+	__chooseN(dst, 0, arr, 0, arr.length, n, options)
 	return dst
 }
 

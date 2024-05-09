@@ -13,8 +13,8 @@ const map$$$ = (arr, fn) => {
 
 const mapTo = (dst, arr, fn) => {
 	const { length } = arr
-	__map(dst, 0, arr, 0, length, fn)
 	dst.length = length
+	__map(dst, 0, arr, 0, length, fn)
 	return dst
 }
 

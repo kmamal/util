@@ -1,4 +1,7 @@
 const { benchmark } = require('@kmamal/benchmarking')
+const Fs = require('node:fs')
+const Path = require('node:path')
+const Os = require('node:os')
 
 benchmark("array iteration", {
 	cases: {
@@ -496,6 +499,92 @@ benchmark("log functions", {
 		},
 		'Math.log10': ({ a }) => {
 			for (let i = 0; i < a.length; i++) { Math.log10(a[i]) }
+		},
+	},
+	time: 1e2,
+})
+
+benchmark("code generation", {
+	pre: () => ({
+		eval: () => eval('(a, b) => b % 2 ? a + b : b % 3 ? a - b : b % 5 ? b / a : a * b'),
+		func: () => new Function('a', 'b', 'return b % 2 ? a + b : b % 3 ? a - b : b % 5 ? b / a : a * b'),
+		file: () => {
+			const filePath = Path.join(Os.tmpdir(), `kmamal-codegen-${process.pid}`)
+			Fs.writeFileSync(filePath, 'module.exports = (a, b) => b % 2 ? a + b : b % 3 ? a - b : b % 5 ? b / a : a * b')
+			return require(filePath)
+		},
+	}),
+	cases: {
+		eval: (pre) => {
+			pre.eval()
+		},
+		func: (pre) => {
+			pre.func()
+		},
+		file: (pre) => {
+			pre.file()
+		},
+	},
+	time: 1e2,
+})
+
+benchmark("generated code", {
+	pre: () => ({
+		eval: eval('(a, b) => b % 2 ? a + b : b % 3 ? a - b : b % 5 ? b / a : a * b'),
+		func: new Function('a', 'b', 'return b % 2 ? a + b : b % 3 ? a - b : b % 5 ? b / a : a * b'),
+		file: (() => {
+			const filePath = Path.join(Os.tmpdir(), `kmamal-codegen-${process.pid}`)
+			Fs.writeFileSync(filePath, 'module.exports = (a, b) => b % 2 ? a + b : b % 3 ? a - b : b % 5 ? b / a : a * b')
+			return require(filePath)
+		})(),
+	}),
+	cases: {
+		eval: (pre) => {
+			pre.eval(Math.random(), Math.random())
+		},
+		func: (pre) => {
+			pre.func(Math.random(), Math.random())
+		},
+		file: (pre) => {
+			pre.file(Math.random(), Math.random())
+		},
+	},
+	time: 1e2,
+})
+
+benchmark("object creating vs caching", {
+	pre: () => ({
+		N: 1e3,
+		arr: new Array(1e3),
+		cache: {
+			list: [],
+			index: 0,
+		},
+	}),
+	cases: {
+		creation: ({ N, arr }) => {
+			for (let i = 0; i < N; i++) {
+				arr[i] = { a: 5 % i, b: i * 9 }
+			}
+			for (let i = 0; i < N; i++) {
+				arr[i] = null
+			}
+		},
+		caching: ({ N, arr, cache }) => {
+			for (let i = 0; i < N; i++) {
+				let obj
+				if (cache.index > 0) {
+					cache.index--
+					obj = cache.list[cache.index]
+				} else {
+					cache.list[cache.index++] = obj = { a: 5 % i, b: i * 9 }
+				}
+				arr[i] = obj
+			}
+			for (let i = 0; i < N; i++) {
+				cache.list[cache.index++] = arr[i]
+				arr[i] = null
+			}
 		},
 	},
 	time: 1e2,

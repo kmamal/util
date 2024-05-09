@@ -215,6 +215,7 @@
     "./number/clamp": "./src/number/clamp.js",
     "./number/interpolate": "./src/number/interpolate.js",
     "./number/rounding": "./src/number/rounding.js",
+    "./number/is-near": "./src/number/is-near.js",
     "./number/modular": "./src/number/modular.js",
     "./int32": "./src/int32/index.js",
     "./set/union": "./src/set/union.js",
