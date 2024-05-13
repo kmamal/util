@@ -1,7 +1,10 @@
-const { MiddleSquareWeyl } = require('./seeded/middle-square-weyl')
+const { defaultRng } = require('./default-rng')
 
-const rng = new MiddleSquareWeyl(Math.floor(Math.random() * (2 ** 20)))
+const __uniform = (rng) => rng.uniform()
 
-const uniform = () => rng.uniform()
+const uniform = () => __uniform(defaultRng)
 
-module.exports = { uniform }
+module.exports = {
+	__uniform,
+	uniform,
+}

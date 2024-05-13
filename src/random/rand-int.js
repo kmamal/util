@@ -1,5 +1,11 @@
-const { rand } = require('./rand')
+const { defaultRng } = require('./default-rng')
+const { __rand } = require('./rand')
 
-const randInt = (a, b, options) => rand(b - a, options) + a
+const __randInt = (rng, a, b) => __rand(rng, b - a) + a
 
-module.exports = { randInt }
+const randInt = (a, b) => __randInt(defaultRng, a, b)
+
+module.exports = {
+	__randInt,
+	randInt,
+}

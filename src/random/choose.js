@@ -1,10 +1,14 @@
-const { randInt } = require('./rand-int')
+const { defaultRng } = require('./default-rng')
+const { __randInt } = require('./rand-int')
 
-const __choose = (arr, start, end, options) => {
-	const index = randInt(start, end, options)
+const __choose = (rng, arr, start, end) => {
+	const index = __randInt(rng, start, end)
 	return arr[index]
 }
 
-const choose = (arr, options) => __choose(arr, 0, arr.length, options)
+const choose = (arr) => __choose(defaultRng, arr, 0, arr.length)
 
-module.exports = { choose }
+module.exports = {
+	__choose,
+	choose,
+}

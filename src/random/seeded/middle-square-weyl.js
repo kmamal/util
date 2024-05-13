@@ -6,10 +6,11 @@ const TWO_POW_52 = 2 ** 52
 
 class MiddleSquareWeyl {
 	constructor (seed) {
-		this.seed(seed || 0)
+		this.seed(seed ?? 0)
 	}
 
-	seed (seed) {
+	seed (uniform) {
+		const seed = Math.floor(uniform * (2 ** 20))
 		this._x = seed & 0x000fffff
 		this._w = 0
 	}

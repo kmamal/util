@@ -1,8 +1,6 @@
-const { uniform } = require('./uniform')
+const { defaultRng } = require('./default-rng')
 
-const randFloat = (_a, _b, options) => {
-	const getRandom = options?.random ?? uniform
-
+const __randFloat = (rng, _a, _b) => {
 	let a = _a
 	let b = _b
 	let range = b - a
@@ -15,7 +13,12 @@ const randFloat = (_a, _b, options) => {
 		scale = 2
 	}
 
-	return scale * (getRandom() * range + a)
+	return scale * (rng.uniform() * range + a)
 }
 
-module.exports = { randFloat }
+const randFloat = (a, b) => __randFloat(defaultRng, a, b)
+
+module.exports = {
+	__randFloat,
+	randFloat,
+}

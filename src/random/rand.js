@@ -1,8 +1,10 @@
-const { uniform } = require('./uniform')
+const { defaultRng } = require('./default-rng')
 
-const rand = (n, options) => {
-	const getRandom = options?.random ?? uniform
-	return Math.floor(getRandom() * n)
+const __rand = (rng, n) => Math.floor(rng.uniform() * n)
+
+const rand = (n) => __rand(defaultRng, n)
+
+module.exports = {
+	__rand,
+	rand,
 }
-
-module.exports = { rand }
