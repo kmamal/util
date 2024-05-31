@@ -176,6 +176,7 @@
     "./random/shuffle": "./src/random/shuffle.js",
     "./random/choose": "./src/random/choose.js",
     "./random/rand": "./src/random/rand.js",
+    "./random/chance": "./src/random/chance.js",
     "./random/seeded/middle-square-weyl": "./src/random/seeded/middle-square-weyl.js",
     "./string/unicode/utf-16": "./src/string/unicode/utf-16.js",
     "./string/case/locale-upper": "./src/string/case/locale-upper.js",
