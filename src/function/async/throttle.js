@@ -7,25 +7,29 @@ const throttle = (fn, time, options) => {
 	let lastResult
 
 	const invoke = () => {
-		if (lastArgs && trailing) {
-			lastResult = fn(...lastArgs)
-		}
-		lastArgs = null
+		if (lastArgs === null) { return }
+		lastResult = fn(...lastArgs)
+		if (timeout === null) { lastArgs = null }
+	}
+
+	const onTimeout = () => {
+		timeout = null
+		if (trailing) { invoke() }
 	}
 
 	const throtled = (...args) => {
 		lastArgs = args
 
-		if (!timeout) {
-			if (leading) { invoke() }
-			setTimeout(invoke, time)
-		}
+		if (timeout !== null) { return lastResult }
+		timeout = setTimeout(onTimeout, time)
+
+		if (leading) { invoke() }
 
 		return lastResult
 	}
 
 	throtled.cancel = () => {
-		if (!timeout) { return }
+		if (timeout === null) { return }
 		clearTimeout(timeout)
 		timeout = null
 	}
