@@ -15,6 +15,12 @@ const debounce = (fn, time, options) => {
 		lastResult = fn(...lastArgs)
 	}
 
+	const onTimeout = () => {
+		timeout = null
+		if (!trailing) { return }
+		invoke()
+	}
+
 	const cancel = () => {
 		clearTimeout(timeout)
 		timeout = null
@@ -23,27 +29,23 @@ const debounce = (fn, time, options) => {
 	const debounced = (...args) => {
 		lastArgs = args
 
-		if (timeout) {
+		if (timeout !== null) {
 			cancel()
 		} else if (leading) {
 			invoke()
 		}
 
-		timeout = setTimeout(() => {
-			timeout = null
-			if (!trailing) { return }
-			invoke()
-		}, time)
+		timeout = setTimeout(onTimeout, time)
 		return lastResult
 	}
 
 	debounced.cancel = () => {
-		if (!timeout) { return }
+		if (timeout === null) { return }
 		cancel()
 	}
 
 	debounced.flush = () => {
-		if (timeout) {
+		if (timeout !== null) {
 			cancel()
 			if (trailing) { invoke() }
 		}
