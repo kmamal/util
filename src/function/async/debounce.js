@@ -1,54 +1,60 @@
+const { TaskQueue } = require('@kmamal/async/task-queue')
+const { sleep } = require('../../promise/sleep')
 
-const debounce = (fn, time, options) => {
-	let leading = false
-	let trailing = true
-	if (options) {
-		if (options.leading !== undefined) { leading = options.leading }
-		if (options.trailing !== undefined) { trailing = options.trailing }
-	}
+const debounce = (fn, time, options = {}) => {
+	const {
+		leading = false,
+		trailing = true,
+		reentrant = false,
+	} = options
 
-	let timeout = null
+	const queue = new TaskQueue()
 	let lastArgs
 	let lastResult
+	let lastPromise
 
-	const invoke = () => {
-		lastResult = fn(...lastArgs)
-	}
+	let sleeper = null
+	let cancelled = false
 
-	const onTimeout = () => {
-		timeout = null
-		if (!trailing) { return }
-		invoke()
-	}
-
-	const cancel = () => {
-		clearTimeout(timeout)
-		timeout = null
+	const invoke = async () => {
+		if (cancelled) { return }
+		lastResult = await fn(...lastArgs)
+		if (!reentrant) { await lastResult }
 	}
 
 	const debounced = (...args) => {
 		lastArgs = args
 
-		if (timeout !== null) {
-			cancel()
-		} else if (leading) {
-			invoke()
+		if (sleeper !== null) {
+			sleeper.reset(time)
+			return lastPromise
 		}
 
-		timeout = setTimeout(onTimeout, time)
-		return lastResult
+		if (queue.size() === 0 && leading) { queue.run(invoke) }
+
+		let promise = queue
+			.run(() => (sleeper = sleep(time)))
+			.then(() => { sleeper = null })
+
+		if (trailing) { promise = queue.run(invoke) }
+
+		lastPromise = promise.then(() => lastResult)
+		return promise
 	}
 
-	debounced.cancel = () => {
-		if (timeout === null) { return }
-		cancel()
+	const cancel = async () => {
+		cancelled = true
+		sleeper?.cancel()
+		await queue.empty()
+		cancelled = false
 	}
 
-	debounced.flush = () => {
-		if (timeout !== null) {
-			cancel()
-			if (trailing) { invoke() }
-		}
+	debounced.cancel = async () => {
+		await cancel()
+	}
+
+	debounced.flush = async () => {
+		await cancel()
 		return lastResult
 	}
 

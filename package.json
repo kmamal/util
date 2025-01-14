@@ -13,6 +13,7 @@
     "update-exports": "node ./scripts/update-exports.mjs"
   },
   "dependencies": {
+    "@kmamal/async": "^0.0.13",
     "@kmamal/heap": "^0.0.9",
     "@kmamal/linked-list": "^0.0.2"
   },
@@ -203,6 +204,7 @@
     "./function/pass": "./src/function/pass.js",
     "./function/async/amrap": "./src/function/async/amrap.js",
     "./function/async/throttle": "./src/function/async/throttle.js",
+    "./function/async/serialized": "./src/function/async/serialized.js",
     "./function/async/once": "./src/function/async/once.js",
     "./function/async/time": "./src/function/async/time.js",
     "./function/async/before": "./src/function/async/before.js",

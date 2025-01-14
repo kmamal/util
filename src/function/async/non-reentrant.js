@@ -1,8 +1,14 @@
 
 const nonReentrant = (fn) => {
-	let promise = Promise.resolve()
+	let running = false
 
-	return async (...args) => await (promise = promise.then(() => fn(...args)))
+	return async (...args) => {
+		if (running) { throw new Error('not reentrant') }
+		running = true
+		const result = await fn(...args)
+		running = false
+		return result
+	}
 }
 
 module.exports = { nonReentrant }

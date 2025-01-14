@@ -15,7 +15,7 @@ test("function.async.delay", (t) => new Promise((resolve) => {
 
 	start()
 	delayed(1)
-	const cancel = delayed(2)
+	const promise = delayed(2)
 	delayed(3)
-	cancel()
+	promise.cancel()
 }))

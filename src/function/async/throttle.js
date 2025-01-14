@@ -1,45 +1,61 @@
+const { TaskQueue } = require('@kmamal/async/task-queue')
+const { sleep } = require('../../promise/sleep')
 
-const throttle = (fn, time, options) => {
-	const leading = options && options.leading
-	const trailing = !options || options.trailing
-	let timeout = null
-	let lastArgs = null
+const throttle = (fn, time, options = {}) => {
+	const {
+		leading = false,
+		trailing = true,
+		reentrant = false,
+	} = options
+
+	const queue = new TaskQueue()
+	let lastArgs
 	let lastResult
+	let lastPromise
 
-	const invoke = () => {
-		if (lastArgs === null) { return }
-		lastResult = fn(...lastArgs)
-		if (timeout === null) { lastArgs = null }
+	let sleeper = null
+	let cancelled = false
+
+	const invoke = async () => {
+		if (cancelled) { return }
+		lastResult = await fn(...lastArgs)
+		if (!reentrant) { await lastResult }
 	}
 
-	const onTimeout = () => {
-		timeout = null
-		if (trailing) { invoke() }
-	}
-
-	const throtled = (...args) => {
+	const throttled = (...args) => {
 		lastArgs = args
 
-		if (timeout !== null) { return lastResult }
-		timeout = setTimeout(onTimeout, time)
+		if (sleeper !== null) { return lastPromise }
 
-		if (leading) { invoke() }
+		if (queue.size() === 0 && leading) { queue.run(invoke) }
 
+		let promise = queue
+			.run(() => (sleeper = sleep(time)))
+			.then(() => { sleeper = null })
+
+		if (trailing) { promise = queue.run(invoke) }
+
+		lastPromise = promise.then(() => lastResult)
+		return promise
+	}
+
+	const cancel = async () => {
+		cancelled = true
+		sleeper?.cancel()
+		await queue.empty()
+		cancelled = false
+	}
+
+	throttled.cancel = async () => {
+		await cancel()
+	}
+
+	throttled.flush = async () => {
+		await cancel()
 		return lastResult
 	}
 
-	throtled.cancel = () => {
-		if (timeout === null) { return }
-		clearTimeout(timeout)
-		timeout = null
-	}
-
-	throtled.flush = () => {
-		invoke()
-		return lastResult
-	}
-
-	return throtled
+	return throttled
 }
 
 module.exports = { throttle }
