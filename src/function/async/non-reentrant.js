@@ -16,4 +16,7 @@ const nonReentrant = (fn, shouldThrow = false) => {
 	}
 }
 
-module.exports = { nonReentrant }
+module.exports = {
+	SYM: { kNonReentrant },
+	nonReentrant,
+}
