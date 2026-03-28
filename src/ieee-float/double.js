@@ -56,11 +56,12 @@ const from = ({ sign: s = 0, exponent: e = 0, mantissa: m = 0 }) => {
 
 const nextToward = (value, target) => {
 	if (Number.isNaN(value) || Number.isNaN(target)) { return NaN }
-	if (value === target) { return value }
+	const diff = target - value
+	if (diff === 0) { return value }
 
 	const view = _toDataView(value)
 	const unsigned = view.getBigUint64(0, false)
-	const direction = target > value ? 1n : -1n
+	const direction = diff > 0 ? 1n : -1n
 	const increment = value > 0 ? direction : -direction
 	view.setBigUint64(0, unsigned + increment, false)
 	return view.getFloat64(0, false)

@@ -47,9 +47,9 @@ const __select = (arr, _start, _end, _n, fnCmp) => {
 
 		const { left, right } = __partitionLeftRight(arr, start, end, pivot, fnCmp)
 
-		if (left > n) {
+		if (left - start > n) {
 			end = left
-		} else if (right > n) {
+		} else if (right - start > n) {
 			return left
 		} else {
 			n -= right - start
