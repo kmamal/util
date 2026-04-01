@@ -76,7 +76,11 @@ const radixsortBy = (arr, fnMap) => {
 
 const radixsortByTo = (dst, arr, fnMap) => {
 	const { length } = arr
-	if (length <= 1) { return Array.from(arr) }
+	if (length <= 1) {
+		dst.length = length
+		__copy(dst, 0, arr, 0, length)
+		return dst
+	}
 
 	dst.length = length
 	const buffer = Array.from(arr)
@@ -110,7 +114,11 @@ const radixsort = (arr) => {
 
 const radixsortTo = (dst, arr) => {
 	const { length } = arr
-	if (length <= 1) { return arr }
+	if (length <= 1) {
+		dst.length = length
+		__copy(dst, 0, arr, 0, length)
+		return dst
+	}
 
 	dst.length = length
 	const buffer = Array.from(arr)
@@ -129,6 +137,7 @@ const radixsort$$$ = (arr) => {
 	return arr
 }
 
+radixsort.to = radixsortTo
 radixsort.$$$ = radixsort$$$
 
 

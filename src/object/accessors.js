@@ -52,8 +52,8 @@ const get = (obj, path) => {
 
 const set = (obj, path, value) => {
 	const steps = __makeSteps(path)
-	const res = {}
-	__set({}, obj, steps, value)
+	const res = Object.assign({}, obj)
+	__set(res, steps, value)
 	return res
 }
 

@@ -47,7 +47,8 @@ const unweave$$$ = (arr, num) => {
 		return arr
 	}
 
-	__unweave(arr, 0, arr, 0, arr.length, num)
+	const copy = Array.from(arr)
+	__unweave(arr, 0, copy, 0, copy.length, num)
 	arr.length = num
 	return arr
 }

@@ -10,7 +10,7 @@ const __zip = (dst, dstStart, src, srcStart, srcEnd, innerStart, innerEnd, fnMap
 	for (let j = innerStart; j < innerEnd; j += 1) {
 		const tuple = new Array(length)
 		for (let i = 0; i < length; i++) {
-			tuple[i] = src[i][j]
+			tuple[i] = src[srcStart + i][j]
 		}
 		dst[writeIndex++] = fnMap(tuple)
 	}

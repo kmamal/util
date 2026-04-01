@@ -15,7 +15,7 @@ const __min = (arr, start, end, fnCmp) => {
 	}
 
 	let minItem = arr[start]
-	let minIndex = 0
+	let minIndex = start
 
 	for (let i = start; i < end; i++) {
 		const item = arr[i]

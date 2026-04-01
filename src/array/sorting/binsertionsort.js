@@ -25,7 +25,7 @@ const binsertionsortWithTo = (dst, arr, fnCmp) => {
 	dst.length = length
 	__copy(dst, 0, arr, 0, length)
 	__binsertionsort(dst, 0, 1, length, fnCmp)
-	return arr
+	return dst
 }
 
 const binsertionsortWith$$$ = (arr, fnCmp) => {
@@ -48,7 +48,7 @@ const binsertionsortByTo = (dst, arr, fnMap) => {
 	dst.length = length
 	__copy(dst, 0, arr, 0, length)
 	__binsertionsort(dst, 0, 1, length, compareBy(fnMap))
-	return arr
+	return dst
 }
 
 const binsertionsortBy$$$ = (arr, fnMap) => {
@@ -71,7 +71,7 @@ const binsertionsortTo = (dst, arr) => {
 	dst.length = length
 	__copy(dst, 0, arr, 0, length)
 	__binsertionsort(dst, 0, 1, length, compare)
-	return arr
+	return dst
 }
 
 const binsertionsort$$$ = (arr) => {

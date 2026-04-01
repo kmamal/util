@@ -5,7 +5,7 @@ const __flat = (dst, dstStart, src, srcStart, srcEnd, _maxDepth) => {
 	const maxDepth = _maxDepth + 1
 	let writeIndex = dstStart
 
-	_stack[0] = { arr: src, length: srcEnd - srcStart, index: 0 }
+	_stack[0] = { arr: src, length: srcEnd, index: srcStart }
 
 	for (;;) {
 		const depth = _stack.length

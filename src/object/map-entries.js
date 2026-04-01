@@ -25,7 +25,7 @@ const mapEntriesTo = (dst, obj, fnMap) => {
 
 const mapEntries$$$ = (_obj, fnMap) => {
 	const res = _obj
-	const obj = { ...obj }
+	const obj = { ..._obj }
 	empty$$$(res)
 	__mapEntries(res, obj, fnMap)
 	return res

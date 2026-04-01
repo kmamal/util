@@ -9,7 +9,8 @@ const __reduce = (arr, start, end, fn, init) => {
 	if (init === undefined) {
 		acc = arr[start]
 		index = 1
-	} else {
+	}
+	else {
 		acc = init
 		index = 0
 	}
@@ -30,10 +31,11 @@ const __reduceRight = (arr, start, end, fn, init) => {
 
 	if (init === undefined) {
 		acc = arr[end - 1]
-		index = end - 2
-	} else {
+		index = n - 2
+	}
+	else {
 		acc = init
-		index = end - 1
+		index = n - 1
 	}
 
 	for (; index >= 0; index--) {

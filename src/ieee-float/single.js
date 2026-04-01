@@ -48,13 +48,20 @@ const from = ({ sign: s = 0, exponent: e = 0, mantissa: m = 0 }) => {
 	const buffer = new ArrayBuffer(BYTES)
 	const view = new DataView(buffer)
 	view.setUint32(0, value, false)
-	return view.getFloat32(0, value, false)
+	return view.getFloat32(0, false)
 }
 
 const nextToward = (value, target) => {
 	if (Number.isNaN(value) || Number.isNaN(target)) { return NaN }
 	const diff = target - value
 	if (diff === 0) { return value }
+
+	if (value === 0) {
+		const buffer = new ArrayBuffer(BYTES)
+		const view = new DataView(buffer)
+		view.setUint32(0, diff > 0 ? 1 : 0x80000001, false)
+		return view.getFloat32(0, false)
+	}
 
 	const view = _toView(value)
 	const unsigned = view.getUint32(0, false)

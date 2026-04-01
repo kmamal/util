@@ -1,5 +1,6 @@
 const { prefixSums } = require('../prefix-sums')
 const { identity } = require('../../function/identity')
+const { __copy } = require('../copy')
 const { copy } = require('../copy')
 const { max } = require('../max')
 
@@ -49,20 +50,24 @@ const countingsortBy = (arr, fnMap, _maxValue) => {
 	__countingsortCount(arr, 0, length, counts, fnMap)
 
 	const res = new Array(length)
-	__countingsortDistribute(res, 0, arr, 0, length, counts)
+	__countingsortDistribute(res, 0, arr, 0, length, counts, fnMap)
 	return res
 }
 
 const countingsortByTo = (dst, arr, fnMap, _maxValue) => {
 	const { length } = arr
-	if (length <= 1) { return Array.from(arr) }
+	if (length <= 1) {
+		dst.length = length
+		__copy(dst, 0, arr, 0, length)
+		return dst
+	}
 
 	const maxValue = _maxValue ?? max(arr)
 	const counts = __countingsortInitCounts(maxValue)
 	__countingsortCount(arr, 0, length, counts, fnMap)
 
 	dst.length = length
-	__countingsortDistribute(dst, 0, arr, 0, length, counts)
+	__countingsortDistribute(dst, 0, arr, 0, length, counts, fnMap)
 	return dst
 }
 
@@ -75,7 +80,7 @@ const countingsortBy$$$ = (arr, fnMap, _maxValue) => {
 	__countingsortCount(arr, 0, length, counts, fnMap)
 
 	const res = new Array(length)
-	__countingsortDistribute(res, 0, arr, 0, length, counts)
+	__countingsortDistribute(res, 0, arr, 0, length, counts, fnMap)
 	copy$$$(arr, res)
 	return arr
 }
@@ -99,7 +104,11 @@ const countingsort = (arr, _maxValue) => {
 
 const countingsortTo = (dst, arr, _maxValue) => {
 	const { length } = arr
-	if (length <= 1) { return Array.from(arr) }
+	if (length <= 1) {
+		dst.length = length
+		__copy(dst, 0, arr, 0, length)
+		return dst
+	}
 
 	const maxValue = _maxValue ?? max(arr)
 	const counts = __countingsortInitCounts(maxValue)

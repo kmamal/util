@@ -15,7 +15,7 @@ const __max = (arr, start, end, fnCmp) => {
 	}
 
 	let maxItem = arr[start]
-	let maxIndex = 0
+	let maxIndex = start
 
 	for (let i = start; i < end; i++) {
 		const item = arr[i]

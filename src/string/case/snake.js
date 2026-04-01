@@ -11,14 +11,15 @@ const _snakeCase = (str) => {
 
 	let expectLeading = true
 	let startsWord = true
-	let isirst = true
+	let isFirst = true
 	for (let i = 0; i < length; i++) {
 		const char = str[i]
 		if (char === '-' || char === '_') {
 			startsWord = true
 			if (!expectLeading) { continue }
 			res[writeIndex++] = '_'
-		} else {
+		}
+		else {
 			if (isUpperCase(char)) {
 				startsWord = true
 			}
@@ -26,10 +27,10 @@ const _snakeCase = (str) => {
 			expectLeading = false
 			if (startsWord) {
 				startsWord = false
-				if (!isirst) {
+				if (!isFirst) {
 					res[writeIndex++] = '_'
 				}
-				isirst = false
+				isFirst = false
 			}
 			res[writeIndex++] = char.toLowerCase()
 		}

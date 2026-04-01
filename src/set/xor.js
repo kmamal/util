@@ -20,7 +20,7 @@ const xorTo = (dst, a, b) => {
 const xor$$$ = (a, b) => {
 	for (const x of b) {
 		const existed = a.delete(x)
-		if (!existed) { continue }
+		if (existed) { continue }
 		a.add(x)
 	}
 	return a

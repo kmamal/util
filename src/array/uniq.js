@@ -31,7 +31,7 @@ const __uniqBy = (dst, dstStart, src, srcStart, srcEnd, fnMap) => {
 
 	const set = new Set([ fnMap(first) ])
 	let size = 1
-	for (let i = 0; i < n; i++) {
+	for (let i = 1; i < n; i++) {
 		const item = src[srcStart + i]
 		const mapped = fnMap(item)
 		set.add(mapped)
@@ -49,7 +49,7 @@ const __uniqSorted = (dst, dstStart, src, srcStart, srcEnd, fnCmp) => {
 
 	let writeIndex = dstStart
 
-	let item = src[dstStart]
+	let item = src[srcStart]
 	dst[writeIndex++] = item
 	let prev = item
 

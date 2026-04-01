@@ -11,7 +11,8 @@ const __scan = (dst, dstStart, src, srcStart, srcEnd, fn, init) => {
 		acc = first
 		dst[dstStart] = first
 		index = 1
-	} else {
+	}
+	else {
 		acc = init
 		index = 0
 	}
@@ -34,10 +35,11 @@ const __scanRight = (dst, dstStart, src, srcStart, srcEnd, fn, init) => {
 	if (init === undefined) {
 		acc = last
 		dst[dstEnd - 1] = last
-		index = srcEnd - 2
-	} else {
+		index = n - 2
+	}
+	else {
 		acc = init
-		index = srcEnd - 1
+		index = n - 1
 	}
 
 	for (; index >= 0; index--) {

@@ -1,4 +1,4 @@
-const { copyDeep } = require('./copy')
+const { copyTo } = require('./copy')
 const { clone } = require('./clone')
 
 const _isObject = (x) => x
@@ -35,9 +35,9 @@ const merge = (a, b) => {
 }
 
 const mergeTo = (dst, a, b) => {
-	copyDeep(dst, a)
+	copyTo(dst, clone(a))
 	__merge(dst, a, b)
-	return a
+	return dst
 }
 
 const merge$$$ = (a, b) => {

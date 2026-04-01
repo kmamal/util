@@ -59,6 +59,13 @@ const nextToward = (value, target) => {
 	const diff = target - value
 	if (diff === 0) { return value }
 
+	if (value === 0) {
+		const buffer = new ArrayBuffer(BYTES)
+		const view = new DataView(buffer)
+		view.setBigUint64(0, diff > 0 ? 1n : 0x8000000000000001n, false)
+		return view.getFloat64(0, false)
+	}
+
 	const view = _toDataView(value)
 	const unsigned = view.getBigUint64(0, false)
 	const direction = diff > 0 ? 1n : -1n

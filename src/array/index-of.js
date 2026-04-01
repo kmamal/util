@@ -17,7 +17,7 @@ const __indexOfSorted = (arr, start, end, x, fnCmp) => {
 	}
 	const fnCmpLt = strictLess(fnCmp)
 	const index = __binarySearch(arr, start, end, x, fnCmpLt)
-	const found = index !== end && fnCmpLt(x, arr[index]) === 0
+	const found = index !== end && fnCmp(x, arr[index]) === 0
 	return found ? index : -1
 }
 
@@ -29,7 +29,7 @@ const __indexOfSortedRight = (arr, start, end, x, fnCmp) => {
 	}
 	const fnCmpGt = strictGreater(fnCmp)
 	const index = __binarySearch(arr, start, end, x, fnCmpGt) - 1
-	const found = index !== start - 1 && fnCmpGt(x, arr[index]) === 0
+	const found = index !== start - 1 && fnCmp(x, arr[index]) === 0
 	return found ? index : -1
 }
 

@@ -14,7 +14,7 @@ const __partitionLeftRight = (arr, start, end, pivot, fnCmp) => {
 	}
 
 	let right = left
-	for (let i = start; i < end; i++) {
+	for (let i = left; i < end; i++) {
 		if (fnCmp(arr[i], pivot) === 0) {
 			swap$$$(arr, right, i)
 			right += 1

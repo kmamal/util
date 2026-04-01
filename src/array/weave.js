@@ -63,10 +63,12 @@ const __weave = (dst, dstStart, srcArray) => {
 			if (src.length === depth + 1) {
 				if (prev === null) {
 					sources.shift()
-				} else {
+				}
+				else {
 					sources._removeAfter(prev)
 				}
-			} else {
+			}
+			else {
 				prev = node
 			}
 			node = next
@@ -74,7 +76,7 @@ const __weave = (dst, dstStart, srcArray) => {
 		writeIndex += n
 	}
 
-	return maxDepth - dstStart
+	return writeIndex - dstStart
 }
 
 
@@ -96,7 +98,7 @@ const weaveTwoTo = (dst, a, b) => {
 
 const weaveTwo$$$ = (_a, b) => {
 	const res = _a
-	const a = Array.from(a)
+	const a = Array.from(_a)
 	const aLength = a.length
 	const bLength = b.length
 	res.length = aLength + bLength

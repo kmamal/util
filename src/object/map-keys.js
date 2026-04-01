@@ -23,7 +23,7 @@ const mapKeysTo = (dst, obj, fnMap) => {
 
 const mapKeys$$$ = (_obj, fnMap) => {
 	const res = _obj
-	const obj = { ...obj }
+	const obj = { ..._obj }
 	empty$$$(res)
 	__mapKeys(res, obj, fnMap)
 	return res

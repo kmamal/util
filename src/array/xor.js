@@ -10,7 +10,7 @@ const __xor = (dst, dstStart, a, aStart, aEnd, b, bStart, bEnd, fnEq) => {
 }
 
 const __xorSorted = (dst, dstStart, a, aStart, aEnd, b, bStart, bEnd, fnCmp) => {
-	const lengths = __comm([], 0, null, -1, [], 0, dst, 0, a, aStart, aEnd, b, bStart, bEnd, fnCmp)
+	const lengths = __comm([], 0, null, -1, [], 0, dst, dstStart, a, aStart, aEnd, b, bStart, bEnd, fnCmp)
 	return lengths.x - dstStart
 }
 
