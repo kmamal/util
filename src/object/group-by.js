@@ -3,8 +3,8 @@ const __groupBy = (dst, arr, start, end, fnMap) => {
 	for (let i = start; i < end; i++) {
 		const item = arr[i]
 		const key = fnMap(item)
-		let list = dst.get(key)
-		if (list === undefined) { dst.set(key, list = []) }
+		let list = dst[key]
+		if (list === undefined) { dst[key] = list = [] }
 		list.push(item)
 	}
 	return dst
@@ -12,7 +12,7 @@ const __groupBy = (dst, arr, start, end, fnMap) => {
 
 
 const groupBy = (arr, fnMap) => {
-	const res = new Map()
+	const res = Object.create(null)
 	__groupBy(res, arr, 0, arr.length, fnMap)
 	return res
 }
