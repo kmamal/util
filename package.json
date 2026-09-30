@@ -154,6 +154,7 @@
     "./array/swap": "./src/array/swap.js",
     "./array/includes.benchmark": "./src/array/includes.benchmark.js",
     "./array/slice": "./src/array/slice.js",
+    "./array/concat.benchmark": "./src/array/concat.benchmark.js",
     "./array/comm": "./src/array/comm.js",
     "./array/searching/exponential": "./src/array/searching/exponential.js",
     "./array/searching/index.benchmark": "./src/array/searching/index.benchmark.js",

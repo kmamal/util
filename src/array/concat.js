@@ -16,6 +16,13 @@ const __concat = (dst, dstStart, src, srcStart, srcEnd) => {
 	return writeIndex - dstStart
 }
 
+const concat = (arrs) => {
+	const total = sumBy(arrs, getLength)
+	const res = new Array(total)
+	__concat(res, 0, arrs, 0, arrs.length)
+	return res
+}
+
 const concatTo = (dst, arrs) => {
 	const total = sumBy(arrs, getLength)
 	dst.length = total
@@ -32,8 +39,12 @@ const concat$$$ = (_arrs) => {
 	return res
 }
 
+concat.to = concatTo
+concat.$$$ = concat$$$
+
 module.exports = {
 	__concat,
+	concat,
 	concatTo,
 	concat$$$,
 }
