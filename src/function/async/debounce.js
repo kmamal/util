@@ -14,10 +14,9 @@ const debounce = (fn, time, options = {}) => {
 	let lastPromise
 
 	let sleeper = null
-	let cancelled = false
+	let generation = 0
 
 	const invoke = async () => {
-		if (cancelled) { return }
 		lastResult = await fn(...lastArgs)
 		if (!reentrant) { await lastResult }
 	}
@@ -30,31 +29,40 @@ const debounce = (fn, time, options = {}) => {
 			return lastPromise
 		}
 
-		if (queue.size() === 0 && leading) { queue.run(invoke) }
+		const currentGeneration = generation
+		const currentSleeper = sleep(time)
+		sleeper = currentSleeper
 
-		let promise = queue
-			.run(() => (sleeper = sleep(time)))
-			.then(() => { sleeper = null })
+		if (leading) { queue.run(invoke) }
 
-		if (trailing) { promise = queue.run(invoke) }
+		let promise = currentSleeper.then(() => {
+			if (sleeper === currentSleeper) { sleeper = null }
+		})
+
+		if (trailing) {
+			const slept = promise
+			promise = queue.run(async () => {
+				await slept
+				if (currentGeneration !== generation) { return }
+				await invoke()
+			})
+		}
 
 		lastPromise = promise.then(() => lastResult)
-		return promise
-	}
-
-	const cancel = async () => {
-		cancelled = true
-		sleeper?.cancel()
-		await queue.empty()
-		cancelled = false
+		return lastPromise
 	}
 
 	debounced.cancel = async () => {
-		await cancel()
+		generation += 1
+		const currentSleeper = sleeper
+		sleeper = null
+		currentSleeper?.reset(0)
+		await queue.empty()
 	}
 
 	debounced.flush = async () => {
-		await cancel()
+		sleeper?.reset(0)
+		await queue.empty()
 		return lastResult
 	}
 
