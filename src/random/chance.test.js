@@ -1,5 +1,6 @@
 const { test } = require('@kmamal/testing')
-const { chance } = require('./chance')
+const { MiddleSquareWeyl } = require('./seeded/middle-square-weyl')
+const { __chance, chance } = require('./chance')
 
 test("random.chance", (t) => {
 	const N = 10000
@@ -13,4 +14,16 @@ test("random.chance", (t) => {
 
 	const ratio = numPassed / N
 	t.ok(P * 0.9 < ratio && ratio < P * 1.1)
+})
+
+test("random.__chance", (t) => {
+	const rng = new MiddleSquareWeyl(5)
+	const twin = new MiddleSquareWeyl(5)
+	for (let i = 0; i < 1000; i++) {
+		t.equal(__chance(rng, 0.3), twin.uniform() < 0.3)
+	}
+	for (let i = 0; i < 1000; i++) {
+		t.equal(__chance(rng, 0), false)
+		t.equal(__chance(rng, 1), true)
+	}
 })

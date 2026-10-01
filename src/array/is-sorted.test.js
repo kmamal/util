@@ -1,5 +1,6 @@
 const { test } = require('@kmamal/testing')
-const { isSorted, isSortedBy } = require('./is-sorted')
+const { __isSorted, isSorted, isSortedBy } = require('./is-sorted')
+const { compare } = require('../function/compare')
 
 test("array.isSorted", (t) => {
 	t.equal(isSorted([]), true)
@@ -19,4 +20,21 @@ test("array.isSortedBy", (t) => {
 	t.equal(isSortedBy([ 2, 1 ], (x) => 2 * x), false)
 	t.equal(isSortedBy([ 1, 2, 3 ], (x) => 2 * x), true)
 	t.equal(isSortedBy([ 1, 3, 2 ], (x) => 2 * x), false)
+})
+
+test("array.__isSorted", (t) => {
+	const arr = [ 9, 1, 2, 2, 3, 0, 5, 4 ]
+	t.equal(__isSorted(arr, 1, 5, compare), true)
+	t.equal(__isSorted(arr, 1, 6, compare), false)
+	t.equal(__isSorted(arr, 0, 2, compare), false)
+	t.equal(__isSorted(arr, 5, 7, compare), true)
+	t.equal(__isSorted(arr, 6, 8, compare), false)
+	t.equal(__isSorted(arr, 0, 1, compare), true)
+	t.equal(__isSorted(arr, 7, 8, compare), true)
+	t.equal(__isSorted(arr, 3, 3, compare), true)
+	t.equal(__isSorted(arr, 8, 8, compare), true)
+	t.equal(__isSorted(arr, 0, 8, compare), false)
+	t.equal(__isSorted(arr, 1, 5, (a, b) => b - a), false)
+	t.equal(__isSorted([ 3, 2, 1 ], 0, 3, (a, b) => b - a), true)
+	t.equal(arr, [ 9, 1, 2, 2, 3, 0, 5, 4 ])
 })

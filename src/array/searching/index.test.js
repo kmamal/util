@@ -63,7 +63,7 @@ test("array.searching", (t) => {
 				|| c1 < cf1 || cl1 < c1
 				|| c2 < cf2 || cl2 < c2
 			) {
-				throw Object.assign(new Error("failed for"), {
+				t.fail({
 					case: { A, x, a, af, al, b, bf, bl, c1, cf1, cl1, c2, cf2, cl2, dl, dr },
 				})
 				// process.stdout.write('\n')

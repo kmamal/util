@@ -1,0 +1,25 @@
+const { test } = require('@kmamal/testing')
+const single = require('./single')
+
+test("ieee-float.single.sign", (t) => {
+	t.equal(single.sign(1), 0)
+	t.equal(single.sign(-1), 1)
+	t.equal(single.sign(-0), 1)
+	t.equal(single.parse(-2).sign, 1)
+	t.equal(single.from(single.parse(-2)), -2)
+})
+
+test("ieee-float.single.nextToward", (t) => {
+	t.equal(single.nextToward(1, 2), 1 + 2 ** -23)
+	t.equal(single.nextToward(1, 0), 1 - 2 ** -24)
+	t.equal(single.nextToward(0, 1), 2 ** -149)
+	t.equal(single.nextToward(0, -1), -(2 ** -149))
+	t.equal(single.nextToward(Infinity, Infinity), Infinity)
+	t.equal(single.nextToward(-Infinity, -Infinity), -Infinity)
+	t.equal(single.nextToward(Infinity, 0), 3.4028234663852886e38)
+	t.ok(Object.is(single.nextToward(-1e-50, 1), -0))
+	t.ok(Object.is(single.nextToward(1e-50, -1), 0))
+	t.equal(single.nextToward(1e-50, 1), 2 ** -149)
+	t.equal(single.nextToward(0.1, 1), Math.fround(0.1))
+	t.ok(Number.isNaN(single.nextToward(NaN, 1)))
+})

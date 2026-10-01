@@ -14,6 +14,12 @@ const cases = [
 	[ 'foo_bar', 'FooBar' ],
 	[ '__foo_bar_', '__FooBar_' ],
 	[ '-foo-bar--', '_FooBar__' ],
+	[ 'abc123', 'Abc123' ],
+	[ 'XMLHttpRequest', 'XmlHttpRequest' ],
+	[ 'FOO_BAR', 'FooBar' ],
+	[ '𐐨x', '𐐀x' ],
+	[ 'foo-𐐨x', 'Foo𐐀x' ],
+	[ '', '' ],
 ]
 
 test('string.pascalCase', (t) => {

@@ -1,6 +1,7 @@
 const { test } = require('@kmamal/testing')
 const { addDefault } = require('../map/add-default')
-const { randFloat } = require('./rand-float')
+const { MiddleSquareWeyl } = require('./seeded/middle-square-weyl')
+const { __randFloat, randFloat } = require('./rand-float')
 
 test("random.randFloat", (t) => {
 	const A = 10
@@ -32,4 +33,23 @@ test("random.randFloat", (t) => {
 		const ratio = D * buckets.get(i) / N
 		t.ok(0.9 < ratio && ratio < 1.1)
 	}
+})
+
+test("random.__randFloat", (t) => {
+	const rng = new MiddleSquareWeyl(4)
+	const twin = new MiddleSquareWeyl(4)
+	for (let i = 0; i < 1000; i++) {
+		const r = __randFloat(rng, -2, 3)
+		t.equal(r, twin.uniform() * 5 - 2)
+		t.ok(r >= -2 && r < 3)
+	}
+
+	const M = Number.MAX_VALUE
+	let negative = 0
+	for (let i = 0; i < 1000; i++) {
+		const r = __randFloat(rng, -M, M)
+		t.ok(Number.isFinite(r) && r >= -M && r <= M)
+		if (r < 0) { negative++ }
+	}
+	t.ok(400 < negative && negative < 600, { negative })
 })

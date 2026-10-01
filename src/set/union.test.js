@@ -1,10 +1,10 @@
-const { test } = require('@kmamal/testing')
+const { testVariants, junkSet } = require('../testing/test-variants')
 const { union } = require('./union')
 
-test("set.union", (t) => {
+testVariants("set.union", union, (t, f) => {
 	const a = new Set([ 1, 2, 3 ])
 	const b = new Set([ 2, 3, 4 ])
-	const set = union(a, b)
+	const set = f(new Set(a), new Set(b))
 
 	t.ok(set.size >= a.size)
 
@@ -28,4 +28,4 @@ test("set.union", (t) => {
 			t.fail({ reason: "missing value", x, b })
 		}
 	}
-})
+}, { dst: junkSet })

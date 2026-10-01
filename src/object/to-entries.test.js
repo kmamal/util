@@ -1,8 +1,8 @@
-const { test } = require('@kmamal/testing')
+const { testVariants } = require('../testing/test-variants')
 const { toEntries } = require('./to-entries')
 
-test("object.to-entries", (t) => {
-	t.equal(toEntries({}), [])
-	t.equal(toEntries({ a: 1 }), [ [ 'a', 1 ] ])
-	t.equal(toEntries({ a: 1, b: 2 }), [ [ 'a', 1 ], [ 'b', 2 ] ])
-})
+testVariants("object.to-entries", toEntries, (t, f) => {
+	t.equal(f({}), [])
+	t.equal(f({ a: 1 }), [ [ 'a', 1 ] ])
+	t.equal(f({ a: 1, b: 2 }), [ [ 'a', 1 ], [ 'b', 2 ] ])
+}, { $$$: null })

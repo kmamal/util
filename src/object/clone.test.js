@@ -33,3 +33,63 @@ test("object.clone", (t) => {
 	}
 	t.equal(obj, clone(obj))
 })
+
+test("object.clone references", (t) => {
+	const obj = { a: { b: [ 1 ] }, m: new Map(), s: new Set() }
+	const res = clone(obj)
+	t.ok(res !== obj)
+	t.ok(res.a !== obj.a)
+	t.ok(res.a.b !== obj.a.b)
+	t.ok(res.m !== obj.m)
+	t.ok(res.s !== obj.s)
+})
+
+test("object.clone cycles", (t) => {
+	const obj = { a: [] }
+	obj.self = obj
+	obj.a.push(obj)
+	const res = clone(obj)
+	t.ok(res !== obj)
+	t.ok(res.self === res)
+	t.ok(res.a[0] === res)
+})
+
+test("object.clone cache after error", (t) => {
+	const shared = { v: 1 }
+	try {
+		clone({ a: shared, f () {} })
+	}
+	catch (_) {}
+	shared.v = 2
+	t.equal(clone(shared).v, 2)
+})
+
+test("object.clone builtins", (t) => {
+	const date = clone({ d: new Date(5) }).d
+	t.ok(date instanceof Date)
+	t.equal(date.getTime(), 5)
+
+	const regexp = clone(/a/gu)
+	t.ok(regexp instanceof RegExp)
+	t.equal(regexp.source, 'a')
+	t.equal(regexp.flags, 'gu')
+
+	const bytes = new Uint8Array([ 1, 2 ])
+	const bytesClone = clone(bytes)
+	t.ok(bytesClone instanceof Uint8Array && bytesClone !== bytes)
+	t.equal(Array.from(bytesClone), [ 1, 2 ])
+
+	class A { constructor () { this.x = { y: 1 } } }
+
+	const a = new A()
+	const aClone = clone(a)
+	t.ok(aClone instanceof A)
+	t.ok(aClone.x !== a.x)
+	t.equal(aClone.x.y, 1)
+})
+
+test("object.clone __proto__", (t) => {
+	const res = clone(JSON.parse('{"__proto__":{"x":1}}'))
+	t.equal(Object.keys(res), [ '__proto__' ])
+	t.equal(Object.getPrototypeOf(res), Object.prototype)
+})

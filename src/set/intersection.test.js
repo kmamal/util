@@ -1,10 +1,10 @@
-const { test } = require('@kmamal/testing')
+const { testVariants, junkSet } = require('../testing/test-variants')
 const { intersection } = require('./intersection')
 
-test("set.intersection", (t) => {
+testVariants("set.intersection", intersection, (t, f) => {
 	const a = new Set([ 1, 2, 3 ])
 	const b = new Set([ 2, 3, 4 ])
-	const set = intersection(a, b)
+	const set = f(new Set(a), new Set(b))
 
 	t.ok(set.size <= a.size)
 
@@ -25,7 +25,8 @@ test("set.intersection", (t) => {
 			if (!b.has(x)) {
 				t.fail({ reason: "value not removed", set, x, a, b })
 			}
-		} else if (b.has(x)) {
+		}
+		else if (b.has(x)) {
 			t.fail({ reason: "value missing", set, x, a, b })
 		}
 	}
@@ -36,8 +37,9 @@ test("set.intersection", (t) => {
 			if (!a.has(x)) {
 				t.fail({ reason: "value not removed", set, x, a, b })
 			}
-		} else if (a.has(x)) {
+		}
+		else if (a.has(x)) {
 			t.fail({ reason: "value missing", set, x, a, b })
 		}
 	}
-})
+}, { dst: junkSet })

@@ -1,11 +1,14 @@
 const { test } = require('@kmamal/testing')
+const { testVariants } = require('../../testing/test-variants')
 const { permutations } = require('./permutations')
 
-test("array.permutations", (t) => {
-	t.equal([ ...permutations([]) ], [ [] ])
-	t.equal([ ...permutations([ 1 ]) ], [ [ 1 ] ])
-	t.equal([ ...permutations([ 1, 2 ]) ], [ [ 1, 2 ], [ 2, 1 ] ])
-	t.equal([ ...permutations([ 1, 2, 3 ]) ], [
+const collect = (iterator) => Array.from(iterator, (x) => Array.from(x))
+
+const testPermutations = (t, f) => {
+	t.equal(collect(f([])), [ [] ])
+	t.equal(collect(f([ 1 ])), [ [ 1 ] ])
+	t.equal(collect(f([ 1, 2 ])), [ [ 1, 2 ], [ 2, 1 ] ])
+	t.equal(collect(f([ 1, 2, 3 ])), [
 		[ 1, 2, 3 ],
 		[ 2, 1, 3 ],
 		[ 3, 1, 2 ],
@@ -13,26 +16,8 @@ test("array.permutations", (t) => {
 		[ 2, 3, 1 ],
 		[ 3, 2, 1 ],
 	])
-})
+}
 
-test("array.permutations.$$$", (t) => {
-	const getResult = (iterator) => {
-		const result = []
-		for (const x of iterator) {
-			result.push(Array.from(x))
-		}
-		return result
-	}
+testVariants("array.permutations", permutations, testPermutations, { to: null, $$$: null })
 
-	t.equal(getResult(permutations.$$$([])), [ [] ])
-	t.equal(getResult(permutations.$$$([ 1 ])), [ [ 1 ] ])
-	t.equal(getResult(permutations.$$$([ 1, 2 ])), [ [ 1, 2 ], [ 2, 1 ] ])
-	t.equal(getResult(permutations.$$$([ 1, 2, 3 ])), [
-		[ 1, 2, 3 ],
-		[ 2, 1, 3 ],
-		[ 3, 1, 2 ],
-		[ 1, 3, 2 ],
-		[ 2, 3, 1 ],
-		[ 3, 2, 1 ],
-	])
-})
+test("array.permutations.$$$", (t) => testPermutations(t, permutations.$$$))

@@ -14,6 +14,11 @@ const cases = [
 	[ 'foo_bar', 'fooBar' ],
 	[ '__foo_bar_', '__fooBar_' ],
 	[ '-foo-bar--', '_fooBar__' ],
+	[ 'abc123', 'abc123' ],
+	[ 'XMLHttpRequest', 'xmlHttpRequest' ],
+	[ 'FOO_BAR', 'fooBar' ],
+	[ 'foo-𐐨x', 'foo𐐀x' ],
+	[ '', '' ],
 ]
 
 test('string.camelCase', (t) => {

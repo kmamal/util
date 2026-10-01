@@ -14,6 +14,14 @@ const cases = [
 	[ 'foo_bar', 'foo_bar' ],
 	[ '__foo_bar_', '__foo_bar_' ],
 	[ '-foo-bar--', '_foo_bar__' ],
+	[ 'abc123', 'abc123' ],
+	[ 'v2', 'v2' ],
+	[ 'v2Beta', 'v2_beta' ],
+	[ 'foo.bar', 'foo.bar' ],
+	[ 'a😀b', 'a😀b' ],
+	[ 'XMLHttpRequest', 'xml_http_request' ],
+	[ 'FOO_BAR', 'foo_bar' ],
+	[ '', '' ],
 ]
 
 test('string.snakeCase', (t) => {

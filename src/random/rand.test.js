@@ -1,5 +1,6 @@
 const { test } = require('@kmamal/testing')
-const { rand } = require('./rand')
+const { MiddleSquareWeyl } = require('./seeded/middle-square-weyl')
+const { __rand, rand } = require('./rand')
 
 test("random.rand", (t) => {
 	const A = 10
@@ -25,5 +26,22 @@ test("random.rand", (t) => {
 	for (let i = 0; i < 10; i++) {
 		const ratio = A * buckets[i] / N
 		t.ok(0.9 < ratio && ratio < 1.1)
+	}
+})
+
+test("random.__rand", (t) => {
+	const rng = new MiddleSquareWeyl(2)
+	const twin = new MiddleSquareWeyl(2)
+	const seen = new Set()
+	for (let i = 0; i < 1000; i++) {
+		const r = __rand(rng, 7)
+		t.equal(r, Math.floor(twin.uniform() * 7))
+		t.ok(Number.isInteger(r) && r >= 0 && r < 7)
+		seen.add(r)
+	}
+	t.equal(seen.size, 7)
+
+	for (let i = 0; i < 100; i++) {
+		t.equal(__rand(rng, 1), 0)
 	}
 })

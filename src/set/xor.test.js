@@ -1,12 +1,12 @@
-const { test } = require('@kmamal/testing')
+const { testVariants, junkSet } = require('../testing/test-variants')
 const { xor } = require('./xor')
 
-test("set.xor", (t) => {
+testVariants("set.xor", xor, (t, f) => {
 	const a = new Set([ 1, 2, 3 ])
 	const b = new Set([ 2, 3, 4 ])
-	const set = xor(a, b)
+	const set = f(new Set(a), new Set(b))
 
-	t.ok(set.size <= a.size)
+	t.ok(set.size <= a.size + b.size)
 
 	// The xor contains only values of a or b, but not of both
 	for (const x of set) {
@@ -36,4 +36,6 @@ test("set.xor", (t) => {
 			}
 		}
 	}
-})
+
+	t.equal(Array.from(f(new Set([ 1, 2 ]), new Set([ 2, 3 ]))).sort(), [ 1, 3 ])
+}, { dst: junkSet })

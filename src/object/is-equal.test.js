@@ -184,3 +184,59 @@ test("object.isEqual", (t) => {
 		},
 	))
 })
+
+test("object.isEqual builtins", (t) => {
+	t.ok(isEqual(new Date(0), new Date(0)))
+	t.ok(!isEqual(new Date(0), new Date(1000)))
+	t.ok(isEqual(new Date(NaN), new Date(NaN)))
+	t.ok(!isEqual(new Date(0), {}))
+	t.ok(isEqual(/a/gu, /a/gu))
+	t.ok(!isEqual(/a/u, /b/u))
+	t.ok(!isEqual(/a/u, /a/gu))
+	t.ok(isEqual(Object(1), Object(1)))
+	t.ok(!isEqual(Object(1), Object(2)))
+	t.ok(!isEqual(Object('a'), Object('b')))
+	t.ok(!isEqual(Object(true), Object(false)))
+	t.ok(isEqual(Object.create(null), {}))
+})
+
+test("object.isEqual prototypes", (t) => {
+	class A { constructor () { this.x = 1 } }
+
+	class B { constructor () { this.x = 1 } }
+
+	t.ok(isEqual(new A(), new A()))
+	t.ok(!isEqual(new A(), { x: 1 }))
+	t.ok(!isEqual(new A(), new B()))
+})
+
+test("object.isEqual map key order", (t) => {
+	t.ok(isEqual(
+		new Map([ [ { x: 1 }, 1 ], [ { x: 1 }, 2 ] ]),
+		new Map([ [ { x: 1 }, 2 ], [ { x: 1 }, 1 ] ]),
+	))
+	t.ok(!isEqual(
+		new Map([ [ { x: 1 }, 1 ], [ { x: 1 }, 2 ] ]),
+		new Map([ [ { x: 1 }, 2 ], [ { x: 1 }, 2 ] ]),
+	))
+})
+
+test("object.isEqual cycles", (t) => {
+	const a = {}
+	a.a = a
+	const b = {}
+	b.a = b
+	t.ok(isEqual(a, b))
+
+	const c = { v: 1 }
+	c.a = c
+	const d = { v: 2 }
+	d.a = d
+	t.ok(!isEqual(c, d))
+
+	const e = [ 1 ]
+	e.push(e)
+	const f = [ 1 ]
+	f.push(f)
+	t.ok(isEqual(e, f))
+})

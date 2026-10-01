@@ -1,5 +1,6 @@
 const { test } = require('@kmamal/testing')
-const { uniform } = require('./uniform')
+const { MiddleSquareWeyl } = require('./seeded/middle-square-weyl')
+const { __uniform, uniform } = require('./uniform')
 
 test("random.uniform", (t) => {
 	const N = 100000
@@ -26,5 +27,15 @@ test("random.uniform", (t) => {
 	for (let i = 0; i < 10; i++) {
 		const ratio = A * buckets[i] / N
 		t.ok(0.9 < ratio && ratio < 1.1)
+	}
+})
+
+test("random.__uniform", (t) => {
+	const rng = new MiddleSquareWeyl(1)
+	const twin = new MiddleSquareWeyl(1)
+	for (let i = 0; i < 1000; i++) {
+		const r = __uniform(rng)
+		t.equal(r, twin.uniform())
+		t.ok(r >= 0 && r < 1)
 	}
 })

@@ -13,7 +13,8 @@ for (;;) {
 		const C = Array.from(B)
 		try {
 			radixsortBy.$$$(C, identity)
-		} catch (error) {
+		}
+		catch (error) {
 			console.log({ in: B, error })
 			process.exit(1)
 		}

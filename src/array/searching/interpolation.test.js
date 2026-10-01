@@ -1,5 +1,6 @@
 const { test } = require('@kmamal/testing')
 const {
+	__interpolationSearch,
 	interpolationSearch,
 	interpolationSearchFirst,
 	interpolationSearchLast,
@@ -7,6 +8,7 @@ const {
 	interpolationSearchFirstBy,
 	interpolationSearchLastBy,
 } = require('./interpolation')
+const { sub } = require('../../operators/arithmetic/sub')
 
 test("array.interpolationSearch", (t) => {
 	t.equal(interpolationSearch([], 0), 0)
@@ -82,4 +84,9 @@ test("array.interpolationSearchLastBy", (t) => {
 	t.equal(interpolationSearchLastBy([ 1, 2, 3 ], 3, (x) => 2 * x), 3)
 	t.equal(interpolationSearchLastBy([ 1, 2, 3 ], 4, (x) => 2 * x), 3)
 	t.equal(interpolationSearchLastBy([ 2, 2, 2 ], 2, (x) => 2 * x), 3)
+})
+
+test("array.__interpolationSearch.empty-range", (t) => {
+	t.equal(__interpolationSearch([ -2, 0, 2, 3 ], 4, 4, 3, sub), 4)
+	t.equal(__interpolationSearch([ -2, 0, 2, 3 ], 2, 2, 0, sub), 2)
 })

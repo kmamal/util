@@ -1,10 +1,10 @@
-const { test } = require('@kmamal/testing')
+const { testVariants, junkSet } = require('../testing/test-variants')
 const { difference } = require('./difference')
 
-test("set.difference", (t) => {
+testVariants("set.difference", difference, (t, f) => {
 	const a = new Set([ 1, 2, 3 ])
 	const b = new Set([ 2, 3, 4 ])
-	const set = difference(a, b)
+	const set = f(new Set(a), new Set(b))
 
 	t.ok(set.size <= a.size)
 
@@ -34,4 +34,4 @@ test("set.difference", (t) => {
 			t.fail({ reason: "value not removed", x, b })
 		}
 	}
-})
+}, { dst: junkSet })

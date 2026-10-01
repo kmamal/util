@@ -7,4 +7,7 @@ test("range.xrange", (t) => {
 	t.equal([ ...xrange(1, 5) ], [ 4, 3, 2, 1 ])
 	t.equal([ ...xrange(1, 5, 2) ], [ 3, 1 ])
 	t.equal([ ...xrange(2, 7, 2) ], [ 6, 4, 2 ])
+	t.equal([ ...xrange(0, 0, 2) ], [])
+	t.equal([ ...xrange(5, 4, 3) ], [])
+	t.equal([ ...xrange(3, 3) ], [])
 })
