@@ -1,5 +1,7 @@
 
 const __chunk = (dst, dstStart, src, srcStart, srcEnd, chunkSize, chunkNum) => {
+	if (chunkNum <= 0) { return }
+
 	let readIndex = srcStart
 
 	for (let i = 0; i < chunkNum - 1; i++) {

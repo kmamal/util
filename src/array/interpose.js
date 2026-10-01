@@ -1,4 +1,4 @@
-const { __copy } = require('./copy')
+const { __copy, __copyRight } = require('./copy')
 
 const __interposeLeft = (dst, dstStart, src, srcStart, srcEnd, value) => {
 	const n = srcEnd - srcStart
@@ -27,11 +27,9 @@ const __interposeRight = (dst, dstStart, src, srcStart, srcEnd, value) => {
 	return m
 }
 
-const __interpose = (dst, dstStart, src, srcStart, srcEnd, value) => {
-	dst === src
-		? __interposeRight(dst, dstStart, src, srcStart, srcEnd, value)
-		: __interposeLeft(dst, dstStart, src, srcStart, srcEnd, value)
-}
+const __interpose = (dst, dstStart, src, srcStart, srcEnd, value) => dst === src
+	? __interposeRight(dst, dstStart, src, srcStart, srcEnd, value)
+	: __interposeLeft(dst, dstStart, src, srcStart, srcEnd, value)
 
 const __interposeAllLeft = (dst, dstStart, a, aStart, aEnd, b, bStart, bEnd) => {
 	const n = aEnd - aStart
@@ -60,7 +58,7 @@ const __interposeAllRight = (dst, dstStart, a, aStart, aEnd, b, bStart, bEnd) =>
 
 	const m = bEnd - bStart
 	if (m <= 0) {
-		__copy(dst, dstStart, a, aStart, aEnd)
+		__copyRight(dst, dstStart, a, aStart, aEnd)
 		return n
 	}
 
@@ -76,11 +74,9 @@ const __interposeAllRight = (dst, dstStart, a, aStart, aEnd, b, bStart, bEnd) =>
 	return total
 }
 
-const __interposeAll = (dst, dstStart, src, srcStart, srcEnd, b, bStart, bEnd) => {
-	dst === src
-		? __interposeAllRight(dst, dstStart, src, srcStart, srcEnd, b, bStart, bEnd)
-		: __interposeAllLeft(dst, dstStart, src, srcStart, srcEnd, b, bStart, bEnd)
-}
+const __interposeAll = (dst, dstStart, src, srcStart, srcEnd, b, bStart, bEnd) => dst === src
+	? __interposeAllRight(dst, dstStart, src, srcStart, srcEnd, b, bStart, bEnd)
+	: __interposeAllLeft(dst, dstStart, src, srcStart, srcEnd, b, bStart, bEnd)
 
 
 const interpose = (arr, value) => {

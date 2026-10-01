@@ -56,8 +56,8 @@ const from = ({ sign: s = 0, exponent: e = 0, mantissa: m = 0 }) => {
 
 const nextToward = (value, target) => {
 	if (Number.isNaN(value) || Number.isNaN(target)) { return NaN }
+	if (value === target) { return value }
 	const diff = target - value
-	if (diff === 0) { return value }
 
 	if (value === 0) {
 		const buffer = new ArrayBuffer(BYTES)

@@ -7,10 +7,12 @@ const {
 const { sub } = require('../../operators/arithmetic/sub')
 
 const __interpolationSearch = (arr, start, end, x, fnDist) => {
+	if (end <= start) { return start }
+
 	let low = start
 	let high = end
-	let lowValue = arr[low]
-	let highValue = arr[high - 1]
+	const lowValue = arr[low]
+	const highValue = arr[high - 1]
 
 	let lowDist = fnDist(x, lowValue)
 	if (lowDist <= 0) { return low }
@@ -30,11 +32,10 @@ const __interpolationSearch = (arr, start, end, x, fnDist) => {
 		if (dist === 0) { return mid }
 		if (dist < 0) {
 			high = mid
-			highValue = midValue
 			highDist = -dist
-		} else {
+		}
+		else {
 			low = mid + 1
-			lowValue = midValue
 			lowDist = dist
 		}
 	}

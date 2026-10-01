@@ -49,9 +49,11 @@ const __select = (arr, _start, _end, _n, fnCmp) => {
 
 		if (left - start > n) {
 			end = left
-		} else if (right - start > n) {
+		}
+		else if (right - start > n) {
 			return left
-		} else {
+		}
+		else {
 			n -= right - start
 			start = right
 		}

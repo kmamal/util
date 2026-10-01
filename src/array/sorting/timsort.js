@@ -87,7 +87,8 @@ class MergeStack {
 			__mergeInplace(this._arr, this._b.start, this._b.end, this._c.end, this._buffer, this._fnCmp)
 			this._c = { length: this._b.length + this._c.length, start: this._b.start, end: this._c.end }
 			this._b = this._a
-		} else {
+		}
+		else {
 			__mergeInplace(this._arr, this._a.start, this._a.end, this._b.end, this._buffer, this._fnCmp)
 			this._b = { length: this._a.length + this._b.length, start: this._a.start, end: this._b.end }
 		}
@@ -143,7 +144,8 @@ const __timsort2 = (arr, start, end, fnCmp) => {
 			__mergeInplace(arr, b.start, b.end, c.end, buffer, fnCmp)
 			c = { length: b.length + c.length, start: b.start, end: c.end }
 			b = a
-		} else {
+		}
+		else {
 			__mergeInplace(arr, a.start, a.end, b.end, buffer, fnCmp)
 			b = { length: a.length + b.length, start: a.start, end: b.end }
 		}
@@ -170,8 +172,9 @@ const __timsort2 = (arr, start, end, fnCmp) => {
 		__maybeMergeRuns()
 	}
 
-	while (b) {
-		__mergeRuns(runs, arr, start, end, fnCmp)
+	for (;;) {
+		if (!b) { break }
+		__mergeRuns()
 	}
 }
 
@@ -247,6 +250,7 @@ timsort.$$$ = timsort$$$
 
 module.exports = {
 	__timsort,
+	__timsort2,
 	timsortWith,
 	timsortBy,
 	timsort,

@@ -1,4 +1,4 @@
-const { max } = require('../max')
+const { max, maxBy } = require('../max')
 const { identity } = require('../../function/identity')
 const { __copy } = require('../copy')
 
@@ -32,7 +32,7 @@ const pigeonholesortBy = (arr, fnMap, _maxValue) => {
 	const { length } = arr
 	if (length <= 1) { return Array.from(arr) }
 
-	const maxValue = _maxValue ?? max(arr)
+	const maxValue = _maxValue ?? fnMap(maxBy(arr, fnMap))
 	const buckets = __pigeonholesortInitBuckets(maxValue)
 
 	const res = new Array(length)
@@ -48,7 +48,7 @@ const pigeonholesortByTo = (dst, arr, fnMap, _maxValue) => {
 		return dst
 	}
 
-	const maxValue = _maxValue ?? max(arr)
+	const maxValue = _maxValue ?? fnMap(maxBy(arr, fnMap))
 	const buckets = __pigeonholesortInitBuckets(maxValue)
 
 	dst.length = length
@@ -60,7 +60,7 @@ const pigeonholesortBy$$$ = (arr, fnMap, _maxValue) => {
 	const { length } = arr
 	if (length <= 1) { return arr }
 
-	const maxValue = _maxValue ?? max(arr)
+	const maxValue = _maxValue ?? fnMap(maxBy(arr, fnMap))
 	const buckets = __pigeonholesortInitBuckets(maxValue)
 
 	__pigeonholesort(arr, 0, arr, 0, length, buckets, fnMap)

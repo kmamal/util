@@ -16,7 +16,8 @@ const passAsync = async (_value, funcs) => {
 		const func = funcs[i]
 		if (func === kAwait) {
 			value = await value
-		} else {
+		}
+		else {
 			value = func(value)
 		}
 	}

@@ -1,45 +1,17 @@
 const { map } = require('../../array/map')
+const { __splitWords } = require('./split-words')
+const { upperFirst } = require('./upper-first')
 
 const map$$$ = map.$$$
 
 
 const _camelCase = (str) => {
-	const { length } = str
-	const res = new Array(length)
-	let writeIndex = 0
-
-	let expectLeading = true
-	let startsWord = true
-	let isFirst = true
-	for (let i = 0; i < length; i++) {
-		const char = str[i]
-		if (char === '-' || char === '_') {
-			startsWord = true
-			if (!expectLeading) { continue }
-			res[writeIndex++] = '_'
-		} else {
-			expectLeading = false
-			if (startsWord) {
-				res[writeIndex++] = isFirst
-					? char.toLowerCase()
-					: char.toUpperCase()
-				startsWord = false
-				isFirst = false
-			} else {
-				res[writeIndex++] = char
-			}
-		}
+	const { leading, words, trailing } = __splitWords(str)
+	for (let i = 0; i < words.length; i++) {
+		const word = words[i].toLowerCase()
+		words[i] = i === 0 ? word : upperFirst(word)
 	}
-
-	if (!expectLeading) {
-		for (let i = length - 1; i >= 0; i--) {
-			const char = str[i]
-			if (char !== '-' && char !== '_')	{ break }
-			res[writeIndex++] = '_'
-		}
-	}
-
-	return res.join('')
+	return `${'_'.repeat(leading)}${words.join('')}${'_'.repeat(trailing)}`
 }
 
 const camelCase = (str) => {

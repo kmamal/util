@@ -1,9 +1,14 @@
 const { copyTo } = require('./copy')
 const { clone } = require('./clone')
+const { setOwn, getOwn } = require('./own')
 
-const _isObject = (x) => x
-	&& typeof x === 'object'
-	&& !Array.isArray(x)
+const _isObject = (x) => {
+	if (x === null || typeof x !== 'object') { return false }
+	const proto = Object.getPrototypeOf(x)
+	return proto === Object.prototype || proto === null
+}
+
+const _cloneValue = (x) => typeof x === 'function' ? x : clone(x)
 
 const __merge = (dst, a, b) => {
 	const keys = Object.keys(b)
@@ -11,17 +16,16 @@ const __merge = (dst, a, b) => {
 		const key = keys[i]
 		const bValue = b[key]
 		if (!_isObject(bValue)) {
-			dst[key] = bValue
+			setOwn(dst, key, _cloneValue(bValue))
 			continue
 		}
-		const aValue = a[key]
-		if (!_isObject(aValue)) {
-			dst[key] = bValue
+		const aValue = getOwn(a, key)
+		let dstValue = getOwn(dst, key)
+		if (!_isObject(aValue) || !_isObject(dstValue)) {
+			dstValue = {}
+			setOwn(dst, key, dstValue)
+			__merge(dstValue, dstValue, bValue)
 			continue
-		}
-		let dstValue = dst[key]
-		if (!_isObject(dstValue)) {
-			dstValue = dst[key] = {}
 		}
 		__merge(dstValue, aValue, bValue)
 	}

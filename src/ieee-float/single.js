@@ -18,7 +18,7 @@ const _toBits = (value) => {
 	return view.getInt32(0, false)
 }
 
-const _sign = (bits) => bits >> (MANTISSA_BITS + EXPONENT_BITS)
+const _sign = (bits) => bits >>> (MANTISSA_BITS + EXPONENT_BITS)
 
 const sign = (value) => _sign(_toBits(value))
 
@@ -51,10 +51,14 @@ const from = ({ sign: s = 0, exponent: e = 0, mantissa: m = 0 }) => {
 	return view.getFloat32(0, false)
 }
 
-const nextToward = (value, target) => {
-	if (Number.isNaN(value) || Number.isNaN(target)) { return NaN }
+const nextToward = (_value, target) => {
+	if (Number.isNaN(_value) || Number.isNaN(target)) { return NaN }
+	if (_value === target) { return _value }
+
+	const value = Math.fround(_value)
+	if (value !== _value && (value > _value) === (target > _value)) { return value }
+	if (value === target) { return value }
 	const diff = target - value
-	if (diff === 0) { return value }
 
 	if (value === 0) {
 		const buffer = new ArrayBuffer(BYTES)

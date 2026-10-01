@@ -6,7 +6,8 @@ const __move = (arr, fromIndex, toIndex) => {
 	const item = arr[fromIndex]
 	if (fromIndex < toIndex) {
 		__copy(arr, fromIndex, arr, fromIndex + 1, toIndex + 1)
-	} else {
+	}
+	else {
 		__copyRight(arr, toIndex + 1, arr, toIndex, fromIndex)
 	}
 	arr[toIndex] = item
@@ -20,11 +21,6 @@ const move = (arr, fromIndex, toIndex) => {
 }
 
 const moveTo = (dst, arr, fromIndex, toIndex) => {
-	if (fromIndex === toIndex) {
-		__copy(dst, 0, arr, 0, arr.length)
-		return dst
-	}
-
 	dst.length = arr.length
 	__copy(dst, 0, arr, 0, arr.length)
 	__move(dst, fromIndex, toIndex)

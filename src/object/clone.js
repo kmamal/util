@@ -1,49 +1,75 @@
-const { mapValues } = require('./map-values')
+const { setOwn } = require('./own')
 
-const _cache = new Map()
-
-const _cloneWithDirtyCache = (x) => {
+const _clone = (x, cache) => {
 	if (typeof x === 'function') { throw new Error("can't clone functions") }
 
 	if (x === null || typeof x !== 'object') { return x }
 
-	const cached = _cache.get(x)
-	if (cached) { return cached }
+	if (cache.has(x)) { return cache.get(x) }
 
-	let res
-	transform: {
-		if (Array.isArray(x)) {
-			res = Array.from(x, _cloneWithDirtyCache)
-			break transform
+	if (Array.isArray(x)) {
+		const { length } = x
+		const res = new Array(length)
+		cache.set(x, res)
+		for (let i = 0; i < length; i++) {
+			res[i] = _clone(x[i], cache)
 		}
-
-		if (x instanceof Map) {
-			res = new Map()
-			for (const entry of x.entries()) {
-				res.set(_cloneWithDirtyCache(entry[0]), _cloneWithDirtyCache(entry[1]))
-			}
-			break transform
-		}
-
-		if (x instanceof Set) {
-			res = new Set()
-			for (const value of x.values()) {
-				res.add(_cloneWithDirtyCache(value))
-			}
-			break transform
-		}
-
-		res = mapValues(x, _cloneWithDirtyCache)
+		return res
 	}
 
-	_cache.set(x, res)
+	if (x instanceof Map) {
+		const res = new Map()
+		cache.set(x, res)
+		for (const entry of x.entries()) {
+			res.set(_clone(entry[0], cache), _clone(entry[1], cache))
+		}
+		return res
+	}
+
+	if (x instanceof Set) {
+		const res = new Set()
+		cache.set(x, res)
+		for (const value of x.values()) {
+			res.add(_clone(value, cache))
+		}
+		return res
+	}
+
+	if (x instanceof Date) {
+		const res = new Date(x.getTime())
+		cache.set(x, res)
+		return res
+	}
+
+	if (x instanceof RegExp) {
+		const res = new RegExp(x.source, x.flags)
+		res.lastIndex = x.lastIndex
+		cache.set(x, res)
+		return res
+	}
+
+	if (x instanceof DataView) {
+		const res = new DataView(x.buffer.slice(x.byteOffset, x.byteOffset + x.byteLength))
+		cache.set(x, res)
+		return res
+	}
+
+	if (ArrayBuffer.isView(x)) {
+		const res = x.slice()
+		cache.set(x, res)
+		return res
+	}
+
+	const res = Object.create(Object.getPrototypeOf(x))
+	cache.set(x, res)
+	const keys = Object.keys(x)
+	for (let i = 0; i < keys.length; i++) {
+		const key = keys[i]
+		setOwn(res, key, _clone(x[key], cache))
+	}
 	return res
 }
 
-const clone = (x) => {
-	const res = _cloneWithDirtyCache(x)
-	_cache.clear()
-	return res
-}
+const clone = (x) => _clone(x, new Map())
 
 module.exports = { clone }

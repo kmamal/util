@@ -1,10 +1,11 @@
 const { empty$$$ } = require('./empty')
+const { setOwn } = require('./own')
 
 const __copy = (dst, src) => {
 	const keys = Object.keys(src)
 	for (let i = 0; i < keys.length; i++) {
 		const key = keys[i]
-		dst[key] = src[key]
+		setOwn(dst, key, src[key])
 	}
 }
 

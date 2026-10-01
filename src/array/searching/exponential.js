@@ -42,7 +42,8 @@ const __contractExponentialSearch = (state, cmp) => {
 	const { sign } = state
 	if (cmp * sign < 0) {
 		state.b = state.mid - sign
-	} else {
+	}
+	else {
 		state.a = state.mid + sign
 	}
 	const { a, b } = state
@@ -62,7 +63,8 @@ const __exponentialSearch = (arr, start, end, x, fnCmp) => {
 		first = start
 		last = end - 1
 		nudge = 0
-	} else {
+	}
+	else {
 		first = start - 1
 		last = end
 		nudge = 1

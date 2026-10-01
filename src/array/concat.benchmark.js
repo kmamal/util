@@ -4,7 +4,7 @@ const { concat } = require('./concat')
 const shapes = {
 	"many small": () => Array.from({ length: 1000 }, () => Array.from({ length: 10 }, (_, i) => i)),
 	"few large": () => Array.from({ length: 10 }, () => Array.from({ length: 1000 }, (_, i) => i)),
-	"mixed sizes": () => Array.from({ length: 100 }, (_, i) => Array.from({ length: i }, (_, j) => j)),
+	"mixed sizes": () => Array.from({ length: 100 }, (_, i) => Array.from({ length: i }, (__, j) => j)),
 }
 
 for (const [ name, pre ] of Object.entries(shapes)) {

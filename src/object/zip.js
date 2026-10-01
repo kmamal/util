@@ -1,11 +1,12 @@
 const { empty$$$ } = require('./empty')
+const { setOwn } = require('./own')
 
 const __zip = (dst, keys, values) => {
 	const { length } = keys
 	for (let i = 0; i < length; i++) {
 		const key = keys[i]
 		const value = values[i]
-		dst[key] = value
+		setOwn(dst, key, value)
 	}
 }
 

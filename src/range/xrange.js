@@ -1,5 +1,6 @@
 
 const xrange = function * (from, to, step = 1) {
+	if (!(from < to)) { return }
 	const remainder = ((to - from) - 1) % step
 	for (let i = to - 1 - remainder; i >= from; i -= step) { yield i }
 }

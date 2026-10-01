@@ -9,57 +9,75 @@ const throttle = (fn, time, options = {}) => {
 	} = options
 
 	const queue = new TaskQueue()
+	const tasks = new Set()
 	let lastArgs
 	let lastResult
 	let lastPromise
+	let pending = false
 
 	let sleeper = null
 	let generation = 0
 
-	const invoke = async () => {
-		lastResult = await fn(...lastArgs)
-		if (!reentrant) { await lastResult }
+	const track = (promise) => {
+		promise.catch(() => {})
+		tasks.add(promise)
+		promise.finally(() => { tasks.delete(promise) }).catch(() => {})
+		return promise
+	}
+
+	const invoke = (args) => {
+		const run = async () => {
+			const result = await fn(...args)
+			lastResult = result
+			return result
+		}
+		return track(reentrant ? run() : queue.run(run))
+	}
+
+	const empty = async () => {
+		while (tasks.size > 0) {
+			await Promise.allSettled([ ...tasks ])
+		}
 	}
 
 	const throttled = (...args) => {
 		lastArgs = args
 
-		if (sleeper !== null) { return lastPromise }
+		if (sleeper !== null) {
+			pending = true
+			return lastPromise
+		}
 
 		const currentGeneration = generation
 		const currentSleeper = sleep(time)
 		sleeper = currentSleeper
+		pending = !leading
 
-		if (leading) { queue.run(invoke) }
+		const leadingPromise = leading ? invoke(args) : null
 
-		let promise = currentSleeper.then(() => {
+		lastPromise = track(currentSleeper.then(() => {
 			if (sleeper === currentSleeper) { sleeper = null }
-		})
+			if (currentGeneration !== generation) { return lastResult }
+			if (!trailing || !pending) { return leadingPromise ?? lastResult }
+			pending = false
+			return invoke(lastArgs)
+		}))
 
-		if (trailing) {
-			const slept = promise
-			promise = queue.run(async () => {
-				await slept
-				if (currentGeneration !== generation) { return }
-				await invoke()
-			})
-		}
-
-		lastPromise = promise.then(() => lastResult)
-		return lastPromise
+		return leadingPromise ?? lastPromise
 	}
 
 	throttled.cancel = async () => {
 		generation += 1
+		pending = false
 		const currentSleeper = sleeper
 		sleeper = null
 		currentSleeper?.reset(0)
-		await queue.empty()
+		await empty()
 	}
 
 	throttled.flush = async () => {
 		sleeper?.reset(0)
-		await queue.empty()
+		await empty()
 		return lastResult
 	}
 

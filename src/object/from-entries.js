@@ -1,9 +1,10 @@
 const { empty$$$ } = require('./empty')
+const { setOwn } = require('./own')
 
 const __fromEntries = (dst, entries) => {
 	for (let i = 0; i < entries.length; i++) {
 		const [ key, value ] = entries[i]
-		dst[key] = value
+		setOwn(dst, key, value)
 	}
 }
 

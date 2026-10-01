@@ -10,9 +10,8 @@ const nonReentrant = (fn, shouldThrow = false) => {
 			return kNonReentrant
 		}
 		running = true
-		const result = await fn(...args)
-		running = false
-		return result
+		try { return await fn(...args) }
+		finally { running = false }
 	}
 }
 

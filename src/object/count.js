@@ -1,12 +1,13 @@
 const { empty$$$ } = require('./empty')
+const { setOwn, getOwn } = require('./own')
 const { identity } = require('../function/identity')
 
 const __count = (dst, arr, start, end, fnMap) => {
 	for (let i = start; i < end; i++) {
 		const item = arr[i]
 		const key = fnMap(item)
-		const n = dst[key] ?? 0
-		dst[key] = n + 1
+		const n = getOwn(dst, key) ?? 0
+		setOwn(dst, key, n + 1)
 	}
 }
 

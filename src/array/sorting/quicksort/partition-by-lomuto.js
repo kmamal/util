@@ -3,6 +3,8 @@ const { swap } = require('../../swap')
 const swap$$$ = swap.$$$
 
 const __partitionByLomuto = (arr, start, end, pivot, fnCmp) => {
+	if (end <= start) { return start }
+
 	let partition = start
 	for (let i = start; i < end; i++) {
 		if (fnCmp(arr[i], pivot) < 0) {

@@ -334,7 +334,8 @@ benchmark("conditional initialization", {
 			if (Math.random() < 0.5) {
 				a = 1
 				b = 2
-			} else {
+			}
+			else {
 				a = 2
 				b = 1
 			}
@@ -576,7 +577,8 @@ benchmark("object creating vs caching", {
 				if (cache.index > 0) {
 					cache.index--
 					obj = cache.list[cache.index]
-				} else {
+				}
+				else {
 					cache.list[cache.index++] = obj = { a: 5 % i, b: i * 9 }
 				}
 				arr[i] = obj

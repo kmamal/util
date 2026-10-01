@@ -2,7 +2,7 @@ const { identity } = require('./identity')
 
 const memoize = (fn, options) => {
 	const resolve = options?.resolve ?? identity
-	const Cache = options?.constructor ?? Map
+	const Cache = Object.hasOwn(options ?? {}, 'constructor') ? options.constructor : Map
 
 	const cache = new Cache()
 

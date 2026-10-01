@@ -35,6 +35,7 @@ const __weave = (dst, dstStart, srcArray) => {
 	let maxDepth = 0
 	for (let i = num - 1; i >= 0; i--) {
 		const src = srcArray[i]
+		if (src.length === 0) { continue }
 		sources.unshift(src)
 		maxDepth = Math.max(maxDepth, src.length)
 	}
@@ -49,7 +50,7 @@ const __weave = (dst, dstStart, srcArray) => {
 			for (let i = 0; i < numRemaining; i++) {
 				dst[writeIndex + i] = rest[depth + i]
 			}
-			return writeIndex + numRemaining
+			return writeIndex + numRemaining - dstStart
 		}
 
 		let node = sources._head

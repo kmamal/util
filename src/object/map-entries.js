@@ -1,4 +1,5 @@
 const { empty$$$ } = require('./empty')
+const { setOwn } = require('./own')
 
 const __mapEntries = (dst, src, fnMap) => {
 	const entries = Object.entries(src)
@@ -6,7 +7,7 @@ const __mapEntries = (dst, src, fnMap) => {
 		const mapped = fnMap(entries[i])
 		const key = mapped[0]
 		const value = mapped[1]
-		dst[key] = value
+		setOwn(dst, key, value)
 	}
 }
 

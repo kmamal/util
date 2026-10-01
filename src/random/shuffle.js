@@ -5,7 +5,7 @@ const { swap } = require('../array/swap')
 const swap$$$ = swap.$$$
 
 const __shuffle = (rng, arr, start, end, limit) => {
-	const stop = Math.min(end, limit) - 1
+	const stop = Math.min(end - 1, limit)
 	for (let i = start; i < stop; i++) {
 		const index = __randInt(rng, i, end)
 		swap$$$(arr, index, i)
@@ -26,6 +26,7 @@ const shuffle = (arr) => {
 	return res
 }
 
+shuffle.to = null
 shuffle.$$$ = shuffle$$$
 
 module.exports = {

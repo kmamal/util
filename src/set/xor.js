@@ -26,6 +26,7 @@ const xor$$$ = (a, b) => {
 	return a
 }
 
+xor.to = xorTo
 xor.$$$ = xor$$$
 
 module.exports = { xor }

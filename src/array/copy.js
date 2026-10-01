@@ -23,7 +23,8 @@ const __copyInplace = (arr, offset, start, end) => {
 	const overlapsBadly = start < offset && offset < end
 	if (!overlapsBadly) {
 		__copy(arr, offset, arr, start, end)
-	} else {
+	}
+	else {
 		__copyRight(arr, offset, arr, start, end)
 	}
 }
@@ -50,9 +51,12 @@ const copyTo = (dst, a, b, start = 0, end = b.length, offset = 0) => {
 }
 
 const copy$$$ = (a, b, start = 0, end = b.length, offset = 0) => {
+	const length = end - start
+	a.length = Math.max(a.length, offset + length)
 	if (a === b) {
 		__copyInplace(a, offset, start, end)
-	} else {
+	}
+	else {
 		__copy(a, offset, b, start, end)
 	}
 	return a

@@ -7,7 +7,8 @@ const intersectionTo = (dst, a, b) => {
 	if (a.size < b.size) {
 		small = a
 		large = b
-	} else {
+	}
+	else {
 		small = b
 		large = a
 	}

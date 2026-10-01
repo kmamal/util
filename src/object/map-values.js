@@ -1,10 +1,11 @@
 const { empty$$$ } = require('./empty')
+const { setOwn } = require('./own')
 
 const __mapValues = (dst, src, fnMap) => {
 	const keys = Object.keys(src)
 	for (let i = 0; i < keys.length; i++) {
 		const key = keys[i]
-		dst[key] = fnMap(src[key])
+		setOwn(dst, key, fnMap(src[key]))
 	}
 }
 

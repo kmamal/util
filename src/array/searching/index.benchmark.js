@@ -80,7 +80,7 @@ benchmark.complex("array :: search algorithms", {
 				{
 					name: "exponential search",
 					value: (arr, x, get) => {
-						__exponentialSearch(arr, 0, arr.length - 1, x, (_, y) => x - get(y))
+						__exponentialSearch(arr, 0, arr.length, x, (_, y) => x - get(y))
 					},
 				},
 			],

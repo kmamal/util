@@ -33,7 +33,8 @@ const __rotateInplace = (arr, start, end, _n, tmp) => {
 		__copy(tmp, 0, arr, start, splitIndex)
 		__copy(arr, start, arr, splitIndex, end)
 		__copy(arr, joinIndex, tmp, 0, splitIndex - start)
-	} else {
+	}
+	else {
 		__copy(tmp, 0, arr, splitIndex, end)
 		__copyRight(arr, joinIndex, arr, start, splitIndex)
 		__copy(arr, start, tmp, 0, end - splitIndex)

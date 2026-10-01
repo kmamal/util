@@ -23,6 +23,7 @@ const __chooseN = (rng, dst, dstStart, src, srcStart, srcEnd, _n) => {
 			}
 		}
 
+		__shuffle(rng, dst, dstStart, dstStart + n, dstStart + n)
 		return n
 	}
 

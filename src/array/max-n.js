@@ -17,7 +17,7 @@ const getItem = (x) => x.item
 
 const __maxN = (dst, dstStart, src, srcStart, srcEnd, n, fnCmp) => {
 	const length = srcEnd - srcStart
-	if (length <= 0) { return 0 }
+	if (length <= 0 || n <= 0) { return 0 }
 
 	const limit = Math.min(length, n)
 

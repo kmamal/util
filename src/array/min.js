@@ -11,6 +11,7 @@ const __min = (arr, start, end, fnCmp) => {
 
 	if (length === 1) {
 		lengthOneResult.item = arr[start]
+		lengthOneResult.index = start
 		return lengthOneResult
 	}
 

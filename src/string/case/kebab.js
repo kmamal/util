@@ -1,49 +1,15 @@
 const { map } = require('../../array/map')
-const { isUpperCase } = require('./upper')
+const { __splitWords } = require('./split-words')
 
 const map$$$ = map.$$$
 
 
 const _kebabCase = (str) => {
-	const { length } = str
-	const res = new Array(length)
-	let writeIndex = 0
-
-	let expectLeading = true
-	let startsWord = true
-	let isFirst = true
-	for (let i = 0; i < length; i++) {
-		const char = str[i]
-		if (char === '-' || char === '_') {
-			startsWord = true
-			if (!expectLeading) { continue }
-			res[writeIndex++] = '-'
-		} else {
-			if (isUpperCase(char)) {
-				startsWord = true
-			}
-
-			expectLeading = false
-			if (startsWord) {
-				startsWord = false
-				if (!isFirst) {
-					res[writeIndex++] = '-'
-				}
-				isFirst = false
-			}
-			res[writeIndex++] = char.toLowerCase()
-		}
+	const { leading, words, trailing } = __splitWords(str)
+	for (let i = 0; i < words.length; i++) {
+		words[i] = words[i].toLowerCase()
 	}
-
-	if (!expectLeading) {
-		for (let i = length - 1; i >= 0; i--) {
-			const char = str[i]
-			if (char !== '-' && char !== '_')	{ break }
-			res[writeIndex++] = '-'
-		}
-	}
-
-	return res.join('')
+	return `${'-'.repeat(leading)}${words.join('-')}${'-'.repeat(trailing)}`
 }
 
 const kebabCase = (str) => {

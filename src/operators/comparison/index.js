@@ -1,1 +1,1 @@
-require('@kmamal/util/meta/build-index')(exports, __dirname)
+require('@kmamal/util/meta/build-index')(module.exports, __dirname)

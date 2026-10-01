@@ -16,7 +16,7 @@ const __quicksort = (arr, _start, _end, fnCmp, sizeCutoff, depthCutoff, takeover
 
 		const length = end - start
 		if (length <= 1) { continue }
-		if (length <= sizeCutoff || depth === depthCutoff) {
+		if (length <= sizeCutoff || depth >= depthCutoff) {
 			takeover(arr, start, start + 1, end, fnCmp)
 			continue
 		}

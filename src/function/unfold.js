@@ -1,5 +1,6 @@
 
 const unfold = (fn, n, init) => {
+	if (n <= 0) { return [] }
 	const res = new Array(n)
 	let value = init
 	res[0] = init

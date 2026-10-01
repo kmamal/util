@@ -1,6 +1,6 @@
 const { __copy } = require('./copy')
 const { __exponentialSearch } = require('./searching/exponential')
-const { compare, compareBy, strictGreater } = require('../function/compare')
+const { compare, compareBy, strictLess, strictGreater } = require('../function/compare')
 
 const __merge = (dst, dstStart, a, aStart, aEnd, b, bStart, bEnd, fnCmp) => {
 	let writeIndex = dstStart
@@ -15,7 +15,8 @@ const __merge = (dst, dstStart, a, aStart, aEnd, b, bStart, bEnd, fnCmp) => {
 		if (cmp <= 0) {
 			dst[writeIndex++] = aItem
 			aItem = a[++aIndex]
-		} else {
+		}
+		else {
 			dst[writeIndex++] = bItem
 			bItem = b[++bIndex]
 		}
@@ -24,7 +25,8 @@ const __merge = (dst, dstStart, a, aStart, aEnd, b, bStart, bEnd, fnCmp) => {
 	if (aIndex < aEnd) {
 		const n = aEnd - aIndex
 		for (let i = 0; i < n; i++) { dst[writeIndex + i] = a[aIndex + i] }
-	} else if (bIndex < bEnd) {
+	}
+	else if (bIndex < bEnd) {
 		const n = bEnd - bIndex
 		for (let i = 0; i < n; i++) { dst[writeIndex + i] = b[bIndex + i] }
 	}
@@ -42,8 +44,9 @@ const __mergeGalloping = (dst, dstStart, a, aStart, aEnd, b, bStart, bEnd, fnCmp
 	let count = 0
 
 	const fnCmpGt = strictGreater(fnCmp)
+	const fnCmpLt = strictLess(fnCmp)
 
-	let cmp = fnCmp(aItem, bItem)
+	let cmp = aIndex < aEnd && bIndex < bEnd ? fnCmp(aItem, bItem) : 0
 	while (aIndex < aEnd && bIndex < bEnd) {
 		if (cmp <= 0) {
 			dst[writeIndex++] = aItem
@@ -55,7 +58,8 @@ const __mergeGalloping = (dst, dstStart, a, aStart, aEnd, b, bStart, bEnd, fnCmp
 				const numJumped = nextIndex - aIndex
 				if (numJumped === 0) {
 					minGalloping++
-				} else {
+				}
+				else {
 					minGalloping--
 					__copy(dst, writeIndex, a, aIndex, nextIndex)
 					writeIndex += numJumped
@@ -67,17 +71,19 @@ const __mergeGalloping = (dst, dstStart, a, aStart, aEnd, b, bStart, bEnd, fnCmp
 			}
 
 			aItem = a[aIndex]
-		} else {
+		}
+		else {
 			dst[writeIndex++] = bItem
 			++bIndex
 
 			count = count < 0 ? 1 : count + 1
 			if (count > minGalloping) {
-				const nextIndex = __exponentialSearch(b, bIndex, bEnd, aItem, fnCmpGt)
+				const nextIndex = __exponentialSearch(b, bIndex, bEnd, aItem, fnCmpLt)
 				const numJumped = nextIndex - bIndex
 				if (numJumped === 0) {
 					minGalloping++
-				} else {
+				}
+				else {
 					minGalloping--
 					__copy(dst, writeIndex, b, bIndex, nextIndex)
 					writeIndex += numJumped
@@ -91,13 +97,14 @@ const __mergeGalloping = (dst, dstStart, a, aStart, aEnd, b, bStart, bEnd, fnCmp
 			bItem = b[bIndex]
 		}
 
-		cmp = fnCmp(aItem, bItem)
+		if (aIndex < aEnd && bIndex < bEnd) { cmp = fnCmp(aItem, bItem) }
 	}
 
 	if (aIndex < aEnd) {
 		const n = aEnd - aIndex
 		for (let i = 0; i < n; i++) { dst[writeIndex + i] = a[aIndex + i] }
-	} else if (bIndex < bEnd) {
+	}
+	else if (bIndex < bEnd) {
 		const n = bEnd - bIndex
 		for (let i = 0; i < n; i++) { dst[writeIndex + i] = b[bIndex + i] }
 	}
@@ -118,7 +125,8 @@ const __mergeRight = (dst, dstStart, a, aStart, aEnd, b, bStart, bEnd, fnCmp) =>
 		if (cmp > 0) {
 			dst[writeIndex--] = aItem
 			aItem = a[--aIndex]
-		} else {
+		}
+		else {
 			dst[writeIndex--] = bItem
 			bItem = b[--bIndex]
 		}
@@ -126,14 +134,16 @@ const __mergeRight = (dst, dstStart, a, aStart, aEnd, b, bStart, bEnd, fnCmp) =>
 
 	if (aStart - 1 < aIndex) {
 		while (aStart - 1 < aIndex) { dst[writeIndex--] = a[aIndex--] }
-	} else if (bStart - 1 < bIndex) {
+	}
+	else if (bStart - 1 < bIndex) {
 		while (bStart - 1 < bIndex) { dst[writeIndex--] = b[bIndex--] }
 	}
 
 	if (aStart - 1 < aIndex) {
 		const n = aIndex - aStart + 1
 		for (let i = 0; i < n; i++) { dst[writeIndex - i] = a[aIndex - i] }
-	} else if (bStart - 1 < bIndex) {
+	}
+	else if (bStart - 1 < bIndex) {
 		const n = bIndex - bStart + 1
 		for (let i = 0; i < n; i++) { dst[writeIndex - i] = b[bIndex - i] }
 	}
@@ -145,7 +155,8 @@ const __mergeInplace = (arr, start, sep, end, buffer, fnCmp) => {
 	if (aLength <= bLength) {
 		__copy(buffer, 0, arr, start, sep)
 		__merge(arr, start, buffer, 0, aLength, arr, sep, end, fnCmp)
-	} else {
+	}
+	else {
 		__copy(buffer, 0, arr, sep, end)
 		__mergeRight(arr, start, arr, start, sep, buffer, 0, bLength, fnCmp)
 	}

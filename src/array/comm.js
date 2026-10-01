@@ -19,11 +19,19 @@ const __comm = (dstA, dstAStart, dstAB, dstABStart, dstB, dstBStart, dstX, dstXS
 			if (dstA) { dstA[dstAIndex++] = aItem }
 			if (dstX) { dstX[dstXIndex++] = aItem }
 			aItem = a[++aIndex]
-		} else if (cmp === 0) {
-			if (dstAB) { dstAB[dstABIndex++] = aItem }
-			aItem = a[++aIndex]
-			bItem = b[++bIndex]
-		} else {
+		}
+		else if (cmp === 0) {
+			do {
+				if (dstAB) { dstAB[dstABIndex++] = aItem }
+				aItem = a[++aIndex]
+			} while (aIndex < aEnd && fnCmp(aItem, bItem) === 0)
+
+			const matched = bItem
+			do {
+				bItem = b[++bIndex]
+			} while (bIndex < bEnd && fnCmp(matched, bItem) === 0)
+		}
+		else {
 			if (dstB) { dstB[dstBIndex++] = bItem }
 			if (dstX) { dstX[dstXIndex++] = bItem }
 			bItem = b[++bIndex]
@@ -36,23 +44,28 @@ const __comm = (dstA, dstAStart, dstAB, dstABStart, dstB, dstBStart, dstX, dstXS
 			for (let i = 0; i < n; i++) { dstX[dstXIndex + i] = dstA[dstAIndex + i] = a[aIndex + i] }
 			dstXIndex += n
 			dstAIndex += n
-		} else if (dstA) {
+		}
+		else if (dstA) {
 			for (let i = 0; i < n; i++) { dstA[dstAIndex + i] = a[aIndex + i] }
 			dstAIndex += n
-		} else if (dstX) {
+		}
+		else if (dstX) {
 			for (let i = 0; i < n; i++) { dstX[dstXIndex + i] = a[aIndex + i] }
 			dstXIndex += n
 		}
-	} else if (bIndex < bEnd) {
+	}
+	else if (bIndex < bEnd) {
 		const n = bEnd - bIndex
 		if (dstB && dstX) {
 			for (let i = 0; i < n; i++) { dstX[dstXIndex + i] = dstB[dstBIndex + i] = b[bIndex + i] }
 			dstXIndex += n
 			dstBIndex += n
-		} else if (dstB) {
+		}
+		else if (dstB) {
 			for (let i = 0; i < n; i++) { dstB[dstBIndex + i] = b[bIndex + i] }
 			dstBIndex += n
-		} else if (dstX) {
+		}
+		else if (dstX) {
 			for (let i = 0; i < n; i++) { dstX[dstXIndex + i] = b[bIndex + i] }
 			dstXIndex += n
 		}

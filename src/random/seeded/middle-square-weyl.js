@@ -4,15 +4,31 @@ const TWO_POW_12 = 2 ** 12
 const TWO_POW_32 = 2 ** 32
 const TWO_POW_52 = 2 ** 52
 
+const _view = new DataView(new ArrayBuffer(8))
+
+const _mix = (_h) => {
+	let h = _h
+	h ^= h >>> 16
+	h = Math.imul(h, 0x85ebca6b)
+	h ^= h >>> 13
+	h = Math.imul(h, 0xc2b2ae35)
+	h ^= h >>> 16
+	return h
+}
+
 class MiddleSquareWeyl {
 	constructor (seed) {
 		this.seed(seed ?? 0)
 	}
 
-	seed (uniform) {
-		const seed = Math.floor(uniform * (2 ** 20))
-		this._x = seed & 0x000fffff
-		this._w = 0
+	seed (value) {
+		_view.setFloat64(0, value, false)
+		const high = _view.getUint32(0, false)
+		const low = _view.getUint32(4, false)
+		const a = _mix(high)
+		const b = _mix(low ^ a)
+		this._x = _mix(b ^ Math.imul(a, 0x9e3779b9)) & 0x000fffff
+		this._w = b
 	}
 
 	next () {
