@@ -9,7 +9,7 @@ const amrap = (fnIterate, timeLimit, options = {}) => {
 	} = options
 
 	let remaining = timeLimit
-	let next = (safety * initial) | 0
+	let next = Math.max(1, Math.floor(initial))
 	let reps = 0
 
 	for (;;) {
