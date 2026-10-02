@@ -86,3 +86,30 @@ test("random.__chooseFromPrefixSums", (t) => {
 		t.equal(__chooseFromPrefixSums(a, arr, 2, 5, sub), __chooseFromPrefixSums(b, arr, 2, 5, sub))
 	}
 })
+
+test("random.__chooseFromPrefixSums boundaries", (t) => {
+	const at = (u, sums) => __chooseFromPrefixSums({ uniform: () => u }, sums, 0, sums.length, sub)
+	const top = 1 - 2 ** -53
+
+	t.equal(at(0, [ 0, 1 ]), 1)
+	t.equal(at(0, [ 0, 0, 1, 1 ]), 2)
+	t.equal(at(0.5, [ 1, 1, 2 ]), 2)
+	t.equal(at(0.5, [ 1, 2 ]), 1)
+	t.equal(at(top, [ 1, 2, 3 ]), 2)
+	t.equal(at(top, [ 1, 1 ]), 0)
+})
+
+test("random.chooseFromPrefixSumsBy boundaries", (t) => {
+	const { defaultRng } = require('./default-rng')
+	const at = (u, sums) => {
+		defaultRng.uniform = () => u
+		try { return chooseFromPrefixSumsBy(sums.map((value) => ({ sum: value })), (x) => x.sum) }
+		finally { delete defaultRng.uniform }
+	}
+	const top = 1 - 2 ** -53
+
+	t.equal(at(0, [ 0, 1 ]), 1)
+	t.equal(at(0.5, [ 1, 1, 2 ]), 2)
+	t.equal(at(top, [ 1, 1 ]), 0)
+	t.ok(typeof defaultRng.uniform() === 'number')
+})

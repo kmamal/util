@@ -1,7 +1,7 @@
 const { defaultRng } = require('./default-rng')
 const { __binarySearch } = require('../array/searching/binary')
 const { prefixSums, prefixSumsBy } = require('../array/prefix-sums')
-const { compareStrictLess, strictLess } = require('../function/compare')
+const { compareStrictGreater, strictGreater } = require('../function/compare')
 const { sub } = require('../operators/arithmetic/sub')
 
 
@@ -11,7 +11,7 @@ const __chooseFromPrefixSums = (rng, arr, start, end, fnCmp) => {
 
 	const total = arr[end - 1]
 	const r = rng.uniform() * total
-	return __binarySearch(arr, start, end, r, strictLess(fnCmp))
+	return __binarySearch(arr, start, end, r, strictGreater(fnCmp))
 }
 
 const chooseFromPrefixSumsWith = (arr, fnCmp) => __chooseFromPrefixSums(defaultRng, arr, 0, arr.length, fnCmp)
@@ -22,7 +22,7 @@ const chooseFromPrefixSumsBy = (arr, fnMap) => {
 
 	const total = fnMap(arr[length - 1])
 	const r = defaultRng.uniform() * total
-	return __binarySearch(arr, 0, length, r, (x, value) => compareStrictLess(x, fnMap(value)))
+	return __binarySearch(arr, 0, length, r, (x, value) => compareStrictGreater(x, fnMap(value)))
 }
 
 const chooseFromPrefixSums = (arr) => __chooseFromPrefixSums(defaultRng, arr, 0, arr.length, sub)
