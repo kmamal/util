@@ -76,7 +76,7 @@ const get = (obj, path) => {
 
 const set = (obj, path, value) => {
 	const steps = __makeSteps(path)
-	const res = { ...obj }
+	const res = _shallowCopy(obj)
 	__setCopying(res, steps, value)
 	return res
 }
