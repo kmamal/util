@@ -99,8 +99,8 @@ const exponentialSearchFirstWith = (arr, x, fnCmp) => exponentialSearchWith(arr,
 const exponentialSearchLastWith = (arr, x, fnCmp) => exponentialSearchWith(arr, x, strictGreater(fnCmp))
 
 const exponentialSearchWithRight = (arr, x, fnCmp) => __exponentialSearch(arr, arr.length, 0, x, fnCmp)
-const exponentialSearchFirstWithRight = (arr, x, fnCmp) => exponentialSearchWithRight(arr, x, strictGreater(fnCmp))
-const exponentialSearchLastWithRight = (arr, x, fnCmp) => exponentialSearchWithRight(arr, x, strictLess(fnCmp))
+const exponentialSearchFirstWithRight = (arr, x, fnCmp) => exponentialSearchWithRight(arr, x, strictLess(fnCmp))
+const exponentialSearchLastWithRight = (arr, x, fnCmp) => exponentialSearchWithRight(arr, x, strictGreater(fnCmp))
 
 const exponentialSearchBy = (arr, x, fnMap) => {
 	// HACK: The first argument to compare is always x
@@ -126,12 +126,12 @@ const exponentialSearchByRight = (arr, x, fnMap) => {
 const exponentialSearchFirstByRight = (arr, x, fnMap) => {
 	// HACK: The first argument to compare is always x
 	const xValue = fnMap(x)
-	return exponentialSearchFirstWithRight(arr, x, (_, b) => compareStrictGreater(xValue, fnMap(b)))
+	return exponentialSearchFirstWithRight(arr, x, (_, b) => compareStrictLess(xValue, fnMap(b)))
 }
 const exponentialSearchLastByRight = (arr, x, fnMap) => {
 	// HACK: The first argument to compare is always x
 	const xValue = fnMap(x)
-	return exponentialSearchLastWithRight(arr, x, (_, b) => compareStrictLess(xValue, fnMap(b)))
+	return exponentialSearchLastWithRight(arr, x, (_, b) => compareStrictGreater(xValue, fnMap(b)))
 }
 
 const exponentialSearch = (arr, x) => exponentialSearchWith(arr, x, compare)

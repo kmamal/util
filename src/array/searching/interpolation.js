@@ -1,4 +1,5 @@
 const { interpolate } = require('../../number/interpolate')
+const { clamp } = require('../../number/clamp')
 const {
 	strictLess,
 	strictGreater,
@@ -26,7 +27,7 @@ const __interpolationSearch = (arr, start, end, x, fnDist) => {
 		if (range === 0) { return low }
 
 		const ratio = lowDist / range
-		const mid = Math.floor(interpolate(low, high, ratio))
+		const mid = clamp(Math.floor(interpolate(low, high, ratio)), low, high - 1)
 		const midValue = arr[mid]
 		const dist = fnDist(x, midValue)
 		if (dist === 0) { return mid }

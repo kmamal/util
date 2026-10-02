@@ -7,84 +7,22 @@ const {
 	interpolationSearchBy,
 	interpolationSearchFirstBy,
 	interpolationSearchLastBy,
+	interpolationSearchWith,
+	interpolationSearchFirstWith,
+	interpolationSearchLastWith,
 } = require('./interpolation')
 const { sub } = require('../../operators/arithmetic/sub')
+const { createTests, createByTests, createWithTests } = require('./testing/test-cases-for-search')
 
-test("array.interpolationSearch", (t) => {
-	t.equal(interpolationSearch([], 0), 0)
-	t.equal(interpolationSearch([ 1 ], 0), 0)
-	t.equal(interpolationSearch([ 1 ], 1), 0)
-	t.equal(interpolationSearch([ 1 ], 2), 1)
-	t.equal(interpolationSearch([ 1, 2, 3 ], 0), 0)
-	t.equal(interpolationSearch([ 1, 2, 3 ], 1), 0)
-	t.equal(interpolationSearch([ 1, 2, 3 ], 2), 1)
-	t.equal(interpolationSearch([ 1, 2, 3 ], 3), 2)
-	t.equal(interpolationSearch([ 1, 2, 3 ], 4), 3)
-})
-
-test("array.interpolationSearchFirst", (t) => {
-	t.equal(interpolationSearchFirst([], 0), 0)
-	t.equal(interpolationSearchFirst([ 1 ], 0), 0)
-	t.equal(interpolationSearchFirst([ 1 ], 1), 0)
-	t.equal(interpolationSearchFirst([ 1 ], 2), 1)
-	t.equal(interpolationSearchFirst([ 1, 2, 3 ], 0), 0)
-	t.equal(interpolationSearchFirst([ 1, 2, 3 ], 1), 0)
-	t.equal(interpolationSearchFirst([ 1, 2, 3 ], 2), 1)
-	t.equal(interpolationSearchFirst([ 1, 2, 3 ], 3), 2)
-	t.equal(interpolationSearchFirst([ 1, 2, 3 ], 4), 3)
-	t.equal(interpolationSearchFirst([ 2, 2, 2 ], 2), 0)
-})
-
-test("array.interpolationSearchLast", (t) => {
-	t.equal(interpolationSearchLast([], 0), 0)
-	t.equal(interpolationSearchLast([ 1 ], 0), 0)
-	t.equal(interpolationSearchLast([ 1 ], 1), 1)
-	t.equal(interpolationSearchLast([ 1 ], 2), 1)
-	t.equal(interpolationSearchLast([ 1, 2, 3 ], 0), 0)
-	t.equal(interpolationSearchLast([ 1, 2, 3 ], 1), 1)
-	t.equal(interpolationSearchLast([ 1, 2, 3 ], 2), 2)
-	t.equal(interpolationSearchLast([ 1, 2, 3 ], 3), 3)
-	t.equal(interpolationSearchLast([ 1, 2, 3 ], 4), 3)
-	t.equal(interpolationSearchLast([ 2, 2, 2 ], 2), 3)
-})
-
-test("array.interpolationSearchBy", (t) => {
-	t.equal(interpolationSearchBy([], 0, (x) => 2 * x), 0)
-	t.equal(interpolationSearchBy([ 1 ], 0, (x) => 2 * x), 0)
-	t.equal(interpolationSearchBy([ 1 ], 1, (x) => 2 * x), 0)
-	t.equal(interpolationSearchBy([ 1 ], 2, (x) => 2 * x), 1)
-	t.equal(interpolationSearchBy([ 1, 2, 3 ], 0, (x) => 2 * x), 0)
-	t.equal(interpolationSearchBy([ 1, 2, 3 ], 1, (x) => 2 * x), 0)
-	t.equal(interpolationSearchBy([ 1, 2, 3 ], 2, (x) => 2 * x), 1)
-	t.equal(interpolationSearchBy([ 1, 2, 3 ], 3, (x) => 2 * x), 2)
-	t.equal(interpolationSearchBy([ 1, 2, 3 ], 4, (x) => 2 * x), 3)
-})
-
-test("array.interpolationSearchFirstBy", (t) => {
-	t.equal(interpolationSearchFirstBy([], 0, (x) => 2 * x), 0)
-	t.equal(interpolationSearchFirstBy([ 1 ], 0, (x) => 2 * x), 0)
-	t.equal(interpolationSearchFirstBy([ 1 ], 1, (x) => 2 * x), 0)
-	t.equal(interpolationSearchFirstBy([ 1 ], 2, (x) => 2 * x), 1)
-	t.equal(interpolationSearchFirstBy([ 1, 2, 3 ], 0, (x) => 2 * x), 0)
-	t.equal(interpolationSearchFirstBy([ 1, 2, 3 ], 1, (x) => 2 * x), 0)
-	t.equal(interpolationSearchFirstBy([ 1, 2, 3 ], 2, (x) => 2 * x), 1)
-	t.equal(interpolationSearchFirstBy([ 1, 2, 3 ], 3, (x) => 2 * x), 2)
-	t.equal(interpolationSearchFirstBy([ 1, 2, 3 ], 4, (x) => 2 * x), 3)
-	t.equal(interpolationSearchFirstBy([ 2, 2, 2 ], 2, (x) => 2 * x), 0)
-})
-
-test("array.interpolationSearchLastBy", (t) => {
-	t.equal(interpolationSearchLastBy([], 0, (x) => 2 * x), 0)
-	t.equal(interpolationSearchLastBy([ 1 ], 0, (x) => 2 * x), 0)
-	t.equal(interpolationSearchLastBy([ 1 ], 1, (x) => 2 * x), 1)
-	t.equal(interpolationSearchLastBy([ 1 ], 2, (x) => 2 * x), 1)
-	t.equal(interpolationSearchLastBy([ 1, 2, 3 ], 0, (x) => 2 * x), 0)
-	t.equal(interpolationSearchLastBy([ 1, 2, 3 ], 1, (x) => 2 * x), 1)
-	t.equal(interpolationSearchLastBy([ 1, 2, 3 ], 2, (x) => 2 * x), 2)
-	t.equal(interpolationSearchLastBy([ 1, 2, 3 ], 3, (x) => 2 * x), 3)
-	t.equal(interpolationSearchLastBy([ 1, 2, 3 ], 4, (x) => 2 * x), 3)
-	t.equal(interpolationSearchLastBy([ 2, 2, 2 ], 2, (x) => 2 * x), 3)
-})
+createTests("array.interpolationSearch", interpolationSearch, 'left')
+createTests("array.interpolationSearchFirst", interpolationSearchFirst, 'first')
+createTests("array.interpolationSearchLast", interpolationSearchLast, 'last')
+createByTests("array.interpolationSearchBy", interpolationSearchBy, 'left')
+createByTests("array.interpolationSearchFirstBy", interpolationSearchFirstBy, 'first')
+createByTests("array.interpolationSearchLastBy", interpolationSearchLastBy, 'last')
+createWithTests("array.interpolationSearchWith", interpolationSearchWith, 'left')
+createWithTests("array.interpolationSearchFirstWith", interpolationSearchFirstWith, 'first')
+createWithTests("array.interpolationSearchLastWith", interpolationSearchLastWith, 'last')
 
 test("array.__interpolationSearch.empty-range", (t) => {
 	t.equal(__interpolationSearch([ -2, 0, 2, 3 ], 4, 4, 3, sub), 4)
