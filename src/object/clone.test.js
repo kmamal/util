@@ -125,3 +125,105 @@ test("object.cloneWith", (t) => {
 	t.equal(cloneWith(5, () => 6), 6)
 	t.throws(() => cloneWith({ f: fn }, () => undefined))
 })
+
+test("object.clone more builtins", (t) => {
+	const buffer = new ArrayBuffer(4)
+	new Uint8Array(buffer).set([ 1, 2, 3, 4 ])
+	const bufferClone = clone(buffer)
+	t.ok(bufferClone instanceof ArrayBuffer && bufferClone !== buffer)
+	t.equal(Array.from(new Uint8Array(bufferClone)), [ 1, 2, 3, 4 ])
+
+	const resizable = new ArrayBuffer(2, { maxByteLength: 8 })
+	const resizableClone = clone(resizable)
+	t.ok(resizableClone.resizable)
+	t.equal(resizableClone.maxByteLength, 8)
+
+	const detached = new ArrayBuffer(2)
+	detached.transfer()
+	t.ok(clone(detached).detached)
+
+	const shared = new SharedArrayBuffer(2)
+	new Uint8Array(shared).set([ 5, 6 ])
+	const sharedClone = clone(shared)
+	t.ok(sharedClone instanceof SharedArrayBuffer && sharedClone !== shared)
+	t.equal(Array.from(new Uint8Array(sharedClone)), [ 5, 6 ])
+
+	const view = new DataView(buffer, 1, 2)
+	const viewClone = clone(view)
+	t.ok(viewClone instanceof DataView)
+	t.equal([ viewClone.byteOffset, viewClone.byteLength, viewClone.getUint8(0) ], [ 1, 2, 2 ])
+
+	t.equal(clone(Object(5)).valueOf(), 5)
+	t.equal(clone(Object('ab')).valueOf(), 'ab')
+	t.equal(clone(Object(false)).valueOf(), false)
+	t.equal(clone(Object(5n)).valueOf(), 5n)
+	const symbol = Symbol('s')
+	t.equal(clone(Object(symbol)).valueOf(), symbol)
+	t.ok(clone(Object(5)) instanceof Number)
+
+	const error = new TypeError('bad', { cause: { code: 1 } })
+	error.extra = { x: 1 }
+	const errorClone = clone(error)
+	t.ok(errorClone instanceof TypeError)
+	t.equal(errorClone.message, 'bad')
+	t.equal(errorClone.stack, error.stack)
+	t.equal(errorClone.cause, { code: 1 })
+	t.ok(errorClone.cause !== error.cause)
+	t.equal(errorClone.extra, { x: 1 })
+	t.equal(Object.keys(errorClone), [ 'extra' ])
+
+	const aggregate = clone(new AggregateError([ new Error('a') ], 'many'))
+	t.ok(aggregate instanceof AggregateError)
+	t.equal(aggregate.errors.map((e) => e.message), [ 'a' ])
+
+	const cyclic = new Error('loop')
+	cyclic.cause = cyclic
+	const cyclicClone = clone(cyclic)
+	t.ok(cyclicClone.cause === cyclicClone)
+})
+
+test("object.clone typed arrays share cloned buffers", (t) => {
+	const buffer = new ArrayBuffer(8)
+	const a = new Uint8Array(buffer, 0, 4)
+	const b = new Uint16Array(buffer, 4, 2)
+	const res = clone({ a, b })
+	t.ok(res.a.buffer === res.b.buffer)
+	t.ok(res.a.buffer !== buffer)
+	t.equal([ res.a.byteOffset, res.a.length, res.b.byteOffset, res.b.length ], [ 0, 4, 4, 2 ])
+	res.a[0] = 9
+	t.equal(a[0], 0)
+
+	t.ok(clone(new Float64Array([ 1.5 ])) instanceof Float64Array)
+	t.equal(Array.from(clone(new BigInt64Array([ 3n ]))), [ 3n ])
+})
+
+test("object.clone subclasses and extra props", (t) => {
+	class MyMap extends Map {}
+
+	class MyArray extends Array {}
+
+	class MyBytes extends Uint8Array {}
+
+	const map = new MyMap([ [ 1, { v: 1 } ] ])
+	map.tag = 'x'
+	const mapClone = clone(map)
+	t.ok(mapClone instanceof MyMap)
+	t.equal(mapClone.get(1), { v: 1 })
+	t.equal(mapClone.tag, 'x')
+
+	t.ok(clone(MyArray.from([ 1, 2 ])) instanceof MyArray)
+	t.ok(clone(new MyBytes(2)) instanceof MyBytes)
+
+	const date = new Date(5)
+	date.label = 'd'
+	t.equal(clone(date).label, 'd')
+})
+
+test("object.clone uncloneable", (t) => {
+	t.throws(() => clone(new WeakMap()))
+	t.throws(() => clone(new WeakSet()))
+	t.throws(() => clone(new WeakRef({})))
+	t.throws(() => clone(Promise.resolve()))
+	t.throws(() => clone(new FinalizationRegistry(() => {})))
+	t.throws(() => clone({ nested: [ new WeakMap() ] }))
+})

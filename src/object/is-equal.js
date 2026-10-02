@@ -1,33 +1,39 @@
 const { enumerateOwnKeys } = require('./own')
+const { __uncloneableConstructors } = require('./clone')
+
+const _errorKeys = [ 'message', 'cause', 'errors' ]
 
 const _isPlainPrototype = (proto) => proto === Object.prototype || proto === null
 
-const _isEqualObjects = (a, b, fnEq, seen) => {
-	const aProto = Object.getPrototypeOf(a)
-	const bProto = Object.getPrototypeOf(b)
-	if (aProto !== bProto && !(_isPlainPrototype(aProto) && _isPlainPrototype(bProto))) { return false }
-
-	// Array
-	const aIsArray = Array.isArray(a)
-	const bIsArray = Array.isArray(b)
-	if (aIsArray !== bIsArray) { return false }
-
-	if (aIsArray) {
-		const aLength = a.length
-		const bLength = b.length
-		if (aLength !== bLength) { return false }
-
-		for (let i = 0; i < aLength; i++) {
-			if (!_isEqualWith(a[i], b[i], fnEq, seen)) { return false }
-		}
-		return true
+const _isEqualBytes = (a, b) => {
+	const { length } = a
+	if (length !== b.length) { return false }
+	for (let i = 0; i < length; i++) {
+		if (a[i] !== b[i]) { return false }
 	}
+	return true
+}
 
+const _isEqualBuffers = (a, b) => {
+	if (a.detached || b.detached) { return a.detached === b.detached }
+	return _isEqualBytes(new Uint8Array(a), new Uint8Array(b))
+}
+
+const _isEqualProps = (a, b, fnEq, seen) => {
+	const aKeys = enumerateOwnKeys(a)
+	const bKeys = enumerateOwnKeys(b)
+	if (aKeys.length !== bKeys.length) { return false }
+
+	for (let i = 0; i < aKeys.length; i++) {
+		const aKey = aKeys[i]
+		if (!Object.hasOwn(b, aKey) || !_isEqualWith(a[aKey], b[aKey], fnEq, seen)) { return false }
+	}
+	return true
+}
+
+const _isEqualBuiltins = (a, b, fnEq, seen) => {
 	// Map
-	const aIsMap = a instanceof Map
-	const bIsMap = b instanceof Map
-	if (aIsMap !== bIsMap) { return false }
-	if (aIsMap) {
+	if (a instanceof Map) {
 		if (a.size !== b.size) { return false }
 
 		const bEntries = new Set(b.entries())
@@ -45,10 +51,7 @@ const _isEqualObjects = (a, b, fnEq, seen) => {
 	}
 
 	// Set
-	const aIsSet = a instanceof Set
-	const bIsSet = b instanceof Set
-	if (aIsSet !== bIsSet) { return false }
-	if (aIsSet) {
+	if (a instanceof Set) {
 		if (a.size !== b.size) { return false }
 
 		const bValuesSet = new Set(b.values())
@@ -68,27 +71,82 @@ const _isEqualObjects = (a, b, fnEq, seen) => {
 	if (a instanceof Date) {
 		const aTime = a.getTime()
 		const bTime = b.getTime()
-		if (aTime !== bTime && !(Number.isNaN(aTime) && Number.isNaN(bTime))) { return false }
+		return aTime === bTime || (Number.isNaN(aTime) && Number.isNaN(bTime))
 	}
 
 	if (a instanceof RegExp) {
-		if (a.source !== b.source || a.flags !== b.flags) { return false }
+		return a.source === b.source && a.flags === b.flags
+	}
+
+	if (a instanceof ArrayBuffer || (typeof SharedArrayBuffer !== 'undefined' && a instanceof SharedArrayBuffer)) {
+		return _isEqualBuffers(a, b)
+	}
+
+	if (a instanceof DataView) {
+		return _isEqualBytes(
+			new Uint8Array(a.buffer, a.byteOffset, a.byteLength),
+			new Uint8Array(b.buffer, b.byteOffset, b.byteLength),
+		)
 	}
 
 	if (a instanceof Number || a instanceof String || a instanceof Boolean || a instanceof BigInt || a instanceof Symbol) {
-		if (!_isEqualWith(a.valueOf(), b.valueOf(), fnEq, seen)) { return false }
+		return _isEqualWith(a.valueOf(), b.valueOf(), fnEq, seen)
 	}
+
+	if (a instanceof Error) {
+		for (let i = 0; i < _errorKeys.length; i++) {
+			const key = _errorKeys[i]
+			const aHas = Object.hasOwn(a, key)
+			if (aHas !== Object.hasOwn(b, key)) { return false }
+			if (aHas && !_isEqualWith(a[key], b[key], fnEq, seen)) { return false }
+		}
+		return true
+	}
+
+	return true
+}
+
+const _isEqualObjects = (a, b, fnEq, seen) => {
+	const aProto = Object.getPrototypeOf(a)
+	const bProto = Object.getPrototypeOf(b)
+	if (aProto !== bProto && !(_isPlainPrototype(aProto) && _isPlainPrototype(bProto))) { return false }
 
 	// Object
-	const aKeys = enumerateOwnKeys(a)
-	const bKeys = enumerateOwnKeys(b)
-	if (aKeys.length !== bKeys.length) { return false }
+	if (_isPlainPrototype(aProto)) { return _isEqualProps(a, b, fnEq, seen) }
 
-	for (let i = 0; i < aKeys.length; i++) {
-		const aKey = aKeys[i]
-		if (!Object.hasOwn(b, aKey) || !_isEqualWith(a[aKey], b[aKey], fnEq, seen)) { return false }
+	// Array
+	const aIsArray = Array.isArray(a)
+	const bIsArray = Array.isArray(b)
+	if (aIsArray !== bIsArray) { return false }
+
+	if (aIsArray) {
+		const aLength = a.length
+		const bLength = b.length
+		if (aLength !== bLength) { return false }
+
+		for (let i = 0; i < aLength; i++) {
+			if (!_isEqualWith(a[i], b[i], fnEq, seen)) { return false }
+		}
+		return true
 	}
-	return true
+
+	if (ArrayBuffer.isView(a) && !(a instanceof DataView)) {
+		const { length } = a
+		if (length !== b.length) { return false }
+
+		for (let i = 0; i < length; i++) {
+			if (!_isEqualWith(a[i], b[i], fnEq, seen)) { return false }
+		}
+		return true
+	}
+
+	for (let i = 0; i < __uncloneableConstructors.length; i++) {
+		if (a instanceof __uncloneableConstructors[i]) { return false }
+	}
+
+	if (!_isEqualBuiltins(a, b, fnEq, seen)) { return false }
+
+	return _isEqualProps(a, b, fnEq, seen)
 }
 
 const _isEqualWith = (a, b, fnEq, _seen) => {
