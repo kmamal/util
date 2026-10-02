@@ -53,3 +53,21 @@ test("random.__randFloat", (t) => {
 	}
 	t.ok(400 < negative && negative < 600, { negative })
 })
+
+test("random.__randFloat never returns b", (t) => {
+	const top = 1 - 2 ** -53
+	const sequence = (...values) => {
+		let i = 0
+		return { uniform: () => values[i++] }
+	}
+
+	t.equal(__randFloat(sequence(top, 0.5), 3, 4), 3.5)
+	t.equal(__randFloat(sequence(top, 0), 1e9, 1e9 + 1), 1e9)
+	t.equal(__randFloat(sequence(top, 0.25), -4, -3), -3.75)
+
+	const M = Number.MAX_VALUE
+	t.ok(__randFloat(sequence(top), -M, M) < M)
+
+	t.equal(__randFloat(sequence(top), 5, 5), 5)
+	t.equal(__randFloat(sequence(0.5), 4, 3), 3.5)
+})

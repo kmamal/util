@@ -3,6 +3,7 @@ const { sum } = require('../array/sum')
 const { sub } = require('../operators/arithmetic/sub')
 const { MiddleSquareWeyl } = require('./seeded/middle-square-weyl')
 const { __chooseFromPrefixSums, chooseFromWeights, chooseFromPrefixSumsBy } = require('./weighted')
+const { defaultRng } = require('./default-rng')
 
 test("sampling.chooseFromWeights Edge-cases", (t) => {
 	t.equal(chooseFromWeights([]), -1)
@@ -10,6 +11,7 @@ test("sampling.chooseFromWeights Edge-cases", (t) => {
 })
 
 test("sampling.chooseFromWeights Frequencies", (t) => {
+	defaultRng.seed(2)
 	const arr = [ 1, 3, 2 ]
 	const N = 3000
 
@@ -30,6 +32,7 @@ test("sampling.chooseFromWeights Frequencies", (t) => {
 })
 
 test("sampling.chooseFromPrefixSumsBy Frequencies", (t) => {
+	defaultRng.seed(2)
 	t.equal(chooseFromPrefixSumsBy([], (x) => x.sum), -1)
 
 	const weights = [ 1, 3, 2 ]
@@ -100,7 +103,6 @@ test("random.__chooseFromPrefixSums boundaries", (t) => {
 })
 
 test("random.chooseFromPrefixSumsBy boundaries", (t) => {
-	const { defaultRng } = require('./default-rng')
 	const at = (u, sums) => {
 		defaultRng.uniform = () => u
 		try { return chooseFromPrefixSumsBy(sums.map((value) => ({ sum: value })), (x) => x.sum) }
