@@ -12,7 +12,14 @@ const _keepFunctions = (x) => typeof x === 'function' ? x : undefined
 
 const _cloneValue = (x) => cloneWith(x, _keepFunctions)
 
-const __merge = (dst, a, b) => {
+const _merge = (dst, a, b, cache) => {
+	let byA = cache.get(b)
+	if (byA === undefined) {
+		byA = new Map()
+		cache.set(b, byA)
+	}
+	byA.set(a, dst)
+
 	const keys = enumerateOwnKeys(b)
 	for (let i = 0; i < keys.length; i++) {
 		const key = keys[i]
@@ -21,17 +28,27 @@ const __merge = (dst, a, b) => {
 			setOwn(dst, key, _cloneValue(bValue))
 			continue
 		}
-		const aValue = getOwn(a, key)
-		let dstValue = getOwn(dst, key)
-		if (!_isObject(aValue) || !_isObject(dstValue)) {
-			dstValue = {}
-			setOwn(dst, key, dstValue)
-			__merge(dstValue, dstValue, bValue)
+		const aValue = a === null ? undefined : getOwn(a, key)
+		const dstValue = getOwn(dst, key)
+		const aContext = _isObject(aValue) && _isObject(dstValue) ? aValue : null
+
+		const merged = cache.get(bValue)?.get(aContext)
+		if (merged !== undefined) {
+			setOwn(dst, key, merged)
 			continue
 		}
-		__merge(dstValue, aValue, bValue)
+
+		if (aContext === null) {
+			const fresh = {}
+			setOwn(dst, key, fresh)
+			_merge(fresh, null, bValue, cache)
+			continue
+		}
+		_merge(dstValue, aValue, bValue, cache)
 	}
 }
+
+const __merge = (dst, a, b) => _merge(dst, a, b, new Map())
 
 
 const merge = (a, b) => {

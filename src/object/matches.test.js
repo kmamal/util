@@ -34,3 +34,19 @@ test("object.matches symbols", (t) => {
 	t.ok(!matches({ a: 1, [s]: 2 }, { [s]: 3 }))
 	t.ok(!matches({ a: 1 }, { [s]: 2 }))
 })
+
+test("object.matches cycles", (t) => {
+	const a = { x: 1, y: 2 }
+	a.self = a
+	const p = { x: 1 }
+	p.self = p
+	t.ok(matches(a, p))
+
+	const q = { x: 2 }
+	q.self = q
+	t.ok(!matches(a, q))
+
+	const r = { x: 1 }
+	r.self = { x: 1, self: r }
+	t.ok(matches(a, r))
+})

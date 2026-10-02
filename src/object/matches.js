@@ -2,7 +2,7 @@ const { enumerateOwnKeys } = require('./own')
 
 const _eq = (a, b) => a === b ? true : undefined
 
-const _matchesWith = (a, b, fnEq, prop) => {
+const _matchesWith = (a, b, fnEq, prop, _seen) => {
 	const res = fnEq(a, b, prop)
 	if (res !== undefined) { return res }
 
@@ -17,17 +17,34 @@ const _matchesWith = (a, b, fnEq, prop) => {
 
 	if (bType !== 'object') { return false } // Should have been handled in `a === b`
 
+	const seen = _seen ?? new Map()
+
+	let bs = seen.get(a)
+	if (bs === undefined) {
+		bs = new Set()
+		seen.set(a, bs)
+	}
+	else if (bs.has(b)) {
+		return true
+	}
+
+	bs.add(b)
+	let result = true
 	const bKeys = enumerateOwnKeys(b)
 	for (let i = 0; i < bKeys.length; i++) {
 		const key = bKeys[i]
-		if (!Object.hasOwn(a, key) || !_matchesWith(a[key], b[key], fnEq, key)) { return false }
+		if (!Object.hasOwn(a, key) || !_matchesWith(a[key], b[key], fnEq, key, seen)) {
+			result = false
+			break
+		}
 	}
-	return true
+	bs.delete(b)
+	return result
 }
 
-const matchesWith = (obj, pattern, fnEq) => _matchesWith(obj, pattern, fnEq)
+const matchesWith = (obj, pattern, fnEq) => _matchesWith(obj, pattern, fnEq, undefined, null)
 
-const matches = (obj, pattern) => _matchesWith(obj, pattern, _eq)
+const matches = (obj, pattern) => _matchesWith(obj, pattern, _eq, undefined, null)
 
 module.exports = {
 	matchesWith,
