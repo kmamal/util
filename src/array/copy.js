@@ -31,7 +31,7 @@ const __copyInplace = (arr, offset, start, end) => {
 
 
 const copy = (a, b, start = 0, end = b.length, offset = 0) => {
-	const length = end - start
+	const length = Math.max(0, end - start)
 	const writeEnd = offset + length
 	const res = new Array(Math.max(a.length, writeEnd))
 	__copy(res, 0, a, 0, offset)
@@ -41,7 +41,7 @@ const copy = (a, b, start = 0, end = b.length, offset = 0) => {
 }
 
 const copyTo = (dst, a, b, start = 0, end = b.length, offset = 0) => {
-	const length = end - start
+	const length = Math.max(0, end - start)
 	const writeEnd = offset + length
 	dst.length = Math.max(a.length, writeEnd)
 	__copy(dst, 0, a, 0, offset)
@@ -51,7 +51,7 @@ const copyTo = (dst, a, b, start = 0, end = b.length, offset = 0) => {
 }
 
 const copy$$$ = (a, b, start = 0, end = b.length, offset = 0) => {
-	const length = end - start
+	const length = Math.max(0, end - start)
 	a.length = Math.max(a.length, offset + length)
 	if (a === b) {
 		__copyInplace(a, offset, start, end)

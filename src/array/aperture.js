@@ -16,7 +16,7 @@ const __aperture = (dst, dstStart, src, srcStart, srcEnd, _width) => {
 
 const aperture = (arr, _width) => {
 	const { length } = arr
-	if (length === 0) { return [] }
+	if (length === 0 || _width < 1) { return [] }
 
 	const width = Math.min(length, _width)
 	const res = new Array(length - width + 1)
@@ -26,7 +26,7 @@ const aperture = (arr, _width) => {
 
 const apertureTo = (dst, arr, _width) => {
 	const { length } = arr
-	if (length === 0) {
+	if (length === 0 || _width < 1) {
 		dst.length = 0
 		return dst
 	}
@@ -40,6 +40,10 @@ const apertureTo = (dst, arr, _width) => {
 const aperture$$$ = (arr, _width) => {
 	const { length } = arr
 	if (length === 0) { return arr }
+	if (_width < 1) {
+		arr.length = 0
+		return arr
+	}
 
 	const width = Math.min(length, _width)
 	__aperture(arr, 0, arr, 0, length, width)
