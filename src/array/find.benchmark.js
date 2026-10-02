@@ -1,7 +1,7 @@
 const { benchmark } = require('@kmamal/benchmarking')
 const {
-	find,
-	findIndex,
+	// find,
+	// findIndex,
 	findRight,
 	findIndexRight,
 } = require('./find')
@@ -29,14 +29,14 @@ benchmark("array :: find", {
 		return a
 	},
 	cases: {
-		"@kmamal/array/find": (a) => {
-			let _
-			_ = find(a, (x) => x === x1)
-			_ = find(a, (x) => x === x2)
-			_ = find(a, (x) => x === x3)
-			_ = find(a, (x) => x === x4)
-			_ = find(a, (x) => x === x5)
-		},
+		// "@kmamal/array/find": (a) => {
+		// 	let _
+		// 	_ = find(a, (x) => x === x1)
+		// 	_ = find(a, (x) => x === x2)
+		// 	_ = find(a, (x) => x === x3)
+		// 	_ = find(a, (x) => x === x4)
+		// 	_ = find(a, (x) => x === x5)
+		// },
 		"Array.prototype.find": (a) => {
 			let _
 			_ = a.find((x) => x === x1)
@@ -45,14 +45,14 @@ benchmark("array :: find", {
 			_ = a.find((x) => x === x4)
 			_ = a.find((x) => x === x5)
 		},
-		"@kmamal/array/findIndex": (a) => {
-			let _
-			_ = findIndex(a, (x) => x === x1)
-			_ = findIndex(a, (x) => x === x2)
-			_ = findIndex(a, (x) => x === x3)
-			_ = findIndex(a, (x) => x === x4)
-			_ = findIndex(a, (x) => x === x5)
-		},
+		// "@kmamal/array/findIndex": (a) => {
+		// 	let _
+		// 	_ = findIndex(a, (x) => x === x1)
+		// 	_ = findIndex(a, (x) => x === x2)
+		// 	_ = findIndex(a, (x) => x === x3)
+		// 	_ = findIndex(a, (x) => x === x4)
+		// 	_ = findIndex(a, (x) => x === x5)
+		// },
 		"Array.prototype.findIndex": (a) => {
 			let _
 			_ = a.findIndex((x) => x === x1)

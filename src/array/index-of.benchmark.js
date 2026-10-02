@@ -1,7 +1,7 @@
 const { benchmark } = require('@kmamal/benchmarking')
 const {
-	indexOf,
-	indexOfSorted,
+	// indexOf,
+	// indexOfSorted,
 	indexOfRight,
 	indexOfSortedRight,
 } = require('./index-of')
@@ -29,22 +29,22 @@ benchmark("array :: indexOf", {
 		return a
 	},
 	cases: {
-		"@kmamal/array/indexOf": (a) => {
-			let _
-			_ = indexOf(a, x1)
-			_ = indexOf(a, x2)
-			_ = indexOf(a, x3)
-			_ = indexOf(a, x4)
-			_ = indexOf(a, x5)
-		},
-		"@kmamal/array/indexOfSorted": (a) => {
-			let _
-			_ = indexOfSorted(a, x1)
-			_ = indexOfSorted(a, x2)
-			_ = indexOfSorted(a, x3)
-			_ = indexOfSorted(a, x4)
-			_ = indexOfSorted(a, x5)
-		},
+		// "@kmamal/array/indexOf": (a) => {
+		// 	let _
+		// 	_ = indexOf(a, x1)
+		// 	_ = indexOf(a, x2)
+		// 	_ = indexOf(a, x3)
+		// 	_ = indexOf(a, x4)
+		// 	_ = indexOf(a, x5)
+		// },
+		// "@kmamal/array/indexOfSorted": (a) => {
+		// 	let _
+		// 	_ = indexOfSorted(a, x1)
+		// 	_ = indexOfSorted(a, x2)
+		// 	_ = indexOfSorted(a, x3)
+		// 	_ = indexOfSorted(a, x4)
+		// 	_ = indexOfSorted(a, x5)
+		// },
 		"Array.prototype.indexOf": (a) => {
 			let _
 			_ = a.indexOf(x1)

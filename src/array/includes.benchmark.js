@@ -1,5 +1,5 @@
 const { benchmark } = require('@kmamal/benchmarking')
-const { includes, includesSorted } = require('./includes')
+// const { includes, includesSorted } = require('./includes')
 
 const N = 1000
 const i1 = 0
@@ -24,22 +24,22 @@ benchmark("array :: includes", {
 		return a
 	},
 	cases: {
-		"@kmamal/array/includes": (a) => {
-			let _
-			_ = includes(a, x1)
-			_ = includes(a, x2)
-			_ = includes(a, x3)
-			_ = includes(a, x4)
-			_ = includes(a, x5)
-		},
-		"@kmamal/array/includesSorted": (a) => {
-			let _
-			_ = includesSorted(a, x1)
-			_ = includesSorted(a, x2)
-			_ = includesSorted(a, x3)
-			_ = includesSorted(a, x4)
-			_ = includesSorted(a, x5)
-		},
+		// "@kmamal/array/includes": (a) => {
+		// 	let _
+		// 	_ = includes(a, x1)
+		// 	_ = includes(a, x2)
+		// 	_ = includes(a, x3)
+		// 	_ = includes(a, x4)
+		// 	_ = includes(a, x5)
+		// },
+		// "@kmamal/array/includesSorted": (a) => {
+		// 	let _
+		// 	_ = includesSorted(a, x1)
+		// 	_ = includesSorted(a, x2)
+		// 	_ = includesSorted(a, x3)
+		// 	_ = includesSorted(a, x4)
+		// 	_ = includesSorted(a, x5)
+		// },
 		"Array.prototype.includes": (a) => {
 			let _
 			_ = a.includes(x1)
