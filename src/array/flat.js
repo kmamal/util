@@ -7,23 +7,29 @@ const __flat = (dst, dstStart, src, srcStart, srcEnd, _maxDepth) => {
 
 	_stack[0] = { arr: src, length: srcEnd, index: srcStart }
 
-	for (;;) {
-		const depth = _stack.length
+	try {
+		for (;;) {
+			const depth = _stack.length
 
-		const top = _stack[depth - 1]
-		if (top.index === top.length) {
-			if (depth === 1) { break }
-			_stack.pop()
-			continue
+			const top = _stack[depth - 1]
+			if (top.index === top.length) {
+				if (depth === 1) { break }
+				_stack.pop()
+				continue
+			}
+
+			const item = top.arr[top.index++]
+			if (Array.isArray(item) && depth < maxDepth) {
+				_stack.push({ arr: item, length: item.length, index: 0 })
+				continue
+			}
+
+			dst[writeIndex++] = item
 		}
-
-		const item = top.arr[top.index++]
-		if (Array.isArray(item) && depth < maxDepth) {
-			_stack.push({ arr: item, length: item.length, index: 0 })
-			continue
-		}
-
-		dst[writeIndex++] = item
+	}
+	finally {
+		_stack.length = 1
+		_stack[0] = null
 	}
 
 	return writeIndex - dstStart
