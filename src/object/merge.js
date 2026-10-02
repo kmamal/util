@@ -1,6 +1,6 @@
 const { copyTo } = require('./copy')
 const { clone } = require('./clone')
-const { setOwn, getOwn } = require('./own')
+const { setOwn, getOwn, enumerateOwnKeys } = require('./own')
 
 const _isObject = (x) => {
 	if (x === null || typeof x !== 'object') { return false }
@@ -11,7 +11,7 @@ const _isObject = (x) => {
 const _cloneValue = (x) => typeof x === 'function' ? x : clone(x)
 
 const __merge = (dst, a, b) => {
-	const keys = Object.keys(b)
+	const keys = enumerateOwnKeys(b)
 	for (let i = 0; i < keys.length; i++) {
 		const key = keys[i]
 		const bValue = b[key]

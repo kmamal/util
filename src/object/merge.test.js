@@ -40,3 +40,12 @@ testVariants('object.merge clones b', merge, (t, f) => {
 	const fn = () => 1
 	t.equal(f({}, { f: fn }).f, fn)
 }, { dst: junkObject })
+
+testVariants('object.merge symbols', merge, (t, f) => {
+	const s = Symbol('s')
+	const r = Symbol('r')
+	const res = f({ a: 1, [s]: { x: 1 } }, { [s]: { y: 2 }, [r]: 3 })
+	t.equal(res.a, 1)
+	t.equal(res[s], { x: 1, y: 2 })
+	t.equal(res[r], 3)
+}, { dst: junkObject })

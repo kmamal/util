@@ -1,3 +1,4 @@
+const { enumerateOwnKeys } = require('./own')
 
 const _isPlainPrototype = (proto) => proto === Object.prototype || proto === null
 
@@ -79,8 +80,8 @@ const _isEqualObjects = (a, b, fnEq, seen) => {
 	}
 
 	// Object
-	const aKeys = Object.keys(a)
-	const bKeys = Object.keys(b)
+	const aKeys = enumerateOwnKeys(a)
+	const bKeys = enumerateOwnKeys(b)
 	if (aKeys.length !== bKeys.length) { return false }
 
 	for (let i = 0; i < aKeys.length; i++) {

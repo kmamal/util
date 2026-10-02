@@ -1,6 +1,7 @@
+const { enumerateOwnKeys } = require('./own')
 
 const toEntries = (obj) => {
-	const res = Object.keys(obj)
+	const res = enumerateOwnKeys(obj)
 	for (let i = 0; i < res.length; i++) {
 		const key = res[i]
 		res[i] = [ key, obj[key] ]
@@ -9,7 +10,7 @@ const toEntries = (obj) => {
 }
 
 const toEntriesTo = (dst, obj) => {
-	const keys = Object.keys(obj)
+	const keys = enumerateOwnKeys(obj)
 	const { length } = keys
 	dst.length = length
 	for (let i = 0; i < length; i++) {

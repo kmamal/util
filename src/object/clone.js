@@ -1,4 +1,4 @@
-const { setOwn } = require('./own')
+const { setOwn, enumerateOwnKeys } = require('./own')
 
 const _clone = (x, cache) => {
 	if (typeof x === 'function') { throw new Error("can't clone functions") }
@@ -62,7 +62,7 @@ const _clone = (x, cache) => {
 
 	const res = Object.create(Object.getPrototypeOf(x))
 	cache.set(x, res)
-	const keys = Object.keys(x)
+	const keys = enumerateOwnKeys(x)
 	for (let i = 0; i < keys.length; i++) {
 		const key = keys[i]
 		setOwn(res, key, _clone(x[key], cache))

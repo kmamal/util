@@ -7,6 +7,15 @@ testVariants("object.copy", copyTo, (t, f) => {
 	t.equal(f({ a: 2 }), { a: 2 })
 	t.equal(f({ a: 1, b: 2 }), { a: 1, b: 2 })
 
+	const s = Symbol('s')
+	const hidden = Symbol('hidden')
+	const src = { a: 1, [s]: 2 }
+	Object.defineProperty(src, hidden, { value: 3, enumerable: false })
+	const withSymbols = f(src)
+	t.equal(Object.keys(withSymbols), [ 'a' ])
+	t.equal(Object.getOwnPropertySymbols(withSymbols), [ s ])
+	t.equal(withSymbols[s], 2)
+
 	const res = f(JSON.parse('{"__proto__":{"x":1}}'))
 	t.equal(Object.keys(res), [ '__proto__' ])
 	t.equal(Object.getPrototypeOf(res), Object.prototype)

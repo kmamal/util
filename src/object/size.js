@@ -1,4 +1,5 @@
+const { enumerateOwnKeys } = require('./own')
 
-const size = (obj) => Object.keys(obj).length
+const size = (obj) => enumerateOwnKeys(obj).length
 
 module.exports = { size }

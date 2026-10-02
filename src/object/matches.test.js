@@ -27,3 +27,10 @@ test('object.matchesWith', (t) => {
 		(a, b, key) => key && (key === 'c' ? true : a === b),
 	))
 })
+
+test("object.matches symbols", (t) => {
+	const s = Symbol('s')
+	t.ok(matches({ a: 1, [s]: 2 }, { [s]: 2 }))
+	t.ok(!matches({ a: 1, [s]: 2 }, { [s]: 3 }))
+	t.ok(!matches({ a: 1 }, { [s]: 2 }))
+})

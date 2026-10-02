@@ -240,3 +240,16 @@ test("object.isEqual cycles", (t) => {
 	f.push(f)
 	t.ok(isEqual(e, f))
 })
+
+test("object.isEqual symbols", (t) => {
+	const s = Symbol('s')
+	const r = Symbol('r')
+	t.ok(isEqual({ a: 1, [s]: { b: 2 } }, { a: 1, [s]: { b: 2 } }))
+	t.ok(!isEqual({ a: 1, [s]: 2 }, { a: 1, [s]: 3 }))
+	t.ok(!isEqual({ a: 1, [s]: 2 }, { a: 1 }))
+	t.ok(!isEqual({ a: 1, [s]: 2 }, { a: 1, [r]: 2 }))
+
+	const hidden = {}
+	Object.defineProperty(hidden, s, { value: 1, enumerable: false })
+	t.ok(isEqual(hidden, {}))
+})

@@ -1,4 +1,4 @@
-const { setOwn, getOwn } = require('./own')
+const { setOwn, getOwn, enumerateOwnKeys } = require('./own')
 
 const _add = (obj, key, value) => {
 	const existing = getOwn(obj, key)
@@ -15,7 +15,7 @@ const _add = (obj, key, value) => {
 
 const invert = (obj) => {
 	const res = {}
-	const keys = Object.keys(obj)
+	const keys = enumerateOwnKeys(obj)
 	for (let i = 0; i < keys.length; i++) {
 		const key = keys[i]
 		const value = obj[key]

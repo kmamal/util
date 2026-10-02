@@ -1,13 +1,12 @@
 const { empty$$$ } = require('./empty')
-const { setOwn } = require('./own')
+const { setOwn, enumerateOwnKeys } = require('./own')
 
 const __mapEntries = (dst, src, fnMap) => {
-	const entries = Object.entries(src)
-	for (let i = 0; i < entries.length; i++) {
-		const mapped = fnMap(entries[i])
-		const key = mapped[0]
-		const value = mapped[1]
-		setOwn(dst, key, value)
+	const keys = enumerateOwnKeys(src)
+	for (let i = 0; i < keys.length; i++) {
+		const key = keys[i]
+		const mapped = fnMap([ key, src[key] ])
+		setOwn(dst, mapped[0], mapped[1])
 	}
 }
 

@@ -43,3 +43,10 @@ test("object.__mapKeys", (t) => {
 	__mapKeys(fromProto, JSON.parse('{"__proto__":1}'), (k) => `${k}!`)
 	t.equal(fromProto, { '__proto__!': 1 })
 })
+
+testVariants("object.map-keys symbols", mapKeys, (t, f) => {
+	const s = Symbol('s')
+	const res = f({ a: 1, [s]: 2 }, (x) => typeof x === 'symbol' ? x : x.repeat(2))
+	t.equal(Reflect.ownKeys(res), [ 'aa', s ])
+	t.equal(res[s], 2)
+}, { dst: junkObject })

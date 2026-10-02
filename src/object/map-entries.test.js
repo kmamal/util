@@ -44,3 +44,10 @@ test("object.__mapEntries", (t) => {
 	t.equal(Object.keys(fromProto), [ '__proto__' ])
 	t.equal(Object.getOwnPropertyDescriptor(fromProto, '__proto__').value, 2)
 })
+
+testVariants("object.map-entries symbols", mapEntries, (t, f) => {
+	const s = Symbol('s')
+	const res = f({ a: 1, [s]: 2 }, ([ key, value ]) => [ key, value * 10 ])
+	t.equal(Reflect.ownKeys(res), [ 'a', s ])
+	t.equal(res[s], 20)
+}, { dst: junkObject })

@@ -93,3 +93,14 @@ test("object.clone __proto__", (t) => {
 	t.equal(Object.keys(res), [ '__proto__' ])
 	t.equal(Object.getPrototypeOf(res), Object.prototype)
 })
+
+test("object.clone symbols", (t) => {
+	const s = Symbol('s')
+	const hidden = Symbol('hidden')
+	const src = { a: 1, [s]: { b: 2 } }
+	Object.defineProperty(src, hidden, { value: 3, enumerable: false })
+	const res = clone(src)
+	t.equal(Reflect.ownKeys(res), [ 'a', s ])
+	t.equal(res[s], { b: 2 })
+	t.ok(res[s] !== src[s])
+})

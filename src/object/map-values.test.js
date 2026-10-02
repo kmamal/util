@@ -40,3 +40,10 @@ test("object.__mapValues", (t) => {
 	t.equal(proto.x, undefined)
 	t.equal(Object.getOwnPropertyDescriptor(proto, '__proto__').value, { x: 1 })
 })
+
+testVariants("object.map-values symbols", mapValues, (t, f) => {
+	const s = Symbol('s')
+	const res = f({ a: 1, [s]: 2 }, (x) => x * 10)
+	t.equal(Reflect.ownKeys(res), [ 'a', s ])
+	t.equal(res[s], 20)
+}, { dst: junkObject })

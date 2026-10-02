@@ -1,18 +1,28 @@
-const { sort } = require('../array/sort')
-const { differenceSorted } = require('../array/difference')
 const { empty$$$ } = require('./empty')
-const { setOwn } = require('./own')
+const { setOwn, enumerateOwnKeys } = require('./own')
 
-const sortTo = sort.to
-const sort$$$ = sort.$$$
-const differenceSorted$$$ = differenceSorted.$$$
-
-const tmp = []
+const _keySet = (keys) => {
+	const set = Object.create(null)
+	for (let i = 0; i < keys.length; i++) {
+		set[keys[i]] = true
+	}
+	return set
+}
 
 const __pick = (dst, src, keys) => {
 	for (let i = 0; i < keys.length; i++) {
 		const key = keys[i]
 		if (!Object.hasOwn(src, key)) { continue }
+		setOwn(dst, key, src[key])
+	}
+}
+
+const __omit = (dst, src, keys) => {
+	const omitted = _keySet(keys)
+	const srcKeys = enumerateOwnKeys(src)
+	for (let i = 0; i < srcKeys.length; i++) {
+		const key = srcKeys[i]
+		if (key in omitted) { continue }
 		setOwn(dst, key, src[key])
 	}
 }
@@ -31,9 +41,14 @@ const pickTo = (dst, obj, keys) => {
 }
 
 const pick$$$ = (obj, keys) => {
-	const omittedKeys = sort$$$(Object.keys(obj))
-	differenceSorted$$$(omittedKeys, sortTo(tmp, keys))
-	return omit$$$(obj, omittedKeys)
+	const picked = _keySet(keys)
+	const objKeys = enumerateOwnKeys(obj)
+	for (let i = 0; i < objKeys.length; i++) {
+		const key = objKeys[i]
+		if (key in picked) { continue }
+		delete obj[key]
+	}
+	return obj
 }
 
 pick.to = pickTo
@@ -41,16 +56,15 @@ pick.$$$ = pick$$$
 
 
 const omit = (obj, keys) => {
-	const pickedKeys = sort$$$(Object.keys(obj))
-	differenceSorted$$$(pickedKeys, sortTo(tmp, keys))
-	return pick(obj, pickedKeys)
+	const res = {}
+	__omit(res, obj, keys)
+	return res
 }
 
 const omitTo = (dst, obj, keys) => {
 	empty$$$(dst)
-	const pickedKeys = sort$$$(Object.keys(obj))
-	differenceSorted$$$(pickedKeys, sortTo(tmp, keys))
-	return pickTo(dst, obj, pickedKeys)
+	__omit(dst, obj, keys)
+	return dst
 }
 
 const omit$$$ = (obj, keys) => {
@@ -66,6 +80,7 @@ omit.$$$ = omit$$$
 
 module.exports = {
 	__pick,
+	__omit,
 	pick,
 	omit,
 }

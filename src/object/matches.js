@@ -1,3 +1,4 @@
+const { enumerateOwnKeys } = require('./own')
 
 const _eq = (a, b) => a === b ? true : undefined
 
@@ -16,7 +17,7 @@ const _matchesWith = (a, b, fnEq, prop) => {
 
 	if (bType !== 'object') { return false } // Should have been handled in `a === b`
 
-	const bKeys = Object.keys(b)
+	const bKeys = enumerateOwnKeys(b)
 	for (let i = 0; i < bKeys.length; i++) {
 		const key = bKeys[i]
 		if (!Object.hasOwn(a, key) || !_matchesWith(a[key], b[key], fnEq, key)) { return false }
