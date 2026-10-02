@@ -5,7 +5,7 @@ const { map } = require('./map')
 const map$$$ = map.$$$
 
 
-const _cache = [
+let _cache = [
 	{ item: null, index: -1 },
 	{ item: null, index: -1 },
 	{ item: null, index: -1 },
@@ -21,39 +21,42 @@ const __minN = (dst, dstStart, src, srcStart, srcEnd, n, fnCmp) => {
 
 	const limit = Math.min(length, n)
 
-	{
-		const numMissingEntries = limit - _cache.length
+	const cache = _cache ?? []
+	_cache = null
+	try {
+		const numMissingEntries = limit - cache.length
 		for (let i = 0; i < numMissingEntries; i++) {
-			_cache.push({ item: null, index: -1 })
+			cache.push({ item: null, index: -1 })
 		}
-	}
 
-	for (let i = 0; i < limit; i++) {
-		const entry = _cache[i]
-		entry.index = srcStart + i
-		entry.item = src[srcStart + i]
-		dst[dstStart + i] = entry
-	}
-
-	if (limit === length) { return limit }
-
-	const fnCmpEntries = (a, b) => fnCmp(b.item, a.item)
-	const dstEnd = dstStart + limit
-
-	__heapify(dst, dstStart, dstEnd, fnCmpEntries)
-
-	let worstEntry = dst[dstStart]
-	for (let i = limit; i < length; i++) {
-		const item = src[srcStart + i]
-		if (fnCmp(item, worstEntry.item) < 0) {
-			worstEntry.item = item
-			worstEntry.index = srcStart + i
-			__bubbleDown(dst, dstStart, dstEnd, dstStart, fnCmpEntries)
-			worstEntry = dst[dstStart]
+		for (let i = 0; i < limit; i++) {
+			const entry = cache[i]
+			entry.index = srcStart + i
+			entry.item = src[srcStart + i]
+			dst[dstStart + i] = entry
 		}
-	}
 
-	return limit
+		if (limit === length) { return limit }
+
+		const fnCmpEntries = (a, b) => fnCmp(b.item, a.item)
+		const dstEnd = dstStart + limit
+
+		__heapify(dst, dstStart, dstEnd, fnCmpEntries)
+
+		let worstEntry = dst[dstStart]
+		for (let i = limit; i < length; i++) {
+			const item = src[srcStart + i]
+			if (fnCmp(item, worstEntry.item) < 0) {
+				worstEntry.item = item
+				worstEntry.index = srcStart + i
+				__bubbleDown(dst, dstStart, dstEnd, dstStart, fnCmpEntries)
+				worstEntry = dst[dstStart]
+			}
+		}
+
+		return limit
+	}
+	finally { _cache = cache }
 }
 
 

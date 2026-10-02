@@ -70,3 +70,12 @@ test("array.sorting.__radixsort", (t) => {
 	const expected = Array.from(items).sort((a, b) => a.v - b.v || a.id - b.id)
 	check(items, 2, (x) => x.v, expected)
 })
+
+test("radixsort nested call in fnMap", (t) => {
+	const arr = Array.from({ length: 100 }, (_, i) => ({ k: (i * 37) % 100 }))
+	const res = radixsortBy(arr, (x) => {
+		radixsort([ 5, 3, 1000, 70000 ])
+		return x.k
+	})
+	t.equal(res.map((x) => x.k), Array.from({ length: 100 }, (_, i) => i))
+})

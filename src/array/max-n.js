@@ -5,7 +5,7 @@ const { map } = require('./map')
 const map$$$ = map.$$$
 
 
-const _cache = [
+let _cache = [
 	{ item: null, index: -1 },
 	{ item: null, index: -1 },
 	{ item: null, index: -1 },
@@ -21,39 +21,42 @@ const __maxN = (dst, dstStart, src, srcStart, srcEnd, n, fnCmp) => {
 
 	const limit = Math.min(length, n)
 
-	{
-		const numMissingEntries = limit - _cache.length
+	const cache = _cache ?? []
+	_cache = null
+	try {
+		const numMissingEntries = limit - cache.length
 		for (let i = 0; i < numMissingEntries; i++) {
-			_cache.push({ item: null, index: -1 })
+			cache.push({ item: null, index: -1 })
 		}
-	}
 
-	for (let i = 0; i < limit; i++) {
-		const entry = _cache[i]
-		entry.index = srcStart + i
-		entry.item = src[srcStart + i]
-		dst[dstStart + i] = entry
-	}
-
-	if (limit === length) { return limit }
-
-	const fnCmpEntries = (a, b) => fnCmp(a.item, b.item)
-	const dstEnd = dstStart + limit
-
-	__heapify(dst, dstStart, dstEnd, fnCmpEntries, false)
-
-	let topEntry = dst[dstStart]
-	for (let i = limit; i < length; i++) {
-		const item = src[srcStart + i]
-		if (fnCmp(item, topEntry.item) > 0) {
-			topEntry.item = item
-			topEntry.index = srcStart + i
-			__bubbleDown(dst, dstStart, dstEnd, dstStart, fnCmpEntries, false)
-			topEntry = dst[dstStart]
+		for (let i = 0; i < limit; i++) {
+			const entry = cache[i]
+			entry.index = srcStart + i
+			entry.item = src[srcStart + i]
+			dst[dstStart + i] = entry
 		}
-	}
 
-	return limit
+		if (limit === length) { return limit }
+
+		const fnCmpEntries = (a, b) => fnCmp(a.item, b.item)
+		const dstEnd = dstStart + limit
+
+		__heapify(dst, dstStart, dstEnd, fnCmpEntries, false)
+
+		let topEntry = dst[dstStart]
+		for (let i = limit; i < length; i++) {
+			const item = src[srcStart + i]
+			if (fnCmp(item, topEntry.item) > 0) {
+				topEntry.item = item
+				topEntry.index = srcStart + i
+				__bubbleDown(dst, dstStart, dstEnd, dstStart, fnCmpEntries, false)
+				topEntry = dst[dstStart]
+			}
+		}
+
+		return limit
+	}
+	finally { _cache = cache }
 }
 
 

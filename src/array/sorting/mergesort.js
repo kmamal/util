@@ -5,9 +5,9 @@ const { __copy } = require('../copy')
 
 const INSERTION_SORT_CUTOFF = 16
 
-const buffer = []
+let _buffer = []
 
-const __recurse = (arr, start, end, fnCmp, cutoff, takeover) => {
+const __recurse = (arr, start, end, fnCmp, cutoff, takeover, buffer) => {
 	const length = end - start
 	if (length <= 1) { return }
 	if (length <= cutoff) {
@@ -16,14 +16,19 @@ const __recurse = (arr, start, end, fnCmp, cutoff, takeover) => {
 	}
 
 	const mid = start + Math.floor(length / 2)
-	__recurse(arr, start, mid, fnCmp, cutoff, takeover)
-	__recurse(arr, mid, end, fnCmp, cutoff, takeover)
+	__recurse(arr, start, mid, fnCmp, cutoff, takeover, buffer)
+	__recurse(arr, mid, end, fnCmp, cutoff, takeover, buffer)
 	__mergeInplace(arr, start, mid, end, buffer, fnCmp)
 }
 
 const __mergesort = (arr, start, end, fnCmp, cutoff, takeover) => {
+	const buffer = _buffer ?? []
+	_buffer = null
 	buffer.length = Math.max(buffer.length, Math.floor((end - start) / 2))
-	__recurse(arr, start, end, fnCmp, cutoff, takeover)
+	try {
+		__recurse(arr, start, end, fnCmp, cutoff, takeover, buffer)
+	}
+	finally { _buffer = buffer }
 }
 
 

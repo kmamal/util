@@ -11,18 +11,20 @@ const _getByte = [
 	(x) => (x & 0xFF000000) >>> 24,
 ]
 
-const _counts = [
+const _createCounts = () => [
 	new Array(256),
 	new Array(256),
 	new Array(256),
 	new Array(256),
 ]
 
-const __radixsort = (arr, start, end, buffer, numBytes, fnMap) => {
+let _counts = _createCounts()
+
+const _radixsort = (arr, start, end, buffer, numBytes, fnMap, allCounts) => {
 	const length = end - start
 
 	for (let i = 0; i < numBytes; i++) {
-		_counts[i].fill(0)
+		allCounts[i].fill(0)
 	}
 
 	for (let i = start; i < end; i++) {
@@ -30,7 +32,7 @@ const __radixsort = (arr, start, end, buffer, numBytes, fnMap) => {
 		const value = fnMap(item)
 		for (let j = 0; j < numBytes; j++) {
 			const byteValue = _getByte[j](value)
-			_counts[j][byteValue]++
+			allCounts[j][byteValue]++
 		}
 	}
 
@@ -44,7 +46,7 @@ const __radixsort = (arr, start, end, buffer, numBytes, fnMap) => {
 		const getByte = _getByte[index]
 		const fnMapByte = (x) => getByte(fnMap(x))
 
-		const counts = _counts[index]
+		const counts = allCounts[index]
 		const canSkip = counts[0] === length
 
 		if (!canSkip) {
@@ -62,6 +64,15 @@ const __radixsort = (arr, start, end, buffer, numBytes, fnMap) => {
 			dstStart = tmpStart
 		}
 	}
+}
+
+const __radixsort = (arr, start, end, buffer, numBytes, fnMap) => {
+	const allCounts = _counts ?? _createCounts()
+	_counts = null
+	try {
+		return _radixsort(arr, start, end, buffer, numBytes, fnMap, allCounts)
+	}
+	finally { _counts = allCounts }
 }
 
 

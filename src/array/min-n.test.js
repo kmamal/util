@@ -81,3 +81,11 @@ test("array.__minN", (t) => {
 	t.equal(call(big, 1, 11, 3), { count: 3, entries: [ [ 1, 1 ], [ 8, 2 ], [ 10, 0 ] ] })
 	t.equal(call(big, 1, 11, 3, (a, b) => b - a), { count: 3, entries: [ [ 2, 8 ], [ 7, 7 ], [ 9, 9 ] ] })
 })
+
+test("minN nested call in comparator", (t) => {
+	const res = minNWith([ 5, 3, 9, 1, 7, 2 ], 2, (a, b) => {
+		minN([ 100, 200, 300 ], 3)
+		return a - b
+	})
+	t.equal(sort(res), sort([ 1, 2 ]))
+})
