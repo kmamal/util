@@ -67,7 +67,7 @@ const maxNIndexWith$$$ = (arr, n, fnCmp) => {
 
 const maxNIndexWithTo = (dst, arr, _n, fnCmp) => {
 	const { length } = arr
-	const n = Math.min(length, _n)
+	const n = Math.max(0, Math.min(length, _n))
 	dst.length = n
 	__maxN(dst, 0, arr, 0, length, n, fnCmp)
 	return map$$$(dst, getIndex)
@@ -75,7 +75,7 @@ const maxNIndexWithTo = (dst, arr, _n, fnCmp) => {
 
 const maxNIndexWith = (arr, _n, fnCmp) => {
 	const { length } = arr
-	const n = Math.min(length, _n)
+	const n = Math.max(0, Math.min(length, _n))
 	const res = new Array(n)
 	__maxN(res, 0, arr, 0, length, n, fnCmp)
 	return map$$$(res, getIndex)
@@ -92,7 +92,7 @@ const maxNIndexBy$$$ = (arr, n, fnMap) => {
 
 const maxNIndexByTo = (dst, arr, _n, fnMap) => {
 	const { length } = arr
-	const n = Math.min(length, _n)
+	const n = Math.max(0, Math.min(length, _n))
 	dst.length = n
 	__maxN(dst, 0, arr, 0, length, n, compareBy(fnMap))
 	return map$$$(dst, getIndex)
@@ -100,7 +100,7 @@ const maxNIndexByTo = (dst, arr, _n, fnMap) => {
 
 const maxNIndexBy = (arr, _n, fnMap) => {
 	const { length } = arr
-	const n = Math.min(length, _n)
+	const n = Math.max(0, Math.min(length, _n))
 	const res = new Array(n)
 	__maxN(res, 0, arr, 0, length, n, compareBy(fnMap))
 	return map$$$(res, getIndex)
@@ -117,7 +117,7 @@ const maxNIndex$$$ = (arr, n) => {
 
 const maxNIndexTo = (dst, arr, _n) => {
 	const { length } = arr
-	const n = Math.min(length, _n)
+	const n = Math.max(0, Math.min(length, _n))
 	dst.length = n
 	__maxN(dst, 0, arr, 0, length, n, compare)
 	return map$$$(dst, getIndex)
@@ -125,7 +125,7 @@ const maxNIndexTo = (dst, arr, _n) => {
 
 const maxNIndex = (arr, _n) => {
 	const { length } = arr
-	const n = Math.min(length, _n)
+	const n = Math.max(0, Math.min(length, _n))
 	const res = new Array(n)
 	__maxN(res, 0, arr, 0, length, n, compare)
 	return map$$$(res, getIndex)
@@ -142,7 +142,7 @@ const maxNWith$$$ = (arr, n, fnCmp) => {
 
 const maxNWithTo = (dst, arr, _n, fnCmp) => {
 	const { length } = arr
-	const n = Math.min(length, _n)
+	const n = Math.max(0, Math.min(length, _n))
 	dst.length = n
 	__maxN(dst, 0, arr, 0, length, n, fnCmp)
 	return map$$$(dst, getItem)
@@ -150,7 +150,7 @@ const maxNWithTo = (dst, arr, _n, fnCmp) => {
 
 const maxNWith = (arr, _n, fnCmp) => {
 	const { length } = arr
-	const n = Math.min(length, _n)
+	const n = Math.max(0, Math.min(length, _n))
 	const res = new Array(n)
 	__maxN(res, 0, arr, 0, length, n, fnCmp)
 	return map$$$(res, getItem)
@@ -167,7 +167,7 @@ const maxNBy$$$ = (arr, n, fnMap) => {
 
 const maxNByTo = (dst, arr, _n, fnMap) => {
 	const { length } = arr
-	const n = Math.min(length, _n)
+	const n = Math.max(0, Math.min(length, _n))
 	dst.length = n
 	__maxN(dst, 0, arr, 0, length, n, compareBy(fnMap))
 	return map$$$(dst, getItem)
@@ -175,7 +175,7 @@ const maxNByTo = (dst, arr, _n, fnMap) => {
 
 const maxNBy = (arr, _n, fnMap) => {
 	const { length } = arr
-	const n = Math.min(length, _n)
+	const n = Math.max(0, Math.min(length, _n))
 	const res = new Array(n)
 	__maxN(res, 0, arr, 0, length, n, compareBy(fnMap))
 	return map$$$(res, getItem)
@@ -192,7 +192,7 @@ const maxN$$$ = (arr, n) => {
 
 const maxNTo = (dst, arr, _n) => {
 	const { length } = arr
-	const n = Math.min(length, _n)
+	const n = Math.max(0, Math.min(length, _n))
 	dst.length = n
 	__maxN(dst, 0, arr, 0, length, n, compare)
 	return map$$$(dst, getItem)
@@ -200,7 +200,7 @@ const maxNTo = (dst, arr, _n) => {
 
 const maxN = (arr, _n) => {
 	const { length } = arr
-	const n = Math.min(length, _n)
+	const n = Math.max(0, Math.min(length, _n))
 	const res = new Array(n)
 	__maxN(res, 0, arr, 0, length, n, compare)
 	return map$$$(res, getItem)

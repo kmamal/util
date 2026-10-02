@@ -67,7 +67,7 @@ const minNIndexWith$$$ = (arr, n, fnCmp) => {
 
 const minNIndexWithTo = (dst, arr, _n, fnCmp) => {
 	const { length } = arr
-	const n = Math.min(length, _n)
+	const n = Math.max(0, Math.min(length, _n))
 	dst.length = n
 	__minN(dst, 0, arr, 0, length, n, fnCmp)
 	return map$$$(dst, getIndex)
@@ -75,7 +75,7 @@ const minNIndexWithTo = (dst, arr, _n, fnCmp) => {
 
 const minNIndexWith = (arr, _n, fnCmp) => {
 	const { length } = arr
-	const n = Math.min(length, _n)
+	const n = Math.max(0, Math.min(length, _n))
 	const res = new Array(n)
 	__minN(res, 0, arr, 0, length, n, fnCmp)
 	return map$$$(res, getIndex)
@@ -92,7 +92,7 @@ const minNIndexBy$$$ = (arr, n, fnMap) => {
 
 const minNIndexByTo = (dst, arr, _n, fnMap) => {
 	const { length } = arr
-	const n = Math.min(length, _n)
+	const n = Math.max(0, Math.min(length, _n))
 	dst.length = n
 	__minN(dst, 0, arr, 0, length, n, compareBy(fnMap))
 	return map$$$(dst, getIndex)
@@ -100,7 +100,7 @@ const minNIndexByTo = (dst, arr, _n, fnMap) => {
 
 const minNIndexBy = (arr, _n, fnMap) => {
 	const { length } = arr
-	const n = Math.min(length, _n)
+	const n = Math.max(0, Math.min(length, _n))
 	const res = new Array(n)
 	__minN(res, 0, arr, 0, length, n, compareBy(fnMap))
 	return map$$$(res, getIndex)
@@ -117,7 +117,7 @@ const minNIndex$$$ = (arr, n) => {
 
 const minNIndexTo = (dst, arr, _n) => {
 	const { length } = arr
-	const n = Math.min(length, _n)
+	const n = Math.max(0, Math.min(length, _n))
 	dst.length = n
 	__minN(dst, 0, arr, 0, length, n, compare)
 	return map$$$(dst, getIndex)
@@ -125,7 +125,7 @@ const minNIndexTo = (dst, arr, _n) => {
 
 const minNIndex = (arr, _n) => {
 	const { length } = arr
-	const n = Math.min(length, _n)
+	const n = Math.max(0, Math.min(length, _n))
 	const res = new Array(n)
 	__minN(res, 0, arr, 0, length, n, compare)
 	return map$$$(res, getIndex)
@@ -142,7 +142,7 @@ const minNWith$$$ = (arr, n, fnCmp) => {
 
 const minNWithTo = (dst, arr, _n, fnCmp) => {
 	const { length } = arr
-	const n = Math.min(length, _n)
+	const n = Math.max(0, Math.min(length, _n))
 	dst.length = n
 	__minN(dst, 0, arr, 0, length, n, fnCmp)
 	return map$$$(dst, getItem)
@@ -150,7 +150,7 @@ const minNWithTo = (dst, arr, _n, fnCmp) => {
 
 const minNWith = (arr, _n, fnCmp) => {
 	const { length } = arr
-	const n = Math.min(length, _n)
+	const n = Math.max(0, Math.min(length, _n))
 	const res = new Array(n)
 	__minN(res, 0, arr, 0, length, n, fnCmp)
 	return map$$$(res, getItem)
@@ -167,7 +167,7 @@ const minNBy$$$ = (arr, n, fnMap) => {
 
 const minNByTo = (dst, arr, _n, fnMap) => {
 	const { length } = arr
-	const n = Math.min(length, _n)
+	const n = Math.max(0, Math.min(length, _n))
 	dst.length = n
 	__minN(dst, 0, arr, 0, length, n, compareBy(fnMap))
 	return map$$$(dst, getItem)
@@ -175,7 +175,7 @@ const minNByTo = (dst, arr, _n, fnMap) => {
 
 const minNBy = (arr, _n, fnMap) => {
 	const { length } = arr
-	const n = Math.min(length, _n)
+	const n = Math.max(0, Math.min(length, _n))
 	const res = new Array(n)
 	__minN(res, 0, arr, 0, length, n, compareBy(fnMap))
 	return map$$$(res, getItem)
@@ -192,7 +192,7 @@ const minN$$$ = (arr, n) => {
 
 const minNTo = (dst, arr, _n) => {
 	const { length } = arr
-	const n = Math.min(length, _n)
+	const n = Math.max(0, Math.min(length, _n))
 	dst.length = n
 	__minN(dst, 0, arr, 0, length, n, compare)
 	return map$$$(dst, getItem)
@@ -200,7 +200,7 @@ const minNTo = (dst, arr, _n) => {
 
 const minN = (arr, _n) => {
 	const { length } = arr
-	const n = Math.min(length, _n)
+	const n = Math.max(0, Math.min(length, _n))
 	const res = new Array(n)
 	__minN(res, 0, arr, 0, length, n, compare)
 	return map$$$(res, getItem)
