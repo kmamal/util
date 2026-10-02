@@ -1,16 +1,12 @@
 
 const floorTo = (x, unit) => {
-	const signX = Math.sign(x)
-	const absX = Math.abs(x)
 	const absUnit = Math.abs(unit)
-	return signX * Math.floor(absX / absUnit) * absUnit
+	return Math.floor(x / absUnit) * absUnit
 }
 
 const ceilTo = (x, unit) => {
-	const signX = Math.sign(x)
-	const absX = Math.abs(x)
 	const absUnit = Math.abs(unit)
-	return signX * Math.ceil(absX / absUnit) * absUnit
+	return Math.ceil(x / absUnit) * absUnit
 }
 
 const roundTo = (x, unit) => {

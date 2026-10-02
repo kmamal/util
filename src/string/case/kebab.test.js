@@ -19,7 +19,8 @@ const cases = [
 	[ 'v2Beta', 'v2-beta' ],
 	[ 'foo.bar', 'foo.bar' ],
 	[ 'a😀b', 'a😀b' ],
-	[ 'XMLHttpRequest', 'xml-http-request' ],
+	[ 'XmlHttpRequest', 'xml-http-request' ],
+	[ 'getABC', 'get-a-b-c' ],
 	[ 'FOO_BAR', 'foo-bar' ],
 	[ '', '' ],
 ]
