@@ -4,7 +4,7 @@ const timeout = (time, info) => {
 	const sleepPromise = sleep(time)
 
 	const promise = sleepPromise.then(() => {
-		throw Object.assign(new Error("timeout"), info)
+		throw Object.assign(new Error("timeout"), { info })
 	})
 
 	promise.cancel = sleepPromise.cancel

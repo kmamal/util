@@ -24,6 +24,14 @@ testVariants("object.accessors.set", set, (t, f) => {
 	const res = f({}, '__proto__', { x: 1 })
 	t.equal(Object.keys(res), [ '__proto__' ])
 	t.equal({}.x, undefined)
+
+	const fromProto = f(JSON.parse('{"__proto__":{"x":1}}'), 'a', 1)
+	t.equal(Object.keys(fromProto), [ '__proto__', 'a' ])
+	t.equal(Object.getPrototypeOf(fromProto), Object.prototype)
+	t.equal(fromProto.x, undefined)
+
+	const s = Symbol('s')
+	t.equal(f({ [s]: 1 }, 'a', 2)[s], 1)
 }, { dst: junkObject })
 
 test("object.accessors.set does not mutate", (t) => {

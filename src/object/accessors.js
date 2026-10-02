@@ -1,5 +1,5 @@
 const { map } = require('../array/map')
-const { empty$$$ } = require('../object/empty')
+const { copyTo } = require('./copy')
 const { setOwn } = require('./own')
 
 const PATTERN = /\[(?<key1>[^.\]]+)\]|\.?(?<key2>[^[.]+)/ug
@@ -83,8 +83,7 @@ const set = (obj, path, value) => {
 
 const setTo = (dst, obj, path, value) => {
 	const steps = __makeSteps(path)
-	empty$$$(dst)
-	Object.assign(dst, obj)
+	copyTo(dst, obj)
 	__setCopying(dst, steps, value)
 	return dst
 }
