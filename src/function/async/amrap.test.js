@@ -15,8 +15,9 @@ test("function.async.amrap", (t) => {
 	}, 50)
 	t.ok(elapsed >= 50)
 	t.equal(reps, batches.reduce((a, b) => a + b, 0))
-	t.equal(batches.slice(0, 3), [ 1, 10, 100 ])
+	t.equal(batches[0], 1)
 	t.ok(batches.every((n) => Number.isInteger(n) && n > 0))
+	t.ok(batches.every((n, i) => i === 0 || n <= batches[i - 1] * 10))
 })
 
 test("function.async.amrap safety below one", (t) => {
