@@ -40,6 +40,22 @@ const throttle = (fn, time, options = {}) => {
 		}
 	}
 
+	const startWindow = (leadingPromise) => {
+		const currentGeneration = generation
+		const currentSleeper = sleep(time)
+		sleeper = currentSleeper
+
+		lastPromise = track(currentSleeper.then(() => {
+			if (sleeper === currentSleeper) { sleeper = null }
+			if (currentGeneration !== generation) { return lastResult }
+			if (!trailing || !pending) { return leadingPromise ?? lastResult }
+			pending = false
+			const trailingPromise = invoke(lastArgs)
+			if (leading) { startWindow(trailingPromise) }
+			return trailingPromise
+		}))
+	}
+
 	const throttled = (...args) => {
 		lastArgs = args
 
@@ -48,21 +64,9 @@ const throttle = (fn, time, options = {}) => {
 			return lastPromise
 		}
 
-		const currentGeneration = generation
-		const currentSleeper = sleep(time)
-		sleeper = currentSleeper
 		pending = !leading
-
 		const leadingPromise = leading ? invoke(args) : null
-
-		lastPromise = track(currentSleeper.then(() => {
-			if (sleeper === currentSleeper) { sleeper = null }
-			if (currentGeneration !== generation) { return lastResult }
-			if (!trailing || !pending) { return leadingPromise ?? lastResult }
-			pending = false
-			return invoke(lastArgs)
-		}))
-
+		startWindow(leadingPromise)
 		return leadingPromise ?? lastPromise
 	}
 
@@ -76,7 +80,12 @@ const throttle = (fn, time, options = {}) => {
 	}
 
 	throttled.flush = async () => {
-		sleeper?.reset(0)
+		for (;;) {
+			const currentSleeper = sleeper
+			if (currentSleeper === null) { break }
+			currentSleeper.reset(0)
+			await currentSleeper
+		}
 		await empty()
 		return lastResult
 	}

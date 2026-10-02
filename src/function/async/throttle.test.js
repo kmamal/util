@@ -67,3 +67,36 @@ test("function.async.throttle Reentrant", async (t) => {
 	t.equal(await check(false), 1)
 	t.equal(await check(true), 2)
 })
+
+test("function.async.throttle Leading and trailing spacing", async (t) => {
+	const times = []
+	const start = Date.now()
+	const wrapped = throttle((x) => {
+		times.push([ x, Date.now() - start ])
+		return x
+	}, 100, { leading: true, trailing: true })
+
+	const p1 = wrapped(1)
+	await sleep(50)
+	const p2 = wrapped(2)
+	await sleep(55)
+	const p3 = wrapped(3)
+	t.equal(await Promise.all([ p1, p2, p3 ]), [ 1, 2, 3 ])
+
+	t.equal(times.map(([ x ]) => x), [ 1, 2, 3 ])
+	for (let i = 1; i < times.length; i++) {
+		t.ok(times[i][1] - times[i - 1][1] >= 95, { times })
+	}
+	await wrapped.flush()
+})
+
+test("function.async.throttle Flush skips cooldown", async (t) => {
+	const calls = []
+	const wrapped = throttle((x) => { calls.push(x) }, 1000, { leading: true, trailing: true })
+	wrapped(1)
+	wrapped(2)
+	const start = Date.now()
+	await wrapped.flush()
+	t.equal(calls, [ 1, 2 ])
+	t.ok(Date.now() - start < 100)
+})
