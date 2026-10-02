@@ -41,6 +41,14 @@ testVariants('object.merge clones b', merge, (t, f) => {
 	t.equal(f({}, { f: fn }).f, fn)
 }, { dst: junkObject })
 
+testVariants('object.merge functions', merge, (t, f) => {
+	const fn = () => 1
+	t.equal(f({ f: fn }, {}).f, fn)
+	t.equal(f({ a: { f: fn } }, { a: { b: 1 } }).a.f, fn)
+	t.equal(f({}, { a: [ fn ] }).a[0], fn)
+	t.equal(f({ a: [ fn ] }, {}).a[0], fn)
+}, { dst: junkObject })
+
 testVariants('object.merge symbols', merge, (t, f) => {
 	const s = Symbol('s')
 	const r = Symbol('r')

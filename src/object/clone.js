@@ -1,6 +1,6 @@
 const { setOwn, enumerateOwnKeys } = require('./own')
 
-const _clone = (x, cache) => {
+const _clone = (x, cache, recurse) => {
 	if (typeof x === 'function') { throw new Error("can't clone functions") }
 
 	if (x === null || typeof x !== 'object') { return x }
@@ -12,7 +12,7 @@ const _clone = (x, cache) => {
 		const res = new Array(length)
 		cache.set(x, res)
 		for (let i = 0; i < length; i++) {
-			res[i] = _clone(x[i], cache)
+			res[i] = recurse(x[i], cache, recurse)
 		}
 		return res
 	}
@@ -21,7 +21,7 @@ const _clone = (x, cache) => {
 		const res = new Map()
 		cache.set(x, res)
 		for (const entry of x.entries()) {
-			res.set(_clone(entry[0], cache), _clone(entry[1], cache))
+			res.set(recurse(entry[0], cache, recurse), recurse(entry[1], cache, recurse))
 		}
 		return res
 	}
@@ -30,7 +30,7 @@ const _clone = (x, cache) => {
 		const res = new Set()
 		cache.set(x, res)
 		for (const value of x.values()) {
-			res.add(_clone(value, cache))
+			res.add(recurse(value, cache, recurse))
 		}
 		return res
 	}
@@ -65,11 +65,23 @@ const _clone = (x, cache) => {
 	const keys = enumerateOwnKeys(x)
 	for (let i = 0; i < keys.length; i++) {
 		const key = keys[i]
-		setOwn(res, key, _clone(x[key], cache))
+		setOwn(res, key, recurse(x[key], cache, recurse))
 	}
 	return res
 }
 
-const clone = (x) => _clone(x, new Map())
+const cloneWith = (x, fnClone) => {
+	const fnRecurse = (y, cache) => {
+		const custom = fnClone(y)
+		if (custom !== undefined) { return custom }
+		return _clone(y, cache, fnRecurse)
+	}
+	return fnRecurse(x, new Map())
+}
 
-module.exports = { clone }
+const clone = (x) => _clone(x, new Map(), _clone)
+
+module.exports = {
+	cloneWith,
+	clone,
+}

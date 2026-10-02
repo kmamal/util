@@ -1,5 +1,5 @@
 const { test } = require('@kmamal/testing')
-const { clone } = require('./clone')
+const { clone, cloneWith } = require('./clone')
 
 test("object.clone", (t) => {
 	t.equal(undefined, clone(undefined))
@@ -103,4 +103,25 @@ test("object.clone symbols", (t) => {
 	t.equal(Reflect.ownKeys(res), [ 'a', s ])
 	t.equal(res[s], { b: 2 })
 	t.ok(res[s] !== src[s])
+})
+
+test("object.cloneWith", (t) => {
+	const fn = () => 1
+	const keepFunctions = (x) => typeof x === 'function' ? x : undefined
+	const src = { f: fn, a: [ fn, { g: fn } ], m: new Map([ [ fn, fn ] ]) }
+	const res = cloneWith(src, keepFunctions)
+	t.equal(res.f, fn)
+	t.equal(res.a[0], fn)
+	t.equal(res.a[1].g, fn)
+	t.ok(res.a !== src.a)
+	t.equal(res.m.get(fn), fn)
+
+	const seen = []
+	cloneWith({ a: 1, b: [ 2 ] }, (x) => { seen.push(x) })
+	t.equal(seen, [ { a: 1, b: [ 2 ] }, 1, [ 2 ], 2 ])
+
+	const marker = {}
+	t.equal(cloneWith({ a: { b: 1 }, c: 2 }, (x) => x?.b === 1 ? marker : undefined).a, marker)
+	t.equal(cloneWith(5, () => 6), 6)
+	t.throws(() => cloneWith({ f: fn }, () => undefined))
 })

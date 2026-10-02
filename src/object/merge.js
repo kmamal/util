@@ -1,5 +1,5 @@
 const { copyTo } = require('./copy')
-const { clone } = require('./clone')
+const { cloneWith } = require('./clone')
 const { setOwn, getOwn, enumerateOwnKeys } = require('./own')
 
 const _isObject = (x) => {
@@ -8,7 +8,9 @@ const _isObject = (x) => {
 	return proto === Object.prototype || proto === null
 }
 
-const _cloneValue = (x) => typeof x === 'function' ? x : clone(x)
+const _keepFunctions = (x) => typeof x === 'function' ? x : undefined
+
+const _cloneValue = (x) => cloneWith(x, _keepFunctions)
 
 const __merge = (dst, a, b) => {
 	const keys = enumerateOwnKeys(b)
@@ -33,13 +35,13 @@ const __merge = (dst, a, b) => {
 
 
 const merge = (a, b) => {
-	const res = clone(a)
+	const res = _cloneValue(a)
 	__merge(res, a, b)
 	return res
 }
 
 const mergeTo = (dst, a, b) => {
-	copyTo(dst, clone(a))
+	copyTo(dst, _cloneValue(a))
 	__merge(dst, a, b)
 	return dst
 }
