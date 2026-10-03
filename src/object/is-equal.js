@@ -111,9 +111,6 @@ const _isEqualObjects = (a, b, fnEq, seen) => {
 	const bProto = Object.getPrototypeOf(b)
 	if (aProto !== bProto && !(_isPlainPrototype(aProto) && _isPlainPrototype(bProto))) { return false }
 
-	// Object
-	if (_isPlainPrototype(aProto)) { return _isEqualProps(a, b, fnEq, seen) }
-
 	// Array
 	const aIsArray = Array.isArray(a)
 	const bIsArray = Array.isArray(b)
@@ -129,6 +126,9 @@ const _isEqualObjects = (a, b, fnEq, seen) => {
 		}
 		return true
 	}
+
+	// Object
+	if (_isPlainPrototype(aProto)) { return _isEqualProps(a, b, fnEq, seen) }
 
 	if (ArrayBuffer.isView(a) && !(a instanceof DataView)) {
 		const { length } = a

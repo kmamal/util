@@ -3,7 +3,7 @@ const { cloneWith } = require('./clone')
 const { setOwn, getOwn, enumerateOwnKeys } = require('./own')
 
 const _isObject = (x) => {
-	if (x === null || typeof x !== 'object') { return false }
+	if (x === null || typeof x !== 'object' || Array.isArray(x)) { return false }
 	const proto = Object.getPrototypeOf(x)
 	return proto === Object.prototype || proto === null
 }

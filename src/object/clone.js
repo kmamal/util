@@ -157,13 +157,6 @@ const _clone = (x, cache, recurse) => {
 	if (cache.has(x)) { return cache.get(x) }
 
 	const proto = Object.getPrototypeOf(x)
-	if (_isPlainPrototype(proto)) {
-		const res = Object.create(proto)
-		cache.set(x, res)
-		_copyProps(res, x, cache, recurse)
-		return res
-	}
-
 	if (Array.isArray(x)) {
 		const { length } = x
 		const res = new Array(length)
@@ -172,6 +165,13 @@ const _clone = (x, cache, recurse) => {
 			res[i] = recurse(x[i], cache, recurse)
 		}
 		if (proto !== Array.prototype) { Object.setPrototypeOf(res, proto) }
+		return res
+	}
+
+	if (_isPlainPrototype(proto)) {
+		const res = Object.create(proto)
+		cache.set(x, res)
+		_copyProps(res, x, cache, recurse)
 		return res
 	}
 

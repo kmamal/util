@@ -227,3 +227,16 @@ test("object.clone uncloneable", (t) => {
 	t.throws(() => clone(new FinalizationRegistry(() => {})))
 	t.throws(() => clone({ nested: [ new WeakMap() ] }))
 })
+
+test("object.clone arrays with plain prototypes", (t) => {
+	for (const proto of [ null, Object.prototype ]) {
+		const arr = Object.setPrototypeOf([ 1, { a: 2 } ], proto)
+		const res = clone(arr)
+		t.ok(Array.isArray(res))
+		t.equal(Object.getPrototypeOf(res), proto)
+		t.equal(res.length, 2)
+		t.equal(res[0], 1)
+		t.ok(res[1] !== arr[1])
+		t.equal(res[1].a, 2)
+	}
+})

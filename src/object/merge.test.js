@@ -88,3 +88,11 @@ testVariants('object.merge shared objects in b', merge, (t, f) => {
 	t.ok(fresh.p === fresh.q)
 	t.ok(fresh.p !== s)
 }, { dst: junkObject })
+
+testVariants('object.merge arrays with plain prototypes', merge, (t, f) => {
+	const arr = Object.setPrototypeOf([ 1, 2 ], null)
+	const res = f({ a: { x: 1 } }, { a: arr })
+	t.ok(Array.isArray(res.a))
+	t.equal(res.a.length, 2)
+	t.equal(Object.getPrototypeOf(res.a), null)
+}, { dst: junkObject })

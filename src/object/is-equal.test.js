@@ -321,3 +321,13 @@ test("object.isEqual non-enumerable props", (t) => {
 	t.equal(isEqual(a, b), false)
 	t.equal(isEqual(b, a), false)
 })
+
+test("object.isEqual arrays with plain prototypes", (t) => {
+	const nullArray = Object.setPrototypeOf([ 1, 2 ], null)
+	const objectArray = Object.setPrototypeOf([ 1, 2 ], Object.prototype)
+	t.equal(isEqual(nullArray, { 0: 1, 1: 2 }), false)
+	t.equal(isEqual({ 0: 1, 1: 2 }, nullArray), false)
+	t.equal(isEqual(objectArray, { 0: 1, 1: 2 }), false)
+	t.equal(isEqual(nullArray, Object.setPrototypeOf([ 1, 2 ], null)), true)
+	t.equal(isEqual(nullArray, Object.setPrototypeOf([ 1, 3 ], null)), false)
+})
