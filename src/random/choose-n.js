@@ -49,7 +49,7 @@ const __chooseN = (rng, dst, dstStart, src, srcStart, srcEnd, _n) => {
 
 const chooseN = (arr, _n) => {
 	const { length } = arr
-	const n = Math.min(length, _n)
+	const n = Math.max(0, Math.min(length, _n))
 	const res = new Array(n)
 	__chooseN(defaultRng, res, 0, arr, 0, length, n)
 	return res
@@ -57,7 +57,7 @@ const chooseN = (arr, _n) => {
 
 const chooseNTo = (dst, arr, _n) => {
 	const { length } = arr
-	const n = Math.min(length, _n)
+	const n = Math.max(0, Math.min(length, _n))
 	dst.length = n
 	__chooseN(defaultRng, dst, 0, arr, 0, arr.length, n)
 	return dst
@@ -65,7 +65,7 @@ const chooseNTo = (dst, arr, _n) => {
 
 const chooseN$$$ = (arr, _n) => {
 	const { length } = arr
-	const n = Math.min(length, _n)
+	const n = Math.max(0, Math.min(length, _n))
 	__shuffle(defaultRng, arr, 0, length, n)
 	arr.length = n
 	return arr

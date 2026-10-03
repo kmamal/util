@@ -6,6 +6,10 @@ const { MiddleSquareWeyl } = require('./seeded/middle-square-weyl')
 const { __chooseN, chooseN } = require('./choose-n')
 
 testVariants("random.chooseN", chooseN, (t, f) => {
+	t.equal(f([ 1, 2, 3 ], 0), [])
+	t.equal(f([ 1, 2, 3 ], -1), [])
+	t.equal(f([], 2), [])
+
 	{
 		const A = 10
 		const B = 20
