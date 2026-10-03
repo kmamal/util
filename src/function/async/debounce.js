@@ -16,6 +16,7 @@ const debounce = (fn, time, options = {}) => {
 	let pending = false
 
 	let sleeper = null
+	let flushed = false
 	let generation = 0
 
 	const track = (promise) => {
@@ -44,7 +45,7 @@ const debounce = (fn, time, options = {}) => {
 		lastArgs = args
 
 		if (sleeper !== null) {
-			sleeper.reset(time)
+			if (!flushed) { sleeper.reset(time) }
 			pending = true
 			return lastPromise
 		}
@@ -52,6 +53,7 @@ const debounce = (fn, time, options = {}) => {
 		const currentGeneration = generation
 		const currentSleeper = sleep(time)
 		sleeper = currentSleeper
+		flushed = false
 		pending = !leading
 
 		const leadingPromise = leading ? invoke(args) : null
@@ -77,7 +79,10 @@ const debounce = (fn, time, options = {}) => {
 	}
 
 	debounced.flush = async () => {
-		sleeper?.reset(0)
+		if (sleeper !== null) {
+			flushed = true
+			sleeper.reset(0)
+		}
 		await empty()
 		return lastResult
 	}

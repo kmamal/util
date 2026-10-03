@@ -132,3 +132,15 @@ test("function.async.debounce Reentrant", async (t) => {
 	t.equal(await check(false), 1)
 	t.equal(await check(true), 2)
 })
+
+test("function.async.debounce Flush is not undone by a later call", async (t) => {
+	const calls = []
+	const wrapped = debounce((x) => { calls.push(x) }, 1000)
+	wrapped(1)
+	const before = Date.now()
+	const flushed = wrapped.flush()
+	wrapped(2)
+	await flushed
+	t.ok(Date.now() - before < 500)
+	t.equal(calls, [ 2 ])
+})
