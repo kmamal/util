@@ -1,4 +1,4 @@
-const { enumerateOwnKeys } = require('./own')
+const { hasOwn, enumerateOwnKeys } = require('./own')
 const { __uncloneableConstructors } = require('./clone')
 
 const _errorKeys = [ 'message', 'cause', 'errors' ]
@@ -26,7 +26,7 @@ const _isEqualProps = (a, b, fnEq, seen) => {
 
 	for (let i = 0; i < aKeys.length; i++) {
 		const aKey = aKeys[i]
-		if (!Object.hasOwn(b, aKey) || !_isEqualWith(a[aKey], b[aKey], fnEq, seen)) { return false }
+		if (!hasOwn(b, aKey) || !_isEqualWith(a[aKey], b[aKey], fnEq, seen)) { return false }
 	}
 	return true
 }

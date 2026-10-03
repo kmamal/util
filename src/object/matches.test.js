@@ -50,3 +50,8 @@ test("object.matches cycles", (t) => {
 	r.self = { x: 1, self: r }
 	t.ok(matches(a, r))
 })
+
+test("object.matches non-enumerable props", (t) => {
+	const obj = Object.defineProperty({}, 'x', { value: 1, enumerable: false })
+	t.equal(matches(obj, { x: 1 }), false)
+})

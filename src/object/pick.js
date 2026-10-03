@@ -1,5 +1,5 @@
 const { empty$$$ } = require('./empty')
-const { setOwn, enumerateOwnKeys } = require('./own')
+const { setOwn, hasOwn, enumerateOwnKeys } = require('./own')
 
 const _keySet = (keys) => {
 	const set = Object.create(null)
@@ -12,7 +12,7 @@ const _keySet = (keys) => {
 const __pick = (dst, src, keys) => {
 	for (let i = 0; i < keys.length; i++) {
 		const key = keys[i]
-		if (!Object.hasOwn(src, key)) { continue }
+		if (!hasOwn(src, key)) { continue }
 		setOwn(dst, key, src[key])
 	}
 }

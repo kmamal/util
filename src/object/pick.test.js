@@ -33,6 +33,9 @@ testVariants('object.pick', pick, (t, f) => {
 	const res = f(JSON.parse('{"__proto__":{"x":1}}'), [ '__proto__' ])
 	t.equal(Object.keys(res), [ '__proto__' ])
 	t.equal(Object.getPrototypeOf(res), Object.prototype)
+
+	t.equal(f(withSymbols(), [ hidden ]), {})
+	t.equal(f(Object.defineProperty({}, 'x', { value: 1, enumerable: false }), [ 'x' ]), {})
 }, { dst: junkObject })
 
 testVariants('object.omit', omit, (t, f) => {

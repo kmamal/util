@@ -314,3 +314,10 @@ test("object.isEqual clone round-trip", (t) => {
 	}
 	t.ok(isEqual(value, clone(value)))
 })
+
+test("object.isEqual non-enumerable props", (t) => {
+	const a = { x: 1 }
+	const b = Object.defineProperty({ y: 1 }, 'x', { value: 1, enumerable: false })
+	t.equal(isEqual(a, b), false)
+	t.equal(isEqual(b, a), false)
+})

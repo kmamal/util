@@ -13,14 +13,16 @@ const setOwn = (obj, key, value) => {
 	}
 }
 
-const getOwn = (obj, key) => Object.hasOwn(obj, key) ? obj[key] : undefined
+const hasOwn = (obj, key) => Object.prototype.propertyIsEnumerable.call(obj, key)
+
+const getOwn = (obj, key) => hasOwn(obj, key) ? obj[key] : undefined
 
 const enumerateOwnKeys = (obj) => {
 	const keys = Object.keys(obj)
 	const symbols = Object.getOwnPropertySymbols(obj)
 	for (let i = 0; i < symbols.length; i++) {
 		const symbol = symbols[i]
-		if (!Object.prototype.propertyIsEnumerable.call(obj, symbol)) { continue }
+		if (!hasOwn(obj, symbol)) { continue }
 		keys.push(symbol)
 	}
 	return keys
@@ -28,6 +30,7 @@ const enumerateOwnKeys = (obj) => {
 
 module.exports = {
 	setOwn,
+	hasOwn,
 	getOwn,
 	enumerateOwnKeys,
 }

@@ -1,6 +1,6 @@
 const { __copy } = require('./copy')
 const { empty$$$ } = require('./empty')
-const { setOwn, getOwn, enumerateOwnKeys } = require('./own')
+const { setOwn, hasOwn, getOwn, enumerateOwnKeys } = require('./own')
 
 const __defaults = (dst, obj, def) => {
 	__copy(dst, def)
@@ -8,7 +8,7 @@ const __defaults = (dst, obj, def) => {
 	for (let i = 0; i < keys.length; i++) {
 		const key = keys[i]
 		const value = obj[key]
-		if (value === undefined && Object.hasOwn(dst, key)) { continue }
+		if (value === undefined && hasOwn(dst, key)) { continue }
 		setOwn(dst, key, value)
 	}
 }

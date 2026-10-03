@@ -1,5 +1,5 @@
 const { test } = require('@kmamal/testing')
-const { setOwn, getOwn, enumerateOwnKeys } = require('./own')
+const { setOwn, hasOwn, getOwn, enumerateOwnKeys } = require('./own')
 
 test("object.setOwn", (t) => {
 	const obj = {}
@@ -10,12 +10,27 @@ test("object.setOwn", (t) => {
 	t.equal(obj.x, undefined)
 })
 
+test("object.hasOwn", (t) => {
+	const s = Symbol('s')
+	const obj = Object.create({ inherited: 1 })
+	obj.own = 2
+	obj[s] = 3
+	Object.defineProperty(obj, 'hidden', { value: 4, enumerable: false })
+	t.equal(hasOwn(obj, 'own'), true)
+	t.equal(hasOwn(obj, s), true)
+	t.equal(hasOwn(obj, 'inherited'), false)
+	t.equal(hasOwn(obj, 'hidden'), false)
+	t.equal(hasOwn(obj, 'missing'), false)
+})
+
 test("object.getOwn", (t) => {
 	const obj = Object.create({ inherited: 1 })
 	obj.own = 2
+	Object.defineProperty(obj, 'hidden', { value: 3, enumerable: false })
 	t.equal(getOwn(obj, 'own'), 2)
 	t.equal(getOwn(obj, 'inherited'), undefined)
 	t.equal(getOwn(obj, 'toString'), undefined)
+	t.equal(getOwn(obj, 'hidden'), undefined)
 })
 
 test("object.enumerateOwnKeys", (t) => {
